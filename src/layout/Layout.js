@@ -1,5 +1,7 @@
+import Header from "./header";
+
 const Layout = () => {
-  return "";
+  return <Header />;
 };
 
 export default Layout;
