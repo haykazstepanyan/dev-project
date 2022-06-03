@@ -40,7 +40,7 @@ const HeaderBottom = () => {
             />
           </Grid>
           <Grid item sm={9}>
-            <nav>
+            <nav className={classes.nav}>
               <ul className={classes.navList}>
                 <li className={classes.navListItems}>
                   <Link to="/" className={classes.navLinks}>

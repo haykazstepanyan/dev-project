@@ -64,13 +64,15 @@ const styles = {
   bottomCategories: {
     display: "flex",
     alignItems: "center",
-    borderRight: "1px solid #e1e1e1",
   },
   bottomCategoriesHeading: {
     paddingLeft: 25,
   },
   categoryLinks: {
     color: "#222",
+  },
+  nav: {
+    borderLeft: "1px solid #e1e1e1",
   },
   navList: {
     display: "flex",
