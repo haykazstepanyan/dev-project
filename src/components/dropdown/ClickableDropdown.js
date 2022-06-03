@@ -3,17 +3,31 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-const ClickableDropdown = (props) => {
+const ClickableDropdown = props => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { icon, options, value, change } = props;
-  const handleClick = (event) => {
+
+  const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (selectedOption) => {
+  const handleClose = selectedOption => {
     setAnchorEl(null);
-    change(selectedOption);
+    change && change(selectedOption);
   };
+  const styles = {
+    text: {
+      color: "#222",
+      fontSize: 14,
+      textTransform: "Capitalize",
+    },
+    button: {
+      "&:hover": {
+        backgroundColor: "transparent",
+      },
+    },
+  };
+
   return (
     <div>
       <Button
@@ -21,7 +35,8 @@ const ClickableDropdown = (props) => {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        endIcon={icon || null}
+        startIcon={icon || null}
+        sx={{ ...styles.button, ...styles.text }}
       >
         {value}
       </Button>
@@ -30,9 +45,14 @@ const ClickableDropdown = (props) => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        sx={{ marginTop: "10px" }}
       >
-        {options.map((option) => (
-          <MenuItem key={option} onClick={() => handleClose(option)}>
+        {options.map((option, i) => (
+          <MenuItem
+            key={`${option}${i}`}
+            onClick={() => handleClose(option)}
+            sx={styles.text}
+          >
             {option}
           </MenuItem>
         ))}

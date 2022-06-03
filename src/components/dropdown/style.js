@@ -1,9 +1,12 @@
-const styles = {
+export const hoverableStyles = {
   textColor: {
     "&:hover": {
-      color: "green",
+      color: "#198754",
+    },
+  },
+  btn: {
+    "&:hover": {
+      backgroundColor: "transparent !important",
     },
   },
 };
-
-export default styles;
