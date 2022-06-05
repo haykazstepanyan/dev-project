@@ -56,7 +56,7 @@ const Products = () => {
             ))}
         </Grid>
         <PaginationBlock
-          count={Math.ceil(products.length / 5)}
+          count={Math.ceil(products.length / 8)}
           onChange={gotoPage}
         />
       </Box>
