@@ -1,15 +1,17 @@
+import React, { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
-import About from "../pages/About";
-import ContactUs from "../pages/ContactUs";
-import Main from "../pages/Main";
+import Header from "../layout/header/Header";
+import Products from "../components/Card/Products";
+
 
 const PageRoutes = () => {
   return (
+    <Fragment>
+      <Header/>
     <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<ContactUs />} />
+      <Route path="/products" element={<Products />} />
     </Routes>
+    </Fragment>
   );
 };
 
