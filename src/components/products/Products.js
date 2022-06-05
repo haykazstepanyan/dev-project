@@ -1,26 +1,21 @@
 import Container from "@mui/system/Container";
 import { productsData } from "./fakeData";
-import Product from "../product";
+import ProductItem from "./ProductItem";
 import Grid from "@mui/material/Grid";
-import { createUseStyles } from "react-jss";
-
-const styles = {
-  productContainer: {
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexWrap: "wrap",
-  },
-};
-
-const useStyles = createUseStyles(styles);
+import { Link } from "react-router-dom";
 
 const Products = () => {
-  const classes = useStyles();
   return (
     <Container maxWidth="lg">
-      <Grid container className={classes.productContainer}>
-        {productsData.map(product => (
-          <Product key={product.id} data={product} />
+      <Grid container>
+        {productsData.map((product) => (
+          <Link
+            key={product.id}
+            to={`/product/${product.id}`}
+            style={{ margin: "15px" }}
+          >
+            <ProductItem data={product} />
+          </Link>
         ))}
       </Grid>
     </Container>

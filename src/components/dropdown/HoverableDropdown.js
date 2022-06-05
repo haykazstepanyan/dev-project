@@ -12,7 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const useStyles = createUseStyles(hoverableStyles);
 
-const HoverableDropdown = props => {
+const HoverableDropdown = (props) => {
   const { icon, value, change, list } = props;
   const classes = useStyles();
   const popupState = usePopupState({

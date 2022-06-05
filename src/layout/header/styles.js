@@ -8,7 +8,7 @@ const styles = {
     height: 80,
   },
   filterContainer: {
-    padding: "25px 10%",
+    padding: [[25, "10%"]],
     borderRight: "1px solid #e1e1e1",
     borderLeft: "1px solid #e1e1e1",
   },
@@ -23,12 +23,12 @@ const styles = {
     position: "relative",
     "&:before": {
       content: "''",
-      width: "1px",
-      height: "24px",
+      width: 1,
+      height: 24,
       background: "#a1a1a1",
       position: "absolute",
       top: "calc(50% - 6px)",
-      marginTop: "-8px",
+      marginTop: -8,
       left: 0,
     },
   },
@@ -37,7 +37,7 @@ const styles = {
     height: 54,
     fontSize: 14,
     fontWeight: 400,
-    padding: "0 50px 0 20px",
+    padding: [[0, 50, 0, 20]],
     opacity: 0.7,
     "&:focus": {
       outline: "none",
@@ -79,12 +79,12 @@ const styles = {
     alignItems: "center",
   },
   navListItems: {
-    padding: "0 15px",
+    padding: [[0, 15]],
   },
   navLinks: {
     position: "relative",
     display: "block",
-    padding: "15px 0",
+    padding: [[15, 0]],
     color: "#222",
     fontSize: 13,
     textTransform: "uppercase",
