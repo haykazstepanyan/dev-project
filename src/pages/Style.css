@@ -1,0 +1,49 @@
+.about-us-section-header {
+    background: #f0f0f0;
+    border-bottom: 1px solid #e1e1e1;
+    padding: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.about-us-section-header h1 {
+    font-size: 42px;
+    line-height: 50px;
+    margin-bottom: 9px;
+}
+.w-100 {
+    width: 100%;
+}
+.mx-auto {
+    margin: 0 auto !important;
+}
+.about-us-info-section {
+    padding: 100px 0;
+}
+.about-info-title {
+    font-size: 24px;
+    line-height: 24px;
+    text-transform: capitalize;
+    font-weight: 400;
+    margin-bottom: 21px;
+    text-align: center;
+}
+.about-info-text {
+    text-align: center;
+    font-size: 14px;
+    line-height: 26px;
+}
+.text-center{
+    text-align: center;
+}
+.features-section-style{
+    padding: 100px 0 93px;
+}
+.features-section-style img{
+    margin-bottom: 23px;
+}
+.feature-bg-image-style{
+    background-repeat: no-repeat;
+    background-size: cover;
+}
