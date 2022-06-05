@@ -55,12 +55,12 @@ const HeaderBottom = () => {
                   </Link>
                 </li>
                 <li className={classes.navListItems}>
-                  <Link to="/" className={classes.navLinks}>
+                  <Link to="/contact" className={classes.navLinks}>
                     Contact us
                   </Link>
                 </li>
                 <li className={classes.navListItems}>
-                  <Link to="/" className={classes.navLinks}>
+                  <Link to="/about" className={classes.navLinks}>
                     About us
                   </Link>
                 </li>
