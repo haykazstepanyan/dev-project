@@ -4,20 +4,13 @@ import PaginationBlock from "../Pagination/Pagination";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { createUseStyles } from "react-jss";
+import { getFakeProductsData } from "../../helpers/api.helpers";
 
 const useStyles = createUseStyles({
   gridContainer: {
     marginTop: 50,
   },
 });
-
-async function getFakeProductsData() {
-  const res = await fetch("https://dummyjson.com/products");
-  const data = await res.json();
-  console.log(data.products);
-  return data.products;
-}
-getFakeProductsData();
 
 const Products = () => {
   const [products, setProducts] = useState([]);

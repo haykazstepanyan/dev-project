@@ -12,3 +12,10 @@ export async function getProductsData() {
       console.log(e.message);
     }
   }
+  export async function getFakeProductsData() {
+    const res = await fetch("https://dummyjson.com/products");
+    const data = await res.json();
+    console.log(data.products);
+    return data.products;
+  }
+  
