@@ -1,3 +1,4 @@
+import React from "react";
 import { ClickableDropdown } from "../../components/dropdown";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/system/Container";
@@ -5,6 +6,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { createUseStyles } from "react-jss";
 import styles from "./styles";
 import { Link } from "react-router-dom";
+
 
 const useStyles = createUseStyles(styles);
 const categoriesArray = [
@@ -48,7 +50,7 @@ const HeaderBottom = () => {
                   </Link>
                 </li>
                 <li className={classes.navListItems}>
-                  <Link to="/" className={classes.navLinks}>
+                  <Link to="/products" className={classes.navLinks}>
                     Products
                   </Link>
                 </li>

@@ -1,20 +1,16 @@
+import React from "react";
 import "./Style.css";
 import { Link } from "react-router-dom";
 import { Grid, Container } from "@mui/material";
-
 import aboutMainImage from "../assets/images/about1.webp";
 import featuresBgImage from "../assets/images/about-us-policy-bg.webp";
-
 import featureIcon1 from "../assets/images/About_icon1.webp";
 import featureIcon2 from "../assets/images/About_icon2.webp";
 import featureIcon3 from "../assets/images/About_icon3.webp";
-
 import featureIcon4 from "../assets/images/about2.webp";
 import featureIcon5 from "../assets/images/about3.webp";
 import featureIcon6 from "../assets/images/about4.webp";
-
 import Slider from "../components/slider/Slider";
-
 import slideImg1 from "../assets/images/brand1.webp";
 import slideImg2 from "../assets/images/brand2.webp";
 import slideImg3 from "../assets/images/brand3.webp";

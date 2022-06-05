@@ -1,3 +1,6 @@
+
+import React from "react";
+
 import "./Button.css";
 
 const Button = (props) => {
@@ -10,6 +13,7 @@ const Button = (props) => {
             </button>
         </>
     );
+
 };
 
 export default Button;
