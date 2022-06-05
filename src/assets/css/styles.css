@@ -9,6 +9,7 @@ body {
   font-style: normal;
   font-weight: 400;
   color: #222;
+  font-family: 'Rubik', sans-serif;
 }
 a {
   text-decoration: none;
@@ -36,4 +37,8 @@ a {
   --c-danger: #dc3545;
   --c-light: #f8f9fa;
   --c-dark: #212529;
+}
+.btn{
+  cursor: pointer;
+  transition: 0.3s all;
 }
