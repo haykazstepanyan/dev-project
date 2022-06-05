@@ -2,9 +2,8 @@ import React, { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "../layout/header/Header";
 import Products from "../components/Card/Products";
-
-
-import ButtonComponent from "../pages/ButtonComponent";
+import About from "../pages/About";
+import ContactUs from "../pages/ContactUs";
 
 const PageRoutes = () => {
   return (
@@ -13,8 +12,9 @@ const PageRoutes = () => {
     <Routes>
 
       <Route path="/products" element={<Products />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<ContactUs />} />
 
-      
     </Routes>
     </Fragment>
   );
