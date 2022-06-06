@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import CardBlock from "./Card";
-import PaginationBlock from "../Pagination/Pagination";
+import CardBlock from "../components/Card/Card";
+import PaginationBlock from "../components/Pagination/Pagination";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { createUseStyles } from "react-jss";
-import { getFakeProductsData } from "../../helpers/api.helpers";
+import { getFakeProductsData } from "../helpers/api.helpers";
 
 const useStyles = createUseStyles({
   gridContainer: {
-    marginTop: 50,
+ 
   },
 });
 

@@ -33,10 +33,10 @@ const HeaderMiddle = () => {
 
   const classes = useStyles();
 
-  const handleCategory = value => {
+  const handleCategory = (value) => {
     categoriesArray.includes(value) && setCategory(value);
   };
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
   return (
@@ -71,7 +71,6 @@ const HeaderMiddle = () => {
             </div>
           </Grid>
           <Grid item sm={2} className={classes.iconsContainer}>
-            {/* <div > */}
             <HoverableDropdown
               value={<PeopleOutlineIcon />}
               list={accountData}
@@ -79,7 +78,6 @@ const HeaderMiddle = () => {
 
             <FavoriteBorderIcon className={classes.icons} />
             <WorkOutlineIcon className={classes.icons} />
-            {/* </div> */}
           </Grid>
         </Grid>
       </Container>

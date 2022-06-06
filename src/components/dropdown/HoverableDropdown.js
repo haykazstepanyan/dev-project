@@ -13,8 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const useStyles = createUseStyles(hoverableStyles);
 
-const HoverableDropdown = props => {
-  const { icon, value, change, list } = props;
+const HoverableDropdown = ({ icon, value, change, list }) => {
   const classes = useStyles();
   const popupState = usePopupState({
     variant: "popover",
@@ -48,7 +47,12 @@ const HoverableDropdown = props => {
           <MenuItem
             className={classes.textColor}
             key={`${item}${i}`}
-            onClick={change && (() => change(item))}
+            onClick={
+              change &&
+              (() => {
+                change(item);
+              })
+            }
           >
             {item}
           </MenuItem>
