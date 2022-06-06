@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Grid, Container } from "@mui/material";
+import "./Style.css";
 
 import BusinessIcon from "@mui/icons-material/Business";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
