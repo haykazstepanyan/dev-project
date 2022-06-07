@@ -1,63 +1,76 @@
-import React from "react";
+import React, { Component } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { createUseStyles } from "react-jss";
 
-import { Slide } from "react-slideshow-image";
-import "react-slideshow-image/dist/styles.css";
+const slickSliderStyles = createUseStyles({
+    slickSlider: {
+        "& div:focus-visible": {
+            outline: "none",
+        },
+        "& img": {
+            margin: "auto",
+        },
+        "& .slick-arrow.slick-next:before": {
+            color: "#6b6b6b",
+        },
+        "& .slick-arrow.slick-prev:before": {
+            color: "#6b6b6b",
+        },
+    },
+});
 
-const Slider = (props) => {
-    const properties = {
-        transitionDuration: 500,
-        slidesToShow: 6,
-        slidesToScroll: 2,
-        autoplay: false,
+export default function SlickSlider(props) {
+    const classes = slickSliderStyles();
+
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: props.slidesToShow,
+        slidesToScroll: props.slidesToScroll,
         arrows: true,
-        responsive: [
-            {
-                breakpoint: 1199,
-                settings: {
-                    slidesToShow: 6,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                },
-            },
-            {
-                breakpoint: 500,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 300,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
+        ...(props.responsive
+            ? {
+                  responsive: [
+                      {
+                          breakpoint: 1024,
+                          settings: {
+                              slidesToShow: 4,
+                              slidesToScroll: 1,
+                              infinite: true,
+                          },
+                      },
+                      {
+                          breakpoint: 600,
+                          settings: {
+                              slidesToShow: 2,
+                              slidesToScroll: 1,
+                              initialSlide: 2,
+                          },
+                      },
+                      {
+                          breakpoint: 480,
+                          settings: {
+                              slidesToShow: 1,
+                              slidesToScroll: 1,
+                          },
+                      },
+                  ],
+              }
+            : {}),
     };
 
     return (
-        <div
-            className="slide-container"
-            style={{ width: "100%", margin: "40px 0px" }}
-        >
-            <Slide {...properties}>
+        <div className={classes.slickSlider}>
+            <Slider {...settings}>
                 {props.sliderData.map((slideImage, index) => (
-                    <div className="each-slide" key={index}>
-                        <div className="text-center">
-                            <img src={slideImage.url} alt="slide-img" />
-                        </div>
+                    <div key={index}>
+                        <img src={slideImage.url} alt="slide-img" />
                     </div>
                 ))}
-            </Slide>
+            </Slider>
         </div>
     );
-};
-
-export default Slider;
+}
