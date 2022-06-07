@@ -1,17 +1,22 @@
 import { Link } from "react-router-dom";
 import { Grid, Container } from "@mui/material";
-import "./Style.css";
 
 import BusinessIcon from "@mui/icons-material/Business";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MailIcon from "@mui/icons-material/Mail";
+
 import Button from "../components/button/Button";
+import React from "react";
+
+import { contactUsStyles, globalStyles } from "./Styles";
 import Layout from "../layout";
 
 const ContactUs = () => {
+  const classes = contactUsStyles();
+  const globalClasses = globalStyles();
   return (
     <Layout>
-      <div className="contact-us-section-header">
+      <div className={globalClasses.header}>
         <div>
           <h1>Contact us</h1>
           <div>
@@ -20,18 +25,18 @@ const ContactUs = () => {
         </div>
       </div>
       <div>
-        <Container maxWidth="lg" className="features-section-style">
+        <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
           <Grid container spacing={4}>
-            <Grid item xs={12} lg={6} md={6} className="mx-auto">
-              <p className="contact-us-title-style">Contact Us</p>
-              <p className="mb-30">
+            <Grid item xs={12} lg={6} md={6} className={globalClasses.mxAuto}>
+              <p className={classes.contactUsTitle}>Contact Us</p>
+              <p className={globalClasses.mb30}>
                 Claritas est etiam processus dynamicus, qui sequitur mutationem
                 consuetudium lectorum. Mirum est notare quam littera gothica,
                 quam nunc putamus parum claram anteposuerit litterarum formas
                 human. qui sequitur mutationem consuetudium lectorum. Mirum est
                 notare quam
               </p>
-              <div className="contact-us-main-info-section">
+              <div className={classes.contactUsMainInfo}>
                 <p>
                   <BusinessIcon />
                   <span>Address : No 40 Baria Sreet 133/2 NewYork City</span>
@@ -50,9 +55,9 @@ const ContactUs = () => {
                 </p>
               </div>
             </Grid>
-            <Grid item xs={12} lg={6} md={6} className="mx-auto">
-              <p className="contact-us-title-style">Tell Us Your Project</p>
-              <div className="contact-us-from">
+            <Grid item xs={12} lg={6} md={6} className={globalClasses.mxAuto}>
+              <p className={classes.contactUsTitle}>Tell Us Your Project</p>
+              <div className={classes.contactUsForm}>
                 <div>
                   <label>Your Name (required)</label>
                   <div>
@@ -77,9 +82,12 @@ const ContactUs = () => {
                     <textarea placeholder="Message *" />
                   </div>
                 </div>
-                <Button shape="square" size="small" type="secondary">
-                  Send
-                </Button>
+                <Button
+                  value="Send"
+                  shape="square"
+                  size="sm"
+                  type="secondary"
+                />
               </div>
             </Grid>
           </Grid>

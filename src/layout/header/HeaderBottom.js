@@ -8,6 +8,7 @@ import style from "./style";
 import { Link } from "react-router-dom";
 
 const useStyles = createUseStyles(style);
+
 const categoriesArray = [
   "All categories",
   "Category 1",
