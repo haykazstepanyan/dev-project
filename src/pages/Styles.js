@@ -125,6 +125,7 @@ const wishlistStyles = createUseStyles({
         "& .MuiTableCell-body": {
             borderBottom: "1px solid #e1e1e1 !important",
             borderRight: "1px solid #e1e1e1 !important",
+            borderLeft: "1px solid #e1e1e1 !important",
             textAlign: "center",
         },
         "& img": {
