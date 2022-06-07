@@ -11,7 +11,7 @@ import Orders from "../components/user/Orders.js";
 import Addresses from "../components/user/Addresses.js";
 import Logout from "../components/user/Logout.js";
 import AccountDetails from "../components/user/AccountDetails.js";
-import ButtonComponent from "../pages/ButtonComponent";
+import Wishlist from "../pages/Wishlist";
 
 const PageRoutes = () => {
   return (
@@ -21,6 +21,7 @@ const PageRoutes = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="account" element={<Account />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="orders" element={<Orders />} />

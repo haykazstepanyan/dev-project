@@ -1,4 +1,5 @@
 import { createUseStyles } from "react-jss";
+import TableCell from "@mui/material/TableCell";
 
 const aboutUsStyles = createUseStyles({
     aboutUsInfo: {
@@ -67,9 +68,9 @@ const contactUsStyles = createUseStyles({
             paddingTop: "20px",
             minHeight: "100px",
         },
-        "& input:focus, textarea:focus":{
-            outline:"none",
-        }
+        "& input:focus, textarea:focus": {
+            outline: "none",
+        },
     },
 });
 
@@ -95,7 +96,7 @@ const globalStyles = createUseStyles({
         },
     },
     textCenter: {
-        textAlign: "center",
+        textAlign: "center !important",
     },
     mxAuto: {
         margin: "0 auto !important",
@@ -108,4 +109,40 @@ const globalStyles = createUseStyles({
     },
 });
 
-export { aboutUsStyles, contactUsStyles, globalStyles };
+const wishlistStyles = createUseStyles({
+    wishlistTable: {
+        "& .MuiTableCell-head": {
+            textTransform: "capitalize",
+            borderBottom: "3px solid #79a206",
+            borderRight: "1px solid #e1e1e1",
+            fontSize: "16px",
+            fontWeight: "600",
+            textTransform: "capitalize",
+            padding: "10px",
+            textAlign: "center",
+            backgroundColor: "#e1e1e1",
+        },
+        "& .MuiTableCell-body": {
+            borderBottom: "1px solid #e1e1e1 !important",
+            borderRight: "1px solid #e1e1e1 !important",
+            textAlign: "center",
+        },
+        "& img": {
+            width: "100px",
+            marginBottom: "0px",
+        },
+        "& .price p": {
+            color: "#222222",
+            fontSize: "16px",
+            fontWeight: "600",
+        },
+        "& .stockStatus": {
+            color: "#222222",
+            fontSize: "16px",
+            fontWeight: "500",
+        },
+        boxShadow: "none !important",
+    },
+});
+
+export { aboutUsStyles, contactUsStyles, globalStyles, wishlistStyles };
