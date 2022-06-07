@@ -1,8 +1,7 @@
-import React from "react";
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 
 export default function CardBlock({ id, name, price, image }) {
   return (
@@ -15,13 +14,12 @@ export default function CardBlock({ id, name, price, image }) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-        {name}
+          {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-      {price}
+          {price}
         </Typography>
       </CardContent>
-      
     </Card>
   );
 }

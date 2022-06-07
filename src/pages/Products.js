@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CardBlock from "../components/card";
-import PaginationBlock from "../components/pagination";
+import PaginationBlock from "../components/Pagination";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { createUseStyles } from "react-jss";
