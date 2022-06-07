@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "../layout/header/Header";
 
-import Products from "../pages/Products";
+import Products from "../pages/Products.js";
 import ContactUs from "../pages/ContactUs";
 import About from "../pages/About";
 import Account from "../pages/Account";

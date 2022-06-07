@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import CardBlock from "../components/Card/Card";
-import PaginationBlock from "../components/Pagination/Pagination";
+import CardBlock from "../components/card/Card.js";
+import PaginationBlock from "../components/pagination/Pagination.js";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { createUseStyles } from "react-jss";
 import { getFakeProductsData } from "../helpers/api.helpers";
 
 const useStyles = createUseStyles({
-  gridContainer: {
- 
-  },
+  gridContainer: {},
 });
 
 const Products = () => {
