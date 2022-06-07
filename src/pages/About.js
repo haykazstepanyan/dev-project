@@ -9,7 +9,7 @@ import featureIcon3 from "../assets/images/About_icon3.webp";
 import featureIcon4 from "../assets/images/about2.webp";
 import featureIcon5 from "../assets/images/about3.webp";
 import featureIcon6 from "../assets/images/about4.webp";
-import SimpleSlider from "../components/slider/Slider";
+import SlickSlider from "../components/slider/Slider";
 import slideImg1 from "../assets/images/brand1.webp";
 import slideImg2 from "../assets/images/brand2.webp";
 import slideImg3 from "../assets/images/brand3.webp";
@@ -231,7 +231,7 @@ const About = () => {
                 </Container>
             </div>
             <Container maxWidth="lg">
-                <SimpleSlider sliderData={slideImages} slidesToShow={6} slidesToScroll={1} responsive />
+                <SlickSlider sliderData={slideImages} slidesToShow={6} slidesToScroll={1} responsive />
             </Container>
         </>
     );
