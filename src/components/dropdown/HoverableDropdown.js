@@ -3,18 +3,12 @@ import {
   bindHover,
   bindMenu,
 } from "material-ui-popup-state/hooks";
-import Button from "@mui/material/Button";
+import Button from "../button";
 import HoverMenu from "material-ui-popup-state/HoverMenu";
 import MenuItem from "@mui/material/MenuItem";
-import { hoverableStyles } from "./style";
-import { createUseStyles } from "react-jss";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const useStyles = createUseStyles(hoverableStyles);
-
-const HoverableDropdown = (props) => {
-  const { icon, value, change, list } = props;
-  const classes = useStyles();
+const HoverableDropdown = ({ icon, value, change, list }) => {
   const popupState = usePopupState({
     variant: "popover",
     popupId: "demoMenu",
@@ -26,6 +20,10 @@ const HoverableDropdown = (props) => {
       },
     },
   });
+  const handleDropdownClick = (item) => {
+    popupState.close();
+    if (change) change(item);
+  };
 
   return (
     <div>
@@ -33,7 +31,8 @@ const HoverableDropdown = (props) => {
         <Button
           {...bindHover(popupState)}
           endIcon={icon || null}
-          className={classes.btn}
+          color="info"
+          type="dropdownBtn"
         >
           {value}
         </Button>
@@ -45,9 +44,8 @@ const HoverableDropdown = (props) => {
       >
         {list.map((item, i) => (
           <MenuItem
-            className={classes.textColor}
             key={`${item}${i}`}
-            onClick={change && (() => change(item))}
+            onClick={() => handleDropdownClick(item)}
           >
             {item}
           </MenuItem>

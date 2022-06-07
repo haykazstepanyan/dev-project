@@ -1,12 +1,13 @@
+import React from "react";
 import { ClickableDropdown } from "../../components/dropdown";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/system/Container";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { createUseStyles } from "react-jss";
-import styles from "./styles";
+import style from "./style";
 import { Link } from "react-router-dom";
 
-const useStyles = createUseStyles(styles);
+const useStyles = createUseStyles(style);
 const categoriesArray = [
   "All categories",
   "Category 1",
@@ -18,13 +19,13 @@ const categoriesArray = [
 
 const HeaderBottom = () => {
   const classes = useStyles();
-  const categoriesToLink = categoriesArray.map(category => (
+  const categoriesToLink = categoriesArray.map((category) => (
     <Link to="/" className={classes.categoryLinks}>
       {category}
     </Link>
   ));
   return (
-    <div className={classes.headerParts}>
+    <div className={`${classes.headerParts} ${classes.headerBottom}`}>
       <Container maxWidth="lg">
         <Grid
           container
@@ -48,17 +49,17 @@ const HeaderBottom = () => {
                   </Link>
                 </li>
                 <li className={classes.navListItems}>
-                  <Link to="/" className={classes.navLinks}>
+                  <Link to="/products" className={classes.navLinks}>
                     Products
                   </Link>
                 </li>
                 <li className={classes.navListItems}>
-                  <Link to="/" className={classes.navLinks}>
+                  <Link to="/contact" className={classes.navLinks}>
                     Contact us
                   </Link>
                 </li>
                 <li className={classes.navListItems}>
-                  <Link to="/" className={classes.navLinks}>
+                  <Link to="/about" className={classes.navLinks}>
                     About us
                   </Link>
                 </li>

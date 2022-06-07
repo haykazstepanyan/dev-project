@@ -1,11 +1,10 @@
-import Products from "../components/products/Products";
 import Header from "./header";
 
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <Products />
+      {children}
     </>
   );
 };

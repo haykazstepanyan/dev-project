@@ -1,3 +1,5 @@
+import { colors } from "../../constants/constants";
+
 export const styles = {
   productCard: {
     width: 255,
@@ -7,12 +9,12 @@ export const styles = {
   },
   productName: {
     fontSize: 14,
-    color: "#222",
+    // color: "#222",
     textTransform: "Capitalize",
   },
   productPrice: {
     fontWeight: [["bold"], "!important"],
     fontSize: 15,
-    color: "#79a206",
+    color: colors.green,
   },
 };

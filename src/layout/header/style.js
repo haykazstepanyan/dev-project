@@ -1,7 +1,12 @@
+import { colors } from "../../constants/constants";
+
 const styles = {
+  header: {
+    display: "initial",
+    background: "red",
+  },
   headerParts: {
-    borderBottom: "1px solid #e1e1e1",
-    color: "#222222",
+    borderBottom: `1px solid ${colors.milky}`,
   },
   pageLogo: {
     width: 80,
@@ -9,15 +14,15 @@ const styles = {
   },
   filterContainer: {
     padding: [[25, "10%"]],
-    borderRight: "1px solid #e1e1e1",
-    borderLeft: "1px solid #e1e1e1",
+    borderRight: `1px solid ${colors.milky}`,
+    borderLeft: `1px solid ${colors.milky}`,
   },
   filterContainerContent: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
     borderRadius: 30,
-    border: "1px solid #e1e1e1",
+    border: `1px solid ${colors.milky}`,
   },
   searchBox: {
     position: "relative",
@@ -46,7 +51,7 @@ const styles = {
   searchIcon: {
     cursor: "pointer",
     "&:hover": {
-      color: "#198754",
+      color: colors.success,
     },
   },
   iconsContainer: {
@@ -58,7 +63,7 @@ const styles = {
     marginRight: 20,
     cursor: "pointer",
     "&:hover": {
-      color: "#198754",
+      color: colors.success,
     },
   },
   bottomCategories: {
@@ -69,10 +74,15 @@ const styles = {
     paddingLeft: 25,
   },
   categoryLinks: {
-    color: "#222",
+    color: colors.black,
+  },
+  headerBottom: {
+    position: "sticky",
+    top: "0px",
+    background: colors.white,
   },
   nav: {
-    borderLeft: "1px solid #e1e1e1",
+    borderLeft: `1px solid ${colors.milky}`,
   },
   navList: {
     display: "flex",
@@ -85,7 +95,7 @@ const styles = {
     position: "relative",
     display: "block",
     padding: [[15, 0]],
-    color: "#222",
+    color: colors.black,
     fontSize: 13,
     textTransform: "uppercase",
     fontWeight: "bold",
@@ -95,7 +105,7 @@ const styles = {
       content: "''",
       width: "100%",
       height: 3,
-      background: "#222",
+      background: colors.black,
       bottom: -1,
       left: 0,
       opacity: 0,
@@ -103,7 +113,7 @@ const styles = {
       transition: ".3s",
     },
     "&:hover": {
-      color: "#79a206",
+      color: colors.green,
       "&:before": {
         opacity: 1,
         visibility: "visible",

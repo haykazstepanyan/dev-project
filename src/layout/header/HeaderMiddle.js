@@ -9,12 +9,12 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
-import styles from "./styles";
+import style from "./style";
 import { createUseStyles } from "react-jss";
 import { useState } from "react";
 import logo from "../../assets/images/logo.png";
 
-const useStyles = createUseStyles(styles);
+const useStyles = createUseStyles(style);
 
 const HeaderMiddle = () => {
   const [category, setCategory] = useState("All categories");
@@ -32,10 +32,10 @@ const HeaderMiddle = () => {
 
   const classes = useStyles();
 
-  const handleCategory = value => {
+  const handleCategory = (value) => {
     categoriesArray.includes(value) && setCategory(value);
   };
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
   return (
@@ -70,7 +70,6 @@ const HeaderMiddle = () => {
             </div>
           </Grid>
           <Grid item sm={2} className={classes.iconsContainer}>
-            {/* <div > */}
             <HoverableDropdown
               value={<PeopleOutlineIcon />}
               list={accountData}
@@ -78,7 +77,6 @@ const HeaderMiddle = () => {
 
             <FavoriteBorderIcon className={classes.icons} />
             <WorkOutlineIcon className={classes.icons} />
-            {/* </div> */}
           </Grid>
         </Grid>
       </Container>

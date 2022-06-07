@@ -1,4 +1,4 @@
-const Product = ({ data }) => {
+const Product = () => {
   return "";
 };
 

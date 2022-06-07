@@ -1,13 +1,14 @@
+import React from "react";
 import Box from "@mui/material/Box";
 import { HoverableDropdown } from "../../components/dropdown";
 import Container from "@mui/system/Container";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
-import styles from "./styles";
+import style from "./style";
 import { createUseStyles } from "react-jss";
 
-const useStyles = createUseStyles(styles);
+const useStyles = createUseStyles(style);
 
 const HeaderTop = () => {
   const [currency, setCurrency] = useState("USD");
@@ -18,10 +19,10 @@ const HeaderTop = () => {
 
   const classes = useStyles();
 
-  const handleCurrency = value => {
+  const handleCurrency = (value) => {
     possibleCurrencies.includes(value) && setCurrency(value);
   };
-  const handleLanguage = value => {
+  const handleLanguage = (value) => {
     possibleLanguage.includes(value) && setLanguage(value);
   };
 
