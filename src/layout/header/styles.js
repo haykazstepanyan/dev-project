@@ -1,13 +1,7 @@
+import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
-const styles = {
-  header: {
-    display: "initial",
-    background: "red",
-  },
-  headerParts: {
-    borderBottom: `1px solid ${colors.milky}`,
-  },
+const middlePartStyles = createUseStyles({
   pageLogo: {
     width: 80,
     height: 80,
@@ -15,7 +9,6 @@ const styles = {
   filterContainer: {
     padding: [[25, "10%"]],
     borderRight: `1px solid ${colors.milky}`,
-    borderLeft: `1px solid ${colors.milky}`,
   },
   filterContainerContent: {
     display: "flex",
@@ -66,6 +59,9 @@ const styles = {
       color: colors.success,
     },
   },
+});
+
+const bottomPartStyles = createUseStyles({
   bottomCategories: {
     display: "flex",
     alignItems: "center",
@@ -120,6 +116,26 @@ const styles = {
       },
     },
   },
-};
+  activeLink: {
+    color: colors.green,
+    "&:before": {
+      opacity: 1,
+      visibility: "visible",
+    },
+  },
+});
 
-export default styles;
+const headerStyles = createUseStyles({
+  header: {
+    display: "initial",
+    background: "red",
+  },
+});
+
+const commonStyles = createUseStyles({
+  headerParts: {
+    borderBottom: `1px solid ${colors.milky}`,
+  },
+});
+
+export { commonStyles, headerStyles, middlePartStyles, bottomPartStyles };

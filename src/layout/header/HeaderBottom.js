@@ -3,11 +3,8 @@ import { ClickableDropdown } from "../../components/dropdown";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/system/Container";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import { createUseStyles } from "react-jss";
-import style from "./style";
-import { Link } from "react-router-dom";
-
-const useStyles = createUseStyles(style);
+import { bottomPartStyles, commonStyles } from "./styles";
+import { Link, NavLink } from "react-router-dom";
 
 const categoriesArray = [
   "All categories",
@@ -19,14 +16,15 @@ const categoriesArray = [
 ];
 
 const HeaderBottom = () => {
-  const classes = useStyles();
+  const classes = bottomPartStyles();
+  const headerClasses = commonStyles();
   const categoriesToLink = categoriesArray.map((category) => (
     <Link to="/" className={classes.categoryLinks}>
       {category}
     </Link>
   ));
   return (
-    <div className={`${classes.headerParts} ${classes.headerBottom}`}>
+    <div className={`${headerClasses.headerParts} ${classes.headerBottom}`}>
       <Container maxWidth="lg">
         <Grid
           container
@@ -45,24 +43,52 @@ const HeaderBottom = () => {
             <nav className={classes.nav}>
               <ul className={classes.navList}>
                 <li className={classes.navListItems}>
-                  <Link to="/" className={classes.navLinks}>
+                  <NavLink
+                    to="/"
+                    className={(data) =>
+                      `${data.isActive ? classes.activeLink : ""} ${
+                        classes.navLinks
+                      }`
+                    }
+                  >
                     Home
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className={classes.navListItems}>
-                  <Link to="/products" className={classes.navLinks}>
-                    Products
-                  </Link>
+                  <NavLink
+                    to="/shop"
+                    className={(data) =>
+                      `${data.isActive ? classes.activeLink : ""} ${
+                        classes.navLinks
+                      }`
+                    }
+                  >
+                    Shop
+                  </NavLink>
                 </li>
                 <li className={classes.navListItems}>
-                  <Link to="/contact" className={classes.navLinks}>
+                  <NavLink
+                    to="/contact"
+                    className={(data) =>
+                      `${data.isActive ? classes.activeLink : ""} ${
+                        classes.navLinks
+                      }`
+                    }
+                  >
                     Contact us
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className={classes.navListItems}>
-                  <Link to="/about" className={classes.navLinks}>
+                  <NavLink
+                    to="/about"
+                    className={(data) =>
+                      `${data.isActive ? classes.activeLink : ""} ${
+                        classes.navLinks
+                      }`
+                    }
+                  >
                     About us
-                  </Link>
+                  </NavLink>
                 </li>
               </ul>
             </nav>

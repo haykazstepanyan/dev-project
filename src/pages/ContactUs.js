@@ -1,29 +1,23 @@
-import { Link } from "react-router-dom";
 import { Grid, Container } from "@mui/material";
 
 import BusinessIcon from "@mui/icons-material/Business";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MailIcon from "@mui/icons-material/Mail";
 
-import Button from "../components/button/Button";
+import Button from "../components/button";
 import React from "react";
 
-import { contactUsStyles, globalStyles } from "./Styles";
+import { globalStyles } from "../components/styles/styles";
+import { contactUsStyles } from "./styles";
 import Layout from "../layout";
+import Banner from "../components/common/Banner";
 
 const ContactUs = () => {
   const classes = contactUsStyles();
   const globalClasses = globalStyles();
   return (
     <Layout>
-      <div className={globalClasses.header}>
-        <div>
-          <h1>Contact us</h1>
-          <div>
-            <Link to="/">Home</Link> / Contact us
-          </div>
-        </div>
-      </div>
+      <Banner name="Contact Us" />
       <div>
         <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
           <Grid container spacing={4}>
@@ -82,12 +76,9 @@ const ContactUs = () => {
                     <textarea placeholder="Message *" />
                   </div>
                 </div>
-                <Button
-                  value="Send"
-                  shape="square"
-                  size="sm"
-                  type="secondary"
-                />
+                <Button shape="square" size="small" type="secondary">
+                  Send
+                </Button>
               </div>
             </Grid>
           </Grid>

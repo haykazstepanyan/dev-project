@@ -5,10 +5,7 @@ import Container from "@mui/system/Container";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
-import style from "./style";
-import { createUseStyles } from "react-jss";
-
-const useStyles = createUseStyles(style);
+import { commonStyles } from "./styles";
 
 const HeaderTop = () => {
   const [currency, setCurrency] = useState("USD");
@@ -17,7 +14,7 @@ const HeaderTop = () => {
   const possibleCurrencies = ["USD", "EUR", "GBP"];
   const possibleLanguage = ["English", "Russian", "Armenian"];
 
-  const classes = useStyles();
+  const headerClasses = commonStyles();
 
   const handleCurrency = (value) => {
     possibleCurrencies.includes(value) && setCurrency(value);
@@ -27,7 +24,7 @@ const HeaderTop = () => {
   };
 
   return (
-    <div className={classes.headerParts}>
+    <div className={headerClasses.headerParts}>
       <Container maxWidth="lg">
         <Grid
           container

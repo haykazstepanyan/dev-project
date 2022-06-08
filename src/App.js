@@ -1,14 +1,11 @@
 import React from "react";
 import Routes from "./routes/Routes";
-import mainTheme from "./components/common/mainTheme";
-import { createUseStyles } from "react-jss";
+import mainTheme from "./components/styles/mainTheme";
 import { ThemeProvider } from "@mui/material/styles";
-import globalStyles from "./components/common/styles";
-
-const useStyles = createUseStyles(globalStyles);
+import { documentStyles } from "./components/styles/styles";
 
 function App() {
-  useStyles();
+  documentStyles();
   return (
     <ThemeProvider theme={mainTheme}>
       <Routes />

@@ -2,13 +2,10 @@ import React from "react";
 import HeaderTop from "./HeaderTop";
 import HeaderMiddle from "./HeaderMiddle";
 import HeaderBottom from "./HeaderBottom";
-import style from "./style";
-import { createUseStyles } from "react-jss";
-
-const useStyles = createUseStyles(style);
+import { headerStyles } from "./styles";
 
 const Header = () => {
-  const classes = useStyles(style);
+  const classes = headerStyles();
   return (
     <header className={classes.header}>
       <HeaderTop />

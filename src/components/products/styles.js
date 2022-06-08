@@ -1,20 +1,22 @@
+import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
-export const styles = {
+const productItemstyles = createUseStyles({
   productCard: {
     width: 255,
-    // margin: 10,
-    cursor: "pointer",
     textAlign: "center",
   },
   productName: {
     fontSize: 14,
-    // color: "#222",
+    color: "#222",
     textTransform: "Capitalize",
+    height: 48,
   },
   productPrice: {
     fontWeight: [["bold"], "!important"],
     fontSize: 15,
     color: colors.green,
   },
-};
+});
+
+export default productItemstyles;

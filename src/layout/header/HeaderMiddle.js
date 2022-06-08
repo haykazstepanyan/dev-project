@@ -10,12 +10,9 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
-import style from "./style";
-import { createUseStyles } from "react-jss";
+import { middlePartStyles, commonStyles } from "./styles";
 import { useState } from "react";
 import logo from "../../assets/images/logo.png";
-
-const useStyles = createUseStyles(style);
 
 const HeaderMiddle = () => {
   const [category, setCategory] = useState("All categories");
@@ -31,7 +28,8 @@ const HeaderMiddle = () => {
   ];
   const accountData = ["My account", "Shopping cart", "Wishlist"];
 
-  const classes = useStyles();
+  const classes = middlePartStyles();
+  const headerClasses = commonStyles();
 
   const handleCategory = (value) => {
     categoriesArray.includes(value) && setCategory(value);
@@ -40,7 +38,7 @@ const HeaderMiddle = () => {
     setInputValue(e.target.value);
   };
   return (
-    <div className={classes.headerParts}>
+    <div className={headerClasses.headerParts}>
       <Container maxWidth="lg">
         <Grid
           container

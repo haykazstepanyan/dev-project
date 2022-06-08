@@ -1,3 +1,5 @@
+import { getUrl } from "../helpers/url.helpers";
+
 export const colors = {
   black: "#222",
   green: "#79a206",
@@ -5,6 +7,8 @@ export const colors = {
   milky: "#e1e1e1",
   success: "#198754",
 };
+
+export const API_URL = getUrl();
 // --c-blue: #0d6efd;
 // --c-indigo: #6610f2;
 // --c-purple: #6f42c1;

@@ -12,7 +12,6 @@ const useStyles = createUseStyles({
 
 const PaginationBlock = ({ count, onChange }) => {
   const classes = useStyles();
-
   return (
     <>
       <Pagination
