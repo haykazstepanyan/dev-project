@@ -5,11 +5,11 @@ import Shop from "../pages/Shop";
 import ContactUs from "../pages/ContactUs";
 import About from "../pages/About";
 import Account from "../pages/Account";
-import Dashboard from "../components/user/Dashboard.js";
-import Orders from "../components/user/Orders.js";
-import Addresses from "../components/user/Addresses.js";
-import Logout from "../components/user/Logout.js";
-import AccountDetails from "../components/user/AccountDetails.js";
+import Dashboard from "../components/account/Dashboard.js";
+import Orders from "../components/account/Orders.js";
+import Addresses from "../components/account/Addresses.js";
+import Logout from "../components/account/Logout.js";
+import AccountDetails from "../components/account/AccountDetails.js";
 import Wishlist from "../pages/Wishlist";
 import ProductView from "../pages/ProductView";
 
