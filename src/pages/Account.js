@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { accountStyles } from "./styles";
+import { accountStyles } from "./Styles";
 import Banner from "../components/common/Banner";
 
 const Account = () => {

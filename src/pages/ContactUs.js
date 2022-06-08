@@ -8,7 +8,7 @@ import Button from "../components/button";
 import React from "react";
 
 import { globalStyles } from "../components/styles/styles";
-import { contactUsStyles } from "./styles";
+import { contactUsStyles } from "./Styles";
 import Layout from "../layout";
 import Banner from "../components/common/Banner";
 
