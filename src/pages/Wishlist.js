@@ -14,84 +14,79 @@ import product1 from "../assets/images/product.webp";
 import product2 from "../assets/images/product2.webp";
 import product3 from "../assets/images/product3.webp";
 
-import { wishlistStyles, globalStyles } from "./Styles";
+import { globalStyles } from "../components/styles/styles";
+import { wishlistStyles } from "./styles";
+import Layout from "../layout";
 
 function createData(image, name, price, stockStatus) {
-    return { image, name, price, stockStatus };
+  return { image, name, price, stockStatus };
 }
 
 const rows = [
-    createData(product1, "Handbag Fringilla", 65.0, "In Stock"),
-    createData(product2, "Handbags Justo", 90.0, "In Stock"),
-    createData(product3, "Handbag Elit", 80.0, "In Stock"),
+  createData(product1, "Handbag Fringilla", 65.0, "In Stock"),
+  createData(product2, "Handbags Justo", 90.0, "In Stock"),
+  createData(product3, "Handbag Elit", 80.0, "In Stock"),
 ];
 
 export default function Wishlist() {
-    const classes = wishlistStyles();
-    const globalClasses = globalStyles();
+  const classes = wishlistStyles();
+  const globalClasses = globalStyles();
 
-    return (
-        <>
-            <div className={globalClasses.header}>
-                <div>
-                    <h1>Wishlist</h1>
-                    <div>
-                        <Link to="/">Home</Link> / Wishlist
-                    </div>
-                </div>
-            </div>
-            <div></div>
-            <Container
-                maxWidth="lg"
-                className={globalClasses.featuresSectionStyle}
-            >
-                <TableContainer
-                    component={Paper}
-                    className={classes.wishlistTable}
+  return (
+    <Layout>
+      <div className={globalClasses.header}>
+        <div>
+          <h1>Wishlist</h1>
+          <div>
+            <Link to="/">Home</Link> / Wishlist
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
+        <TableContainer component={Paper} className={classes.wishlistTable}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Delete</TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Product</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Stock Status</TableCell>
+                <TableCell>Add to cart</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, index) => (
+                <TableRow
+                  key={index}
+                  sx={{
+                    "&:last-child td, &:last-child th": {
+                      border: 0,
+                    },
+                    height: "122px",
+                  }}
                 >
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Delete</TableCell>
-                                <TableCell>Image</TableCell>
-                                <TableCell>Product</TableCell>
-                                <TableCell>Price</TableCell>
-                                <TableCell>Stock Status</TableCell>
-                                <TableCell>Add to cart</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row, index) => (
-                                <TableRow
-                                    key={index}
-                                    sx={{
-                                        "&:last-child td, &:last-child th": {
-                                            border: 0,
-                                        },
-                                        height: "122px",
-                                    }}
-                                >
-                                    <TableCell>
-                                        <ClearIcon />
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        <img
-                                            src={row.image}
-                                            alt="product-image"
-                                        />
-                                    </TableCell>
-                                    <TableCell>{row.name}</TableCell>
-                                    <TableCell className="price">
-                                        <p>£{row.price}</p>
-                                    </TableCell>
-                                    <TableCell className="stockStatus">{row.stockStatus}</TableCell>
-                                    <TableCell>Add to Cart</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Container>
-        </>
-    );
+                  <TableCell>
+                    <ClearIcon />
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <img src={row.image} alt="product" />
+                  </TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell className="price">
+                    <p>£{row.price}</p>
+                  </TableCell>
+                  <TableCell className="stockStatus">
+                    {row.stockStatus}
+                  </TableCell>
+                  <TableCell>Add to Cart</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
+    </Layout>
+  );
 }

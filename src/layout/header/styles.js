@@ -1,34 +1,32 @@
-const styles = {
-  headerParts: {
-    borderBottom: "1px solid #e1e1e1",
-    color: "#222222",
-  },
+import { createUseStyles } from "react-jss";
+import { colors } from "../../constants/constants";
+
+const middlePartStyles = createUseStyles({
   pageLogo: {
     width: 80,
     height: 80,
   },
   filterContainer: {
-    padding: "25px 10%",
-    borderRight: "1px solid #e1e1e1",
-    borderLeft: "1px solid #e1e1e1",
+    padding: [[25, "10%"]],
+    borderRight: `1px solid ${colors.milky}`,
   },
   filterContainerContent: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
     borderRadius: 30,
-    border: "1px solid #e1e1e1",
+    border: `1px solid ${colors.milky}`,
   },
   searchBox: {
     position: "relative",
     "&:before": {
       content: "''",
-      width: "1px",
-      height: "24px",
+      width: 1,
+      height: 24,
       background: "#a1a1a1",
       position: "absolute",
       top: "calc(50% - 6px)",
-      marginTop: "-8px",
+      marginTop: -8,
       left: 0,
     },
   },
@@ -37,7 +35,7 @@ const styles = {
     height: 54,
     fontSize: 14,
     fontWeight: 400,
-    padding: "0 50px 0 20px",
+    padding: [[0, 50, 0, 20]],
     opacity: 0.7,
     "&:focus": {
       outline: "none",
@@ -46,7 +44,7 @@ const styles = {
   searchIcon: {
     cursor: "pointer",
     "&:hover": {
-      color: "#198754",
+      color: colors.success,
     },
   },
   iconsContainer: {
@@ -58,32 +56,42 @@ const styles = {
     marginRight: 20,
     cursor: "pointer",
     "&:hover": {
-      color: "#198754",
+      color: colors.success,
     },
   },
+});
+
+const bottomPartStyles = createUseStyles({
   bottomCategories: {
     display: "flex",
     alignItems: "center",
-    borderRight: "1px solid #e1e1e1",
   },
   bottomCategoriesHeading: {
     paddingLeft: 25,
   },
   categoryLinks: {
-    color: "#222",
+    color: colors.black,
+  },
+  headerBottom: {
+    position: "sticky",
+    top: "0px",
+    background: colors.white,
+  },
+  nav: {
+    borderLeft: `1px solid ${colors.milky}`,
   },
   navList: {
     display: "flex",
     alignItems: "center",
   },
   navListItems: {
-    padding: "0 15px",
+    padding: [[0, 15]],
   },
   navLinks: {
     position: "relative",
     display: "block",
-    padding: "15px 0",
-    color: "#222",
+    padding: [[15, 0]],
+    color: colors.black,
     fontSize: 13,
     textTransform: "uppercase",
     fontWeight: "bold",
@@ -93,7 +101,7 @@ const styles = {
       content: "''",
       width: "100%",
       height: 3,
-      background: "#222",
+      background: colors.black,
       bottom: -1,
       left: 0,
       opacity: 0,
@@ -101,13 +109,33 @@ const styles = {
       transition: ".3s",
     },
     "&:hover": {
-      color: "#79a206",
+      color: colors.green,
       "&:before": {
         opacity: 1,
         visibility: "visible",
       },
     },
   },
-};
+  activeLink: {
+    color: colors.green,
+    "&:before": {
+      opacity: 1,
+      visibility: "visible",
+    },
+  },
+});
 
-export default styles;
+const headerStyles = createUseStyles({
+  header: {
+    display: "initial",
+    background: "red",
+  },
+});
+
+const commonStyles = createUseStyles({
+  headerParts: {
+    borderBottom: `1px solid ${colors.milky}`,
+  },
+});
+
+export { commonStyles, headerStyles, middlePartStyles, bottomPartStyles };

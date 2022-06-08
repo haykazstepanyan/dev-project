@@ -1,19 +1,29 @@
-
 import React from "react";
+import Button from "@mui/material/Button";
+import { theme } from "./theme";
+import { ThemeProvider } from "@mui/material/styles";
 
-import "./Button.css";
-
-const Button = (props) => {
-    return (
-        <>
-            <button
-                className={`btn btn-${props.type} ${props.size} ${props.shape}`}
-            >
-                {props.value}
-            </button>
-        </>
-    );
-
+const CustomButton = ({
+  children,
+  color,
+  size,
+  borders,
+  type,
+  ...otherProps
+}) => {
+  return (
+    <ThemeProvider theme={theme}>
+      <Button
+        color={color}
+        size={size}
+        borders={borders}
+        type={type}
+        {...otherProps}
+      >
+        {children}
+      </Button>
+    </ThemeProvider>
+  );
 };
 
-export default Button;
+export default CustomButton;

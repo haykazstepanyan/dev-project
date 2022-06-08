@@ -1,149 +1,135 @@
 import { createUseStyles } from "react-jss";
-import TableCell from "@mui/material/TableCell";
 
 const aboutUsStyles = createUseStyles({
-    aboutUsInfo: {
-        padding: "100px 0",
-    },
-    aboutInfoTitle: {
-        fontSize: "24px",
-        lineHeight: "24px",
-        textTransform: "capitalize",
-        fontWeight: "400",
-        marginBottom: "21px",
-        textAlign: "center",
-    },
-    aboutInfoText: {
-        textAlign: "center",
-        fontSize: "14px",
-        lineHeight: "26px",
-    },
-    featureBgImage: {
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-    },
+  aboutUsInfo: {
+    padding: [[100, 0]],
+  },
+  aboutInfoTitle: {
+    fontSize: 24,
+    textTransform: "capitalize",
+    fontWeight: 400,
+    marginBottom: 21,
+    textAlign: "center",
+  },
+  aboutInfoText: {
+    textAlign: "center",
+    fontSize: 14,
+  },
+  featureBgImage: {
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
 });
 
 const contactUsStyles = createUseStyles({
-    contactUsTitle: {
-        fontSize: "21px",
-        textTransform: "capitalize",
-        fontWeight: "500",
-        lineHeight: "20px",
-        marginBottom: "25px",
+  contactUsTitle: {
+    fontSize: 21,
+    textTransform: "capitalize",
+    fontWeight: 500,
+    lineHeight: 20,
+    marginBottom: 25,
+  },
+  contactUsMainInfo: {
+    "& p": {
+      padding: [[13, 0]],
+      borderTop: "1px solid #e1e1e1",
+      color: "#3b3b41",
+      display: "flex",
+      alignItems: "center",
+      "& span": {
+        marginLeft: 10,
+      },
     },
-    contactUsMainInfo: {
-        "& p": {
-            padding: "13px 0",
-            borderTop: "1px solid #e1e1e1",
-            color: "#3b3b41",
-            display: "flex",
-            alignItems: "center",
-            "& span": {
-                marginLeft: "10px",
-            },
-        },
-        "& a": {
-            color: "#3b3b41",
-            textDecoration: "none",
-        },
+    "& a": {
+      color: "#3b3b41",
+      textDecoration: "none",
     },
     contactUsForm: {
-        "& label": {
-            lineHeight: "18px",
-            fontWeight: "500",
-            marginBottom: "10px",
-            display: "block",
-        },
-        "& input,textarea": {
-            border: "1px solid #e1e1e1",
-            height: "45px",
-            background: "#ffffff",
-            textIndent: "20px",
-            color: "#757575",
-            marginBottom: "20px",
-            minWidth: "100%",
-        },
-        "& textarea": {
-            paddingTop: "20px",
-            minHeight: "100px",
-        },
-        "& input:focus, textarea:focus": {
-            outline: "none",
-        },
+      "& label": {
+        lineHeight: 18,
+        fontWeight: 500,
+        marginBottom: 10,
+        display: "block",
+      },
+      "& input,textarea": {
+        border: "1px solid #e1e1e1",
+        height: 45,
+        background: "#ffffff",
+        textIndent: 20,
+        color: "#757575",
+        marginBottom: 20,
+        minWidth: "100%",
+      },
+      "& textarea": {
+        paddingTop: 20,
+        minHeight: 100,
+      },
+      "& input:focus, textarea:focus": {
+        outline: "none",
+      },
     },
+    "& input,textarea": {
+      border: "1px solid #e1e1e1",
+      height: 45,
+      background: "#ffffff",
+      textIndent: 20,
+      color: "#757575",
+      marginBottom: 20,
+      minWidth: "100%",
+    },
+    "& textarea": {
+      paddingTop: 20,
+      minHeight: 100,
+    },
+    "& input:focus, textarea:focus": {
+      outline: "none",
+    },
+  },
 });
 
-const globalStyles = createUseStyles({
-    header: {
-        background: "#f0f0f0",
-        borderBottom: "1px solid #e1e1e1",
-        padding: "50px 0",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        "& h1": {
-            fontSize: "42px",
-            lineHeight: "50px",
-            marginBottom: "9px",
-        },
+const accountStyles = createUseStyles({
+  try: {
+    "&:hover": {
+      background: "rgb(121, 162, 6)",
     },
-    featuresSectionStyle: {
-        padding: "100px 0 93px",
-        "& img": {
-            marginBottom: "23px",
-        },
-    },
-    textCenter: {
-        textAlign: "center !important",
-    },
-    mxAuto: {
-        margin: "0 auto !important",
-    },
-    w100: {
-        width: "100%",
-    },
-    mb30: {
-        marginBottom: "30px",
-    },
+    cursor: "pointer",
+  },
 });
 
 const wishlistStyles = createUseStyles({
-    wishlistTable: {
-        "& .MuiTableCell-head": {
-            textTransform: "capitalize",
-            borderBottom: "3px solid #79a206",
-            borderRight: "1px solid #e1e1e1",
-            fontSize: "16px",
-            fontWeight: "600",
-            textTransform: "capitalize",
-            padding: "10px",
-            textAlign: "center",
-            backgroundColor: "#e1e1e1",
-        },
-        "& .MuiTableCell-body": {
-            borderBottom: "1px solid #e1e1e1 !important",
-            borderRight: "1px solid #e1e1e1 !important",
-            borderLeft: "1px solid #e1e1e1 !important",
-            textAlign: "center",
-        },
-        "& img": {
-            width: "100px",
-            marginBottom: "0px",
-        },
-        "& .price p": {
-            color: "#222222",
-            fontSize: "16px",
-            fontWeight: "600",
-        },
-        "& .stockStatus": {
-            color: "#222222",
-            fontSize: "16px",
-            fontWeight: "500",
-        },
-        boxShadow: "none !important",
+  wishlistTable: {
+    "& .MuiTableCell-head": {
+      textTransform: "capitalize",
+      borderBottom: "3px solid #79a206",
+      borderRight: "1px solid #e1e1e1",
+      fontSize: 16,
+      fontWeight: 600,
+      padding: 10,
+      textAlign: "center",
+      backgroundColor: "#e1e1e1",
     },
+    "& .MuiTableCell-body": {
+      borderBottom: "1px solid #e1e1e1 !important",
+      borderRight: "1px solid #e1e1e1 !important",
+      borderLeft: "1px solid #e1e1e1 !important",
+      textAlign: "center",
+    },
+    "& img": {
+      width: 100,
+      marginBottom: 0,
+    },
+    "& .price p": {
+      color: "#222222",
+      fontSize: 16,
+      fontWeight: 600,
+    },
+    "& .stockStatus": {
+      color: "#222222",
+      fontSize: 16,
+      fontWeight: 500,
+    },
+    boxShadow: "none !important",
+  },
 });
 
-export { aboutUsStyles, contactUsStyles, globalStyles, wishlistStyles };
+export { aboutUsStyles, contactUsStyles, accountStyles, wishlistStyles };
