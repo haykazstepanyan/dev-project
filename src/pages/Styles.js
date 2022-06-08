@@ -52,12 +52,14 @@ const contactUsStyles = createUseStyles({
         },
         "& input,textarea": {
             border: "1px solid #e1e1e1",
-            height: 45,
+            maxHeight: 45,
+            height:45,
             background: "#ffffff",
             textIndent: 20,
             color: "#757575",
             marginBottom: 20,
             minWidth: "100%",
+            maxWidth: "100%",
         },
         "& textarea": {
             paddingTop: 20,
