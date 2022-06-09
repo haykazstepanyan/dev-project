@@ -24,6 +24,7 @@ const Account = () => {
     <>
       <Layout />
       <Banner name="My Account" />
+      
       <Box pt={12} pb={8}>
         <Container>
           <Grid container spacing={1}>
@@ -35,7 +36,6 @@ const Account = () => {
                     <NavLink
                       to={`/account/${path}`}
                       className={(data) =>{
-                        console.log(data)
                        return  `${data.isActive ? classes.activeLink : ""} `}
                       }
                     >

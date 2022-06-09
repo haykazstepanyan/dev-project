@@ -9,6 +9,7 @@ const CustomButton = ({
   size,
   borders,
   type,
+  borderRadius,
   ...otherProps
 }) => {
   return (
@@ -18,6 +19,7 @@ const CustomButton = ({
         size={size}
         borders={borders}
         type={type}
+        sx={{ borderRadius: borderRadius }}
         {...otherProps}
       >
         {children}

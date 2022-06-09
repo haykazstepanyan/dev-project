@@ -22,11 +22,11 @@ const PageRoutes = () => {
       <Route path="/wishlist" element={<Wishlist />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<ContactUs />} />
+      <Route path="/account/logout" element={<Logout />} />
       <Route path="account" element={<Account />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="orders" element={<Orders />} />
         <Route path="addresses" element={<Addresses />} />
-        <Route path="logout" element={<Logout />} />
         <Route path="accountdetails" element={<AccountDetails />} />
       </Route>
     </Routes>
