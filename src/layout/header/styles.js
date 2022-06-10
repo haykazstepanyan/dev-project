@@ -76,6 +76,7 @@ const bottomPartStyles = createUseStyles({
     position: "sticky",
     top: "0px",
     background: colors.white,
+    zIndex:10
   },
   nav: {
     borderLeft: `1px solid ${colors.milky}`,

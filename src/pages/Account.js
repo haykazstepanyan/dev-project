@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { accountStyles } from "./Styles";
+import { accountStyles } from "./styles";
 import Banner from "../components/common/Banner";
 import Layout from "../layout/Layout";
 
