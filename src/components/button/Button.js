@@ -3,7 +3,15 @@ import MuiButton from "@mui/material/Button";
 import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 
-const Button = ({ children, color, size, borders, type, ...otherProps }) => {
+const CustomButton = ({
+  children,
+  color,
+  size,
+  borders,
+  type,
+  borderRadius,
+  ...otherProps
+}) => {
   return (
     <ThemeProvider theme={theme}>
       <MuiButton
@@ -11,7 +19,7 @@ const Button = ({ children, color, size, borders, type, ...otherProps }) => {
         size={size}
         borders={borders}
         type={type}
-        onClick={() => alert()}
+        sx={{ borderRadius: borderRadius }}
         {...otherProps}
       >
         {children}

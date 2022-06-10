@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -7,48 +7,43 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { accountStyles } from "./styles";
 import Banner from "../components/common/Banner";
+import Layout from "../layout/Layout";
 
 const Account = () => {
-  const navigate = useNavigate();
   const classes = accountStyles();
 
   const tabList = [
     "Dashboard",
     "Orders",
-
     "Addresses",
     "Account Details",
-    "Logout",
+    "Login",
   ];
   return (
     <>
+      <Layout />
       <Banner name="My Account" />
+
       <Box pt={12} pb={8}>
         <Container>
           <Grid container spacing={1}>
             <Grid item xs={3.5} pr={3} pt={0}>
               <List style={{ color: "#FFF" }}>
                 {tabList.map((item, index) => {
-                  const path = item.toLowerCase().replace(/\s/g, "");
+                  let path = item.toLowerCase().replace(/\s/g, "");
+                  if (path === "accountdetails") path = "details";
                   return (
-                    <ListItem
-                      className={classes.try}
+                    <NavLink
                       key={index}
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        p: 1,
-                        m: 1,
-                        bgcolor: "text.primary",
-                        color: "#FFF",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        borderRadius: 1,
+                      to={`/account/${path}`}
+                      className={(data) => {
+                        return `${data.isActive ? classes.activeLink : ""} `;
                       }}
-                      onClick={() => navigate(`/account/${path}`)}
                     >
-                      {item}
-                    </ListItem>
+                      <ListItem className={classes.listItem} key={index}>
+                        {item}
+                      </ListItem>
+                    </NavLink>
                   );
                 })}
               </List>

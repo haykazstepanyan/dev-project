@@ -11,6 +11,7 @@ export const colors = {
 };
 
 export const API_URL = getUrl();
+export const TABLE_TITLES = ["Date", "Status", "Total", "Actions"];
 // --c-blue: #0d6efd;
 // --c-indigo: #6610f2;
 // --c-purple: #6f42c1;
