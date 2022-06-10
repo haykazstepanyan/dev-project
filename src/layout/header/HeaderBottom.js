@@ -37,6 +37,7 @@ const HeaderBottom = () => {
               options={categoriesToLink}
               icon={<FormatListBulletedIcon />}
               value="Categories"
+              topDistance="6px"
             />
           </Grid>
           <Grid item sm={9}>

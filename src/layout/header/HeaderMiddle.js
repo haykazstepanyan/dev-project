@@ -61,6 +61,7 @@ const HeaderMiddle = () => {
                 icon={<KeyboardArrowDownIcon />}
                 change={handleCategory}
                 value={category}
+                topDistance="10px"
               />
               <div className={classes.searchBox}>
                 <input

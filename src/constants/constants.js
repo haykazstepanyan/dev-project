@@ -6,6 +6,8 @@ export const colors = {
   white: "#fff",
   milky: "#e1e1e1",
   success: "#198754",
+  lightGrey: "#f0f0f0",
+  red: "#DC0F0F",
 };
 
 export const API_URL = getUrl();

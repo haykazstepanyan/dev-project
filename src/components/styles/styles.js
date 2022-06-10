@@ -1,4 +1,5 @@
 import { createUseStyles } from "react-jss";
+import { colors } from "../../constants/constants";
 
 const documentStyles = createUseStyles({
   "@global": {
@@ -22,8 +23,8 @@ const documentStyles = createUseStyles({
 
 const globalStyles = createUseStyles({
   header: {
-    background: "#f0f0f0",
-    borderBottom: "1px solid #e1e1e1",
+    background: colors.lightGrey,
+    borderBottom: `1px solid ${colors.milky}`,
     padding: [[50, 0]],
     display: "flex",
     alignItems: "center",

@@ -1,9 +1,10 @@
 import React from "react";
-import productItemstyles from "./styles";
+import { productItemstyles } from "./styles";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import Sale from "./Sale";
 
 const ProductItem = ({ title, price, image }) => {
   const classes = productItemstyles();
@@ -15,6 +16,7 @@ const ProductItem = ({ title, price, image }) => {
           {title}
         </Typography>
         <Typography className={classes.productPrice}>$ {price}</Typography>
+        <Sale number={5} />
       </CardContent>
     </Card>
   );

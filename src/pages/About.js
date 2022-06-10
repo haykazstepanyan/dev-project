@@ -15,7 +15,7 @@ import slideImg3 from "../assets/images/brand3.webp";
 import slideImg4 from "../assets/images/brand4.webp";
 import slideImg5 from "../assets/images/brand5.webp";
 
-import { aboutUsStyles } from "./Styles";
+import { aboutUsStyles } from "./styles";
 import { globalStyles } from "../components/styles/styles";
 import Layout from "../layout";
 import Banner from "../components/common/Banner";
