@@ -110,4 +110,4 @@ const formStyles = createUseStyles({
     },
 });
 
-export { documentStyles, globalStyles, formStyles };
+export { documentStyles, globalStyles };

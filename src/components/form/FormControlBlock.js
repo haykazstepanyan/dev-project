@@ -11,7 +11,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import Button from "../button/Button";
-import { formStyles } from "../styles/styles";
+import { formStyles } from "./styles";
 
 const Form = ({ nameInput, passwordInput, loginType }) => {
   const classes = formStyles();
@@ -49,25 +49,35 @@ const Form = ({ nameInput, passwordInput, loginType }) => {
             <Link to="#" className={classes.lostPasswordLink}>
               Lost your password?
             </Link>
-            <div>
-              <FormGroup className={classes.btnCnt}>
-                <FormControlLabel
-                  className={classes.label}
-                  control={
-                    <Checkbox
-                      defaultChecked
-                      style={{ color: "blue", height: "10px", width: "10px" }}
-                    />
-                  }
-                  label="Remember me"
-                />
-                <Button children="Login" type="sumbit" borderRadius="20px" />
-              </FormGroup>
-            </div>
+
+            <FormGroup className={classes.btnCnt}>
+              <FormControlLabel
+                className={classes.label}
+                control={
+                  <Checkbox
+                    className={classes.checkbox}
+                    defaultChecked
+                    style={{ color: "#0d6efd", height: "10px", width: "10px" }}
+                  />
+                }
+                label="Remember me"
+              />
+              <Button
+                className={classes.loginSubmit}
+                children="Login"
+                type="sumbit"
+                borderRadius="20px"
+              />
+            </FormGroup>
           </Container>
         ) : (
           <FormGroup className={classes.btnCnt}>
-            <Button children="Register" type="sumbit" borderRadius="20px" />
+            <Button
+              className={classes.loginSubmit}
+              children="Register"
+              type="sumbit"
+              borderRadius="20px"
+            />
           </FormGroup>
         )}
       </FormControl>

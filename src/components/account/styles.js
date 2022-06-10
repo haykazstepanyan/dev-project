@@ -6,7 +6,6 @@ const orderStyles = createUseStyles({
     backgroundColor: "rgb(225, 225, 225)",
   },
   greenText: {
-    color: "green!important",
     cursor: "pointer",
     textAlign: "right!important",
   },
@@ -22,7 +21,7 @@ const orderStyles = createUseStyles({
 const loginStyles = createUseStyles({
   container: {
     marginTop: "90px",
-    marginBottom:"90px"
+    marginBottom: "90px",
   },
   boxContainer: {
     display: "grid",
@@ -36,7 +35,62 @@ const loginStyles = createUseStyles({
     lineHeight: "22px",
     marginBottom: "30px",
   },
-  
 });
-
-export { orderStyles, loginStyles };
+const detailsStyles = createUseStyles({
+  container: {
+    marginTop: "13px",
+    paddingLeft: "0!important",
+  },
+  detailsTitle: {
+    fontSize: "22px",
+    fontWeight: 500,
+    marginBottom: "15px",
+  },
+  formControl: {
+    width: "100%",
+    "& a": {
+      color: colors.green,
+      fontWeight: 500,
+    },
+  },
+  inputRadio: {
+    marginTop: "10px",
+    "& label": {
+      fontWeight: 500,
+    },
+  },
+  radioGroup: {
+    display: "flex",
+    flexDirection: "row!important",
+    marginTop: "10px",
+  },
+  inputContainer: {
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "20px",
+    width: "100%",
+    "& input": {
+      height: "40px",
+      maxWidth: "100%",
+      padding: [0, 20],
+      width: "100%",
+    },
+    "& label": {
+      fontSize: "16px",
+      fontWeight: 400,
+      color: colors.black,
+      lineHeight: "12px",
+      marginBottom: "12px",
+    },
+  },
+  inputsContainer: {
+    marginTop: "22px",
+  },
+  saveBtn: {
+    color: colors.green,
+  },
+  saveBtnContainer: {
+    marginTop: "15px",
+  },
+});
+export { orderStyles, loginStyles, detailsStyles };
