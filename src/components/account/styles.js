@@ -6,7 +6,6 @@ const orderStyles = createUseStyles({
     backgroundColor: "rgb(225, 225, 225)",
   },
   greenText: {
-    color: "green!important",
     cursor: "pointer",
     textAlign: "right!important",
   },
