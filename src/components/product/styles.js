@@ -1,10 +1,10 @@
 import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
-const productItemstyles = createUseStyles({
+const productItemStyles = createUseStyles({
   productCard: {
     position: "relative",
-    width: 255,
+    maxWidth: 255,
     textAlign: "center",
     background: colors.lightGrey,
   },
@@ -33,4 +33,4 @@ const saleStyles = createUseStyles({
   },
 });
 
-export { productItemstyles, saleStyles };
+export { productItemStyles, saleStyles };

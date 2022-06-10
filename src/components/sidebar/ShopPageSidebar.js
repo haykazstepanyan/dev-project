@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { filterRangeTheme } from "./theme";
 import Input from "@mui/material/Input";
 import Container from "@mui/system/Container";
+import TextField from "@mui/material/TextField";
 
 function valuetext(value) {
   return `${value}`;
@@ -19,32 +20,26 @@ const ShopPageSidebar = () => {
   const handleChange = (_, newValue) => {
     setValue(newValue);
   };
-  const handleMinValueChange = (e) => {
-    setValue((value) => [e.target.value, value[1]]);
+  const handleMinValueChange = e => {
+    setValue(value => [e.target.value, value[1]]);
   };
-  const handleMaxValueChange = (e) => {
-    setValue((value) => [value[0], e.target.value]);
+  const handleMaxValueChange = e => {
+    setValue(value => [value[0], e.target.value]);
   };
   return (
     <div className={classes.shopSidebar}>
-      <div>
+      <div className={classes.filterBox}>
         <h3 className={classes.filterName}>Filter by Price</h3>
         <Box width={"100%"} mb={2.5}>
           <ThemeProvider theme={filterRangeTheme}>
             <Slider
-              // getAriaLabel={() => "Minimum distance"}
               size="small"
               value={value}
               onChange={handleChange}
               min={0}
               max={450}
-              //   className={classes.filterRangeInput}
-              // getAriaValueText={valuetext}
-              // defaultValue={70}
-              // aria-label="Small"
               valueLabelDisplay="auto"
               className={classes.filterRange}
-              //   color="primary"
             />
           </ThemeProvider>
         </Box>
@@ -61,15 +56,36 @@ const ShopPageSidebar = () => {
           </div>
           <div className={classes.minMaxValues}>
             <div>
-              <span>Min:</span>
-              <Input value={value[0]} onChange={handleMinValueChange} />
+              <TextField
+                id="outlined-number"
+                label="Min:"
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={value[0]}
+              />
+              {/* <span>Min:</span>
+              <Input onChange={handleMinValueChange} /> */}
             </div>
             <div>
-              <span>Max:</span>
-              <Input value={value[1]} onChange={handleMaxValueChange} />
+              <TextField
+                id="outlined-number"
+                label="Max:"
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={value[1]}
+              />
+              {/* <span>Max:</span>
+              <Input  onChange={handleMaxValueChange} /> */}
             </div>
           </div>
         </Container>
+      </div>
+      <div>
+        <h3 className={classes.filterName}>Filter by Brand</h3>
       </div>
     </div>
   );

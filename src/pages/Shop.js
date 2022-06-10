@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from "react";
-import PaginationBlock from "../components/pagination/Pagination";
+import Pagination from "../components/pagination";
 import Grid from "@mui/material/Grid";
 import { getFakeProductsData } from "../helpers/api.helpers";
 import Layout from "../layout";
 import Banner from "../components/common/Banner";
 import Container from "@mui/system/Container";
-import { Link } from "react-router-dom";
 import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import Box from "@mui/material/Box";
+import { shopStyles } from "./styles";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-  const [productsbyPages, setProductsbyPages] = useState([]);
+  const [productsByPages, setProductsByPages] = useState([]);
   const [start, setStart] = useState(0);
+  const classes = shopStyles();
 
   useEffect(() => {
-    getFakeProductsData().then((productsData) =>
-      setProducts((prev) => [...prev, ...productsData])
+    getFakeProductsData().then(productsData =>
+      setProducts(prev => [...prev, ...productsData])
     );
   }, []);
 
   useEffect(() => {
     if (products.length > 0) {
-      setProductsbyPages([...products].slice(start, start + 9));
+      setProductsByPages([...products].slice(start, start + 9));
     }
   }, [products, start]);
 
@@ -42,17 +43,16 @@ const Shop = () => {
               <ShopPageSidebar />
             </Grid>
             <Grid item md={9}>
-              <Grid container spacing={2}>
-                {productsbyPages &&
-                  productsbyPages.map(({ id, title, images, price }) => (
-                    <Grid item sm={4} key={id}>
-                      <Link to={`/product/${id}`} style={{ margin: "15px" }}>
-                        <ProductItem
-                          title={title}
-                          image={images[0]}
-                          price={price}
-                        />
-                      </Link>
+              <Grid container className={classes.shopItemContainer}>
+                {productsByPages &&
+                  productsByPages.map(({ id, title, images, price }) => (
+                    <Grid item sm={4} key={id} className={classes.shopItem}>
+                      <ProductItem
+                        id={id}
+                        title={title}
+                        image={images[0]}
+                        price={price}
+                      />
                     </Grid>
                   ))}
               </Grid>
@@ -61,10 +61,7 @@ const Shop = () => {
         </Box>
       </Container>
 
-      <PaginationBlock
-        count={Math.ceil(products.length / 9)}
-        onChange={gotoPage}
-      />
+      <Pagination count={Math.ceil(products.length / 9)} onChange={gotoPage} />
     </>
   );
 };

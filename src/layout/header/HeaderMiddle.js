@@ -20,6 +20,9 @@ const HeaderMiddle = () => {
   const navigateFavPage = () => {
     navigate("/wishlist");
   };
+  const navigateCartPage = () => {
+    navigate("/cart");
+  };
 
   const [category, setCategory] = useState("All categories");
   const [inputValue, setInputValue] = useState("");
@@ -85,7 +88,7 @@ const HeaderMiddle = () => {
                 className={classes.icons}
               />
             </Link>
-            <WorkOutlineIcon className={classes.icons} />
+            <WorkOutlineIcon onClick={navigateCartPage} className={classes.icons} />
           </Grid>
         </Grid>
       </Container>

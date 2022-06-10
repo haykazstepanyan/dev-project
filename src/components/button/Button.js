@@ -3,7 +3,7 @@ import MuiButton from "@mui/material/Button";
 import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 
-const CustomButton = ({
+const Button = ({
   children,
   color,
   size,

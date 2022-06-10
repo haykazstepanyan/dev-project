@@ -94,40 +94,81 @@ const accountStyles = createUseStyles({
   },
 });
 
-const wishlistStyles = createUseStyles({
-  wishlistTable: {
-    "& .MuiTableCell-head": {
-      textTransform: "capitalize",
-      borderBottom: "3px solid #79a206",
-      borderRight: "1px solid #e1e1e1",
-      fontSize: 16,
-      fontWeight: 600,
-      padding: 10,
-      textAlign: "center",
-      backgroundColor: "#e1e1e1",
-    },
-    "& .MuiTableCell-body": {
-      borderBottom: "1px solid #e1e1e1 !important",
-      borderRight: "1px solid #e1e1e1 !important",
-      borderLeft: "1px solid #e1e1e1 !important",
-      textAlign: "center",
-    },
-    "& img": {
-      width: 100,
-      marginBottom: 0,
-    },
-    "& .price p": {
-      color: "#222222",
-      fontSize: 16,
-      fontWeight: 600,
-    },
-    "& .stockStatus": {
-      color: "#222222",
-      fontSize: 16,
-      fontWeight: 500,
-    },
-    boxShadow: "none !important",
+const shopStyles = createUseStyles({
+  shopItemContainer: {
+    marginLeft: 25,
+  },
+  shopItem: {
+    padding: "0 !important",
+    marginBottom: 24,
+    // marginLeft: 25,
+  },
+  productLink: {
+    // margin: 15,
   },
 });
 
-export { aboutUsStyles, contactUsStyles, accountStyles, wishlistStyles };
+const cartStyles = createUseStyles({
+  couponBlock: {
+    backgroundColor: colors.black,
+    "& h3": {
+      color: "#ffffff",
+      lineHeight: "36px",
+      padding: "5px 15px",
+      background: "#222222",
+      textTransform: "uppercase",
+      fontSize: "16px",
+      fontWeight: "500",
+    },
+  },
+  couponBottomBlock: {
+    padding: "25px",
+    border: "1px solid #e1e1e1",
+    "& p": {
+      fontSize: "14px",
+      marginBottom: "20px",
+    },
+    "& input": {
+      border: "1px solid #e1e1e1",
+      maxHeight: 45,
+      height: 35,
+      background: "#ffffff",
+      textIndent: 20,
+      color: "#757575",
+      marginRight: 10,
+      marginBottom: 10,
+    },
+    "& input:focus-visible": {
+      outline: "none",
+    },
+  },
+  cartTotalsBottom: {
+    padding: "25px",
+    border: "1px solid #e1e1e1",
+    "& >div>div": {
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "20px",
+      "& p:first-child": {
+        fontWeight: "600",
+        fontSize: "14px",
+      },
+      "& p:last-child": {
+        fontSize: "18px",
+        fontWeight: "500",
+        textAlign: "right",
+        "& span": {
+          marginRight: "20px",
+        },
+      },
+    },
+  },
+});
+
+export {
+  aboutUsStyles,
+  contactUsStyles,
+  shopStyles,
+  accountStyles,
+  cartStyles,
+};

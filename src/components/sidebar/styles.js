@@ -5,6 +5,9 @@ const shopSidebarStyles = createUseStyles({
   shopSidebar: {
     marginRight: 16,
   },
+  filterBox: {
+    marginBottom: 32,
+  },
   filterName: {
     textTransform: "uppercase",
     fontSize: 15,
@@ -28,7 +31,7 @@ const shopSidebarStyles = createUseStyles({
     justifyContent: "end",
     alignItems: "center",
     "& > div": {
-      width: 35,
+      width: 80,
       marginLeft: 15,
     },
     "& .MuiInput-input::after": {
