@@ -5,13 +5,10 @@ import { shopSidebarStyles } from "./styles";
 import Button from "../button";
 import { ThemeProvider } from "@mui/material/styles";
 import { filterRangeTheme } from "./theme";
-import Input from "@mui/material/Input";
 import Container from "@mui/system/Container";
 import TextField from "@mui/material/TextField";
-
-function valuetext(value) {
-  return `${value}`;
-}
+import { brands, categories } from "../../DUMMY_DATA";
+import ListItems from "../listItems";
 
 const ShopPageSidebar = () => {
   const classes = shopSidebarStyles();
@@ -20,12 +17,13 @@ const ShopPageSidebar = () => {
   const handleChange = (_, newValue) => {
     setValue(newValue);
   };
-  const handleMinValueChange = e => {
-    setValue(value => [e.target.value, value[1]]);
+  const handleMinValueChange = (e) => {
+    setValue((value) => [+e.target.value, value[1]]);
   };
-  const handleMaxValueChange = e => {
-    setValue(value => [value[0], e.target.value]);
+  const handleMaxValueChange = (e) => {
+    setValue((value) => [value[0], +e.target.value]);
   };
+
   return (
     <div className={classes.shopSidebar}>
       <div className={classes.filterBox}>
@@ -60,32 +58,37 @@ const ShopPageSidebar = () => {
                 id="outlined-number"
                 label="Min:"
                 type="number"
+                className={classes.minMaxInputs}
                 InputLabelProps={{
                   shrink: true,
                 }}
                 value={value[0]}
+                onChange={handleMinValueChange}
               />
-              {/* <span>Min:</span>
-              <Input onChange={handleMinValueChange} /> */}
             </div>
             <div>
               <TextField
                 id="outlined-number"
                 label="Max:"
                 type="number"
+                className={classes.minMaxInputs}
                 InputLabelProps={{
                   shrink: true,
                 }}
                 value={value[1]}
+                onChange={handleMaxValueChange}
               />
-              {/* <span>Max:</span>
-              <Input  onChange={handleMaxValueChange} /> */}
             </div>
           </div>
         </Container>
       </div>
-      <div>
+      <div className={classes.filterBox}>
+        <h3 className={classes.filterName}>Filter by Category</h3>
+        <ListItems list={categories} />
+      </div>
+      <div className={classes.filterBox}>
         <h3 className={classes.filterName}>Filter by Brand</h3>
+        <ListItems list={brands} />
       </div>
     </div>
   );

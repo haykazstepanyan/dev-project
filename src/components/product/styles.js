@@ -14,10 +14,16 @@ const productItemStyles = createUseStyles({
     textTransform: "Capitalize",
     height: 48,
   },
-  productPrice: {
-    fontWeight: "bold",
+  productDiscountedPrice: {
+    fontWeight: 500,
     fontSize: 15,
     color: colors.green,
+  },
+  productRealPrice: {
+    marginLeft: 8,
+    textDecoration: "line-through",
+    fontWeight: 400,
+    fontSize: 12,
   },
 });
 

@@ -1,11 +1,11 @@
 import React from "react";
 import { saleStyles } from "./styles";
 
-const Sale = ({ number }) => {
+const Sale = ({ discount }) => {
   const classes = saleStyles();
   return (
     <div className={classes.sale}>
-      <span>- {number} %</span>
+      <span>- {discount} %</span>
     </div>
   );
 };

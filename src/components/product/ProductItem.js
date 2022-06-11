@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Sale from "./Sale";
 import { Link } from "react-router-dom";
 
-const ProductItem = ({ id, title, price, image }) => {
+const ProductItem = ({ id, title, price, image, discount = 5 }) => {
   const classes = productItemStyles();
   return (
     <Card className={classes.productCard}>
@@ -17,8 +17,13 @@ const ProductItem = ({ id, title, price, image }) => {
           <Typography gutterBottom className={classes.productName}>
             {title}
           </Typography>
-          <Typography className={classes.productPrice}>$ {price}</Typography>
-          <Sale number={5} />
+          <div>
+            <span className={classes.productDiscountedPrice}>
+              ${price - (price * discount) / 100}
+            </span>
+            <span className={classes.productRealPrice}>${price}</span>
+          </div>
+          <Sale discount={discount} />
         </CardContent>
       </Link>
     </Card>

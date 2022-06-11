@@ -17,8 +17,8 @@ const Shop = () => {
   const classes = shopStyles();
 
   useEffect(() => {
-    getFakeProductsData().then(productsData =>
-      setProducts(prev => [...prev, ...productsData])
+    getFakeProductsData().then((productsData) =>
+      setProducts((prev) => [...prev, ...productsData])
     );
   }, []);
 

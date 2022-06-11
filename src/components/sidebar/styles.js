@@ -31,12 +31,16 @@ const shopSidebarStyles = createUseStyles({
     justifyContent: "end",
     alignItems: "center",
     "& > div": {
-      width: 80,
+      width: 50,
       marginLeft: 15,
     },
-    "& .MuiInput-input::after": {
-      "&::after": {
-        display: "none",
+  },
+  minMaxInputs: {
+    "& input": {
+      padding: "5px !important",
+      textAlign: "center",
+      "&::-webkit-inner-spin-button": {
+        "-webkit-appearance": "none",
       },
     },
   },
