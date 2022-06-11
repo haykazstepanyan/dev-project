@@ -5,15 +5,9 @@ import Container from "@mui/system/Container";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { bottomPartStyles, commonStyles } from "./styles";
 import { Link, NavLink } from "react-router-dom";
+import { categories } from "../../DUMMY_DATA";
 
-const categoriesArray = [
-  "All categories",
-  "Category 1",
-  "Category 2",
-  "Category 3 for kids",
-  "Category 4",
-  "Category 5",
-];
+const categoriesArray = ["All categories", ...categories];
 
 const HeaderBottom = () => {
   const classes = bottomPartStyles();
@@ -37,6 +31,7 @@ const HeaderBottom = () => {
               options={categoriesToLink}
               icon={<FormatListBulletedIcon />}
               value="Categories"
+              topDistance={5}
             />
           </Grid>
           <Grid item sm={9}>

@@ -14,6 +14,7 @@ import { middlePartStyles, commonStyles } from "./styles";
 import { useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import { categories } from "../../DUMMY_DATA";
 
 const HeaderMiddle = () => {
   const navigate = useNavigate();
@@ -27,14 +28,7 @@ const HeaderMiddle = () => {
   const [category, setCategory] = useState("All categories");
   const [inputValue, setInputValue] = useState("");
 
-  const categoriesArray = [
-    "All categories",
-    "Category 1",
-    "Category 2",
-    "Category 3 for kids",
-    "Category 4",
-    "Category 5",
-  ];
+  const categoriesArray = ["All categories", ...categories];
   const accountData = ["My account", "Shopping cart", "Wishlist"];
   const classes = middlePartStyles();
   const headerClasses = commonStyles();
@@ -64,6 +58,7 @@ const HeaderMiddle = () => {
                 icon={<KeyboardArrowDownIcon />}
                 change={handleCategory}
                 value={category}
+                topDistance={10}
               />
               <div className={classes.searchBox}>
                 <input
@@ -87,7 +82,10 @@ const HeaderMiddle = () => {
                 className={classes.icons}
               />
             </Link>
-            <WorkOutlineIcon onClick={navigateCartPage} className={classes.icons} />
+            <WorkOutlineIcon
+              onClick={navigateCartPage}
+              className={classes.icons}
+            />
           </Grid>
         </Grid>
       </Container>

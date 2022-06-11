@@ -3,11 +3,20 @@ import { useState } from "react";
 import Button from "../button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { createUseStyles } from "react-jss";
 
-const ClickableDropdown = (props) => {
+const useStyles = createUseStyles({
+  dropdownMenu: ({ topDistance = 0 }) => ({
+    "& .MuiPaper-root": {
+      marginTop: topDistance,
+      minWidth: 200,
+    },
+  }),
+});
+
+const ClickableDropdown = ({ icon, options, value, change, topDistance }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { icon, options, value, change } = props;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -16,6 +25,8 @@ const ClickableDropdown = (props) => {
     setAnchorEl(null);
     change && change(selectedOption);
   };
+
+  const classes = useStyles({ topDistance });
 
   return (
     <div>
@@ -36,7 +47,8 @@ const ClickableDropdown = (props) => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        sx={{ marginTop: "10px" }}
+        className={classes.dropdownMenu}
+        // sx={{ marginTop: topDistance }}
       >
         {options.map((option, i) => (
           <MenuItem key={`${option}${i}`} onClick={() => handleClose(option)}>

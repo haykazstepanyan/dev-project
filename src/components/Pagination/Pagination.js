@@ -1,5 +1,5 @@
 import React from "react";
-import Pagination from "@mui/material/Pagination";
+import MuiPagination from "@mui/material/Pagination";
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
@@ -10,11 +10,11 @@ const useStyles = createUseStyles({
   },
 });
 
-const PaginationBlock = ({ count, onChange }) => {
+const Pagination = ({ count, onChange }) => {
   const classes = useStyles();
   return (
     <>
-      <Pagination
+      <MuiPagination
         className={classes.paginationStyle}
         count={count}
         onChange={onChange}
@@ -24,4 +24,4 @@ const PaginationBlock = ({ count, onChange }) => {
     </>
   );
 };
-export default PaginationBlock;
+export default Pagination;
