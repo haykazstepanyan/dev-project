@@ -1,14 +1,18 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
+import { dashboardStyles } from "./styles";
 const Dashboard = () => {
+  const classes = dashboardStyles();
   return (
     <>
-      <h3>Dashboard</h3>
-      <p>
-        From your account dashboard. you can easily check & view your recent
-        orders, manage your shipping and billing addresses and Edit your
-        password and account details.
-      </p>
+      <div className={classes.dashboardContainer}>
+        <h3>Dashboard</h3>
+        <p>
+          From your account dashboard. you can easily check & view your
+          <Link to="/orders"> recent orders,</Link>
+          <Link to="/details"> edit your password and account details.</Link>
+        </p>
+      </div>
     </>
   );
 };

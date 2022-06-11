@@ -7,7 +7,6 @@ import About from "../pages/About";
 import Account from "../pages/Account";
 import Dashboard from "../components/account/Dashboard.js";
 import Orders from "../components/account/Orders.js";
-import Addresses from "../components/account/Addresses.js";
 import Login from "../components/account/Login.js";
 import AccountDetails from "../components/account/AccountDetails.js";
 import Wishlist from "../pages/Wishlist";
@@ -28,7 +27,6 @@ const PageRoutes = () => {
       <Route path="account" element={<Account />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="orders" element={<Orders />} />
-        <Route path="addresses" element={<Addresses />} />
         <Route path="details" element={<AccountDetails />} />
       </Route>
     </Routes>

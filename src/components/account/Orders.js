@@ -1,11 +1,6 @@
 import React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import {Link} from "react-router-dom"
+import {Table, TableBody, TableCell, TableContainer, TableHead,TableRow,Paper } from "@mui/material";
 import { TABLE_TITLES } from "../../constants/constants";
 import { orderStyles } from "./styles";
 
@@ -46,9 +41,7 @@ const Orders = (props) => {
                 <TableCell align="right">{row.status}</TableCell>
                 <TableCell align="right">{row.total}</TableCell>
                 <TableCell className={classes.greenText} align="right ">
-                  {row.action}
-                  {/* <Link to="cart"> {row.action}</Link> */}
-                  {/* henc cart ejy patrast lini petqe poxel Linkov */}
+                  <Link to="cart"> {row.action}</Link>
                 </TableCell>
               </TableRow>
             ))}
