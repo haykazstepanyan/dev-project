@@ -47,24 +47,24 @@ const globalStyles = createUseStyles({
       fontSize: 42,
       marginBottom: 9,
     },
-    featuresSectionStyle: {
-      padding: [[100, 0, 93]],
-      "& img": {
-        marginBottom: 23,
-      },
+  },
+  featuresSectionStyle: {
+    padding: [[100, 0, 93]],
+    "& img": {
+      marginBottom: 23,
     },
-    textCenter: {
-      textAlign: "center",
-    },
-    mxAuto: {
-      margin: "0 auto !important",
-    },
-    w100: {
-      width: "100%",
-    },
-    mb30: {
-      marginBottom: 30,
-    },
+  },
+  textCenter: {
+    textAlign: "center",
+  },
+  mxAuto: {
+    margin: "0 auto !important",
+  },
+  w100: {
+    width: "100%",
+  },
+  mb30: {
+    marginBottom: 30,
   },
 });
 
