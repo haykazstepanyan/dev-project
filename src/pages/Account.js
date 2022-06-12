@@ -15,7 +15,6 @@ const Account = () => {
   const tabList = [
     "Dashboard",
     "Orders",
-    "Addresses",
     "Account Details",
     "Login",
   ];
