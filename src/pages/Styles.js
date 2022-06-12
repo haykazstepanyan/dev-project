@@ -94,20 +94,6 @@ const accountStyles = createUseStyles({
   },
 });
 
-const shopStyles = createUseStyles({
-  shopItemContainer: {
-    marginLeft: 25,
-  },
-  shopItem: {
-    padding: "0 !important",
-    marginBottom: 24,
-    // marginLeft: 25,
-  },
-  productLink: {
-    // margin: 15,
-  },
-});
-
 const cartStyles = createUseStyles({
   couponBlock: {
     backgroundColor: colors.black,
@@ -165,10 +151,4 @@ const cartStyles = createUseStyles({
   },
 });
 
-export {
-  aboutUsStyles,
-  contactUsStyles,
-  shopStyles,
-  accountStyles,
-  cartStyles,
-};
+export { aboutUsStyles, contactUsStyles, accountStyles, cartStyles };

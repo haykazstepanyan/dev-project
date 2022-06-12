@@ -6,15 +6,12 @@ import Layout from "../layout";
 import Banner from "../components/common/Banner";
 import Container from "@mui/system/Container";
 import ProductItem from "../components/product";
-import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
-import Box from "@mui/material/Box";
-import { shopStyles } from "./styles";
+import { Link } from "react-router-dom";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-  const [productsByPages, setProductsByPages] = useState([]);
+  const [productsByPages, setProductsbyPages] = useState([]);
   const [start, setStart] = useState(0);
-  const classes = shopStyles();
 
   useEffect(() => {
     getFakeProductsData().then((productsData) =>
@@ -24,7 +21,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (products.length > 0) {
-      setProductsByPages([...products].slice(start, start + 9));
+      setProductsbyPages([...products].slice(start, start + 9));
     }
   }, [products, start]);
 
@@ -37,28 +34,25 @@ const Shop = () => {
       <Layout />
       <Banner name="Shop" />
       <Container maxWidth="lg">
-        <Box mt={12.5}>
-          <Grid container>
-            <Grid item md={3}>
-              <ShopPageSidebar />
-            </Grid>
-            <Grid item md={9}>
-              <Grid container className={classes.shopItemContainer}>
-                {productsByPages &&
-                  productsByPages.map(({ id, title, images, price }) => (
-                    <Grid item sm={4} key={id} className={classes.shopItem}>
+        <Grid container spacing={2}>
+          <Grid item md={3}></Grid>
+          <Grid item md={9}>
+            <Grid container spacing={2}>
+              {productsByPages &&
+                productsByPages.map(({ id, title, images, price }) => (
+                  <Grid item sm={4} key={id}>
+                    <Link to={`/product/${id}`} style={{ margin: "15px" }}>
                       <ProductItem
-                        id={id}
                         title={title}
                         image={images[0]}
                         price={price}
                       />
-                    </Grid>
-                  ))}
-              </Grid>
+                    </Link>
+                  </Grid>
+                ))}
             </Grid>
           </Grid>
-        </Box>
+        </Grid>
       </Container>
 
       <Pagination count={Math.ceil(products.length / 9)} onChange={gotoPage} />
