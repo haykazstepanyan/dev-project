@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PaginationBlock from "../components/pagination/Pagination";
+import Pagination from "../components/pagination";
 import Grid from "@mui/material/Grid";
 import { getFakeProductsData } from "../helpers/api.helpers";
 import Layout from "../layout";
@@ -55,10 +55,7 @@ const Shop = () => {
         </Grid>
       </Container>
 
-      <PaginationBlock
-        count={Math.ceil(products.length / 9)}
-        onChange={gotoPage}
-      />
+      <Pagination count={Math.ceil(products.length / 9)} onChange={gotoPage} />
     </>
   );
 };
