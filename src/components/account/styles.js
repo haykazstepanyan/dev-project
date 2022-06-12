@@ -8,6 +8,9 @@ const orderStyles = createUseStyles({
   greenText: {
     cursor: "pointer",
     textAlign: "right!important",
+    "& a": {
+      color: colors.green,
+    },
   },
   orderTitle: {
     fontSize: "22px",
@@ -93,4 +96,16 @@ const detailsStyles = createUseStyles({
     marginTop: "15px",
   },
 });
-export { orderStyles, loginStyles, detailsStyles };
+const dashboardStyles = createUseStyles({
+  dashboardContainer: {
+    marginTop: "13px",
+    "& h3": {
+      fontSize: "22px",
+      marginBottom: "15px",
+    },
+    "& a": {
+      color: colors.green,
+    },
+  },
+});
+export { orderStyles, loginStyles, detailsStyles, dashboardStyles };
