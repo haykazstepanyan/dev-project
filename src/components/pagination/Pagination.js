@@ -13,15 +13,13 @@ const useStyles = createUseStyles({
 const Pagination = ({ count, onChange }) => {
   const classes = useStyles();
   return (
-    <>
-      <MuiPagination
-        className={classes.paginationStyle}
-        count={count}
-        onChange={onChange}
-        variant="outlined"
-        shape="rounded"
-      />
-    </>
+    <MuiPagination
+      className={classes.paginationStyle}
+      count={count}
+      onChange={onChange}
+      variant="outlined"
+      shape="rounded"
+    />
   );
 };
 export default Pagination;
