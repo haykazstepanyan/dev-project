@@ -37,6 +37,7 @@ const ClickableDropdown = ({ icon, options, value, change, topDistance }) => {
         onClick={handleClick}
         startIcon={icon || null}
         type="dropdownBtn"
+        state={open ? "open" : ""}
         color="info"
         disableRipple
       >
@@ -48,10 +49,13 @@ const ClickableDropdown = ({ icon, options, value, change, topDistance }) => {
         open={open}
         onClose={handleClose}
         className={classes.dropdownMenu}
-        // sx={{ marginTop: topDistance }}
       >
         {options.map((option, i) => (
-          <MenuItem key={`${option}${i}`} onClick={() => handleClose(option)}>
+          <MenuItem
+            className={classes.dropdownMenuItems}
+            key={`${option}${i}`}
+            onClick={() => handleClose(option)}
+          >
             {option}
           </MenuItem>
         ))}

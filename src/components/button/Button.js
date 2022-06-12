@@ -9,23 +9,21 @@ const Button = ({
   size,
   borders,
   type,
-  borderRadius,
+  state,
   ...otherProps
-}) => {
-  return (
-    <ThemeProvider theme={theme}>
-      <MuiButton
-        color={color}
-        size={size}
-        borders={borders}
-        type={type}
-        sx={{ borderRadius: borderRadius }}
-        {...otherProps}
-      >
-        {children}
-      </MuiButton>
-    </ThemeProvider>
-  );
-};
+}) => (
+  <ThemeProvider theme={theme}>
+    <MuiButton
+      color={color}
+      size={size}
+      borders={borders}
+      type={type}
+      state={state}
+      {...otherProps}
+    >
+      {children}
+    </MuiButton>
+  </ThemeProvider>
+);
 
 export default Button;

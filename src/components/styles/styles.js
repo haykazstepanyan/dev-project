@@ -13,6 +13,19 @@ const documentStyles = createUseStyles({
       fontStyle: "normal",
       fontWeight: 400,
       fontFamily: "'Rubik', sans-serif",
+      "@media screen and (max-width: 900px)": {
+        "& .MuiMenu-paper": {
+          minWidth: "auto !important",
+          maxHeight: 220,
+          overflow: "auto",
+        },
+        "& .MuiMenu-list": {
+          maxHeight: "inherit",
+        },
+        "& .MuiMenuItem-root": {
+          minHeight: "auto",
+        },
+      },
     },
     a: {
       textDecoration: "none",

@@ -7,37 +7,31 @@ import {
 import Button from "../button";
 import HoverMenu from "material-ui-popup-state/HoverMenu";
 import MenuItem from "@mui/material/MenuItem";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { hoverableDropdownStyles } from "./styles";
 
-const HoverableDropdown = ({ icon, value, change, list }) => {
+const HoverableDropdown = ({ icon, value, list }) => {
+  const classes = hoverableDropdownStyles();
   const popupState = usePopupState({
     variant: "popover",
     popupId: "demoMenu",
   });
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: popupState.isOpen ? "#198754" : "#222",
-      },
-    },
-  });
-  const handleDropdownClick = (item) => {
+
+  const handleDropdownClick = () => {
     popupState.close();
-    if (change) change(item);
   };
 
   return (
     <div>
-      <ThemeProvider theme={theme}>
-        <Button
-          {...bindHover(popupState)}
-          endIcon={icon || null}
-          color="info"
-          type="dropdownBtn"
-        >
-          {value}
-        </Button>
-      </ThemeProvider>
+      <Button
+        {...bindHover(popupState)}
+        endIcon={icon || null}
+        color="info"
+        type="dropdownBtn"
+        state={popupState.isOpen ? "open" : ""}
+        disableRipple
+      >
+        {value}
+      </Button>
       <HoverMenu
         {...bindMenu(popupState)}
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
@@ -45,8 +39,9 @@ const HoverableDropdown = ({ icon, value, change, list }) => {
       >
         {list.map((item, i) => (
           <MenuItem
+            className={classes.menuItems}
             key={`${item}${i}`}
-            onClick={() => handleDropdownClick(item)}
+            onClick={handleDropdownClick}
           >
             {item}
           </MenuItem>

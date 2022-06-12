@@ -7,6 +7,7 @@ const listStyles = createUseStyles({
     maxHeight: 180,
     overflowY: "auto",
     marginTop: 12,
+    textTransform: "capitalize",
   },
   listItems: {
     paddingTop: 0,

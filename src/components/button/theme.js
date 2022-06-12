@@ -30,6 +30,9 @@ export const theme = createTheme({
           style: {
             color: colors.black,
             background: "transparent",
+            "&:hover": {
+              color: colors.green,
+            },
           },
         },
         {
@@ -69,6 +72,12 @@ export const theme = createTheme({
             "&:hover": {
               backgroundColor: "transparent",
             },
+          },
+        },
+        {
+          props: { state: "open" },
+          style: {
+            color: colors.green,
           },
         },
       ],
