@@ -27,13 +27,13 @@ const FooterBottom = () => {
           className={classes.footerBottomGridContainer}
         >
           <Grid item xs={8} className={classes.footerBottomGrid}>
-            <p className="copyright-text">
+            <p class="copyright-text">
               © 2021{" "}
               <Link to="/" className={classes.footerBottomLink}>
                 Lukani
               </Link>
               . Made with <FavoriteIcon className={classes.footerBottomHeart} />
-              <i className="fa fa-heart text-danger"></i> By{" "}
+              <i class="fa fa-heart text-danger"></i> By{" "}
               <Link to="/" className={classes.footerBottomLink}>
                 Our Teams
               </Link>
