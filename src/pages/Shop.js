@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Pagination from "../components/pagination";
+import Pagination from "../components/Pagination"
 import Grid from "@mui/material/Grid";
 import { getFakeProductsData } from "../helpers/api.helpers";
 import Layout from "../layout";
