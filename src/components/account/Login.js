@@ -15,8 +15,7 @@ import { loginStyles } from "./styles";
 const Logout = (props) => {
   const classes = loginStyles();
   return (
-    <>
-      <Layout />
+    <Layout>
       <Banner name="My Account" />
       <Container className={classes.container}>
         <Box className={classes.boxContainer}>
@@ -38,7 +37,7 @@ const Logout = (props) => {
           </Container>
         </Box>
       </Container>
-    </>
+    </Layout>
   );
 };
 

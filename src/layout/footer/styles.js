@@ -12,6 +12,7 @@ const styles = {
     paddingLeft: "var(--bs-gutter-x,.75rem)",
     marginRight: "auto",
     marginLeft: "auto",
+    boxSizing: "border-box",
   },
   footerTop: {
     padding: "99px 0 89px",
@@ -164,8 +165,8 @@ const styles = {
     cursor: "pointer",
   },
   footerBottomRight: {
-    textAlign: "right"
-  }
+    textAlign: "right",
+  },
 };
 
 export default styles;

@@ -12,15 +12,9 @@ import Layout from "../layout/Layout";
 const Account = () => {
   const classes = accountStyles();
 
-  const tabList = [
-    "Dashboard",
-    "Orders",
-    "Account Details",
-    "Login",
-  ];
+  const tabList = ["Dashboard", "Orders", "Account Details", "Login"];
   return (
-    <>
-      <Layout />
+    <Layout>
       <Banner name="My Account" />
 
       <Box pt={12} pb={8}>
@@ -53,7 +47,7 @@ const Account = () => {
           </Grid>
         </Container>
       </Box>
-    </>
+    </Layout>
   );
 };
 export default Account;
