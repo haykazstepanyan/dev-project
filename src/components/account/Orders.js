@@ -1,5 +1,5 @@
 import React from "react";
-import {NavLink} from "react-router-dom"
+import {Link} from "react-router-dom"
 import {Table, TableBody, TableCell, TableContainer, TableHead,TableRow,Paper } from "@mui/material";
 import { TABLE_TITLES } from "../../constants/constants";
 import { orderStyles } from "./styles";
@@ -41,7 +41,7 @@ const Orders = (props) => {
                 <TableCell align="right">{row.status}</TableCell>
                 <TableCell align="right">{row.total}</TableCell>
                 <TableCell className={classes.greenText} align="right ">
-                  <NavLink to="cart"> {row.action}</NavLink>
+                  <Link to="cart"> {row.action}</Link>
                 </TableCell>
               </TableRow>
             ))}

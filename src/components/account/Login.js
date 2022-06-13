@@ -1,14 +1,7 @@
 import React from "react";
 import Layout from "../../layout/Layout";
 import Banner from "../common/Banner";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import {
-  Container,
-  Box,
-  FormControl,
-  FormLabel,
-  TextField,
-} from "@mui/material";
+import { Container, Box } from "@mui/material";
 import Form from "../form/FormControlBlock";
 import { loginStyles } from "./styles";
 

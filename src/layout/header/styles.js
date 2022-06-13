@@ -1,24 +1,37 @@
 import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
-const middlePartStyles = createUseStyles({
+const logoStyles = createUseStyles({
   pageLogo: {
     width: 80,
     height: 80,
   },
+  "@media screen and (max-width: 900px)": {
+    pageLogo: {
+      width: 50,
+      height: 50,
+    },
+  },
+});
+
+const searchBoxStyles = createUseStyles({
   filterContainer: {
-    padding: [[25, "10%"]],
+    padding: 25,
     borderRight: `1px solid ${colors.milky}`,
   },
   filterContainerContent: {
+    position: "relative",
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around",
+    width: 480,
     borderRadius: 30,
+    margin: [[0, "auto"]],
+    padding: [[0, 15]],
     border: `1px solid ${colors.milky}`,
   },
   searchBox: {
     position: "relative",
+    flexGrow: 3,
     "&:before": {
       content: "''",
       width: 1,
@@ -30,23 +43,65 @@ const middlePartStyles = createUseStyles({
       left: 0,
     },
   },
+  searchCategories: {
+    flexGrow: 1,
+  },
   searchInput: {
     border: 0,
     height: 54,
     fontSize: 14,
     fontWeight: 400,
-    padding: [[0, 50, 0, 20]],
+    padding: [[0, 20, 0, 20]],
     opacity: 0.7,
+    width: "80%",
     "&:focus": {
       outline: "none",
     },
   },
   searchIcon: {
+    position: "absolute",
+    top: 15,
+    right: 0,
     cursor: "pointer",
     "&:hover": {
       color: colors.success,
     },
   },
+  "@media screen and (max-width: 900px)": {
+    filterContainer: {
+      padding: 0,
+      borderRight: "none",
+    },
+    filterContainerContent: {
+      border: "none",
+      flexDirection: "column-reverse",
+      width: "100%",
+      padding: 0,
+    },
+    searchBox: {
+      border: `1px solid ${colors.milky}`,
+      width: "100%",
+      "&:before": {
+        content: "none",
+      },
+    },
+    searchCategories: {
+      border: `1px solid ${colors.milky}`,
+      marginTop: 25,
+      padding: [[0, 20]],
+    },
+    searchInput: {
+      padding: [[0, 10]],
+      height: 34,
+    },
+    searchIcon: {
+      top: 5,
+      right: 8,
+    },
+  },
+});
+
+const iconsStyles = createUseStyles({
   iconsContainer: {
     display: "flex",
     alignItems: "center",
@@ -59,25 +114,33 @@ const middlePartStyles = createUseStyles({
       color: colors.success,
     },
   },
-});
-
-const bottomPartStyles = createUseStyles({
   bottomCategories: {
     display: "flex",
     alignItems: "center",
   },
-  bottomCategoriesHeading: {
-    paddingLeft: 25,
-  },
   categoryLinks: {
     color: colors.black,
   },
-  headerBottom: {
-    position: "sticky",
-    top: "0px",
-    background: colors.white,
-    zIndex:10
+  "@media screen and (max-width: 900px)": {
+    iconsContainer: {
+      "& .MuiButton-root": {
+        minWidth: "auto",
+        padding: 0,
+        paddingBottom: 3,
+        marginRight: 8,
+      },
+    },
+    icons: {
+      marginRight: 8,
+    },
+    formatAlignIcon: {
+      padding: 4,
+      border: `1px solid ${colors.black}`,
+    },
   },
+});
+
+const navbarStyles = createUseStyles({
   nav: {
     borderLeft: `1px solid ${colors.milky}`,
   },
@@ -124,6 +187,51 @@ const bottomPartStyles = createUseStyles({
       visibility: "visible",
     },
   },
+  "@media screen and (max-width: 900px)": {
+    nav: {
+      borderLeft: "none",
+      marginTop: 25,
+      alignItems: "start",
+    },
+    navList: {
+      flexDirection: "column",
+      padding: [[0, 15]],
+    },
+    navListItems: {
+      borderBottom: `1px solid ${colors.milky}`,
+      width: "100%",
+      boxSizing: "border-box",
+      padding: 0,
+    },
+    navLinks: {
+      "&:before": {
+        height: 2,
+      },
+    },
+  },
+});
+
+const drawerClasses = createUseStyles({
+  headerDrawer: {
+    position: "relative",
+    "& .MuiPaper-root ": {
+      padding: [[50, 10, 15]],
+      maxWidth: "50%",
+    },
+  },
+  welcomeText: {
+    textAlign: "center",
+    marginBottom: 24,
+    fontSize: 12,
+  },
+  closeIcon: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    color: colors.black,
+    border: `1px solid ${colors.milky}`,
+    borderRadius: "50%",
+  },
 });
 
 const headerStyles = createUseStyles({
@@ -131,12 +239,22 @@ const headerStyles = createUseStyles({
     display: "initial",
     background: "red",
   },
-});
-
-const commonStyles = createUseStyles({
   headerParts: {
     borderBottom: `1px solid ${colors.milky}`,
   },
+  stickyLine: {
+    position: "sticky",
+    top: "0px",
+    background: colors.white,
+    zIndex: 10,
+  },
 });
 
-export { commonStyles, headerStyles, middlePartStyles, bottomPartStyles };
+export {
+  headerStyles,
+  logoStyles,
+  searchBoxStyles,
+  iconsStyles,
+  navbarStyles,
+  drawerClasses,
+};

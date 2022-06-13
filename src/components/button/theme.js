@@ -30,6 +30,9 @@ export const theme = createTheme({
           style: {
             color: colors.black,
             background: "transparent",
+            "&:hover": {
+              color: colors.green,
+            },
           },
         },
         {
@@ -38,24 +41,16 @@ export const theme = createTheme({
             fontSize: 12,
             fontWeight: 700,
             height: 34,
-            lineHeight: 26,
             padding: "5px 20px",
-            "&.rounded": {
-              borderRadius: 20,
-            },
           },
         },
         {
           props: { size: "large" },
           style: {
             height: 65,
-            lineHeight: 65,
             padding: "0 45px",
             fontSize: 15,
             fontWeight: 500,
-            "&.rounded": {
-              borderRadius: 30,
-            },
           },
         },
         {
@@ -79,40 +74,13 @@ export const theme = createTheme({
             },
           },
         },
+        {
+          props: { state: "open" },
+          style: {
+            color: colors.green,
+          },
+        },
       ],
-      // styleOverrides: {
-      //   clickable: {
-      //     color: "red",
-      //   },
-      // sizeSmall: {
-      //   fontSize: 12,
-      //   fontWeight: 700,
-      //   height: 34,
-      //   lineHeight: 26,
-      //   padding: "5px 20px",
-      //   "&.rounded": {
-      //     borderRadius: 20,
-      //   },
-      // },
-      //   sizeLarge: {
-      //     height: 65,
-      //     lineHeight: 65,
-      //     padding: "0 45px",
-      //     fontSize: 15,
-      //     fontWeight: 500,
-      //     "&.rounded": {
-      //       borderRadius: 30,
-      // },
-      //   },
-      //   // variant: {
-      //   // clickable: {
-
-      //   // text: {
-      //   //   textTransform: "Capitalize",
-      //   // },
-      //   // },
-      //   // },
-      // },
     },
   },
 });

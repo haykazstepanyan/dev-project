@@ -6,11 +6,12 @@ export const colors = {
   white: "#fff",
   milky: "#e1e1e1",
   success: "#198754",
-  blue:"#0d6efd"
+  lightGrey: "#f0f0f0",
+  red: "#DC0F0F",
 };
 
 export const API_URL = getUrl();
- export const TABLE_TITLES = ["Date", "Status", "Total", "Actions"];
+export const TABLE_TITLES = ["Date", "Status", "Total", "Actions"];
 // --c-blue: #0d6efd;
 // --c-indigo: #6610f2;
 // --c-purple: #6f42c1;
