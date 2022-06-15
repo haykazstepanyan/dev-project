@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import Pagination from "../components/pagination";
+import Pagination from "../components/Pagination";
 import { getFakeProductsData } from "../helpers/api.helpers";
 import Layout from "../layout";
 import Banner from "../components/common/Banner";
