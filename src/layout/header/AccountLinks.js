@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
@@ -7,10 +6,12 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import { HoverableDropdown } from "../../components/dropdown";
 import { iconsStyles } from "./styles";
 
-const AccountLinks = () => {
+function AccountLinks() {
   const classes = iconsStyles();
   const accountData = [
-    <Link to="/account">My account</Link>,
+    <Link key="account" to="/account">
+      My account
+    </Link>,
     "Shopping cart",
     "Wishlist",
   ];
@@ -25,6 +26,6 @@ const AccountLinks = () => {
       </Link>
     </Grid>
   );
-};
+}
 
 export default AccountLinks;

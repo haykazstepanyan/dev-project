@@ -1,11 +1,24 @@
-import React from "react";
-import {Link} from "react-router-dom"
-import {Table, TableBody, TableCell, TableContainer, TableHead,TableRow,Paper } from "@mui/material";
+import { Link } from "react-router-dom";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import { TABLE_TITLES } from "../../constants/constants";
 import { orderStyles } from "./styles";
 
 function createData(order, date, status, total, action) {
-  return { order, date, status, total, action };
+  return {
+    order,
+    date,
+    status,
+    total,
+    action,
+  };
 }
 
 const rows = [
@@ -13,7 +26,7 @@ const rows = [
   createData(2, "May 10 2018", "Completed", "$25.00 For 1 Item", "View"),
 ];
 
-const Orders = (props) => {
+function Orders() {
   const classes = orderStyles();
   return (
     <>
@@ -23,9 +36,11 @@ const Orders = (props) => {
           <TableHead>
             <TableRow className={classes.rowTitle}>
               <TableCell>Order</TableCell>
-              {TABLE_TITLES.map((title) => {
-                return <TableCell align="right">{title}</TableCell>;
-              })}
+              {TABLE_TITLES.map((title) => (
+                <TableCell align="right" key={title}>
+                  {title}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -50,5 +65,5 @@ const Orders = (props) => {
       </TableContainer>
     </>
   );
-};
+}
 export default Orders;

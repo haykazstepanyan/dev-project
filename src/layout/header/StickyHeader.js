@@ -1,19 +1,18 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import Container from "@mui/system/Container";
+import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import NavBar from "./NavBar";
+import Navbar from "./Navbar";
 import { ClickableDropdown } from "../../components/dropdown";
 import { headerStyles } from "./styles";
 import { categories } from "../../DUMMY_DATA";
 
-const StickyHeader = () => {
+function StickyHeader() {
   const classes = headerStyles();
   const categoriesArray = ["All categories", ...categories];
 
   const categoriesToLink = categoriesArray.map((category) => (
-    <Link to="/" className={classes.categoryLinks}>
+    <Link to="/" className={classes.categoryLinks} key={category}>
       {category}
     </Link>
   ));
@@ -34,11 +33,11 @@ const StickyHeader = () => {
               topDistance={5}
             />
           </Grid>
-          <NavBar />
+          <Navbar />
         </Grid>
       </Container>
     </div>
   );
-};
+}
 
 export default StickyHeader;

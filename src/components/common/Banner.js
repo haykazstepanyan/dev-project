@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
 import { colors } from "../../constants/constants";
@@ -12,7 +12,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const Banner = ({ name }) => {
+function Banner({ name }) {
   const globalClasses = globalStyles();
   const classes = useStyles();
   return (
@@ -28,6 +28,10 @@ const Banner = ({ name }) => {
       </div>
     </div>
   );
+}
+
+Banner.propTypes = {
+  name: PropTypes.string.isRequired,
 };
 
 export default Banner;

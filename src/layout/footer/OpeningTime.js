@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { createUseStyles } from "react-jss";
@@ -6,7 +5,7 @@ import styles from "./styles";
 
 const useStyles = createUseStyles(styles);
 
-const OpeningTime = () => {
+function OpeningTime() {
   const classes = useStyles();
   const theme = createTheme({
     typography: {
@@ -50,6 +49,6 @@ const OpeningTime = () => {
       </p>
     </>
   );
-};
+}
 
 export default OpeningTime;

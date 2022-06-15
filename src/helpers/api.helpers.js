@@ -10,7 +10,8 @@ export async function getProductsData() {
     const res = await response.json();
     return res;
   } catch (e) {
-    console.log(e.message);
+    // console.log(e.message);
+    return null;
   }
 }
 export async function getFakeProductsData() {

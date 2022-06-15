@@ -1,15 +1,15 @@
-import React from "react";
+import PropTypes from "prop-types";
 import {
   usePopupState,
   bindHover,
   bindMenu,
 } from "material-ui-popup-state/hooks";
-import Button from "../button";
 import HoverMenu from "material-ui-popup-state/HoverMenu";
 import MenuItem from "@mui/material/MenuItem";
+import Button from "../button";
 import { hoverableDropdownStyles } from "./styles";
 
-const HoverableDropdown = ({ icon, value, list }) => {
+function HoverableDropdown({ icon, value, list }) {
   const classes = hoverableDropdownStyles();
   const popupState = usePopupState({
     variant: "popover",
@@ -24,7 +24,7 @@ const HoverableDropdown = ({ icon, value, list }) => {
     <div>
       <Button
         {...bindHover(popupState)}
-        endIcon={icon || null}
+        endIcon={icon}
         color="info"
         type="dropdownBtn"
         state={popupState.isOpen ? "open" : ""}
@@ -37,10 +37,10 @@ const HoverableDropdown = ({ icon, value, list }) => {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "left" }}
       >
-        {list.map((item, i) => (
+        {list.map((item) => (
           <MenuItem
             className={classes.menuItems}
-            key={`${item}${i}`}
+            key={item}
             onClick={handleDropdownClick}
           >
             {item}
@@ -49,6 +49,18 @@ const HoverableDropdown = ({ icon, value, list }) => {
       </HoverMenu>
     </div>
   );
+}
+
+HoverableDropdown.defaultProps = {
+  icon: "",
+};
+
+HoverableDropdown.propTypes = {
+  icon: PropTypes.element,
+  value: PropTypes.string.isRequired,
+  list: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  ),
 };
 
 export default HoverableDropdown;

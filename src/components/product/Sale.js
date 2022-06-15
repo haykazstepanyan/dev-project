@@ -1,13 +1,17 @@
-import React from "react";
+import PropTypes from "prop-types";
 import { saleStyles } from "./styles";
 
-const Sale = ({ discount }) => {
+function Sale({ discount }) {
   const classes = saleStyles();
   return (
     <div className={classes.sale}>
-      <span>- {discount} %</span>
+      <span>-{discount} %</span>
     </div>
   );
+}
+
+Sale.propTypes = {
+  discount: PropTypes.number.isRequired,
 };
 
 export default Sale;

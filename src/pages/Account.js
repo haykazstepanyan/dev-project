@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -9,7 +8,7 @@ import { accountStyles } from "./styles";
 import Banner from "../components/common/Banner";
 import Layout from "../layout/Layout";
 
-const Account = () => {
+function Account() {
   const classes = accountStyles();
 
   const tabList = ["Dashboard", "Orders", "Account Details", "Login"];
@@ -22,20 +21,18 @@ const Account = () => {
           <Grid container spacing={1}>
             <Grid item xs={3.5} pr={3} pt={0}>
               <List style={{ color: "#FFF" }}>
-                {tabList.map((item, index) => {
+                {tabList.map((item) => {
                   let path = item.toLowerCase().replace(/\s/g, "");
                   if (path === "accountdetails") path = "details";
                   return (
                     <NavLink
-                      key={index}
+                      key={item}
                       to={`/account/${path}`}
-                      className={(data) => {
-                        return `${data.isActive ? classes.activeLink : ""} `;
-                      }}
+                      className={(data) =>
+                        `${data.isActive ? classes.activeLink : ""} `
+                      }
                     >
-                      <ListItem className={classes.listItem} key={index}>
-                        {item}
-                      </ListItem>
+                      <ListItem className={classes.listItem}>{item}</ListItem>
                     </NavLink>
                   );
                 })}
@@ -49,5 +46,5 @@ const Account = () => {
       </Box>
     </Layout>
   );
-};
+}
 export default Account;

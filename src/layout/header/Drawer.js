@@ -1,14 +1,13 @@
-import React from "react";
-import { useToggle } from "../../components/hooks/hooks";
 import Grid from "@mui/material/Grid";
 import MuiDrawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
+import { useToggle } from "../../hooks/hooks";
 import SearchBox from "./SearchBox";
-import NavBar from "./NavBar";
+import Navbar from "./Navbar";
 import { iconsStyles, drawerClasses } from "./styles";
 
-const Drawer = () => {
+function Drawer() {
   const [anchor, setAnchor] = useToggle();
   const iconsClasses = iconsStyles();
   const classes = drawerClasses();
@@ -23,7 +22,7 @@ const Drawer = () => {
       />
       <MuiDrawer
         className={classes.headerDrawer}
-        anchor={"left"}
+        anchor="left"
         open={anchor}
         onClose={toggleDrawer}
       >
@@ -31,11 +30,11 @@ const Drawer = () => {
           <p>Free Delivery: Take advantage of our time to save event</p>
         </div>
         <SearchBox distance={1} />
-        <NavBar />
+        <Navbar />
         <CloseIcon className={classes.closeIcon} onClick={toggleDrawer} />
       </MuiDrawer>
     </Grid>
   );
-};
+}
 
 export default Drawer;

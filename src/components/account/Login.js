@@ -1,11 +1,10 @@
-import React from "react";
+import { Container, Box } from "@mui/material";
 import Layout from "../../layout/Layout";
 import Banner from "../common/Banner";
-import { Container, Box } from "@mui/material";
 import Form from "../form/FormControlBlock";
 import { loginStyles } from "./styles";
 
-const Logout = (props) => {
+function Logout() {
   const classes = loginStyles();
   return (
     <Layout>
@@ -17,7 +16,7 @@ const Logout = (props) => {
             <Form
               nameInput="Username or email *"
               passwordInput="Passwords *"
-              loginType={true}
+              loginType
             />
           </Container>
           <Container>
@@ -32,6 +31,6 @@ const Logout = (props) => {
       </Container>
     </Layout>
   );
-};
+}
 
 export default Logout;

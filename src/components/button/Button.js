@@ -1,9 +1,9 @@
-import React from "react";
+import PropTypes from "prop-types";
 import MuiButton from "@mui/material/Button";
-import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme";
 
-const Button = ({
+function Button({
   children,
   color,
   size,
@@ -11,19 +11,30 @@ const Button = ({
   type,
   state,
   ...otherProps
-}) => (
-  <ThemeProvider theme={theme}>
-    <MuiButton
-      color={color}
-      size={size}
-      borders={borders}
-      type={type}
-      state={state}
-      {...otherProps}
-    >
-      {children}
-    </MuiButton>
-  </ThemeProvider>
-);
+}) {
+  return (
+    <ThemeProvider theme={theme}>
+      <MuiButton
+        color={color}
+        size={size}
+        borders={borders}
+        type={type}
+        state={state}
+        {...otherProps}
+      >
+        {children}
+      </MuiButton>
+    </ThemeProvider>
+  );
+}
+
+Button.propTypes = {
+  color: PropTypes.string,
+  size: PropTypes.string,
+  borders: PropTypes.string,
+  type: PropTypes.string,
+  state: PropTypes.string,
+  children: PropTypes.element,
+};
 
 export default Button;

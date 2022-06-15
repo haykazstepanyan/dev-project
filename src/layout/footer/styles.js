@@ -49,7 +49,6 @@ const styles = {
     display: "block",
     fontWeight: "400",
     fontSize: "15px",
-    lineHeight: "30px",
     transition: "all 0.3s ease 0s",
     color: "inherit",
     lineHeight: "inherit",

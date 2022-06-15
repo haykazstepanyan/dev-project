@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -6,14 +7,14 @@ import { ClickableDropdown } from "../../components/dropdown";
 import { searchBoxStyles } from "./styles";
 import { categories } from "../../DUMMY_DATA";
 
-const SearchBox = ({ distance }) => {
+function SearchBox({ distance }) {
   const [category, setCategory] = useState("All categories");
   const [inputValue, setInputValue] = useState("");
   const categoriesArray = ["All categories", ...categories];
   const classes = searchBoxStyles();
 
   const handleCategory = (value) => {
-    categoriesArray.includes(value) && setCategory(value);
+    return categoriesArray.includes(value) && setCategory(value);
   };
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -43,6 +44,10 @@ const SearchBox = ({ distance }) => {
       </div>
     </Grid>
   );
+}
+
+SearchBox.propTypes = {
+  distance: PropTypes.number,
 };
 
 export default SearchBox;

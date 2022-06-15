@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
@@ -7,7 +6,7 @@ import styles from "./styles";
 
 const useStyles = createUseStyles(styles);
 
-const MyAccount = () => {
+function MyAccount() {
   const classes = useStyles();
   const theme = createTheme({
     typography: {
@@ -68,6 +67,6 @@ const MyAccount = () => {
       </nav>
     </>
   );
-};
+}
 
 export default MyAccount;

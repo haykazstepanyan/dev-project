@@ -1,8 +1,4 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { detailsStyles } from "./styles";
-import Button from "../button/Button";
-
 import {
   Container,
   FormControl,
@@ -12,6 +8,8 @@ import {
   RadioGroup,
   Radio,
 } from "@mui/material";
+import { detailsStyles } from "./styles";
+import Button from "../button";
 
 const labelNames = [
   "First Name",
@@ -20,7 +18,8 @@ const labelNames = [
   "Password",
   "Birthdate",
 ];
-const AccountDetails = (props) => {
+
+function AccountDetails() {
   const classes = detailsStyles();
   return (
     <Container className={classes.container}>
@@ -60,11 +59,13 @@ const AccountDetails = (props) => {
         </div>
         <span>(E.g.: 05/31/1970)</span>
         <div className={classes.saveBtnContainer}>
-          <Button className={classes.saveBtn} children="Save" variant="text" />
+          <Button className={classes.saveBtn} variant="text">
+            Save
+          </Button>
         </div>
       </FormControl>
     </Container>
   );
-};
+}
 
 export default AccountDetails;

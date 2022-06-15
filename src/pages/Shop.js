@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import Pagination from "../components/pagination";
+import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Pagination from "../components/pagination";
 import { getFakeProductsData } from "../helpers/api.helpers";
 import Layout from "../layout";
 import Banner from "../components/common/Banner";
-import Container from "@mui/system/Container";
 import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
-import Box from "@mui/material/Box";
 import { shopStyles } from "./styles";
 
-const Shop = () => {
+function Shop() {
   const [products, setProducts] = useState([]);
   const [productsByPages, setProductsByPages] = useState([]);
   const [start, setStart] = useState(0);
@@ -18,7 +18,7 @@ const Shop = () => {
 
   useEffect(() => {
     getFakeProductsData().then((productsData) =>
-      setProducts((prev) => [...prev, ...productsData])
+      setProducts((prev) => [...prev, ...productsData]),
     );
   }, []);
 
@@ -65,6 +65,6 @@ const Shop = () => {
       </Container>
     </Layout>
   );
-};
+}
 
 export default Shop;

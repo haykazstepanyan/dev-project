@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import MuiPagination from "@mui/material/Pagination";
 import { createUseStyles } from "react-jss";
 
@@ -10,7 +10,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const Pagination = ({ count, onChange }) => {
+function Pagination({ count, onChange }) {
   const classes = useStyles();
   return (
     <MuiPagination
@@ -21,5 +21,11 @@ const Pagination = ({ count, onChange }) => {
       shape="rounded"
     />
   );
+}
+
+Pagination.propTypes = {
+  count: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
+
 export default Pagination;

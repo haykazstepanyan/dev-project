@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 import { colors } from "../../constants/constants";
 
-export const theme = createTheme({
+const theme = createTheme({
   components: {
     MuiButton: {
       variants: [
@@ -84,3 +84,5 @@ export const theme = createTheme({
     },
   },
 });
+
+export default theme;

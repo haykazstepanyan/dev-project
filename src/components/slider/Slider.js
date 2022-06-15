@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -21,17 +21,17 @@ const slickSliderStyles = createUseStyles({
   },
 });
 
-export default function SlickSlider(props) {
+function SlickSlider({ slidesToShow, slidesToScroll, responsive, sliderData }) {
   const classes = slickSliderStyles();
 
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: props.slidesToShow,
-    slidesToScroll: props.slidesToScroll,
+    slidesToShow,
+    slidesToScroll,
     arrows: true,
-    ...(props.responsive
+    ...(responsive
       ? {
           responsive: [
             {
@@ -65,8 +65,8 @@ export default function SlickSlider(props) {
   return (
     <div className={classes.slickSlider}>
       <Slider {...settings}>
-        {props.sliderData.map((slideImage, index) => (
-          <div key={index}>
+        {sliderData.map((slideImage) => (
+          <div key={slideImage.url}>
             <img src={slideImage.url} alt="slide-img" />
           </div>
         ))}
@@ -74,3 +74,12 @@ export default function SlickSlider(props) {
     </div>
   );
 }
+
+SlickSlider.propTypes = {
+  sliderData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  slidesToShow: PropTypes.number,
+  slidesToScroll: PropTypes.number,
+  responsive: PropTypes.bool,
+};
+
+export default SlickSlider;

@@ -1,5 +1,6 @@
 import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
+
 const orderStyles = createUseStyles({
   rowTitle: {
     borderBottom: "1.5px solid black",

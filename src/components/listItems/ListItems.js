@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import MuiList from "@mui/material/List";
 import MuiListItem from "@mui/material/ListItem";
 import MuiListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
-import { useToggle } from "../hooks/hooks";
+import { useToggle } from "../../hooks/hooks";
 import { listStyles } from "./styles";
 
-const ListItems = ({ list }) => {
+function ListItems({ list }) {
   const [checked, setChecked] = useState([]);
   const [showMore, setShowMore] = useToggle();
   const classes = listStyles();
 
   const handleMoreToggle = () => {
-    setShowMore((showMore) => !showMore);
+    setShowMore((prevState) => !prevState);
   };
 
   const handleCheckboxToggle = (value) => () => {
@@ -52,11 +53,21 @@ const ListItems = ({ list }) => {
           </MuiListItem>
         ))}
       </MuiList>
-      <span className={classes.moreLess} onClick={handleMoreToggle}>
+      <div
+        role="button"
+        tabIndex={0}
+        className={classes.moreLess}
+        onClick={handleMoreToggle}
+        onKeyDown={handleMoreToggle}
+      >
         {showMore ? "Less..." : "More..."}
-      </span>
+      </div>
     </>
   );
+}
+
+ListItems.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ListItems;

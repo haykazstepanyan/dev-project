@@ -1,15 +1,14 @@
-import React from "react";
 import Grid from "@mui/material/Grid";
-import Container from "@mui/system/Container";
+import Container from "@mui/material/Container";
+import { useSelector } from "react-redux";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";
 import AccountLinks from "./AccountLinks";
 import Drawer from "./Drawer";
 import StickyHeader from "./StickyHeader";
 import { headerStyles } from "./styles";
-import { useSelector } from "react-redux";
 
-const Header = () => {
+function Header() {
   const classes = headerStyles();
 
   const isMobileVersion = useSelector((state) => state.app.isMobile);
@@ -32,7 +31,7 @@ const Header = () => {
               </>
             ) : (
               <>
-                <SearchBox />
+                <SearchBox distance={10} />
                 <AccountLinks />
               </>
             )}
@@ -42,6 +41,6 @@ const Header = () => {
       {!isMobileVersion && <StickyHeader />}
     </header>
   );
-};
+}
 
 export default Header;

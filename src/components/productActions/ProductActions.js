@@ -1,6 +1,3 @@
-import React from "react";
-const ProductActions = () => {
-  return "";
-};
+const ProductActions = () => "";
 
 export default ProductActions;

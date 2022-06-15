@@ -1,18 +1,16 @@
 import { Grid, Container } from "@mui/material";
-
 import BusinessIcon from "@mui/icons-material/Business";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MailIcon from "@mui/icons-material/Mail";
 
 import Button from "../components/button";
-import React from "react";
 
 import { globalStyles } from "../components/styles/styles";
 import { contactUsStyles } from "./styles";
 import Layout from "../layout";
 import Banner from "../components/common/Banner";
 
-const ContactUs = () => {
+function ContactUs() {
   const classes = contactUsStyles();
   const globalClasses = globalStyles();
   return (
@@ -53,28 +51,28 @@ const ContactUs = () => {
               <p className={classes.contactUsTitle}>Tell Us Your Project</p>
               <div className={classes.contactUsForm}>
                 <div>
-                  <label>Your Name (required)</label>
-                  <div>
-                    <input placeholder="Name *" type="text" />
-                  </div>
+                  <label htmlFor="name">
+                    Your Name (required)
+                    <input id="name" placeholder="Name *" type="text" />
+                  </label>
                 </div>
                 <div>
-                  <label>Your Email (required)</label>
-                  <div>
-                    <input placeholder="Email *" type="email" />
-                  </div>
+                  <label htmlFor="email">
+                    Your Email (required)
+                    <input id="email" placeholder="Email *" type="email" />
+                  </label>
                 </div>
                 <div>
-                  <label>Subject</label>
-                  <div>
-                    <input placeholder="Subject *" type="text" />
-                  </div>
+                  <label htmlFor="subject">
+                    Subject
+                    <input id="subject" placeholder="Subject *" type="text" />
+                  </label>
                 </div>
                 <div>
-                  <label>Your Message</label>
-                  <div>
-                    <textarea placeholder="Message *" />
-                  </div>
+                  <label htmlFor="msg">
+                    Your Message
+                    <textarea id="msg" placeholder="Message *" />
+                  </label>
                 </div>
                 <Button type="secondary" disableRipple>
                   Send
@@ -86,6 +84,6 @@ const ContactUs = () => {
       </div>
     </Layout>
   );
-};
+}
 
 export default ContactUs;

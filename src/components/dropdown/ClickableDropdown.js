@@ -1,9 +1,9 @@
-import React from "react";
 import { useState } from "react";
-import Button from "../button";
+import PropTypes from "prop-types";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { createUseStyles } from "react-jss";
+import Button from "../button";
 
 const useStyles = createUseStyles({
   dropdownMenu: ({ topDistance = 0 }) => ({
@@ -14,7 +14,7 @@ const useStyles = createUseStyles({
   }),
 });
 
-const ClickableDropdown = ({ icon, options, value, change, topDistance }) => {
+function ClickableDropdown({ icon, options, value, change, topDistance }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -23,7 +23,7 @@ const ClickableDropdown = ({ icon, options, value, change, topDistance }) => {
   };
   const handleClose = (selectedOption) => {
     setAnchorEl(null);
-    change && change(selectedOption);
+    return change && change(selectedOption);
   };
 
   const classes = useStyles({ topDistance });
@@ -35,7 +35,7 @@ const ClickableDropdown = ({ icon, options, value, change, topDistance }) => {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        startIcon={icon || null}
+        startIcon={icon}
         type="dropdownBtn"
         state={open ? "open" : ""}
         color="info"
@@ -50,10 +50,10 @@ const ClickableDropdown = ({ icon, options, value, change, topDistance }) => {
         onClose={handleClose}
         className={classes.dropdownMenu}
       >
-        {options.map((option, i) => (
+        {options.map((option) => (
           <MenuItem
             className={classes.dropdownMenuItems}
-            key={`${option}${i}`}
+            key={option}
             onClick={() => handleClose(option)}
           >
             {option}
@@ -62,6 +62,19 @@ const ClickableDropdown = ({ icon, options, value, change, topDistance }) => {
       </Menu>
     </div>
   );
+}
+
+ClickableDropdown.defaultProps = {
+  icon: "",
+  topDistance: 0,
+};
+
+ClickableDropdown.propTypes = {
+  icon: PropTypes.element,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  value: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+  topDistance: PropTypes.number,
 };
 
 export default ClickableDropdown;

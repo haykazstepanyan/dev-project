@@ -1,28 +1,27 @@
-import React, { useEffect } from "react";
-import Routes from "./routes/Routes";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import Routes from "./routes";
 import { documentStyles } from "./components/styles/styles";
-import { StyledEngineProvider } from "@mui/material/styles";
+
 import mainTheme from "./components/styles/mainTheme";
 import { appActions } from "./redux/appSlice";
 
-const App = () => {
+function App() {
   const dispatch = useDispatch();
 
-  const handleIsMobileVersion = () => {
-    return dispatch(
+  const handleIsMobileVersion = () =>
+    dispatch(
       appActions.setIsMobileVersion({
         isMobile: Boolean(window.innerWidth < 900),
-      })
+      }),
     );
-  };
 
   useEffect(() => {
     handleIsMobileVersion();
     window.addEventListener("resize", handleIsMobileVersion);
     return () => window.removeEventListener("resize", handleIsMobileVersion);
-  }, []);
+  }, [handleIsMobileVersion]);
 
   documentStyles();
 
@@ -33,6 +32,6 @@ const App = () => {
       </ThemeProvider>
     </StyledEngineProvider>
   );
-};
+}
 
 export default App;

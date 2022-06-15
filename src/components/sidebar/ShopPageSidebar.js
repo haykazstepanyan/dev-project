@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { ThemeProvider } from "@mui/material/styles";
+import Container from "@mui/material/Container";
+import TextField from "@mui/material/TextField";
 import { shopSidebarStyles } from "./styles";
 import Button from "../button";
-import { ThemeProvider } from "@mui/material/styles";
 import { filterRangeTheme } from "./theme";
-import Container from "@mui/system/Container";
-import TextField from "@mui/material/TextField";
 import { brands, categories } from "../../DUMMY_DATA";
 import ListItems from "../listItems";
 
-const ShopPageSidebar = () => {
+function ShopPageSidebar() {
   const classes = shopSidebarStyles();
   const [value, setValue] = useState([0, 100]);
 
@@ -18,17 +18,17 @@ const ShopPageSidebar = () => {
     setValue(newValue);
   };
   const handleMinValueChange = (e) => {
-    setValue((value) => [+e.target.value, value[1]]);
+    setValue((prevState) => [+e.target.value, prevState[1]]);
   };
   const handleMaxValueChange = (e) => {
-    setValue((value) => [value[0], +e.target.value]);
+    setValue((prevState) => [prevState[0], +e.target.value]);
   };
 
   return (
     <div className={classes.shopSidebar}>
       <div className={classes.filterBox}>
         <h3 className={classes.filterName}>Filter by Price</h3>
-        <Box width={"100%"} mb={2.5}>
+        <Box width="100%" mb={2.5}>
           <ThemeProvider theme={filterRangeTheme}>
             <Slider
               size="small"
@@ -92,6 +92,6 @@ const ShopPageSidebar = () => {
       </div>
     </div>
   );
-};
+}
 
 export default ShopPageSidebar;

@@ -1,16 +1,14 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { createUseStyles } from "react-jss";
-import styles from "./styles";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import clsx from "clsx";
 import GoogleIcon from "@mui/icons-material/Google";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import styles from "./styles";
 
 const useStyles = createUseStyles(styles);
 
-const ContactLinks = () => {
+function ContactLinks() {
   const classes = useStyles();
 
   return (
@@ -19,12 +17,13 @@ const ContactLinks = () => {
         <Link to="/" className={classes.ContactLinksHeaderClik}>
           <img
             src="https://htmldemo.net/lukani/lukani/assets/img/logo/logo.png"
+            alt="logo"
             className={classes.ContactLinksImg}
-          ></img>
+          />
         </Link>
       </div>
       <div className={classes.socialBtnList}>
-        <ul className={clsx(classes.contactPagesDiv, classes.infoUl)}>
+        <ul className={`${classes.contactPagesDiv} ${classes.infoUl}`}>
           <li className={classes.socialBtnLine}>
             <Link to="/" className={classes.socialBtn}>
               <FacebookOutlinedIcon className={classes.iconSize} />
@@ -49,6 +48,6 @@ const ContactLinks = () => {
       </div>
     </>
   );
-};
+}
 
 export default ContactLinks;

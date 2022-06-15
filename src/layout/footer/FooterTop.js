@@ -1,5 +1,4 @@
-import * as React from "react";
-import { Container } from "@mui/system";
+import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { createUseStyles } from "react-jss";
 import styles from "./styles";
@@ -11,7 +10,7 @@ import ContactLinks from "./ContactLinks";
 
 const useStyles = createUseStyles(styles);
 
-const FooterTop = () => {
+function FooterTop() {
   const classes = useStyles();
 
   return (
@@ -43,6 +42,6 @@ const FooterTop = () => {
       </Container>
     </div>
   );
-};
+}
 
 export default FooterTop;

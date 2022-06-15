@@ -1,13 +1,13 @@
-import React from "react";
-import { productItemStyles } from "./styles";
+import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Sale from "./Sale";
 import { Link } from "react-router-dom";
+import Sale from "./Sale";
+import { productItemStyles } from "./styles";
 
-const ProductItem = ({ id, title, price, image, discount = 5 }) => {
+function ProductItem({ id, title, price, image, discount = 5 }) {
   const classes = productItemStyles();
   return (
     <Card className={classes.productCard}>
@@ -28,6 +28,14 @@ const ProductItem = ({ id, title, price, image, discount = 5 }) => {
       </Link>
     </Card>
   );
+}
+
+ProductItem.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  discount: PropTypes.number.isRequired,
 };
 
 export default ProductItem;

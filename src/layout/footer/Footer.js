@@ -1,12 +1,11 @@
-import React from "react";
+import { createUseStyles } from "react-jss";
 import FooterTop from "./FooterTop";
 import FooterBottom from "./FooterBottom";
-import { createUseStyles } from "react-jss";
 import styles from "./styles";
 
 const useStyles = createUseStyles(styles);
 
-const Footer = () => {
+function Footer() {
   const classes = useStyles();
   return (
     <div className={classes.footer}>
@@ -14,6 +13,6 @@ const Footer = () => {
       <FooterBottom />
     </div>
   );
-};
+}
 
 export default Footer;

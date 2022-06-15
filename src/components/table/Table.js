@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import MuiTable from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,9 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import ClearIcon from "@mui/icons-material/Clear";
 import Button from "../button";
-import { tableStyles } from "./style";
+import { tableStyles } from "./styles";
 
-const Table = (props) => {
+function Table({ type, tableData, deleteProduct }) {
   const classes = tableStyles();
 
   return (
@@ -23,7 +23,7 @@ const Table = (props) => {
             <TableCell>Product</TableCell>
             <TableCell>Price</TableCell>
             <TableCell>Stock Status</TableCell>
-            {props.type === "wishlist" ? (
+            {type === "wishlist" ? (
               <TableCell>Add to cart</TableCell>
             ) : (
               <>
@@ -34,9 +34,9 @@ const Table = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.tableData.map((row, index) => (
+          {tableData.map((row) => (
             <TableRow
-              key={index}
+              key={row.name}
               sx={{
                 "&:last-child td, &:last-child th": {
                   border: 0,
@@ -55,11 +55,11 @@ const Table = (props) => {
                 <p>£{row.price}</p>
               </TableCell>
               <TableCell className="stockStatus">{row.stockStatus}</TableCell>
-              {props.type === "wishlist" ? (
+              {type === "wishlist" ? (
                 <TableCell>
                   <Button
                     type="primary"
-                    onClick={() => props.deleteProduct(row.productId)}
+                    onClick={() => deleteProduct(row.productId)}
                     disableRipple
                   >
                     Add to cart
@@ -68,8 +68,10 @@ const Table = (props) => {
               ) : (
                 <>
                   <TableCell className="qty-input">
-                    <label>Quantity</label>
-                    <input type="number" />
+                    <label htmlFor="quantity">
+                      Quantity
+                      <input id="quantity" type="number" />
+                    </label>
                   </TableCell>
                   <TableCell className="price">
                     <p>£{row.total}</p>
@@ -82,6 +84,21 @@ const Table = (props) => {
       </MuiTable>
     </TableContainer>
   );
+}
+
+Table.propTypes = {
+  tableData: PropTypes.arrayOf(
+    PropTypes.shape({
+      productId: PropTypes.number,
+      name: PropTypes.string,
+      image: PropTypes.string,
+      price: PropTypes.number,
+      total: PropTypes.number,
+      stockStatus: PropTypes.string,
+    }),
+  ).isRequired,
+  type: PropTypes.string,
+  deleteProduct: PropTypes.func,
 };
 
 export default Table;

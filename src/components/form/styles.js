@@ -71,7 +71,7 @@ const formStyles = createUseStyles({
   },
   checkbox: {
     "& input[type='checkbox']": {
-        color:colors.green,
+      color: colors.green,
       backgroundColor: colors.blue,
     },
   },

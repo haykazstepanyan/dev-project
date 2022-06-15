@@ -1,24 +1,19 @@
-import React from "react";
 import Grid from "@mui/material/Grid";
-import styles from "./styles";
 import { createUseStyles } from "react-jss";
-import { Container } from "@mui/system";
-import clsx from "clsx";
+import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import styles from "./styles";
 
 const useStyles = createUseStyles(styles);
 
-const FooterBottom = () => {
+function FooterBottom() {
   const classes = useStyles();
   return (
-    <div className={clsx(classes.footerBottom, classes.footerBottomHeight)}>
+    <div className={`${classes.footerBottom} ${classes.footerBottomHeight}`}>
       <Container
         maxWidth="lg"
-        className={clsx(
-          classes.footerBottomConteiner,
-          classes.footerBottomHeight
-        )}
+        className={`${classes.footerBottomConteiner} ${classes.footerBottomHeight}`}
       >
         <Grid
           container
@@ -27,13 +22,13 @@ const FooterBottom = () => {
           className={classes.footerBottomGridContainer}
         >
           <Grid item xs={8} className={classes.footerBottomGrid}>
-            <p class="copyright-text">
+            <p className="copyright-text">
               © 2021{" "}
               <Link to="/" className={classes.footerBottomLink}>
                 Lukani
               </Link>
               . Made with <FavoriteIcon className={classes.footerBottomHeart} />
-              <i class="fa fa-heart text-danger"></i> By{" "}
+              <i className="fa fa-heart text-danger" /> By{" "}
               <Link to="/" className={classes.footerBottomLink}>
                 Our Teams
               </Link>
@@ -42,7 +37,10 @@ const FooterBottom = () => {
           <Grid item xs={8} className={classes.footerBottomGrid}>
             <div className={classes.footerBottomRight}>
               <Link to="/">
-                <img src="https://htmldemo.net/lukani/lukani/assets/img/icon/payment.png" />
+                <img
+                  alt="socialLinks"
+                  src="https://htmldemo.net/lukani/lukani/assets/img/icon/payment.png"
+                />
               </Link>
             </div>
           </Grid>
@@ -50,6 +48,6 @@ const FooterBottom = () => {
       </Container>
     </div>
   );
-};
+}
 
 export default FooterBottom;
