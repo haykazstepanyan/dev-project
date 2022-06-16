@@ -1,9 +1,6 @@
 import PropTypes from "prop-types";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import Sale from "./Sale";
 import { productItemStyles } from "./styles";
 

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
+import { createUseStyles } from "react-jss";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { createUseStyles } from "react-jss";
 import styles from "./styles";
 
 const useStyles = createUseStyles(styles);

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -8,19 +9,22 @@ import {
   RadioGroup,
   Radio,
 } from "@mui/material";
-import { detailsStyles } from "./styles";
 import Button from "../button";
-
-const labelNames = [
-  "First Name",
-  "Last Name",
-  "Email",
-  "Password",
-  "Birthdate",
-];
+import { detailsStyles } from "./styles";
 
 function AccountDetails() {
+  const [gender, setGender] = useState("female");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const classes = detailsStyles();
+
+  const handleRadioChange = (_, value) => {
+    setGender(value);
+  };
+
   return (
     <Container className={classes.container}>
       <h3 className={classes.detailsTitle}>Account Details</h3>
@@ -32,36 +36,62 @@ function AccountDetails() {
 
         <RadioGroup
           className={classes.radioGroup}
-          defaultValue="female"
+          value={gender}
           name="radio-buttons-group"
+          onChange={handleRadioChange}
         >
-          <FormControlLabel value="female" control={<Radio />} label="Mr." />
-          <FormControlLabel value="male" control={<Radio />} label="Mrs." />
+          <FormControlLabel value="male" control={<Radio />} label="Mr." />
+          <FormControlLabel value="female" control={<Radio />} label="Mrs." />
         </RadioGroup>
         <div className={classes.inputsContainer}>
-          {labelNames.map((item) => {
-            const id = item.toLowerCase().replace(/\s/g, "");
-            const value = id === "birthdate" ? "MM/DD/YYY" : "";
-
-            return (
-              <div className={classes.inputContainer} key={item}>
-                <FormLabel htmlFor={id}>{item}</FormLabel>
-                <TextField
-                  className={classes.formInput}
-                  id={id}
-                  name="name"
-                  type="text"
-                  value={value}
-                />
-              </div>
-            );
-          })}
+          <div className={classes.inputContainer}>
+            <FormLabel htmlFor="firstName">First Name</FormLabel>
+            <TextField
+              className={classes.formInput}
+              id="firstName"
+              name="firstName"
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className={classes.inputContainer}>
+            <FormLabel htmlFor="lastName">Last Name</FormLabel>
+            <TextField
+              className={classes.formInput}
+              id="lastName"
+              name="lastName"
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div className={classes.inputContainer}>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <TextField
+              className={classes.formInput}
+              id="email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className={classes.inputContainer}>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <TextField
+              className={classes.formInput}
+              id="password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          {/* Date picker */}
         </div>
-        <span>(E.g.: 05/31/1970)</span>
         <div className={classes.saveBtnContainer}>
-          <Button className={classes.saveBtn} variant="text">
-            Save
-          </Button>
+          <Button color="primary">Save</Button>
         </div>
       </FormControl>
     </Container>

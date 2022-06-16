@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import MuiPagination from "@mui/material/Pagination";
 import { createUseStyles } from "react-jss";
+import MuiPagination from "@mui/material/Pagination";
 
 const useStyles = createUseStyles({
   paginationStyle: {

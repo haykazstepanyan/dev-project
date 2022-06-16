@@ -1,12 +1,11 @@
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import { createUseStyles } from "react-jss";
-import styles from "./styles";
+import { Container, Grid } from "@mui/material";
 import OpeningTime from "./OpeningTime";
 import Information from "./Information";
 import MyAccount from "./MyAccount";
 import CustomerService from "./CustomerService";
 import ContactLinks from "./ContactLinks";
+import styles from "./styles";
 
 const useStyles = createUseStyles(styles);
 

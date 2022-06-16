@@ -85,6 +85,7 @@ const accountStyles = createUseStyles({
     borderRadius: "3px",
     padding: 10,
     margin: 10,
+    textTransform: "capitalize",
     "&:hover": {
       background: "rgb(121, 162, 6)",
     },

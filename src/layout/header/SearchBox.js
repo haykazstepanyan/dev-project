@@ -4,8 +4,8 @@ import Grid from "@mui/material/Grid";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { ClickableDropdown } from "../../components/dropdown";
-import { searchBoxStyles } from "./styles";
 import { categories } from "../../DUMMY_DATA";
+import { searchBoxStyles } from "./styles";
 
 function SearchBox({ distance }) {
   const [category, setCategory] = useState("All categories");

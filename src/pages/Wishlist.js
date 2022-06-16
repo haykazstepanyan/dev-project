@@ -1,11 +1,10 @@
 import { Container } from "@mui/material";
+import Table from "../components/table/Table";
+import Banner from "../components/common/Banner";
 import product1 from "../assets/images/product.webp";
 import product2 from "../assets/images/product2.webp";
 import product3 from "../assets/images/product3.webp";
 import { globalStyles } from "../components/styles/styles";
-import Layout from "../layout";
-import Table from "../components/table/Table";
-import Banner from "../components/common/Banner";
 
 function createData(image, name, price, stockStatus, productId) {
   return {
@@ -31,7 +30,7 @@ export default function Wishlist() {
   const globalClasses = globalStyles();
 
   return (
-    <Layout>
+    <>
       <Banner name="Wishlist" />
       <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
         <Table
@@ -40,6 +39,6 @@ export default function Wishlist() {
           // deleteProduct={deleteProduct}
         />
       </Container>
-    </Layout>
+    </>
   );
 }

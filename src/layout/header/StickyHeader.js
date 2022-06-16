@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import { Container, Grid } from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Navbar from "./Navbar";
 import { ClickableDropdown } from "../../components/dropdown";
-import { headerStyles } from "./styles";
 import { categories } from "../../DUMMY_DATA";
+import { headerStyles } from "./styles";
 
 function StickyHeader() {
   const classes = headerStyles();

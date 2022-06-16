@@ -1,8 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import { createUseStyles } from "react-jss";
+import { Menu, MenuItem } from "@mui/material";
 import Button from "../button";
 
 const useStyles = createUseStyles({

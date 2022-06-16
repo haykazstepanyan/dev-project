@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Pagination from "../components/pagination";
+import { Container, Grid, Box } from "@mui/material";
 import { getFakeProductsData } from "../helpers/api.helpers";
-import Layout from "../layout";
+import Pagination from "../components/pagination";
 import Banner from "../components/common/Banner";
 import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
@@ -33,7 +30,7 @@ function Shop() {
   };
 
   return (
-    <Layout>
+    <>
       <Banner name="Shop" />
       <Container maxWidth="lg">
         <Box mt={12.5}>
@@ -51,6 +48,7 @@ function Shop() {
                         title={title}
                         image={images[0]}
                         price={price}
+                        discount={5}
                       />
                     </Grid>
                   ))}
@@ -63,7 +61,7 @@ function Shop() {
           </Grid>
         </Box>
       </Container>
-    </Layout>
+    </>
   );
 }
 
