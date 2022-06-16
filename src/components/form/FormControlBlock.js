@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import {
   Container,
   FormControl,
@@ -44,9 +44,9 @@ function Form({ nameInput, passwordInput, loginType }) {
       </div>
       {loginType ? (
         <Container className={classes.loginSumbit}>
-          <Link to="/" className={classes.lostPasswordLink}>
+          {/* <Link to="/" className={classes.lostPasswordLink}>
             Lost your password?
-          </Link>
+          </Link> */}
 
           <FormGroup className={classes.btnCnt}>
             <FormControlLabel

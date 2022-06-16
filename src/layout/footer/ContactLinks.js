@@ -4,6 +4,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import GoogleIcon from "@mui/icons-material/Google";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import logo from "../../assets/images/logo.png";
 import styles from "./styles";
 
 const useStyles = createUseStyles(styles);
@@ -15,11 +16,7 @@ function ContactLinks() {
     <>
       <div className={classes.ContactLinksHeader}>
         <Link to="/" className={classes.ContactLinksHeaderClik}>
-          <img
-            src="https://htmldemo.net/lukani/lukani/assets/img/logo/logo.png"
-            alt="logo"
-            className={classes.ContactLinksImg}
-          />
+          <img src={logo} alt="logo" className={classes.ContactLinksImg} />
         </Link>
       </div>
       <div className={classes.socialBtnList}>

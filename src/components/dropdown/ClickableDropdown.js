@@ -71,9 +71,14 @@ ClickableDropdown.defaultProps = {
 
 ClickableDropdown.propTypes = {
   icon: PropTypes.element,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    // PropTypes.string,
+    // PropTypes.shape({PropTypes.string, PropTypes.ele}),
+  ).isRequired,
   value: PropTypes.string.isRequired,
-  change: PropTypes.func.isRequired,
+  change: PropTypes.func,
   topDistance: PropTypes.number,
 };
 

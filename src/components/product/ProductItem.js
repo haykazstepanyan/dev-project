@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Sale from "./Sale";
 import { productItemStyles } from "./styles";
 
-function ProductItem({ id, title, price, image, discount = 5 }) {
+function ProductItem({ id, title, price, image, discount }) {
   const classes = productItemStyles();
   return (
     <Card className={classes.productCard}>
@@ -30,12 +30,16 @@ function ProductItem({ id, title, price, image, discount = 5 }) {
   );
 }
 
+ProductItem.defaultProps = {
+  discount: 0,
+};
+
 ProductItem.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
-  discount: PropTypes.number.isRequired,
+  discount: PropTypes.number,
 };
 
 export default ProductItem;

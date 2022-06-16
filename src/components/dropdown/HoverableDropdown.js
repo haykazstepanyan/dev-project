@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "../button";
 import { hoverableDropdownStyles } from "./styles";
 
-function HoverableDropdown({ icon, value, list }) {
+function HoverableDropdown({ value, list }) {
   const classes = hoverableDropdownStyles();
   const popupState = usePopupState({
     variant: "popover",
@@ -24,7 +24,6 @@ function HoverableDropdown({ icon, value, list }) {
     <div>
       <Button
         {...bindHover(popupState)}
-        endIcon={icon}
         color="info"
         type="dropdownBtn"
         state={popupState.isOpen ? "open" : ""}
@@ -51,13 +50,8 @@ function HoverableDropdown({ icon, value, list }) {
   );
 }
 
-HoverableDropdown.defaultProps = {
-  icon: "",
-};
-
 HoverableDropdown.propTypes = {
-  icon: PropTypes.element,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   list: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   ),
