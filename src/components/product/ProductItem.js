@@ -23,7 +23,7 @@ function ProductItem({ id, title, price, image, discount }) {
             </span>
             <span className={classes.productRealPrice}>${price}</span>
           </div>
-          <Sale discount={discount} />
+          <Sale discount={5} />
         </CardContent>
       </Link>
     </Card>
