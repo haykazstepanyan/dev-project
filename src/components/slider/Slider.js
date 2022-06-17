@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import Slider from "react-slick";
+import { createUseStyles } from "react-jss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { createUseStyles } from "react-jss";
 
 const slickSliderStyles = createUseStyles({
   slickSlider: {

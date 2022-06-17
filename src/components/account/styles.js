@@ -89,9 +89,6 @@ const detailsStyles = createUseStyles({
   inputsContainer: {
     marginTop: "22px",
   },
-  saveBtn: {
-    color: colors.green,
-  },
   saveBtnContainer: {
     marginTop: "15px",
   },

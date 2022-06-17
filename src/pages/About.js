@@ -1,4 +1,5 @@
 import { Grid, Container } from "@mui/material";
+import Banner from "../components/common/Banner";
 import aboutMainImage from "../assets/images/about1.webp";
 import featuresBgImage from "../assets/images/about-us-policy-bg.webp";
 import featureIcon1 from "../assets/images/About_icon1.webp";
@@ -13,11 +14,8 @@ import slideImg2 from "../assets/images/brand2.webp";
 import slideImg3 from "../assets/images/brand3.webp";
 import slideImg4 from "../assets/images/brand4.webp";
 import slideImg5 from "../assets/images/brand5.webp";
-
 import { aboutUsStyles } from "./styles";
 import { globalStyles } from "../components/styles/styles";
-import Layout from "../layout";
-import Banner from "../components/common/Banner";
 
 const slideImages = [
   {
@@ -66,7 +64,7 @@ function About() {
   const classes = aboutUsStyles();
   const globalClasses = globalStyles();
   return (
-    <Layout>
+    <>
       <Banner name="About Us" />
       <div className={classes.aboutUsInfo}>
         <Grid container spacing={2}>
@@ -194,7 +192,7 @@ function About() {
           responsive
         />
       </Container>
-    </Layout>
+    </>
   );
 }
 

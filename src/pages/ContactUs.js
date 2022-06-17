@@ -2,19 +2,16 @@ import { Grid, Container } from "@mui/material";
 import BusinessIcon from "@mui/icons-material/Business";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MailIcon from "@mui/icons-material/Mail";
-
 import Button from "../components/button";
-
+import Banner from "../components/common/Banner";
 import { globalStyles } from "../components/styles/styles";
 import { contactUsStyles } from "./styles";
-import Layout from "../layout";
-import Banner from "../components/common/Banner";
 
 function ContactUs() {
   const classes = contactUsStyles();
   const globalClasses = globalStyles();
   return (
-    <Layout>
+    <>
       <Banner name="Contact Us" />
       <div>
         <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
@@ -82,7 +79,7 @@ function ContactUs() {
           </Grid>
         </Container>
       </div>
-    </Layout>
+    </>
   );
 }
 

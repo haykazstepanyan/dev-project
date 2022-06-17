@@ -12,6 +12,12 @@ export const colors = {
 
 export const API_URL = getUrl();
 export const TABLE_TITLES = ["Date", "Status", "Total", "Actions"];
+export const NAV_LINKS = [
+  { route: "/", name: "Home" },
+  { route: "/shop", name: "Shop" },
+  { route: "/contact", name: "Contact" },
+  { route: "/about", name: "About Us" },
+];
 // --c-blue: #0d6efd;
 // --c-indigo: #6610f2;
 // --c-purple: #6f42c1;

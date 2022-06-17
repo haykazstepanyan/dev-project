@@ -1,5 +1,7 @@
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
+import Fallback from "../components/common/Fallback";
+import Layout from "../layout";
 
 const Account = lazy(() => import("../pages/Account"));
 const Dashboard = lazy(() => import("../components/account/Dashboard"));
@@ -18,23 +20,62 @@ const AccountDetails = lazy(() =>
 
 function PageRoutes() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Layout>
+      <Fallback>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="shop" element={<Shop />} />
+          <Route path="product/:productId" element={<ProductView />} />
+          <Route path="wishlist" element={<Wishlist />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="about" element={<About />} />
+          <Route path="/contact" element={<ContactUs />} />
+        </Routes>
+      </Fallback>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/product/:productId" element={<ProductView />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<ContactUs />} />
-        <Route path="account" element={<Account />}>
-          <Route path="login" element={<Login />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="details" element={<AccountDetails />} />
+        <Route
+          path="account"
+          element={
+            <Fallback>
+              <Account />
+            </Fallback>
+          }
+        >
+          <Route
+            path="login"
+            element={
+              <Fallback>
+                <Login />
+              </Fallback>
+            }
+          />
+          <Route
+            path="dashboard"
+            element={
+              <Fallback>
+                <Dashboard />
+              </Fallback>
+            }
+          />
+          <Route
+            path="orders"
+            element={
+              <Fallback>
+                <Orders />
+              </Fallback>
+            }
+          />
+          <Route
+            path="details"
+            element={
+              <Fallback>
+                <AccountDetails />
+              </Fallback>
+            }
+          />
         </Route>
       </Routes>
-    </Suspense>
+    </Layout>
   );
 }
 

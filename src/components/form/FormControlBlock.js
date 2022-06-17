@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-// import { Link } from "react-router-dom";
 import {
   Container,
   FormControl,
@@ -60,24 +59,12 @@ function Form({ nameInput, passwordInput, loginType }) {
               }
               label="Remember me"
             />
-            <Button
-              className={classes.loginSubmit}
-              type="sumbit"
-              borderRadius="20px"
-            >
-              Login
-            </Button>
+            <Button color="primary">Login</Button>
           </FormGroup>
         </Container>
       ) : (
         <FormGroup className={classes.btnCnt}>
-          <Button
-            className={classes.loginSubmit}
-            type="sumbit"
-            borderRadius="20px"
-          >
-            Register
-          </Button>
+          <Button color="primary">Register</Button>
         </FormGroup>
       )}
     </FormControl>

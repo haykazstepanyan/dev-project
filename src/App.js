@@ -1,27 +1,25 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import { appActions } from "./redux/appSlice";
 import Routes from "./routes";
 import { documentStyles } from "./components/styles/styles";
-
 import mainTheme from "./components/styles/mainTheme";
-import { appActions } from "./redux/appSlice";
 
 function App() {
   const dispatch = useDispatch();
 
-  const handleIsMobileVersion = () =>
-    dispatch(
-      appActions.setIsMobileVersion({
-        isMobile: Boolean(window.innerWidth < 900),
-      }),
-    );
-
   useEffect(() => {
+    const handleIsMobileVersion = () =>
+      dispatch(
+        appActions.setIsMobileVersion({
+          isMobile: window.innerWidth < 900,
+        }),
+      );
     handleIsMobileVersion();
     window.addEventListener("resize", handleIsMobileVersion);
     return () => window.removeEventListener("resize", handleIsMobileVersion);
-  }, [handleIsMobileVersion]);
+  }, [dispatch]);
 
   documentStyles();
 
