@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-import { FormControl, InputLabel, TextareaAutosize } from "@mui/material";
+import { FormControl, InputLabel } from "@mui/material";
 import { globalTextAreaStyles } from "./styles";
 
-function Textarea({ labelValue, htmlFor, state, placeholder, ...otherProps }) {
+function Textarea({ labelValue, htmlFor, placeholder, ...otherProps }) {
   const textareaClasses = globalTextAreaStyles();
   return (
     <FormControl variant="standard" className={textareaClasses.w100}>
@@ -12,10 +12,9 @@ function Textarea({ labelValue, htmlFor, state, placeholder, ...otherProps }) {
       >
         {labelValue}
       </InputLabel>
-      <TextareaAutosize
+      <textarea
         id={htmlFor}
         placeholder={placeholder}
-        state={state}
         className={textareaClasses.textareaStyle}
         {...otherProps}
       />
@@ -26,7 +25,6 @@ function Textarea({ labelValue, htmlFor, state, placeholder, ...otherProps }) {
 Textarea.propTypes = {
   labelValue: PropTypes.string,
   htmlFor: PropTypes.string,
-  state: PropTypes.string,
   placeholder: PropTypes.string,
 };
 
