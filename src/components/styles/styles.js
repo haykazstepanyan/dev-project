@@ -66,6 +66,13 @@ const globalStyles = createUseStyles({
   mb30: {
     marginBottom: 30,
   },
+  mb10: {
+    marginBottom: 10,
+  },
+  inputStyle: {
+    marginTop: 5,
+    width: "100%",
+  },
 });
 
 export { documentStyles, globalStyles };

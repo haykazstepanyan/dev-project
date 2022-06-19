@@ -7,6 +7,7 @@ import product2 from "../assets/images/product2.webp";
 import product3 from "../assets/images/product3.webp";
 import { globalStyles } from "../components/styles/styles";
 import { cartStyles } from "./styles";
+import Input from "../components/input";
 
 function createData(image, name, price, stockStatus, total) {
   return {
@@ -47,8 +48,20 @@ function Cart() {
               <div className={classes.couponBottomBlock}>
                 <p>Enter your coupon code if you have one.</p>
                 <div>
-                  <input type="text" placeholder="Coupon code" />
-                  <Button color="secondary" disableRipple>
+                  <Input
+                    type="text"
+                    placeholder="Coupon code"
+                    size="small"
+                    borders="square"
+                    state="noFocus"
+                    htmlFor="subject"
+                    className={globalClasses.inputStyle}
+                  />
+                  <Button
+                    color="secondary"
+                    disableRipple
+                    style={{ marginTop: 15 }}
+                  >
                     Apply coupon
                   </Button>
                 </div>

@@ -9,11 +9,24 @@ import { iconsStyles } from "./styles";
 function AccountLinks() {
   const classes = iconsStyles();
   const accountData = [
-    <Link key="account" to="/account">
-      My account
-    </Link>,
-    "Shopping cart",
-    "Wishlist",
+    {
+      item: (
+        <Link key="account" to="/account/dashboard">
+          My account
+        </Link>
+      ),
+      key: "account",
+    },
+    {
+      item: (
+        <Link key="signInUp" to="/login">
+          SignIn / SignUp
+        </Link>
+      ),
+      key: "signInUp",
+    },
+    { item: "Shopping cart", key: "shoppingCart" },
+    { item: "Wishlist", key: "wishlist" },
   ];
   return (
     <Grid item md={2} className={classes.iconsContainer}>

@@ -72,7 +72,11 @@ ClickableDropdown.propTypes = {
   icon: PropTypes.element,
 
   options: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.object,
+    ]),
     // PropTypes.string,
     // PropTypes.shape({PropTypes.string, PropTypes.ele}),
   ).isRequired,

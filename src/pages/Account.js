@@ -12,7 +12,7 @@ import { accountStyles } from "./styles";
 function Account() {
   const classes = accountStyles();
 
-  const tabList = ["dashboard", "orders", "account details", "login"];
+  const tabList = ["dashboard", "orders", "account details", "logout"];
   return (
     <>
       <Banner name="My Account" />
@@ -27,7 +27,7 @@ function Account() {
                   return (
                     <NavLink
                       key={item}
-                      to={`/account/${path}`}
+                      to={`${path}`}
                       className={(data) =>
                         `${data.isActive ? classes.activeLink : ""} `
                       }
