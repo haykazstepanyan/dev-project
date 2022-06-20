@@ -5,7 +5,6 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  Button,
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -13,6 +12,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import Button from "../button";
 import { miniShoppingCartStyles } from "./styles";
 
 function MiniShoppingCart({ onClose, open }) {
@@ -129,7 +129,7 @@ function MiniShoppingCart({ onClose, open }) {
             <Button
               variant="contained"
               onClick={handleCheckoutPage}
-              color="success"
+              color="primary"
               fullWidth
             >
               <ShoppingCartCheckoutIcon
