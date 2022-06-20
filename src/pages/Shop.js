@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Pagination from "../components/pagination";
 import { getProductsDataByPage } from "../helpers/api.helpers";
-import Layout from "../layout";
 import Banner from "../components/common/Banner";
 import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
@@ -32,7 +31,7 @@ function Shop() {
   };
 
   return (
-    <Layout>
+    <>
       <Banner name="Shop" />
       <Container maxWidth="lg">
         <Box mt={12.5}>
@@ -64,7 +63,7 @@ function Shop() {
           </Grid>
         </Box>
       </Container>
-    </Layout>
+    </>
   );
 }
 

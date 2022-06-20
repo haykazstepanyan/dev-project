@@ -121,7 +121,7 @@ function MiniShoppingCart({ onClose, open }) {
               color="info"
               fullWidth
             >
-              <ShoppingCartIcon fontSize="small" />
+              <ShoppingCartIcon fontSize="small" sx={{ marginRight: 1 }} />
               <span>VIEW CART</span>
             </Button>
           </Box>
@@ -132,7 +132,10 @@ function MiniShoppingCart({ onClose, open }) {
               color="success"
               fullWidth
             >
-              <ShoppingCartCheckoutIcon fontSize="small" />
+              <ShoppingCartCheckoutIcon
+                fontSize="small"
+                sx={{ marginRight: 1 }}
+              />
               <span>CHECKOUT</span>
             </Button>
           </Box>
