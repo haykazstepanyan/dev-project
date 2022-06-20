@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import { Container, Grid, Box } from "@mui/material";
-import { getFakeProductsData } from "../helpers/api.helpers";
+import { nanoid } from "nanoid";
+import Container from "@mui/system/Container";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Pagination from "../components/pagination";
+import { getProductsDataByPage } from "../helpers/api.helpers";
+import Layout from "../layout";
 import Banner from "../components/common/Banner";
 import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
@@ -9,28 +13,26 @@ import { shopStyles } from "./styles";
 
 function Shop() {
   const [products, setProducts] = useState([]);
-  const [productsByPages, setProductsByPages] = useState([]);
-  const [start, setStart] = useState(0);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState();
+
   const classes = shopStyles();
 
   useEffect(() => {
-    getFakeProductsData().then((productsData) =>
-      setProducts((prev) => [...prev, ...productsData]),
-    );
-  }, []);
+    getProductsDataByPage(page).then((productsData) => {
+      console.log(productsData);
+      setCount(productsData.length);
+      setProducts(productsData.results);
+    });
+  }, [page]);
 
-  useEffect(() => {
-    if (products.length > 0) {
-      setProductsByPages([...products].slice(start, start + 9));
-    }
-  }, [products, start]);
-
-  const gotoPage = (_, page) => {
-    setStart(page * 9 - 9);
+  const gotoPage = (_, pageNum) => {
+    console.log(page);
+    setPage(pageNum);
   };
 
   return (
-    <>
+    <Layout>
       <Banner name="Shop" />
       <Container maxWidth="lg">
         <Box mt={12.5}>
@@ -40,28 +42,29 @@ function Shop() {
             </Grid>
             <Grid item md={9}>
               <Grid container className={classes.shopItemContainer}>
-                {productsByPages &&
-                  productsByPages.map(({ id, title, images, price }) => (
-                    <Grid item sm={4} key={id} className={classes.shopItem}>
+                {products &&
+                  products.map(({ id, name, price }) => (
+                    <Grid
+                      item
+                      sm={4}
+                      key={nanoid()}
+                      className={classes.shopItem}
+                    >
                       <ProductItem
                         id={id}
-                        title={title}
-                        image={images[0]}
+                        title={name}
+                        // image={images[0]}
                         price={price}
-                        discount={5}
                       />
                     </Grid>
                   ))}
               </Grid>
-              <Pagination
-                count={Math.ceil(products.length / 9)}
-                onChange={gotoPage}
-              />
+              <Pagination count={count} onChange={gotoPage} />
             </Grid>
           </Grid>
         </Box>
       </Container>
-    </>
+    </Layout>
   );
 }
 

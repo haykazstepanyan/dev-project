@@ -1,4 +1,4 @@
-import { getUrl } from "../helpers/url.helpers";
+// import { getUrl } from "../helpers/url.helpers";
 
 export const colors = {
   black: "#222",
@@ -10,7 +10,7 @@ export const colors = {
   red: "#DC0F0F",
 };
 
-export const API_URL = getUrl();
+export const API_URL = "http://localhost:5000";
 export const TABLE_TITLES = ["Date", "Status", "Total", "Actions"];
 export const NAV_LINKS = [
   { route: "/", name: "Home" },
