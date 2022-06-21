@@ -21,7 +21,13 @@ const slickSliderStyles = createUseStyles({
   },
 });
 
-function SlickSlider({ slidesToShow, slidesToScroll, responsive, sliderData }) {
+function SlickSlider({
+  slidesToShow,
+  slidesToScroll,
+  responsive,
+  sliderData,
+  homeSlide,
+}) {
   const classes = slickSliderStyles();
 
   const settings = {
@@ -62,6 +68,19 @@ function SlickSlider({ slidesToShow, slidesToScroll, responsive, sliderData }) {
       : {}),
   };
 
+  if (homeSlide === true) {
+    return (
+      <div className={classes.slickSlider}>
+        <Slider {...settings}>
+          {sliderData.map((slideImage) => (
+            <div key={slideImage.url}>
+              <img src={slideImage.url} alt="slide-img" />
+            </div>
+          ))}
+        </Slider>
+      </div>
+    );
+  }
   return (
     <div className={classes.slickSlider}>
       <Slider {...settings}>
@@ -80,6 +99,7 @@ SlickSlider.propTypes = {
   slidesToShow: PropTypes.number,
   slidesToScroll: PropTypes.number,
   responsive: PropTypes.bool,
+  homeSlide: PropTypes.bool,
 };
 
 export default SlickSlider;

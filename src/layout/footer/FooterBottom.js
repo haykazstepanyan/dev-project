@@ -10,11 +10,8 @@ const useStyles = createUseStyles(styles);
 function FooterBottom() {
   const classes = useStyles();
   return (
-    <div className={`${classes.footerBottom} ${classes.footerBottomHeight}`}>
-      <Container
-        maxWidth="lg"
-        className={`${classes.footerBottomConteiner} ${classes.footerBottomHeight}`}
-      >
+    <div className={classes.footerBottom}>
+      <Container maxWidth="lg" className={classes.footerBottomConteiner}>
         <Grid
           container
           spacing={2}
@@ -22,17 +19,13 @@ function FooterBottom() {
           className={classes.footerBottomGridContainer}
         >
           <Grid item xs={8} className={classes.footerBottomGrid}>
-            <p className="copyright-text">
-              © 2021{" "}
-              <Link to="/" className={classes.footerBottomLink}>
-                Lukani
-              </Link>
-              . Made with <FavoriteIcon className={classes.footerBottomHeart} />
-              <i className="fa fa-heart text-danger" /> By{" "}
-              <Link to="/" className={classes.footerBottomLink}>
-                Our Teams
-              </Link>
-            </p>
+            <div>
+              <p>
+                © 2021 <Link to="/">Lukani</Link>. Made with <FavoriteIcon />
+                <i className="fa fa-heart text-danger" /> By{" "}
+                <Link to="/">Our Teams</Link>{" "}
+              </p>
+            </div>
           </Grid>
           <Grid item xs={8} className={classes.footerBottomGrid}>
             <div className={classes.footerBottomRight}>

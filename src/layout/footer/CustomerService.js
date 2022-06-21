@@ -27,45 +27,40 @@ function CustomerService() {
           bottom: "0",
           left: "0",
         },
+        "@media only screen and (max-width: 767px)": {
+          marginBottom: "12px",
+          fontSize: "14px",
+          display: "inline-block",
+        },
       },
     },
   });
 
   return (
-    <>
+    <div className={classes.footerContainer}>
       <ThemeProvider theme={theme}>
         <Typography variant="h3">CUSTOMER SERVICE</Typography>
       </ThemeProvider>
       <nav>
-        <ul className={classes.infoUl}>
-          <li className={classes.infoLi}>
-            <Link to="/contact" className={classes.link}>
-              Contact Us
-            </Link>
+        <ul>
+          <li>
+            <Link to="/contact">Contact Us</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/" className={classes.link}>
-              Terms of use
-            </Link>
+          <li>
+            <Link to="/">Terms of use</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/contact" className={classes.link}>
-              Site Map
-            </Link>
+          <li>
+            <Link to="/contact">Site Map</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/my-account" className={classes.link}>
-              My Account
-            </Link>
+          <li>
+            <Link to="/my-account">My Account</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/" className={classes.link}>
-              Returns
-            </Link>
+          <li>
+            <Link to="/">Returns</Link>
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 }
 

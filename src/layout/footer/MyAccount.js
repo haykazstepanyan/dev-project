@@ -27,45 +27,40 @@ function MyAccount() {
           bottom: "0",
           left: "0",
         },
+        "@media only screen and (max-width: 767px)": {
+          marginBottom: "12px",
+          fontSize: "14px",
+          display: "inline-block",
+        },
       },
     },
   });
 
   return (
-    <>
+    <div className={classes.footerContainer}>
       <ThemeProvider theme={theme}>
         <Typography variant="h3">MY ACCOUNT</Typography>
       </ThemeProvider>
       <nav>
-        <ul className={classes.infoUl}>
-          <li className={classes.infoLi}>
-            <Link to="/my-account" className={classes.link}>
-              My Account
-            </Link>
+        <ul>
+          <li>
+            <Link to="/my-account">My Account</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/contact" className={classes.link}>
-              Contact
-            </Link>
+          <li>
+            <Link to="/contact">Contact</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/cart" className={classes.link}>
-              Shopping cart
-            </Link>
+          <li>
+            <Link to="/cart">Shopping cart</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/chekouts" className={classes.link}>
-              Checkout
-            </Link>
+          <li>
+            <Link to="/chekouts">Checkout</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/shop" className={classes.link}>
-              Shop
-            </Link>
+          <li>
+            <Link to="/shop">Shop</Link>
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 }
 

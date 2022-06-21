@@ -13,37 +13,37 @@ function ContactLinks() {
   const classes = useStyles();
 
   return (
-    <>
-      <div className={classes.ContactLinksHeader}>
-        <Link to="/" className={classes.ContactLinksHeaderClik}>
-          <img src={logo} alt="logo" className={classes.ContactLinksImg} />
+    <div className={classes.contactContainer}>
+      <div className={classes.contactLinksHeader}>
+        <Link to="/">
+          <img src={logo} alt="logo" />
         </Link>
       </div>
       <div className={classes.socialBtnList}>
-        <ul className={`${classes.contactPagesDiv} ${classes.infoUl}`}>
-          <li className={classes.socialBtnLine}>
-            <Link to="/" className={classes.socialBtn}>
-              <FacebookOutlinedIcon className={classes.iconSize} />
+        <ul>
+          <li>
+            <Link to="/">
+              <FacebookOutlinedIcon />
             </Link>
           </li>
-          <li className={classes.socialBtnLine}>
-            <Link to="/" className={classes.socialBtn}>
-              <TwitterIcon className={classes.iconSize} />
+          <li>
+            <Link to="/">
+              <TwitterIcon />
             </Link>
           </li>
-          <li className={classes.socialBtnLine}>
-            <Link to="/" className={classes.socialBtn}>
-              <GoogleIcon className={classes.iconSize} />
+          <li>
+            <Link to="/">
+              <GoogleIcon />
             </Link>
           </li>
-          <li className={classes.socialBtnLine}>
-            <Link to="/" className={classes.socialBtn}>
-              <YouTubeIcon className={classes.iconSize} />
+          <li>
+            <Link to="/">
+              <YouTubeIcon />
             </Link>
           </li>
         </ul>
       </div>
-    </>
+    </div>
   );
 }
 
