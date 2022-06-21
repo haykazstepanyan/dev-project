@@ -27,45 +27,40 @@ function Information() {
           bottom: "0",
           left: "0",
         },
+        "@media only screen and (max-width: 767px)": {
+          marginBottom: "12px",
+          fontSize: "14px",
+          display: "inline-block",
+        },
       },
     },
   });
 
   return (
-    <>
+    <div className={classes.infoContainer}>
       <ThemeProvider theme={theme}>
         <Typography variant="h3">INFORMATION</Typography>
       </ThemeProvider>
       <nav>
-        <ul className={classes.infoUl}>
-          <li className={classes.infoLi}>
-            <Link to="/about" className={classes.link}>
-              About Us
-            </Link>
+        <ul>
+          <li>
+            <Link to="/about">About Us</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/checkouts" className={classes.link}>
-              Checkout
-            </Link>
+          <li>
+            <Link to="/checkouts">Checkout</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/contact" className={classes.link}>
-              Contact
-            </Link>
+          <li>
+            <Link to="/contact">Contact</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/faq" className={classes.link}>
-              Frequently Questions
-            </Link>
+          <li>
+            <Link to="/faq">Frequently Questions</Link>
           </li>
-          <li className={classes.infoLi}>
-            <Link to="/wishlist" className={classes.link}>
-              Wishlist
-            </Link>
+          <li>
+            <Link to="/wishlist">Wishlist</Link>
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 }
 
