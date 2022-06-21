@@ -48,10 +48,9 @@ const contactUsStyles = createUseStyles({
   contactUsForm: {
     "& label": {
       fontWeight: 500,
-      marginBottom: 10,
       display: "block",
     },
-    "& input,textarea": {
+    "& textarea": {
       border: "1px solid #e1e1e1",
       maxHeight: 45,
       height: 45,
@@ -61,8 +60,6 @@ const contactUsStyles = createUseStyles({
       marginBottom: 20,
       minWidth: "100%",
       maxWidth: "100%",
-    },
-    "& textarea": {
       paddingTop: 20,
       minHeight: 100,
     },
@@ -85,6 +82,7 @@ const accountStyles = createUseStyles({
     borderRadius: "3px",
     padding: 10,
     margin: 10,
+    textTransform: "capitalize",
     "&:hover": {
       background: "rgb(121, 162, 6)",
     },
@@ -124,19 +122,19 @@ const cartStyles = createUseStyles({
       fontSize: "14px",
       marginBottom: "20px",
     },
-    "& input": {
-      border: "1px solid #e1e1e1",
-      maxHeight: 45,
-      height: 35,
-      background: "#ffffff",
-      textIndent: 20,
-      color: "#757575",
-      marginRight: 10,
-      marginBottom: 10,
-    },
-    "& input:focus-visible": {
-      outline: "none",
-    },
+    // "& input": {
+    //   border: "1px solid #e1e1e1",
+    //   maxHeight: 45,
+    //   height: 35,
+    //   background: "#ffffff",
+    //   textIndent: 20,
+    //   color: "#757575",
+    //   marginRight: 10,
+    //   marginBottom: 10,
+    // },
+    // "& input:focus-visible": {
+    //   outline: "none",
+    // },
   },
   cartTotalsBottom: {
     padding: "25px",

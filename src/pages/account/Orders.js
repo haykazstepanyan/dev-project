@@ -55,7 +55,7 @@ function Orders() {
                 <TableCell align="right">{row.date}</TableCell>
                 <TableCell align="right">{row.status}</TableCell>
                 <TableCell align="right">{row.total}</TableCell>
-                <TableCell className={classes.greenText} align="right ">
+                <TableCell className={classes.greenText} align="right">
                   <Link to="cart"> {row.action}</Link>
                 </TableCell>
               </TableRow>

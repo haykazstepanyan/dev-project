@@ -1,7 +1,6 @@
-import Grid from "@mui/material/Grid";
-import { createUseStyles } from "react-jss";
-import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
+import { createUseStyles } from "react-jss";
+import { Container, Grid } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import styles from "./styles";
 

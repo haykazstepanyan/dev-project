@@ -2,19 +2,18 @@ import { Grid, Container } from "@mui/material";
 import BusinessIcon from "@mui/icons-material/Business";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MailIcon from "@mui/icons-material/Mail";
-
 import Button from "../components/button";
-
+import Banner from "../components/common/Banner";
 import { globalStyles } from "../components/styles/styles";
 import { contactUsStyles } from "./styles";
-import Layout from "../layout";
-import Banner from "../components/common/Banner";
+import Input from "../components/input";
+import Textarea from "../components/textarea/Textarea";
 
 function ContactUs() {
   const classes = contactUsStyles();
   const globalClasses = globalStyles();
   return (
-    <Layout>
+    <>
       <Banner name="Contact Us" />
       <div>
         <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
@@ -50,29 +49,50 @@ function ContactUs() {
             <Grid item xs={12} lg={6} md={6} className={globalClasses.mxAuto}>
               <p className={classes.contactUsTitle}>Tell Us Your Project</p>
               <div className={classes.contactUsForm}>
-                <div>
-                  <label htmlFor="name">
-                    Your Name (required)
-                    <input id="name" placeholder="Name *" type="text" />
-                  </label>
+                <div className={globalClasses.mb10}>
+                  <Input
+                    placeholder="Name *"
+                    size="large"
+                    borders="square"
+                    state="noFocus"
+                    htmlFor="name"
+                    type="text"
+                    labelValue="Your Name (required)"
+                    className={globalClasses.inputStyle}
+                  />
+                </div>
+                <div className={globalClasses.mb10}>
+                  <Input
+                    placeholder="Email *"
+                    size="large"
+                    borders="square"
+                    state="noFocus"
+                    htmlFor="email"
+                    type="email"
+                    labelValue="Your Email (required)"
+                    className={globalClasses.inputStyle}
+                  />
+                </div>
+                <div className={globalClasses.mb10}>
+                  <Input
+                    placeholder="Subject *"
+                    size="large"
+                    borders="square"
+                    state="noFocus"
+                    htmlFor="subject"
+                    labelValue="Subject"
+                    type="text"
+                    className={globalClasses.inputStyle}
+                  />
                 </div>
                 <div>
-                  <label htmlFor="email">
-                    Your Email (required)
-                    <input id="email" placeholder="Email *" type="email" />
-                  </label>
-                </div>
-                <div>
-                  <label htmlFor="subject">
-                    Subject
-                    <input id="subject" placeholder="Subject *" type="text" />
-                  </label>
-                </div>
-                <div>
-                  <label htmlFor="msg">
-                    Your Message
-                    <textarea id="msg" placeholder="Message *" />
-                  </label>
+                  <Textarea
+                    id="msg"
+                    placeholder="Message *"
+                    htmlFor="msg"
+                    labelValue="Your Message"
+                    type="standard"
+                  />
                 </div>
                 <Button type="secondary" disableRipple>
                   Send
@@ -82,7 +102,7 @@ function ContactUs() {
           </Grid>
         </Container>
       </div>
-    </Layout>
+    </>
   );
 }
 

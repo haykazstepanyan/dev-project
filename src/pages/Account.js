@@ -1,42 +1,44 @@
 import { NavLink, Outlet } from "react-router-dom";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import { accountStyles } from "./styles";
+import {
+  Container,
+  Box,
+  Grid,
+  List as MuiList,
+  ListItem as MuiListItem,
+} from "@mui/material";
 import Banner from "../components/common/Banner";
-import Layout from "../layout/Layout";
+import { accountStyles } from "./styles";
 
 function Account() {
   const classes = accountStyles();
 
-  const tabList = ["Dashboard", "Orders", "Account Details", "Login"];
+  const tabList = ["dashboard", "orders", "account details", "logout"];
   return (
-    <Layout>
+    <>
       <Banner name="My Account" />
 
       <Box pt={12} pb={8}>
         <Container>
           <Grid container spacing={1}>
             <Grid item xs={3.5} pr={3} pt={0}>
-              <List style={{ color: "#FFF" }}>
+              <MuiList style={{ color: "#FFF" }}>
                 {tabList.map((item) => {
-                  let path = item.toLowerCase().replace(/\s/g, "");
-                  if (path === "accountdetails") path = "details";
+                  const path = item === "account details" ? "details" : item;
                   return (
                     <NavLink
                       key={item}
-                      to={`/account/${path}`}
+                      to={`${path}`}
                       className={(data) =>
                         `${data.isActive ? classes.activeLink : ""} `
                       }
                     >
-                      <ListItem className={classes.listItem}>{item}</ListItem>
+                      <MuiListItem className={classes.listItem}>
+                        {item}
+                      </MuiListItem>
                     </NavLink>
                   );
                 })}
-              </List>
+              </MuiList>
             </Grid>
             <Grid item xs={8} p={1}>
               <Outlet />
@@ -44,7 +46,7 @@ function Account() {
           </Grid>
         </Container>
       </Box>
-    </Layout>
+    </>
   );
 }
 export default Account;

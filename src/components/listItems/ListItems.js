@@ -1,9 +1,11 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import MuiList from "@mui/material/List";
-import MuiListItem from "@mui/material/ListItem";
-import MuiListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  List as MuiList,
+  ListItem as MuiListItem,
+  ListItemText as MuiListItemText,
+  Checkbox,
+} from "@mui/material";
 import { useToggle } from "../../hooks/hooks";
 import { listStyles } from "./styles";
 

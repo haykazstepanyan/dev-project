@@ -1,5 +1,4 @@
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
+import { Container, Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";

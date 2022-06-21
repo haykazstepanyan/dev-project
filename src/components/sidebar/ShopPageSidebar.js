@@ -1,14 +1,11 @@
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
+import { Container, Box, Slider, TextField } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
-import { shopSidebarStyles } from "./styles";
 import Button from "../button";
-import { filterRangeTheme } from "./theme";
-import { brands, categories } from "../../DUMMY_DATA";
 import ListItems from "../listItems";
+import { brands, categories } from "../../DUMMY_DATA";
+import { shopSidebarStyles } from "./styles";
+import { filterRangeTheme } from "./theme";
 
 function ShopPageSidebar() {
   const classes = shopSidebarStyles();

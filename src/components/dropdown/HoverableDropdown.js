@@ -36,13 +36,13 @@ function HoverableDropdown({ value, list }) {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "left" }}
       >
-        {list.map((item) => (
+        {list.map((elem) => (
           <MenuItem
             className={classes.menuItems}
-            key={item}
+            key={elem.key}
             onClick={handleDropdownClick}
           >
-            {item}
+            {elem.item}
           </MenuItem>
         ))}
       </HoverMenu>
@@ -53,7 +53,11 @@ function HoverableDropdown({ value, list }) {
 HoverableDropdown.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   list: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.object,
+    ]),
   ),
 };
 

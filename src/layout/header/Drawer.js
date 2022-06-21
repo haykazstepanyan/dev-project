@@ -1,5 +1,4 @@
-import Grid from "@mui/material/Grid";
-import MuiDrawer from "@mui/material/Drawer";
+import { Grid, Drawer as MuiDrawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import { useToggle } from "../../hooks/hooks";

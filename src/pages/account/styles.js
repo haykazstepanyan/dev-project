@@ -23,20 +23,16 @@ const orderStyles = createUseStyles({
 });
 
 const loginStyles = createUseStyles({
-  container: {
-    marginBottom: "90px",
-  },
-  boxContainer: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr ",
-    columnGap: "40px",
-  },
   title: {
     fontSize: "28px",
     textTransform: "capitalize",
     fontWeight: 500,
     lineHeight: "22px",
     marginBottom: "30px",
+  },
+  containerStyle: {
+    marginTop: 60,
+    marginBottom: 60,
   },
 });
 const detailsStyles = createUseStyles({
@@ -82,15 +78,12 @@ const detailsStyles = createUseStyles({
       fontSize: "16px",
       fontWeight: 400,
       color: colors.black,
-      lineHeight: "12px",
+      // lineHeight: "12px",
       marginBottom: "12px",
     },
   },
   inputsContainer: {
     marginTop: "22px",
-  },
-  saveBtn: {
-    color: colors.green,
   },
   saveBtnContainer: {
     marginTop: "15px",

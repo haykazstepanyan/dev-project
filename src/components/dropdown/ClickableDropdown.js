@@ -1,8 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import { createUseStyles } from "react-jss";
+import { Menu, MenuItem } from "@mui/material";
 import Button from "../button";
 
 const useStyles = createUseStyles({
@@ -73,7 +72,11 @@ ClickableDropdown.propTypes = {
   icon: PropTypes.element,
 
   options: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.object,
+    ]),
     // PropTypes.string,
     // PropTypes.shape({PropTypes.string, PropTypes.ele}),
   ).isRequired,

@@ -1,13 +1,13 @@
 import { Container, Grid } from "@mui/material";
+import Table from "../components/table/Table";
+import Button from "../components/button";
+import Banner from "../components/common/Banner";
 import product1 from "../assets/images/product.webp";
 import product2 from "../assets/images/product2.webp";
 import product3 from "../assets/images/product3.webp";
 import { globalStyles } from "../components/styles/styles";
-import Layout from "../layout";
-import Table from "../components/table/Table";
-import Button from "../components/button";
-import Banner from "../components/common/Banner";
 import { cartStyles } from "./styles";
+import Input from "../components/input";
 
 function createData(image, name, price, stockStatus, total) {
   return {
@@ -35,7 +35,7 @@ function Cart() {
   const classes = cartStyles();
 
   return (
-    <Layout>
+    <>
       <Banner name="Cart" />
       <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
         <Table tableData={rows} type="cart" deleteProduct={deleteProduct} />
@@ -48,8 +48,20 @@ function Cart() {
               <div className={classes.couponBottomBlock}>
                 <p>Enter your coupon code if you have one.</p>
                 <div>
-                  <input type="text" placeholder="Coupon code" />
-                  <Button color="secondary" disableRipple>
+                  <Input
+                    type="text"
+                    placeholder="Coupon code"
+                    size="small"
+                    borders="square"
+                    state="noFocus"
+                    htmlFor="subject"
+                    className={globalClasses.inputStyle}
+                  />
+                  <Button
+                    color="secondary"
+                    disableRipple
+                    style={{ marginTop: 15 }}
+                  >
                     Apply coupon
                   </Button>
                 </div>
@@ -93,7 +105,7 @@ function Cart() {
           </Grid>
         </Grid>
       </Container>
-    </Layout>
+    </>
   );
 }
 
