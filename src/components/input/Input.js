@@ -9,8 +9,8 @@ function Input({
   labelValue,
   borders,
   htmlFor,
-  state,
   placeholder,
+  autoComplete,
   ...otherProps
 }) {
   const inputClasses = globalInputStyles();
@@ -25,13 +25,17 @@ function Input({
           placeholder={placeholder}
           size={size}
           borders={borders}
-          state={state}
+          autoComplete={autoComplete}
           {...otherProps}
         />
       </FormControl>
     </ThemeProvider>
   );
 }
+
+Input.defaultProps = {
+  autoComplete: "on",
+};
 
 Input.propTypes = {
   size: PropTypes.string,
@@ -40,6 +44,7 @@ Input.propTypes = {
   borders: PropTypes.string,
   state: PropTypes.string,
   placeholder: PropTypes.string,
+  autoComplete: PropTypes.string,
 };
 
 export default Input;

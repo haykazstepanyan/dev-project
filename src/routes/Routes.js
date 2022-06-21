@@ -65,41 +65,6 @@ function PageRoutes() {
           </Route>
         </Routes>
       </Fallback>
-      {/* <Routes>
-        <Route
-          path="account"
-          element={
-            <Fallback>
-              <Account />
-            </Fallback>
-          }
-        >
-          <Route
-            path="dashboard"
-            element={
-              <Fallback>
-                <Dashboard />
-              </Fallback>
-            }
-          />
-          <Route
-            path="orders"
-            element={
-              <Fallback>
-                <Orders />
-              </Fallback>
-            }
-          />
-          <Route
-            path="details"
-            element={
-              <Fallback>
-                <AccountDetails />
-              </Fallback>
-            }
-          />
-        </Route>
-      </Routes> */}
     </Layout>
   );
 }

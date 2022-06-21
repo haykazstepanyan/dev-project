@@ -8,7 +8,7 @@ function Button({
   color,
   size,
   borders,
-  type,
+  purpose,
   state,
   ...otherProps
 }) {
@@ -18,7 +18,7 @@ function Button({
         color={color}
         size={size}
         borders={borders}
-        type={type}
+        purpose={purpose}
         state={state}
         {...otherProps}
       >
@@ -32,7 +32,7 @@ Button.propTypes = {
   color: PropTypes.string,
   size: PropTypes.string,
   borders: PropTypes.string,
-  type: PropTypes.string,
+  purpose: PropTypes.string,
   state: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
 };

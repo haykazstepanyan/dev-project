@@ -66,7 +66,7 @@ const theme = createTheme({
           },
         },
         {
-          props: { type: "dropdownBtn" },
+          props: { purpose: "dropdownBtn" },
           style: {
             textTransform: "Capitalize",
             "&:hover": {

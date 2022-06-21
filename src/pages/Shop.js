@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Pagination from "../components/pagination";
+// import Pagination from "../components/pagination";
 import { getProductsDataByPage } from "../helpers/api.helpers";
 import Banner from "../components/common/Banner";
 import ProductItem from "../components/product";
@@ -58,7 +58,7 @@ function Shop() {
                     </Grid>
                   ))}
               </Grid>
-              <Pagination count={count} onChange={gotoPage} />
+              {/* <Pagination count={count} onChange={gotoPage} /> */}
             </Grid>
           </Grid>
         </Box>

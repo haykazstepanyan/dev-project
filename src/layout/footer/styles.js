@@ -8,8 +8,8 @@ const styles = {
     fontFamily: '"Rubik", sans-serif',
     color: "#222222",
     width: "100%",
-    paddingRight: "var(--bs-gutter-x,.75rem)",
-    paddingLeft: "var(--bs-gutter-x,.75rem)",
+    // paddingRight: "var(--bs-gutter-x,.75rem)",
+    // paddingLeft: "var(--bs-gutter-x,.75rem)",
     marginRight: "auto",
     marginLeft: "auto",
     boxSizing: "border-box",
@@ -19,11 +19,11 @@ const styles = {
     borderTop: "1px solid #e1e1e1",
     borderBottom: "1px solid #e1e1e1",
   },
-  row: {
-    marginTop: "calc(var(--bs-gutter-y) * -1)",
-    marginRight: "calc(var(--bs-gutter-x) * -.5)",
-    marginLeft: "calc(var(--bs-gutter-x) * -.5)",
-  },
+  // row: {
+  //   marginTop: "calc(var(--bs-gutter-y) * -1)",
+  //   marginRight: "calc(var(--bs-gutter-x) * -.5)",
+  //   marginLeft: "calc(var(--bs-gutter-x) * -.5)",
+  // },
   workingTime: {
     fontSize: "14px",
     lineHeight: "30px",
@@ -138,8 +138,8 @@ const styles = {
   footerBottomConteiner: {
     maxWidth: "1200px",
     width: "100%",
-    paddingRight: "var(--bs-gutter-x,.75rem)",
-    paddingLeft: "var(--bs-gutter-x,.75rem)",
+    // paddingRight: "var(--bs-gutter-x,.75rem)",
+    // paddingLeft: "var(--bs-gutter-x,.75rem)",
     marginRight: "auto",
     marginLeft: "auto",
   },
@@ -151,7 +151,7 @@ const styles = {
   },
   footerBottomHeart: {
     display: "inline-block",
-    font: "normal normal normal 14px/1 FontAwesome",
+    // font: "normal normal normal 14px/1 FontAwesome",
     fontSize: "14px!important",
     textRendering: "auto",
     color: "#dc3545",
