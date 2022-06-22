@@ -10,6 +10,7 @@ function Button({
   borders,
   type,
   state,
+  page,
   ...otherProps
 }) {
   return (
@@ -20,6 +21,7 @@ function Button({
         borders={borders}
         type={type}
         state={state}
+        page={page}
         {...otherProps}
       >
         {children}
@@ -30,6 +32,7 @@ function Button({
 
 Button.propTypes = {
   color: PropTypes.string,
+  page: PropTypes.string,
   size: PropTypes.string,
   borders: PropTypes.string,
   type: PropTypes.string,

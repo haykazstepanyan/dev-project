@@ -13,6 +13,7 @@ function Textarea({ labelValue, htmlFor, placeholder, ...otherProps }) {
         {labelValue}
       </InputLabel>
       <textarea
+        value="Aaa"
         id={htmlFor}
         placeholder={placeholder}
         className={textareaClasses.textareaStyle}

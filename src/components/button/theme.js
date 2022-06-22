@@ -26,6 +26,26 @@ const theme = createTheme({
           },
         },
         {
+          props: { page: "admin" },
+          style: {
+            color: colors.white,
+            background: "#24695c",
+          },
+        },
+        {
+          props: { page: "admin", letter: "capitalize" },
+          style: {
+            color: "white",
+            background: "#a3a3a3",
+            textTransform: "capitalize",
+            padding: [[20, 10]],
+            fontSize: 16,
+            "&:hover": {
+              background: "#575657",
+            },
+          },
+        },
+        {
           props: { color: "info" },
           style: {
             color: colors.black,

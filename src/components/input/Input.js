@@ -10,10 +10,14 @@ function Input({
   borders,
   htmlFor,
   state,
+  value,
+  type,
+  pattern,
   placeholder,
   ...otherProps
 }) {
   const inputClasses = globalInputStyles();
+
   return (
     <ThemeProvider theme={theme}>
       <FormControl variant="standard" className={inputClasses.w100}>
@@ -21,11 +25,14 @@ function Input({
           {labelValue}
         </InputLabel>
         <MuiTextField
+          value={value}
           id={htmlFor}
           placeholder={placeholder}
           size={size}
           borders={borders}
           state={state}
+          type={type}
+          pattern={pattern}
           {...otherProps}
         />
       </FormControl>
@@ -39,6 +46,9 @@ Input.propTypes = {
   htmlFor: PropTypes.string,
   borders: PropTypes.string,
   state: PropTypes.string,
+  type: PropTypes.string,
+  pattern: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   placeholder: PropTypes.string,
 };
 
