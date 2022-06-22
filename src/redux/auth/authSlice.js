@@ -6,7 +6,7 @@ const authSlice = createSlice({
   initialState: {
     isAuth: false,
     userData: {},
-    loading: false,
+    loading: true,
   },
   extraReducers: {
     [checkIsAuth.pending]: (state) => {

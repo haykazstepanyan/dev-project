@@ -1,8 +1,9 @@
 import { Suspense } from "react";
 import PropTypes from "prop-types";
+import Loader from "../loader";
 
 function Fallback({ children }) {
-  return <Suspense fallback={<div>Loading......</div>}>{children}</Suspense>;
+  return <Suspense fallback={<Loader />}>{children}</Suspense>;
 }
 
 Fallback.propTypes = {
