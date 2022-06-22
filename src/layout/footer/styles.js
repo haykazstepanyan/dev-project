@@ -201,8 +201,8 @@ const styles = {
       textTransform: "capitalize",
       lineHeight: "25px",
       fontSize: "14px",
-      textAlign: "center",
       "@media only screen and (max-width: 767px)": {
+        textAlign: "center",
         letterSpacing: "0",
         fontSize: "13px",
         lineHeight: "20px",
