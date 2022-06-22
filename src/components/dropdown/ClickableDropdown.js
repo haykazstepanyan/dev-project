@@ -35,7 +35,7 @@ function ClickableDropdown({ icon, options, value, change, topDistance }) {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         startIcon={icon}
-        type="dropdownBtn"
+        purpose="dropdownBtn"
         state={open ? "open" : ""}
         color="info"
         disableRipple

@@ -25,7 +25,7 @@ function HoverableDropdown({ value, list }) {
       <Button
         {...bindHover(popupState)}
         color="info"
-        type="dropdownBtn"
+        purpose="dropdownBtn"
         state={popupState.isOpen ? "open" : ""}
         disableRipple
       >

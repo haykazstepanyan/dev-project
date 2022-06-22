@@ -1,17 +1,19 @@
+import { useState } from "react";
 import { Grid, Container } from "@mui/material";
 import BusinessIcon from "@mui/icons-material/Business";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MailIcon from "@mui/icons-material/Mail";
 import Button from "../components/button";
 import Banner from "../components/common/Banner";
+import Input from "../components/input";
+import Textarea from "../components/textarea";
 import { globalStyles } from "../components/styles/styles";
 import { contactUsStyles } from "./styles";
-import Input from "../components/input";
-import Textarea from "../components/textarea/Textarea";
 
 function ContactUs() {
   const classes = contactUsStyles();
   const globalClasses = globalStyles();
+  const [textareaValue, setTextareaValue] = useState("");
   return (
     <>
       <Banner name="Contact Us" />
@@ -92,6 +94,8 @@ function ContactUs() {
                     htmlFor="msg"
                     labelValue="Your Message"
                     type="standard"
+                    value={textareaValue}
+                    onChange={(e) => setTextareaValue(e.target.value)}
                   />
                 </div>
                 <Button type="secondary" disableRipple>

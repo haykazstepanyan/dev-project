@@ -3,9 +3,7 @@ import { nanoid } from "nanoid";
 import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Pagination from "../components/Pagination";
-import { getFakeProductsData } from "../helpers/api.helpers";
-import Layout from "../layout";
+import Pagination from "../components/pagination";
 import { getProductsDataByPage } from "../helpers/api.helpers";
 import Banner from "../components/common/Banner";
 import ProductItem from "../components/product";
@@ -21,14 +19,12 @@ function Shop() {
 
   useEffect(() => {
     getProductsDataByPage(page).then((productsData) => {
-      console.log(productsData);
       setCount(productsData.length);
       setProducts(productsData.results);
     });
   }, [page]);
 
   const gotoPage = (_, pageNum) => {
-    console.log(page);
     setPage(pageNum);
   };
 

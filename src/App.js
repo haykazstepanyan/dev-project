@@ -1,13 +1,22 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
-import { appActions } from "./redux/appSlice";
+import { appActions } from "./redux/app/appSlice";
+import { checkIsAuth } from "./redux/auth/actions";
 import Routes from "./routes";
+import Notification from "./components/notification";
 import { documentStyles } from "./components/styles/styles";
 import mainTheme from "./components/styles/mainTheme";
 
 function App() {
   const dispatch = useDispatch();
+  const notification = useSelector((state) => state.app.notification);
+  useEffect(() => {
+    // const token = localStorage.getItem("token");
+    // if (token) {
+    dispatch(checkIsAuth());
+    // }
+  }, [dispatch]);
 
   useEffect(() => {
     const handleIsMobileVersion = () =>
@@ -27,6 +36,13 @@ function App() {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={mainTheme}>
         <Routes />
+        {notification.show && (
+          <Notification
+            open
+            type={notification.type}
+            message={notification.message}
+          />
+        )}
       </ThemeProvider>
     </StyledEngineProvider>
   );

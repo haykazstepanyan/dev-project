@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import Layout from "../layout";
 import shipping1 from "../assets/images/shipping1.webp";
 import shipping2 from "../assets/images/shipping2.webp";
 import shipping3 from "../assets/images/shipping3.webp";
@@ -15,7 +14,7 @@ function Main() {
   const classes = mainStyles();
 
   return (
-    <Layout>
+    <>
       <Grid item xs={8}>
         FotoSlide
       </Grid>
@@ -177,7 +176,7 @@ function Main() {
           </div>
         </div>
       </Grid>
-    </Layout>
+    </>
   );
 }
 

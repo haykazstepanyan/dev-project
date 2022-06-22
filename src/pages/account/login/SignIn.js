@@ -1,14 +1,32 @@
-import { FormControl, FormGroup } from "@mui/material";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../../redux/auth/actions";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
 import signUpInStyles from "./styles";
 
-export default function SignIn() {
+function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const classes = signUpInStyles();
+
+  const handleSignInSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      email,
+      password,
+    };
+
+    dispatch(signIn(data));
+  };
+
   return (
-    <FormControl className={classes.formStyle}>
+    <form className={classes.formStyle} onSubmit={handleSignInSubmit}>
       <div>
         <Input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           borders="square"
           state="noFocus"
           htmlFor="registerName"
@@ -19,31 +37,35 @@ export default function SignIn() {
           className={classes.mb10}
         />
       </div>
-
       <div>
         <Input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           borders="square"
           state="noFocus"
-          htmlFor="registerPassword"
+          htmlFor="registerSignInPassword"
           name="password"
           type="password"
           labelValue="Passwords *"
           size="large"
+          autoComplete="current-password"
           className={classes.mb10}
         />
       </div>
-      <FormGroup>
-        <div className={classes.btnContainer}>
-          <Button
-            className={classes.btnStyle}
-            color="primary"
-            borders="rounded"
-            size="small"
-          >
-            Login
-          </Button>
-        </div>
-      </FormGroup>
-    </FormControl>
+      {/* <FormGroup> */}
+      <div className={classes.btnContainer}>
+        <Button
+          className={classes.btnStyle}
+          type="submit"
+          color="primary"
+          borders="rounded"
+          size="small"
+        >
+          Login
+        </Button>
+      </div>
+    </form>
   );
 }
+
+export default SignIn;
