@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import Header from "./header";
@@ -6,7 +7,12 @@ import Loader from "../components/loader";
 
 function Layout({ children }) {
   const showLoader = useSelector((state) => state.auth.loading);
-  return (
+  const location = useLocation();
+  const segment1 = location.pathname.split("/");
+
+  return segment1[1] && segment1[1] === "admin" ? (
+    <div>{children}</div>
+  ) : (
     <>
       <Header />
       {showLoader ? <Loader /> : children}
