@@ -37,7 +37,11 @@ Button.propTypes = {
   borders: PropTypes.string,
   purpose: PropTypes.string,
   state: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
 };
 
 export default Button;

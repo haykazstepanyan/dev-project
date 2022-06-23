@@ -212,25 +212,10 @@ const navbarStyles = createUseStyles({
 });
 
 const drawerClasses = createUseStyles({
-  headerDrawer: {
-    position: "relative",
-    "& .MuiPaper-root ": {
-      padding: [[50, 10, 15]],
-      maxWidth: "50%",
-    },
-  },
   welcomeText: {
     textAlign: "center",
     marginBottom: 24,
     fontSize: 12,
-  },
-  closeIcon: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-    color: colors.black,
-    border: `1px solid ${colors.milky}`,
-    borderRadius: "50%",
   },
 });
 

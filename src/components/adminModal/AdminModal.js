@@ -121,7 +121,7 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
 }
 
 AdminModal.propTypes = {
-  modalData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
+  modalData: PropTypes.arrayOf([PropTypes.object]),
   open: PropTypes.bool,
   onClose: PropTypes.func,
   type: PropTypes.string,

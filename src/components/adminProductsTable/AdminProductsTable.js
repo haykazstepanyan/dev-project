@@ -147,8 +147,7 @@ function AdminProductsTable({ tableData }) {
 }
 
 AdminProductsTable.propTypes = {
-  tableData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
-    .isRequired,
+  tableData: PropTypes.arrayOf([PropTypes.object]).isRequired,
 };
 
 export default AdminProductsTable;

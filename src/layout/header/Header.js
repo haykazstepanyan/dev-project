@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";
 import AccountLinks from "./AccountLinks";
-import Drawer from "./Drawer";
+import HeaderMobileDrawer from "./HeaderMobileDrawer";
 import StickyHeader from "./StickyHeader";
 import { headerStyles } from "./styles";
 
@@ -26,7 +26,7 @@ function Header() {
             {isMobileVersion ? (
               <>
                 <AccountLinks />
-                <Drawer />
+                <HeaderMobileDrawer />
               </>
             ) : (
               <>

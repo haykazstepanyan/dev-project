@@ -35,6 +35,7 @@ function HoverableDropdown({ value, list }) {
         {...bindMenu(popupState)}
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "left" }}
+        disableScrollLock
       >
         {list.map((elem) => (
           <MenuItem

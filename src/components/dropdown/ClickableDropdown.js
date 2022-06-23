@@ -77,8 +77,6 @@ ClickableDropdown.propTypes = {
       PropTypes.element,
       PropTypes.object,
     ]),
-    // PropTypes.string,
-    // PropTypes.shape({PropTypes.string, PropTypes.ele}),
   ).isRequired,
   value: PropTypes.string.isRequired,
   change: PropTypes.func,

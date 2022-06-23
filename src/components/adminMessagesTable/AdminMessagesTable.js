@@ -97,8 +97,7 @@ function AdminMessagesTable({ tableData }) {
 }
 
 AdminMessagesTable.propTypes = {
-  tableData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
-    .isRequired,
+  tableData: PropTypes.arrayOf([PropTypes.object]).isRequired,
 };
 
 export default AdminMessagesTable;

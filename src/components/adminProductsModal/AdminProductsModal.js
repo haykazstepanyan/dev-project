@@ -226,10 +226,8 @@ AdminProductsModal.propTypes = {
   modalData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  selectBrandData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string])),
-  selectCategoryData: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string]),
-  ),
+  selectBrandData: PropTypes.arrayOf([PropTypes.string]),
+  selectCategoryData: PropTypes.arrayOf([PropTypes.string]),
   type: PropTypes.string,
   onSubmit: PropTypes.func,
 };

@@ -467,6 +467,32 @@ const mainStyles = createUseStyles({
     transform: "translatey(-50%)",
   },
 });
+const signUpInStyles = createUseStyles({
+  formContainer: {
+    padding: [[50, 0]],
+  },
+  formStyle: {
+    width: 350,
+    border: "1px solid #e1e1e1",
+    padding: "23px 20px 29px",
+    boxSizing: "border-box",
+  },
+  btnContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  authLink: {
+    "&:hover": {
+      color: colors.green,
+    },
+  },
+  mb10: {
+    marginBottom: 10,
+  },
+});
 
 export {
   aboutUsStyles,
@@ -475,4 +501,5 @@ export {
   cartStyles,
   shopStyles,
   mainStyles,
+  signUpInStyles,
 };

@@ -58,7 +58,7 @@ export const signUp = createAsyncThunk(
 );
 
 export const signIn = createAsyncThunk(
-  "auth/signUp",
+  "auth/signIn",
   async (data, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(`${BASE_URL}/users/signIn`, {
@@ -66,6 +66,7 @@ export const signIn = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(data),
       });
 
