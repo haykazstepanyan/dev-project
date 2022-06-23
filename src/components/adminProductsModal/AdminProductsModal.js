@@ -23,8 +23,8 @@ function AdminProductsModal({
   const [description, setDescription] = useState(
     type === "add" ? "" : data.description,
   );
-  const [price, setPrice] = useState(type === "add" ? 0 : data.price);
-  const [discount, setDiscount] = useState(type === "add" ? 0 : data.discount);
+  const [price, setPrice] = useState(type === "add" ? "" : data.price);
+  const [discount, setDiscount] = useState(type === "add" ? "" : data.discount);
   const [brandId, setBrandId] = useState(type === "add" ? 0 : data.brandId);
   const [categoryId, setCategoryId] = useState(
     type === "add" ? 0 : data.categoryId,
@@ -43,13 +43,21 @@ function AdminProductsModal({
     setInputValue(e.target.value);
   };
   const handlePrice = (e) => {
-    setPrice(+e.target.value);
+    if (e.target.value === "") {
+      setPrice("");
+    } else {
+      setPrice(+e.target.value);
+    }
   };
   const handleDescription = (e) => {
     setDescription(e.target.value);
   };
   const handleDiscount = (e) => {
-    setDiscount(+e.target.value);
+    if (e.target.value === "") {
+      setDiscount("");
+    } else {
+      setDiscount(+e.target.value);
+    }
   };
   const editData = () => {
     const brandData = {
@@ -105,9 +113,7 @@ function AdminProductsModal({
             </div>
             <div className={classes.mb10}>
               <Input
-                type="text"
-                pattern="[0-9]*"
-                // type="number"
+                type="number"
                 placeholder="Price"
                 size="large"
                 borders="square"
@@ -119,9 +125,7 @@ function AdminProductsModal({
             </div>
             <div className={classes.mb10}>
               <Input
-                type="text"
-                pattern="[0-9]*"
-                // type="number"
+                type="number"
                 placeholder="Discount"
                 size="large"
                 borders="square"
