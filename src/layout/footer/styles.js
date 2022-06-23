@@ -16,16 +16,19 @@ const styles = {
     width: "100%",
     marginRight: "auto",
     marginLleft: "auto",
+    "@media only screen and (max-width: 767px)": {
+      maxWidth: "100%",
+    },
     "@media only screen and (max-width: 479px)": {
       width: "100%",
       textAlign: "center",
     },
-    "@media only screen and (max-width: 767px)": {
-      maxWidth: "464px",
-    },
   },
   gridRow: {
-    "@media only screen and (max-width: 767px)": { width: "100%" },
+    "@media only screen and (max-width: 767px)": {
+      width: "100%",
+      textAlign: "center",
+    },
   },
   footerTop: {
     padding: "99px 0 89px",
@@ -64,13 +67,19 @@ const styles = {
   },
   widgetsContainer: {
     boxSizing: "border-box",
+    "& h3": {
+      textAlign: "left",
+      marginBottom: 68,
+    },
     "& p": {
+      textAlign: "left",
       fontSize: "14px",
       lineHeight: "30px",
       marginBottom: "0",
       marginTop: "0",
       "@media only screen and (max-width: 767px)": {
         fontSize: "13px",
+        textAlign: "center",
       },
     },
     "@media only screen and (max-width: 575px)": {

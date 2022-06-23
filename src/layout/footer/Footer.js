@@ -1,6 +1,6 @@
 import { createUseStyles } from "react-jss";
 import FooterTop from "./FooterTop";
-import FooterBottom from "./FooterBottom";
+// import FooterBottom from "./FooterBottom";
 import styles from "./styles";
 
 const useStyles = createUseStyles(styles);
@@ -10,7 +10,7 @@ function Footer() {
   return (
     <div className={classes.footer}>
       <FooterTop />
-      <FooterBottom />
+      {/* <FooterBottom /> */}
     </div>
   );
 }

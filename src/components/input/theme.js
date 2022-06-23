@@ -61,6 +61,17 @@ const theme = createTheme({
             },
           },
         },
+        {
+          props: { borders: "none" },
+          style: {
+            "& fieldset": {
+              border: "none !important",
+            },
+            "& >div:hover fieldset": {
+              border: "none !important",
+            },
+          },
+        },
       ],
     },
   },

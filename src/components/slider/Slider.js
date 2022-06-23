@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import Slider from "react-slick";
 import { createUseStyles } from "react-jss";
+import { colors } from "../../constants/constants";
+import Button from "../button";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -19,6 +21,61 @@ const slickSliderStyles = createUseStyles({
       color: "#6b6b6b",
     },
   },
+  homeSlider: {
+    "& div:focus-visible": {
+      outline: "none",
+    },
+    "& img": {
+      margin: "auto",
+    },
+    "& .slick-arrow.slick-next:before": {
+      color: `${colors.green}`,
+    },
+    "& .slick-arrow.slick-prev:before": {
+      color: `${colors.green}`,
+    },
+    "& .slick-arrow.slick-next": {
+      position: "absolute",
+      right: 30,
+      top: "50%",
+      transform: "translate(0, -50%)",
+    },
+    "& .slick-arrow.slick-prev": {
+      zIndex: 9,
+      position: "absolute",
+      left: 30,
+      top: "50%",
+      transform: "translate(0, -50%)",
+    },
+  },
+  homePageSlider: {
+    height: 600,
+    width: "100%",
+    objectFit: "cover",
+  },
+  positionRelative: {
+    position: "relative",
+  },
+  sliderBlockStyle: {
+    position: "absolute",
+    top: "50%",
+    left: "10%",
+    transform: "translate(0, -50%)",
+    "& h1": {
+      fontSize: 63,
+      marginBottom: 23,
+      textTransform: "uppercase",
+      letterSpacing: -2,
+    },
+    "& p": {
+      fontSize: 20,
+      fontWeight: 500,
+      marginBottom: 30,
+      "& span": {
+        color: `${colors.green}`,
+      },
+    },
+  },
 });
 
 function SlickSlider({
@@ -26,33 +83,36 @@ function SlickSlider({
   slidesToScroll,
   responsive,
   sliderData,
-  homeSlide,
+  arrows,
+  page,
 }) {
   const classes = slickSliderStyles();
-
+  console.log(page);
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
     slidesToShow,
     slidesToScroll,
-    arrows: true,
+    ...(arrows ? { arrows: true } : { arrows: false }),
     ...(responsive
       ? {
           responsive: [
             {
               breakpoint: 1024,
               settings: {
-                slidesToShow: 4,
-                slidesToScroll: 1,
+                ...(page === "home"
+                  ? { slidesToShow: 1, slidesToScroll: 1 }
+                  : { slidesToShow: 4, slidesToScroll: 1 }),
                 infinite: true,
               },
             },
             {
               breakpoint: 600,
               settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
+                ...(page === "home"
+                  ? { slidesToShow: 1, slidesToScroll: 1 }
+                  : { slidesToShow: 2, slidesToScroll: 1 }),
                 initialSlide: 2,
               },
             },
@@ -61,6 +121,7 @@ function SlickSlider({
               settings: {
                 slidesToShow: 1,
                 slidesToScroll: 1,
+                ...(page === "home" ? { arrows: false } : { arrows: true }),
               },
             },
           ],
@@ -68,25 +129,32 @@ function SlickSlider({
       : {}),
   };
 
-  if (homeSlide === true) {
-    return (
-      <div className={classes.slickSlider}>
-        <Slider {...settings}>
-          {sliderData.map((slideImage) => (
-            <div key={slideImage.url}>
-              <img src={slideImage.url} alt="slide-img" />
-            </div>
-          ))}
-        </Slider>
-      </div>
-    );
-  }
   return (
-    <div className={classes.slickSlider}>
+    <div className={page === "home" ? classes.homeSlider : classes.slickSlider}>
       <Slider {...settings}>
         {sliderData.map((slideImage) => (
-          <div key={slideImage.url}>
-            <img src={slideImage.url} alt="slide-img" />
+          <div
+            key={slideImage.url}
+            className={page === "home" ? classes.positionRelative : ""}
+          >
+            <img
+              className={page === "home" ? classes.homePageSlider : ""}
+              src={slideImage.url}
+              alt="slide-img"
+            />
+            {page === "home" ? (
+              <div className={classes.sliderBlockStyle}>
+                <h1>TOP SALE</h1>
+                <p>
+                  Discount <span>20% Off </span> For Lukani Members{" "}
+                </p>
+                <Button size="large" borders="rounded">
+                  Discover now
+                </Button>
+              </div>
+            ) : (
+              <div>Bye!!!</div>
+            )}
           </div>
         ))}
       </Slider>
@@ -99,7 +167,8 @@ SlickSlider.propTypes = {
   slidesToShow: PropTypes.number,
   slidesToScroll: PropTypes.number,
   responsive: PropTypes.bool,
-  homeSlide: PropTypes.bool,
+  arrows: PropTypes.bool,
+  page: PropTypes.string,
 };
 
 export default SlickSlider;
