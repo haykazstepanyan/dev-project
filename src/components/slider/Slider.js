@@ -153,7 +153,7 @@ function SlickSlider({
                 </Button>
               </div>
             ) : (
-              <div>Bye!!!</div>
+              ""
             )}
           </div>
         ))}
