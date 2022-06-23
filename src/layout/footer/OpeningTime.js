@@ -52,9 +52,9 @@ function OpeningTime() {
       <p>
         <span>Suns:</span> 14hPM-18hPM
       </p>
-      <h6 className={classes.whenWeOpen}>
+      {/* <h6 className={classes.whenWeOpen}>
         <b>We Work All The Holidays</b>
-      </h6>
+      </h6> */}
     </div>
   );
 }

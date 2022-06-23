@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import Input from "../components/input";
 import shipping1 from "../assets/images/shipping1.webp";
 import shipping2 from "../assets/images/shipping2.webp";
 import shipping3 from "../assets/images/shipping3.webp";
@@ -8,7 +9,26 @@ import banner1 from "../assets/images/banner1.webp";
 import banner2 from "../assets/images/banner2.webp";
 import ourHistory from "../assets/images/ourHistory.webp";
 import signature from "../assets/images/signature.webp";
+import Slider from "../components/slider";
+import slideImg1 from "../assets/images/slider1.webp";
+import slideImg2 from "../assets/images/slider2.webp";
+import slideImg3 from "../assets/images/slider3.webp";
 import { mainStyles } from "./styles";
+
+const slideImages = [
+  {
+    url: `${slideImg1}`,
+    caption: "Slide 1",
+  },
+  {
+    url: `${slideImg2}`,
+    caption: "Slide 2",
+  },
+  {
+    url: `${slideImg3}`,
+    caption: "Slide 3",
+  },
+];
 
 function Main() {
   const classes = mainStyles();
@@ -16,7 +36,14 @@ function Main() {
   return (
     <>
       <Grid item xs={8}>
-        FotoSlide
+        <Slider
+          sliderData={slideImages}
+          slidesToShow={1}
+          slidesToScroll={1}
+          responsive
+          arrows
+          page="home"
+        />
       </Grid>
       <Grid item xs={8} className={classes.shipingArea}>
         <div className={classes.container}>
@@ -66,7 +93,10 @@ function Main() {
         <div className={classes.bannerArea}>
           <div className={classes.container}>
             <div className={classes.row}>
-              <div className={classes.colLg6}>
+              <div
+                className={classes.colLg6}
+                style={{ paddingRight: 10, paddingLeft: 10 }}
+              >
                 <figure className={classes.singleBanner}>
                   <div className={classes.bannerThumb}>
                     <Link to="/shop">
@@ -84,7 +114,10 @@ function Main() {
                   </div>
                 </figure>
               </div>
-              <div className={classes.colLg6}>
+              <div
+                className={classes.colLg6}
+                style={{ paddingRight: 10, paddingLeft: 10 }}
+              >
                 <figure className={classes.singleBanner}>
                   <div className={classes.bannerThumb}>
                     <Link to="/shop">
@@ -159,11 +192,13 @@ function Main() {
               <div className={classes.newsletterContainer}>
                 <div>
                   <form>
-                    <input
-                      id="email"
+                    <Input
                       type="email"
                       placeholder="Enter you email"
-                      name="EMAIL"
+                      size="large"
+                      borders="none"
+                      state="noFocus"
+                      htmlFor="email"
                     />
                     <button type="button">Subscribe</button>
                     <div className={classes.subscribeFormEmailIcon}>
