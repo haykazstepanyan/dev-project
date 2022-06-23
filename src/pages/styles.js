@@ -172,7 +172,7 @@ const mainStyles = createUseStyles({
     marginRight: "auto",
     marginLeft: "auto",
     maxWidth: "1200px",
-    wisth: "100%",
+    width: "100%",
     boxSizing: "border-box",
     "@media only screen and (max-width: 479px)": {
       width: "100%",

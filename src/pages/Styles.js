@@ -172,6 +172,7 @@ const mainStyles = createUseStyles({
     marginRight: "auto",
     marginLeft: "auto",
     maxWidth: "1200px",
+    width: "100%",
     boxSizing: "border-box",
     "@media only screen and (max-width: 479px)": {
       width: "100%",
@@ -186,6 +187,7 @@ const mainStyles = createUseStyles({
     "@media only screen and (max-width: 479px)": {
       display: "-webkit-box;",
     },
+    justifyContent: "center",
   },
   colLg4: {
     width: "33.33333333%",
@@ -243,7 +245,7 @@ const mainStyles = createUseStyles({
     },
   },
   colLg6: {
-    width: "50%",
+    width: "45%",
     "@media only screen and (max-width: 767px)": {
       width: "auto",
     },
@@ -315,7 +317,7 @@ const mainStyles = createUseStyles({
     textAlign: "center",
   },
   "@media only screen and (max-width: 767px)": {
-    marginBottom: "32px",
+    // marginBottom: "32px",
   },
   colLg7: {
     "@media (min-width: 992px)": {
@@ -362,7 +364,7 @@ const mainStyles = createUseStyles({
     },
   },
   welcomeHomeFooter: {
-    marginTop: "32px",
+    // marginTop: "32px",
     "@media only screen and (max-width: 767px)": {
       marginTop: "23px",
     },
@@ -412,6 +414,8 @@ const mainStyles = createUseStyles({
     },
   },
   newsletterContainer: {
+    width: "100%",
+    boxSizing: "border-box",
     paddingTop: "16px",
     "@media only screen and (max-width: 767px)": {
       paddingTop: "0",
