@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import {
   Stack,
   Typography,
@@ -15,10 +16,11 @@ import { miniShoppingCartStyles } from "./styles";
 
 function MiniShoppingCart() {
   const classes = miniShoppingCartStyles();
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const navigate = useNavigate();
 
   const handleCartPage = () => {
-    navigate("/cart");
+    return navigate(`${isAuth ? "/cart" : "/signin"}`);
     // onClose();
   };
 

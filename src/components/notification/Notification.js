@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { appActions } from "../../redux/app/appSlice";
+import { hideNotification } from "../../redux/app/appSlice";
 import notificationStyles from "./styles";
 
 function Notification({ open, type, message }) {
   const dispatch = useDispatch();
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      dispatch(appActions.hideNotification());
+      dispatch(hideNotification());
     }, 3000);
     return () => clearTimeout(timeoutId);
   }, [dispatch]);

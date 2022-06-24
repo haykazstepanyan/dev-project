@@ -95,6 +95,32 @@ const theme = createTheme({
           },
         },
         {
+          props: { purpose: "modalCancel" },
+          style: {
+            background: "transparent",
+            border: `3px solid ${colors.black}`,
+            color: colors.black,
+            padding: "3px 8px",
+            "&:hover": {
+              backgroundColor: colors.black,
+              color: colors.white,
+            },
+          },
+        },
+        {
+          props: { purpose: "modalSubmit" },
+          style: {
+            background: "transparent",
+            color: colors.black,
+            padding: "3px 8px",
+            border: `3px solid ${colors.green}`,
+            "&:hover": {
+              backgroundColor: colors.green,
+              color: colors.white,
+            },
+          },
+        },
+        {
           props: { state: "open" },
           style: {
             color: colors.green,
