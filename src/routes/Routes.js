@@ -28,7 +28,7 @@ function PageRoutes() {
   const userRole = useSelector((state) => state.auth.userData?.role);
   const loading = useSelector((state) => state.auth.loading);
 
-  console.log(userRole);
+  // console.log(userRole);
   let allowedRoutes;
 
   if (!userRole) {

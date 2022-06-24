@@ -40,7 +40,7 @@ function Shop() {
             <Grid item md={9}>
               <Grid container className={classes.shopItemContainer}>
                 {products &&
-                  products.map(({ id, name, price }) => (
+                  products.map(({ id, name, price, productImg }) => (
                     <Grid
                       item
                       sm={4}
@@ -50,7 +50,7 @@ function Shop() {
                       <ProductItem
                         id={id}
                         title={name}
-                        // image={images[0]}
+                        image={productImg}
                         price={price}
                       />
                     </Grid>

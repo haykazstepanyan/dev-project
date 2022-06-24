@@ -4,7 +4,7 @@ export async function getProductsDataByPage(pageNumber, limit = 9) {
   let res;
   try {
     const response = await fetch(
-      `${API_URL}/api/v1/products/getProducts?page=${pageNumber}&limit=${limit}`,
+      `${API_URL}/products/getProducts?page=${pageNumber}&limit=${limit}`,
       {
         method: "GET",
         mode: "cors",

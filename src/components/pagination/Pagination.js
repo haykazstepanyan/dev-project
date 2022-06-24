@@ -24,7 +24,7 @@ function Pagination({ count, onChange }) {
 }
 
 Pagination.propTypes = {
-  count: PropTypes.number.isRequired,
+  count: PropTypes.number,
   onChange: PropTypes.func.isRequired,
 };
 

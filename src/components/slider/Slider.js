@@ -87,7 +87,6 @@ function SlickSlider({
   page,
 }) {
   const classes = slickSliderStyles();
-  console.log(page);
   const settings = {
     dots: false,
     infinite: true,
