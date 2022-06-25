@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux/es/exports";
 import { Container } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
+import { getBrands } from "../../redux/brand/actions";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
-import { brands } from "../../DUMMY_DATA";
+import Loader from "../../components/loader";
+
+// import { brands } from "../../DUMMY_DATA";
 
 function createData(id, name, createdAt, updatedAt) {
   return { id, name, createdAt, updatedAt };
@@ -12,13 +17,32 @@ function createData(id, name, createdAt, updatedAt) {
 
 const rows = [];
 
-brands.forEach((elem, index) => {
-  rows.push(
-    createData(index, elem, "2022-03-16 13:12:00", "2022-03-16 13:12:00"),
-  );
-});
+function createBrandsList({ loading, brands }) {
+  if (!loading) {
+    brands.forEach((elem) => {
+      const { id, name, createdAt, updatedAt } = elem;
+      rows.push(createData(id, name, createdAt, updatedAt));
+    });
+  }
+}
 
 export default function Brand() {
+  const brandsData = useSelector((state) => state.brands);
+  const [loading, setLoading] = useState(true);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBrands());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!brandsData?.loading) {
+      setLoading(false);
+    }
+    createBrandsList(brandsData);
+  }, [brandsData]);
+
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -44,7 +68,11 @@ export default function Brand() {
             <AddIcon />
           </Button>
         </div>
-        <AdminMainTable type="brand" tableData={rows} />
+        {loading ? (
+          <Loader />
+        ) : (
+          <AdminMainTable type="brand" tableData={rows} />
+        )}
       </Container>
       {open ? (
         <AdminModal

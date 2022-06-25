@@ -13,7 +13,7 @@ export const checkIsAuth = createAsyncThunk(
         throw new Error(response.statusText);
       }
       const result = await response.json();
-
+      console.log(result);
       return result;
     } catch (err) {
       return rejectWithValue({ message: err.message });
