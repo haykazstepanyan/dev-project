@@ -28,6 +28,7 @@ function AccountLinks() {
   };
   const handleSignOut = () => {
     dispatch(signOut(id));
+    onModalClose();
   };
   const logoutModal = (
     <Dialog

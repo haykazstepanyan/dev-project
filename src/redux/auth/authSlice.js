@@ -6,27 +6,25 @@ const authSlice = createSlice({
   initialState: {
     isAuth: false,
     userData: {},
-    loading: true,
+    loading: false,
+    authLoading: true,
   },
   extraReducers: {
-    [checkIsAuth.pending]: (state) => {
-      state.loading = true;
-    },
     [checkIsAuth.fulfilled]: (state, { payload }) => {
       state.isAuth = payload.isAuth;
       state.userData = payload.user;
-      state.loading = false;
+      state.authLoading = false;
     },
     [checkIsAuth.rejected]: (state) => {
-      state.loading = false;
+      state.authLoading = false;
     },
     [signUp.pending]: (state) => {
       state.loading = true;
     },
     [signUp.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.isAuth = payload.isAuth;
-      state.userData = payload.data;
+      state.isAuth = payload.data.isAuth;
+      state.userData = payload.data.user;
     },
     [signUp.rejected]: (state) => {
       state.loading = false;
@@ -36,8 +34,8 @@ const authSlice = createSlice({
     },
     [signIn.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.isAuth = payload.isAuth;
-      state.userData = payload.data;
+      state.isAuth = payload.data.isAuth;
+      state.userData = payload.data.user;
     },
     [signIn.rejected]: (state) => {
       state.loading = false;
@@ -50,7 +48,7 @@ const authSlice = createSlice({
       state.isAuth = false;
       state.userData = {};
     },
-    [signIn.rejected]: (state) => {
+    [signOut.rejected]: (state) => {
       state.loading = false;
     },
   },

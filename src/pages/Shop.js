@@ -4,7 +4,7 @@ import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Pagination from "../components/pagination";
-import { getProductsDataByPage } from "../helpers/api.helpers";
+import { getProductsDataByPage } from "../helpers/helpers";
 import Banner from "../components/common/Banner";
 import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";

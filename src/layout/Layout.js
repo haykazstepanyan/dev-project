@@ -15,7 +15,8 @@ function Layout({ children }) {
   ) : (
     <>
       <Header />
-      {showLoader ? <Loader /> : children}
+      {children}
+      {showLoader && <Loader />}
       <Footer />
     </>
   );

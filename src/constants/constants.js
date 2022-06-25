@@ -10,7 +10,6 @@ export const colors = {
   red: "#DC0F0F",
 };
 
-export const API_URL = "http://localhost:5000";
 export const TABLE_TITLES = ["Date", "Status", "Total", "Actions"];
 export const NAV_LINKS = [
   { route: "/", name: "Home" },
