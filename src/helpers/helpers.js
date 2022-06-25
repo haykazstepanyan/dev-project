@@ -51,3 +51,18 @@ export async function getProductsDataByPage(pageNumber, limit = 9) {
   }
   return res;
 }
+
+export async function getProductById(id) {
+  let result;
+  try {
+    const response = await fetch(`${BASE_URL}/products/getProducts/${id}`, {
+      method: "GET",
+      mode: "cors",
+    });
+    result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+  return result;
+}
