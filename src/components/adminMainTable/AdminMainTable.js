@@ -124,7 +124,8 @@ function AdminMainTable({ tableData }) {
 }
 
 AdminMainTable.propTypes = {
-  tableData: PropTypes.arrayOf([PropTypes.object]).isRequired,
+  tableData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
 };
 
 export default AdminMainTable;

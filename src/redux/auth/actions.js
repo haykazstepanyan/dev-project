@@ -7,7 +7,6 @@ export const checkIsAuth = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetchData("users/auth");
-
       return response.data;
     } catch (err) {
       return rejectWithValue();
