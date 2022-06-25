@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { checkIsAuth, signUp, signIn } from "./actions";
+import { checkIsAuth, signUp, signIn, signOut } from "./actions";
 
 const authSlice = createSlice({
   name: "auth",
@@ -42,10 +42,18 @@ const authSlice = createSlice({
     [signIn.rejected]: (state) => {
       state.loading = false;
     },
+    [signOut.pending]: (state) => {
+      state.loading = true;
+    },
+    [signOut.fulfilled]: (state) => {
+      state.loading = false;
+      state.isAuth = false;
+      state.userData = {};
+    },
+    [signIn.rejected]: (state) => {
+      state.loading = false;
+    },
   },
 });
-
-const authActions = authSlice.actions;
-export { authActions };
 
 export default authSlice;

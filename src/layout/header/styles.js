@@ -211,7 +211,7 @@ const navbarStyles = createUseStyles({
   },
 });
 
-const drawerClasses = createUseStyles({
+const drawerStyles = createUseStyles({
   welcomeText: {
     textAlign: "center",
     marginBottom: 24,
@@ -241,5 +241,5 @@ export {
   searchBoxStyles,
   iconsStyles,
   navbarStyles,
-  drawerClasses,
+  drawerStyles,
 };

@@ -3,10 +3,10 @@ import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import SearchBox from "./SearchBox";
 import Navbar from "./Navbar";
 import Drawer from "../../components/drawer";
-import { drawerClasses } from "./styles";
+import { drawerStyles } from "./styles";
 
 function HeaderMobileDrawer() {
-  const classes = drawerClasses();
+  const classes = drawerStyles();
   return (
     <Grid>
       <Drawer anchorDirection="left" OpenIcon={FormatAlignJustifyIcon} outline>

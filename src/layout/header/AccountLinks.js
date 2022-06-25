@@ -1,23 +1,60 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import Grid from "@mui/material/Grid";
-import { useSelector } from "react-redux";
+import { Grid, Dialog, DialogTitle, DialogActions } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import { HoverableDropdown } from "../../components/dropdown";
-import { iconsStyles } from "./styles";
+import { signOut } from "../../redux/auth/actions";
 import MiniShoppingCart from "../../components/miniShoppingCart";
 import Drawer from "../../components/drawer";
+import Button from "../../components/button";
+import { iconsStyles } from "./styles";
 
 function AccountLinks() {
-  const userRole = useSelector((state) => state.auth.userData?.role);
+  const [openModal, setOpenModal] = useState(false);
+  const user = useSelector((state) => state.auth.userData);
+  const { id, role } = user;
+  const dispatch = useDispatch();
 
   const classes = iconsStyles();
+
+  const onModalClose = () => {
+    setOpenModal(false);
+  };
+  const onModalOpen = () => {
+    setOpenModal(true);
+  };
+  const handleSignOut = () => {
+    dispatch(signOut(id));
+  };
+  const logoutModal = (
+    <Dialog
+      open={openModal}
+      onClose={onModalClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        Are you sure you want to sign out?
+      </DialogTitle>
+      <DialogActions>
+        <Button purpose="modalCancel" onClick={onModalClose} disableRipple>
+          Cancel
+        </Button>
+        <Button color="primary" onClick={handleSignOut} disableRipple>
+          Sign Out
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   let linkNameToAccount;
   let allowedLinks;
-  if (userRole) {
+  if (role) {
     linkNameToAccount =
-      userRole === "ADMIN" || userRole === "MAIN_ADMIN"
+      role === "ADMIN" || role === "MAIN_ADMIN"
         ? "/admin"
         : "/account/dashboard";
     allowedLinks = [
@@ -32,6 +69,20 @@ function AccountLinks() {
 
       { item: "Shopping cart", key: "shoppingCart" },
       { item: "Wishlist", key: "wishlist" },
+      {
+        item: (
+          <Button
+            key="signout"
+            color="info"
+            purpose="dropdownBtn"
+            onClick={onModalOpen}
+            disableRipple
+          >
+            Sign out
+          </Button>
+        ),
+        key: "signout",
+      },
     ];
   } else {
     allowedLinks = [
@@ -67,6 +118,7 @@ function AccountLinks() {
       >
         <MiniShoppingCart />
       </Drawer>
+      {logoutModal}
     </Grid>
   );
 }

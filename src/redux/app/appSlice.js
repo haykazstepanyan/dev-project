@@ -31,6 +31,7 @@ const appSlice = createSlice({
   },
 });
 
-export const appActions = appSlice.actions;
+export const { setIsMobileVersion, showNotification, hideNotification } =
+  appSlice.actions;
 
 export default appSlice;

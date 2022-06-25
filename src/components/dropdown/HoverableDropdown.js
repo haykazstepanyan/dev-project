@@ -42,6 +42,7 @@ function HoverableDropdown({ value, list }) {
             className={classes.menuItems}
             key={elem.key}
             onClick={handleDropdownClick}
+            disableRipple
           >
             {elem.item}
           </MenuItem>

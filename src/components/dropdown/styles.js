@@ -10,6 +10,13 @@ const hoverableDropdownStyles = createUseStyles({
       background: "transparent",
       color: colors.green,
     },
+    "& button": {
+      padding: 0,
+      fontFamily: '"Rubik", sans-serif',
+      fontSize: "1rem",
+      lineHeight: 1.5,
+      letterSpacing: 0,
+    },
   },
 });
 
