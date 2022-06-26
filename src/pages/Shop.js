@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
 import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
@@ -13,6 +14,9 @@ import { shopStyles } from "./styles";
 
 const USERIDFAKE = 1;
 function Shop() {
+  const user = useSelector((state) => state.auth.userData);
+  console.log(user, "******userrrrrrrrr");
+
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);

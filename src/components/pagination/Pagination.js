@@ -11,7 +11,6 @@ const useStyles = createUseStyles({
 });
 
 function Pagination({ count, onChange }) {
-  console.log(count, "counttttttttttttttttt");
   const classes = useStyles();
   return (
     <MuiPagination
