@@ -21,12 +21,10 @@ function MiniShoppingCart() {
 
   const handleCartPage = () => {
     return navigate(`${isAuth ? "/cart" : "/signin"}`);
-    // onClose();
   };
 
   const handleCheckoutPage = () => {
     navigate("/#");
-    // onClose();
   };
 
   return (

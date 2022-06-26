@@ -1,21 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BASE_URL } from "../../constants/constants";
 import { showNotification } from "../app/appSlice";
+import { fetchData } from "../../helpers/helpers";
 
 export const checkIsAuth = createAsyncThunk(
   "auth/isAuth",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${BASE_URL}/users`, {
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      const result = await response.json();
-      return result;
+      const response = await fetchData("users/auth");
+      return response.data;
     } catch (err) {
-      return rejectWithValue({ message: err.message });
+      return rejectWithValue();
     }
   },
 );
@@ -24,34 +18,37 @@ export const signUp = createAsyncThunk(
   "auth/signUp",
   async (data, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch(`${BASE_URL}/users/createUser`, {
-        method: "POST",
+      const requestOptions = {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        const errMessage = await response.text();
+      };
+      const response = await fetchData(
+        "users/signUp",
+        data,
+        requestOptions,
+        "POST",
+      );
+      if (response.result === "error") {
         dispatch(
           showNotification({
             notificationType: "error",
-            notificationMessage: errMessage,
+            notificationMessage: response.message,
           }),
         );
-        throw new Error(errMessage);
+        throw new Error();
       }
-      const result = await response.json();
+
       dispatch(
         showNotification({
           notificationType: "success",
           notificationMessage: "You have successfully signed up!",
         }),
       );
-      return result;
+
+      return response;
     } catch (err) {
-      return rejectWithValue({ message: err.message });
+      return rejectWithValue();
     }
   },
 );
@@ -60,35 +57,31 @@ export const signOut = createAsyncThunk(
   "auth/signOut",
   async (id, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch(`${BASE_URL}/users/signOut`, {
-        method: "POST",
+      const requestOptions = {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
-        body: JSON.stringify({ id }),
-      });
-      if (!response.ok) {
-        const errMessage = await response.text();
+      };
+
+      const response = await fetchData(
+        "users/signOut",
+        { id },
+        requestOptions,
+        "POST",
+      );
+      if (response.result === "error") {
         dispatch(
           showNotification({
             notificationType: "error",
-            notificationMessage: errMessage,
+            notificationMessage: response.message,
           }),
         );
-        throw new Error(errMessage);
+        throw new Error();
       }
-      const result = await response.json();
-      dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "You have successfully signed out!",
-        }),
-      );
 
-      return result;
+      return response;
     } catch (err) {
-      return rejectWithValue({ message: err.message });
+      return rejectWithValue();
     }
   },
 );
@@ -97,37 +90,38 @@ export const signIn = createAsyncThunk(
   "auth/signIn",
   async (data, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch(`${BASE_URL}/users/signIn`, {
-        method: "POST",
+      const requestOptions = {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
-        body: JSON.stringify(data),
-      });
+      };
+      const response = await fetchData(
+        "users/signIn",
+        data,
+        requestOptions,
+        "POST",
+      );
 
-      if (!response.ok) {
-        const errMessage = await response.text();
+      if (response.result === "error") {
         dispatch(
           showNotification({
             notificationType: "error",
-            notificationMessage: errMessage,
+            notificationMessage: response.message,
           }),
         );
-        throw new Error(errMessage);
+        throw new Error();
       }
 
-      const result = await response.json();
       dispatch(
         showNotification({
           notificationType: "success",
-          notificationMessage: "You have successfully signed in!",
+          notificationMessage: `Welcome back, ${response.data.user.firstName} ${response.data.user.lastName}!`,
         }),
       );
 
-      return result;
-    } catch (err) {
-      return rejectWithValue({ message: err.message });
+      return response;
+    } catch {
+      return rejectWithValue();
     }
   },
 );
