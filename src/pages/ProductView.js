@@ -18,7 +18,6 @@ import { getProductById } from "../helpers/helpers";
 function Product() {
   const [product, setProduct] = useState({ category: {} });
   const { productId } = useParams();
-  //  console.log(product, productId);
   useEffect(() => {
     async function getProduct() {
       const { data: productData } = await getProductById(productId);

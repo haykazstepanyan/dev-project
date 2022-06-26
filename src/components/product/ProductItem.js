@@ -1,11 +1,33 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Sale from "./Sale";
+import {
+  addToWishlist,
+  deleteItemFromWishlist,
+} from "../../helpers/helpers";
 import { productItemStyles } from "./styles";
+// import { addToWishlist, deleteItemFromWishlist } from "../../helpers/helpers";
 
-function ProductItem({ id, title, price, image, discount }) {
+const USERIDFAKE = 1;
+
+function ProductItem({ id, title, price, image, discount, isFilled }) {
+  const [filled, setFilled] = useState(isFilled);
   const classes = productItemStyles();
+  const handleAddToWishList = (event, productId) => {
+    event.preventDefault();
+    if (isFilled) {
+      deleteItemFromWishlist(USERIDFAKE, productId);
+    } else {
+      addToWishlist(USERIDFAKE, productId);
+    }
+    setFilled(!filled);
+  };
+
   return (
     <Card className={classes.productCard}>
       <Link to={`/product/${id}`}>
@@ -20,6 +42,11 @@ function ProductItem({ id, title, price, image, discount }) {
             </span>
             <span className={classes.productRealPrice}>${price}</span>
           </div>
+          <span>
+            <IconButton onClick={(event) => handleAddToWishList(event, id)}>
+              {filled ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
+            </IconButton>
+          </span>
           <Sale discount={5} />
         </CardContent>
       </Link>
@@ -37,6 +64,7 @@ ProductItem.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   discount: PropTypes.number,
+  isFilled: PropTypes.bool,
 };
 
 export default ProductItem;
