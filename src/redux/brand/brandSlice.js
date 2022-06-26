@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getBrands } from "./actions";
+import { getBrands, addBrands, deleteBrands, updateBrands } from "./actions";
 
 const brandSlice = createSlice({
   name: "brands",
   initialState: {
-    brands: {},
+    brands: [],
     loading: true,
   },
   extraReducers: {
@@ -12,12 +12,29 @@ const brandSlice = createSlice({
       state.loading = true;
     },
     [getBrands.fulfilled]: (state, { payload }) => {
-      console.log("payload", payload);
       state.brands = payload.brands;
       state.loading = false;
     },
     [getBrands.rejected]: (state) => {
       state.loading = true;
+    },
+    [addBrands.fulfilled]: (state, { payload }) => {
+      state.brands.push(payload.brand.data);
+      state.loading = false;
+    },
+    [deleteBrands.fulfilled]: (state, { payload }) => {
+      const brandId = payload.data.id;
+      const currState = state.brands;
+      const newState = currState.filter((elem) => elem.id !== brandId);
+      state.brands = newState;
+    },
+    [updateBrands.fulfilled]: (state, { payload }) => {
+      const { brand } = payload;
+      const currState = state.brands;
+      const newState = currState.map((elem) =>
+        elem.id === brand.id ? brand : elem,
+      );
+      state.brands = newState;
     },
   },
 });
