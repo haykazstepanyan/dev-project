@@ -4,31 +4,20 @@ import { useSelector } from "react-redux/es/exports";
 import { Container } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
-import { getBrands } from "../../redux/brand/actions";
+import { addBrands, getBrands } from "../../redux/brand/actions";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
 import Loader from "../../components/loader";
-
-// import { brands } from "../../DUMMY_DATA";
 
 function createData(id, name, createdAt, updatedAt) {
   return { id, name, createdAt, updatedAt };
 }
 
-const rows = [];
-
-function createBrandsList({ loading, brands }) {
-  if (!loading) {
-    brands.forEach((elem) => {
-      const { id, name, createdAt, updatedAt } = elem;
-      rows.push(createData(id, name, createdAt, updatedAt));
-    });
-  }
-}
-
 export default function Brand() {
   const brandsData = useSelector((state) => state.brands);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [brandsRows, setBrandsRows] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -40,10 +29,16 @@ export default function Brand() {
     if (!brandsData?.loading) {
       setLoading(false);
     }
-    createBrandsList(brandsData);
-  }, [brandsData]);
 
-  const [open, setOpen] = useState(false);
+    const rows = [];
+    if (!brandsData.loading) {
+      brandsData.brands.forEach((elem) => {
+        const { id, name, createdAt, updatedAt } = elem;
+        rows.push(createData(id, name, createdAt, updatedAt));
+      });
+    }
+    setBrandsRows(rows);
+  }, [brandsData]);
 
   const handleClose = () => {
     setOpen(false);
@@ -52,7 +47,9 @@ export default function Brand() {
     setOpen(true);
   };
   const addData = (value) => {
-    console.log(value);
+    const brandData = { name: value };
+    dispatch(addBrands(brandData));
+    handleClose();
   };
   return (
     <>
@@ -71,7 +68,7 @@ export default function Brand() {
         {loading ? (
           <Loader />
         ) : (
-          <AdminMainTable type="brand" tableData={rows} />
+          <AdminMainTable type="brand" tableData={brandsRows} />
         )}
       </Container>
       {open ? (

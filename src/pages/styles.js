@@ -498,6 +498,87 @@ const signUpInStyles = createUseStyles({
   },
 });
 
+const productViewStyles = createUseStyles({
+  "container_grid-container": {
+    alignItems: "center",
+  },
+
+  "grid-item_img_container": {
+    padding: "10px !important",
+  },
+  "grid-item_img_img": {
+    maxWidth: "100% !important",
+  },
+
+  "grid-item_content": {
+    padding: "5px !important",
+  },
+  "grid-item_content_container": {
+    maxWidth: "100% !important",
+  },
+
+  "product-name-price_container": {
+    marginBottom: "3px !important",
+  },
+
+  "product_current-price": { fontWeight: 500, fontSize: 23, color: "#79a206" },
+
+  "product_old-price": {
+    textDecoration: "line-through",
+    fontWeight: 400,
+    fontSize: 20,
+    marginLeft: "10px !important",
+  },
+
+  product_description_container: {
+    marginBottom: "6px !important",
+  },
+
+  product_form_container: {
+    marginTop: "3px !important",
+  },
+  "product_form-button": {
+    display: "inline",
+    marginLeft: "3px !important",
+  },
+  "product_add-to-wishlist_container": {
+    marginTop: "3px !important",
+  },
+
+  "product_add-to-wishlist_text": {
+    fontSize: 12,
+  },
+
+  product_category_container: {
+    marginTop: "3px !important",
+  },
+
+  product_category_text: {
+    marginRight: 4,
+  },
+
+  "social-network-icons_container": {
+    display: "flex",
+    justifyContent: "space-between",
+    width: 100,
+  },
+
+  fb_icon: {
+    cursor: "pointer",
+    color: "#4267B2",
+  },
+
+  pinterest_icon: {
+    cursor: "pointer",
+    color: "#E60023",
+  },
+
+  linkedIn_icon: {
+    cursor: "pointer",
+    color: "#0072b1",
+  },
+});
+
 export {
   aboutUsStyles,
   contactUsStyles,
@@ -506,4 +587,5 @@ export {
   shopStyles,
   mainStyles,
   signUpInStyles,
+  productViewStyles,
 };
