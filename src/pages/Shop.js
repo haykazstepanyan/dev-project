@@ -1,32 +1,44 @@
 import { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Pagination from "../components/pagination";
-import { getProductsDataByPage } from "../helpers/helpers";
 import Banner from "../components/common/Banner";
 import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
+import Loader from "../components/loader";
 import { shopStyles } from "./styles";
+import {
+  getProductsPagination,
+  getProductsCount,
+} from "../redux/product/actions";
 
 function Shop() {
-  const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState();
 
+  const dispatch = useDispatch();
   const classes = shopStyles();
+  const products = useSelector((state) => state.products.paginationProducts);
+  const productsLength = useSelector((state) => state.products.productsLength);
+  const loading = useSelector((state) => state.products.loading);
 
   useEffect(() => {
-    getProductsDataByPage(page).then((productsData) => {
-      setCount(productsData.length);
-      setProducts(productsData.results);
-    });
-  }, [page]);
+    dispatch(getProductsCount());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getProductsPagination({ page }));
+  }, [dispatch, page]);
 
   const gotoPage = (_, pageNum) => {
+    console.log("pageNum - ", pageNum);
     setPage(pageNum);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -41,12 +53,7 @@ function Shop() {
               <Grid container className={classes.shopItemContainer}>
                 {products &&
                   products.map(({ id, name, price, productImg }) => (
-                    <Grid
-                      item
-                      sm={4}
-                      key={nanoid()}
-                      className={classes.shopItem}
-                    >
+                    <Grid item sm={4} key={id} className={classes.shopItem}>
                       <ProductItem
                         id={id}
                         title={name}
@@ -56,7 +63,11 @@ function Shop() {
                     </Grid>
                   ))}
               </Grid>
-              <Pagination count={count} onChange={gotoPage} />
+              <Pagination
+                count={Math.ceil(productsLength / 9)}
+                page={page}
+                onChange={gotoPage}
+              />
             </Grid>
           </Grid>
         </Box>

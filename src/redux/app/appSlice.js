@@ -11,14 +11,14 @@ const appSlice = createSlice({
     },
   },
   reducers: {
-    setIsMobileVersion(state, action) {
-      state.isMobile = action.payload.isMobile;
+    setIsMobileVersion(state, { payload }) {
+      state.isMobile = payload.isMobile;
     },
-    showNotification(state, action) {
+    showNotification(state, { payload }) {
       state.notification = {
         show: true,
-        type: action.payload.notificationType,
-        message: action.payload.notificationMessage,
+        type: payload.notificationType,
+        message: payload.notificationMessage,
       };
     },
     hideNotification(state) {

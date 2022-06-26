@@ -1,6 +1,11 @@
 import { BASE_URL } from "../constants/constants";
 
-export const fetchData = async (urlEndPart, data, options, method = "GET") => {
+export const fetchData = async (
+  urlEndPart,
+  data,
+  options = {},
+  method = "GET",
+) => {
   try {
     if (data) {
       options.body = JSON.stringify(data);
@@ -10,6 +15,7 @@ export const fetchData = async (urlEndPart, data, options, method = "GET") => {
       method,
       ...options,
     });
+
     if (!response.ok) {
       const errMessage = await response.text();
       throw new Error(errMessage);
@@ -53,9 +59,6 @@ export async function getProductsDataByPage(pageNumber, limit = 9) {
 }
 
 export async function getProductById(id) {
-  const { data: result } = await fetchData(`products/getProducts/${id}`, "", {
-    method: "GET",
-    mode: "cors",
-  });
+  const { data: result } = await fetchData(`products/getProducts/${id}`);
   return result;
 }
