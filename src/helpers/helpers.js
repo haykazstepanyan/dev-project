@@ -1,5 +1,4 @@
-import { BASE_URL } from "../constants/constants";
-import { WISHLIST_URL, PRODUCTS_URL } from "../constants/constants";
+import { BASE_URL, WISHLIST_URL, PRODUCTS_URL } from "../constants/constants";
 
 export const fetchData = async (urlEndPart, data, options, method = "GET") => {
   try {
@@ -52,6 +51,17 @@ export const fetchData = async (urlEndPart, data, options, method = "GET") => {
 //   }
 //   return res;
 // }
+export async function getAllProducts() {
+  let res;
+  try {
+    const response = await fetch(`${PRODUCTS_URL}`);
+    res = response.json();
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+  return res;
+}
 export async function getProductsDataByPage(pageNumber, limit = 9) {
   let res;
   try {
