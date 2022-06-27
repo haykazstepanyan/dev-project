@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import PropTypes from "prop-types";
 import {
   Table as MuiTable,
@@ -13,20 +15,24 @@ import ClearIcon from "@mui/icons-material/Clear";
 import Button from "../button";
 import { tableStyles } from "./styles";
 import { deleteItemFromWishlist } from "../../helpers/helpers";
+import { setWishlistProducts } from "../../redux/wishlist/wishlistSlice";
 
-const USERIDFAKE = 1;
 function Table({ type, tableData, deleteProduct }) {
-  const [wishlistProducts, setWishlistProducts] = useState([]);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.userData);
+  const wishlistProducts = useSelector(
+    (state) => state.wishlist.wishlisProducts,
+  );
+  console.log(wishlistProducts);
+  useEffect(() => {}, [wishlistProducts]);
 
-  useEffect(() => {
-    setWishlistProducts(tableData);
-  }, [tableData]);
 
   const classes = tableStyles();
   function deleteFromWishlist(event, productId) {
     const data = wishlistProducts.filter((item) => item.id !== productId);
-    setWishlistProducts(data);
-    deleteItemFromWishlist(USERIDFAKE, productId);
+    dispatch(setWishlistProducts(data));
+
+    deleteItemFromWishlist(user.id, productId);
   }
   return (
     <TableContainer component={Paper} className={classes.tableStyle}>

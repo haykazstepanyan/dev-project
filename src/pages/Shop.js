@@ -12,10 +12,8 @@ import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import { shopStyles } from "./styles";
 
-const USERIDFAKE = 1;
 function Shop() {
   const user = useSelector((state) => state.auth.userData);
-  console.log(user, "******userrrrrrrrr");
 
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
@@ -24,7 +22,7 @@ function Shop() {
 
   const classes = shopStyles();
   useEffect(() => {
-    getWishlistData(USERIDFAKE).then((data) => {
+    getWishlistData(user.id).then((data) => {
       setWishlist(data);
     });
   }, [page]);

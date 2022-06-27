@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
@@ -10,18 +11,18 @@ import { addToWishlist, deleteItemFromWishlist } from "../../helpers/helpers";
 import { productItemStyles } from "./styles";
 // import { addToWishlist, deleteItemFromWishlist } from "../../helpers/helpers";
 
-const USERIDFAKE = 1;
 
 function ProductItem({ id, title, price, image, discount, isFilled }) {
+  const user = useSelector((state) => state.auth.userData);
   const [filled, setFilled] = useState(isFilled);
   const classes = productItemStyles();
   useEffect(() => {}, [filled]);
   const handleAddToWishList = (event, productId) => {
     event.preventDefault();
     if (isFilled) {
-      deleteItemFromWishlist(USERIDFAKE, productId);
+      deleteItemFromWishlist(user.id, productId);
     } else {
-      addToWishlist(USERIDFAKE, productId);
+      addToWishlist(user.id, productId);
     }
     setFilled(!filled);
   };
