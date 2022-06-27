@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getWishlistData } from "./actions";
+import {
+  getWishlistData,
+  deleteItemFromWishlist,
+  addToWishlist,
+} from "./actions";
 
 const wishlistSlice = createSlice({
   name: "wishlist",
@@ -9,7 +13,6 @@ const wishlistSlice = createSlice({
   },
   reducers: {
     setWishlistProducts(state, { payload }) {
-      console.log("payload", payload);
       state.wishlisProducts = payload;
     },
   },
@@ -23,6 +26,12 @@ const wishlistSlice = createSlice({
     },
     [getWishlistData.rejected]: (state) => {
       state.loading = true;
+    },
+    [deleteItemFromWishlist.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+    },
+    [addToWishlist.fulfilled]: (state, { payload }) => {
+      state.loading = false;
     },
   },
 });

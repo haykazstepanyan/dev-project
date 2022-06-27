@@ -98,7 +98,6 @@ export async function addToWishlist(userId, productId) {
       },
       body: JSON.stringify({
         userId,
-        productId,
       }),
     });
     return response;

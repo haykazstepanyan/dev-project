@@ -7,22 +7,26 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Sale from "./Sale";
-import { addToWishlist, deleteItemFromWishlist } from "../../helpers/helpers";
 import { productItemStyles } from "./styles";
-// import { addToWishlist, deleteItemFromWishlist } from "../../helpers/helpers";
-
+import {
+  deleteItemFromWishlist,
+  addToWishlist,
+} from "../../redux/wishlist/actions";
 
 function ProductItem({ id, title, price, image, discount, isFilled }) {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
   const [filled, setFilled] = useState(isFilled);
   const classes = productItemStyles();
   useEffect(() => {}, [filled]);
+
   const handleAddToWishList = (event, productId) => {
     event.preventDefault();
     if (isFilled) {
-      deleteItemFromWishlist(user.id, productId);
+      dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
     } else {
-      addToWishlist(user.id, productId);
+      dispatch(addToWishlist({ userId: user.id, productId }));
+      // addToWishlist(user.id, productId);
     }
     setFilled(!filled);
   };

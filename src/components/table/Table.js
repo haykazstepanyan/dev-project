@@ -14,26 +14,25 @@ import {
 import ClearIcon from "@mui/icons-material/Clear";
 import Button from "../button";
 import { tableStyles } from "./styles";
-import { deleteItemFromWishlist } from "../../helpers/helpers";
 import { setWishlistProducts } from "../../redux/wishlist/wishlistSlice";
+import { deleteItemFromWishlist } from "../../redux/wishlist/actions";
 
-function Table({ type, tableData, deleteProduct }) {
+function Table({ type, deleteProduct }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
   const wishlistProducts = useSelector(
     (state) => state.wishlist.wishlisProducts,
   );
-  console.log(wishlistProducts);
+  const classes = tableStyles();
+
   useEffect(() => {}, [wishlistProducts]);
 
-
-  const classes = tableStyles();
   function deleteFromWishlist(event, productId) {
     const data = wishlistProducts.filter((item) => item.id !== productId);
     dispatch(setWishlistProducts(data));
-
-    deleteItemFromWishlist(user.id, productId);
+    dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
   }
+
   return (
     <TableContainer component={Paper} className={classes.tableStyle}>
       <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">
