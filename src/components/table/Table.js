@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import PropTypes from "prop-types";
 import {
   Table as MuiTable,
@@ -32,7 +31,6 @@ function Table({ type, deleteProduct }) {
     dispatch(setWishlistProducts(data));
     dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
   }
-
   return (
     <TableContainer component={Paper} className={classes.tableStyle}>
       <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">
@@ -116,18 +114,17 @@ function Table({ type, deleteProduct }) {
 }
 
 Table.propTypes = {
-  tableData: PropTypes.arrayOf(
-    PropTypes.shape({
-      productId: PropTypes.number,
-      name: PropTypes.string,
-      image: PropTypes.string,
-      price: PropTypes.number,
-      total: PropTypes.number,
-      stockStatus: PropTypes.string,
-    }),
-  ).isRequired,
   type: PropTypes.string,
   deleteProduct: PropTypes.func,
 };
-
+// tableData: PropTypes.arrayOf(
+//   PropTypes.shape({
+//     productId: PropTypes.number,
+//     name: PropTypes.string,
+//     image: PropTypes.string,
+//     price: PropTypes.number,
+//     total: PropTypes.number,
+//     stockStatus: PropTypes.string,
+//   }),
+// ).isRequired,
 export default Table;

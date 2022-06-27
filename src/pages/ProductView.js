@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   Container,
@@ -8,14 +9,21 @@ import {
   Divider,
   TextField,
   Button,
-  Link,
 } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { getProductById } from "../helpers/helpers";
+import {
+  deleteItemFromWishlist,
+  addToWishlist,
+} from "../redux/wishlist/actions";
 
 function Product() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.userData);
+  const wishlist = useSelector((state) => state.wishlist.wishlistData);
+  const [isAdded, setIsAdded] = useState(false);
   const [product, setProduct] = useState({ category: {} });
   const { productId } = useParams();
   useEffect(() => {
@@ -24,11 +32,24 @@ function Product() {
       setProduct(productData);
     }
     getProduct();
-  }, [productId]);
+    const productInWishlist = wishlist.find(
+      (item) => item.productId === Number(productId),
+    );
+    if (productInWishlist) {
+      setIsAdded(true);
+    }
+  }, [productId, isAdded]);
 
   const handleAddToWishlist = (e) => {
     e.preventDefault();
     console.log(product);
+    if (isAdded) {
+      dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
+    } else {
+      dispatch(addToWishlist({ userId: user.id, productId }));
+      // addToWishlist(user.id, productId);
+    }
+    setIsAdded(!isAdded);
   };
 
   return (
@@ -94,13 +115,12 @@ function Product() {
             </Box>
             <Box marginTop={3}>
               {/* Redux WISHLIST state needed and DB table WISHLIST needed!!! */}
-              <Link
-                href="/"
-                sx={{ fontSize: 12 }}
+              <Button
+                sx={{ fontSize: 12, cursor: "pointer" }}
                 onClick={handleAddToWishlist}
               >
-                +Add to wishlist
-              </Link>
+                {isAdded ? "-Remove from wishlist" : "+Add to wishlist"}
+              </Button>
             </Box>
             <Box marginTop={3}>
               <Typography>

@@ -28,9 +28,11 @@ const wishlistSlice = createSlice({
       state.loading = true;
     },
     [deleteItemFromWishlist.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       state.loading = false;
     },
     [addToWishlist.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       state.loading = false;
     },
   },

@@ -5,26 +5,25 @@ import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Pagination from "../components/pagination";
-import { getProductsDataByPage, getWishlistData } from "../helpers/helpers";
-
+import { getProductsDataByPage } from "../helpers/helpers";
 import Banner from "../components/common/Banner";
 import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import { shopStyles } from "./styles";
+import { getWishlistData } from "../redux/wishlist/actions";
 
 function Shop() {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
+  const wishlist = useSelector((state) => state.wishlist.wishlistData);
 
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
-  const [wishlist, setWishlist] = useState([]);
 
   const classes = shopStyles();
   useEffect(() => {
-    getWishlistData(user.id).then((data) => {
-      setWishlist(data);
-    });
+    dispatch(getWishlistData(user.id));
   }, [page]);
   useEffect(() => {
     getProductsDataByPage(page).then((productsData) => {

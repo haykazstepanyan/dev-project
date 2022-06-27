@@ -12,9 +12,6 @@ export default function Wishlist() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
   const wishlist = useSelector((state) => state.wishlist.wishlistData);
-  const wishlistProducts = useSelector(
-    (state) => state.wishlist.wishlistProducts,
-  );
   const [products, setProdcuts] = useState([]);
   const globalClasses = globalStyles();
 
