@@ -7,13 +7,19 @@ import { getAllProducts } from "../helpers/helpers";
 import { setWishlistProducts } from "../redux/wishlist/wishlistSlice";
 import { globalStyles } from "../components/styles/styles";
 import { getWishlistData } from "../redux/wishlist/actions";
+import { deleteItemFromWishlist } from "../redux/wishlist/actions";
 
 export default function Wishlist() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
   const wishlist = useSelector((state) => state.wishlist.wishlistData);
+  const wishlistProducts = useSelector(
+    (state) => state.wishlist.wishlisProducts,
+  );
   const [products, setProdcuts] = useState([]);
   const globalClasses = globalStyles();
+
+  useEffect(() => {}, [wishlistProducts]);
 
   useEffect(() => {
     dispatch(getWishlistData(user.id));
@@ -38,13 +44,19 @@ export default function Wishlist() {
     }
   }, [dispatch, wishlist]);
 
+  function deleteFromWishlist(event, productId) {
+    const data = wishlistProducts.filter((item) => item.id !== productId);
+    dispatch(setWishlistProducts(data));
+    dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
+  }
   return (
     <>
       <Banner name="Wishlist" />
       <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
         <Table
           type="wishlist"
-          // deleteProduct={deleteProduct}
+          tableData={wishlistProducts}
+          deleteProduct={deleteFromWishlist}
         />
       </Container>
     </>

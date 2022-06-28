@@ -13,24 +13,25 @@ import {
 import ClearIcon from "@mui/icons-material/Clear";
 import Button from "../button";
 import { tableStyles } from "./styles";
-import { setWishlistProducts } from "../../redux/wishlist/wishlistSlice";
-import { deleteItemFromWishlist } from "../../redux/wishlist/actions";
+// import { setWishlistProducts } from "../../redux/wishlist/wishlistSlice";
+// import { deleteItemFromWishlist } from "../../redux/wishlist/actions";
 
-function Table({ type, deleteProduct }) {
+function Table({ type, tableData, deleteProduct }) {
+  console.log(tableData, "tableData");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
-  const wishlistProducts = useSelector(
-    (state) => state.wishlist.wishlisProducts,
-  );
+  // const wishlistProducts = useSelector(
+  //   (state) => state.wishlist.wishlisProducts,
+  // );
   const classes = tableStyles();
 
-  useEffect(() => {}, [wishlistProducts]);
+  // useEffect(() => {}, [wishlistProducts]);
 
-  function deleteFromWishlist(event, productId) {
-    const data = wishlistProducts.filter((item) => item.id !== productId);
-    dispatch(setWishlistProducts(data));
-    dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
-  }
+  // function deleteFromWishlist(event, productId) {
+  //   const data = wishlistProducts.filter((item) => item.id !== productId);
+  //   dispatch(setWishlistProducts(data));
+  //   dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
+  // }
   return (
     <TableContainer component={Paper} className={classes.tableStyle}>
       <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">
@@ -52,7 +53,7 @@ function Table({ type, deleteProduct }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {wishlistProducts.map((row) => (
+          {tableData.map((row) => (
             <TableRow
               key={row.id}
               sx={{
@@ -63,9 +64,7 @@ function Table({ type, deleteProduct }) {
               }}
             >
               <TableCell>
-                <ClearIcon
-                  onClick={(event) => deleteFromWishlist(event, row.id)}
-                />
+                <ClearIcon onClick={(event) => deleteProduct(event, row.id)} />
               </TableCell>
               <TableCell component="th" scope="row">
                 <img
@@ -114,17 +113,18 @@ function Table({ type, deleteProduct }) {
 }
 
 Table.propTypes = {
+  tableData: PropTypes.arrayOf(
+    PropTypes.shape({
+      productId: PropTypes.number,
+      name: PropTypes.string,
+      image: PropTypes.string,
+      price: PropTypes.number,
+      total: PropTypes.number,
+      stockStatus: PropTypes.string,
+    }),
+  ).isRequired,
   type: PropTypes.string,
   deleteProduct: PropTypes.func,
 };
-// tableData: PropTypes.arrayOf(
-//   PropTypes.shape({
-//     productId: PropTypes.number,
-//     name: PropTypes.string,
-//     image: PropTypes.string,
-//     price: PropTypes.number,
-//     total: PropTypes.number,
-//     stockStatus: PropTypes.string,
-//   }),
-// ).isRequired,
+
 export default Table;
