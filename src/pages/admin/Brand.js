@@ -7,7 +7,6 @@ import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
 import { addBrands, getBrands } from "../../redux/brand/actions";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
-import Loader from "../../components/loader";
 
 function createData(id, name, createdAt, updatedAt) {
   return { id, name, createdAt, updatedAt };
@@ -15,7 +14,6 @@ function createData(id, name, createdAt, updatedAt) {
 
 export default function Brand() {
   const brandsData = useSelector((state) => state.brands);
-  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [brandsRows, setBrandsRows] = useState([]);
 
@@ -26,10 +24,6 @@ export default function Brand() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!brandsData?.loading) {
-      setLoading(false);
-    }
-
     const rows = [];
     if (!brandsData.loading) {
       brandsData.brands.forEach((elem) => {
@@ -65,11 +59,7 @@ export default function Brand() {
             <AddIcon />
           </Button>
         </div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <AdminMainTable type="brand" tableData={brandsRows} />
-        )}
+        {brandsData && <AdminMainTable type="brand" tableData={brandsRows} />}
       </Container>
       {open ? (
         <AdminModal

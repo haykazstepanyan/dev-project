@@ -55,3 +55,27 @@ export const getProductsCount = createAsyncThunk(
     }
   },
 );
+
+export const getProducts = createAsyncThunk(
+  "products/getProducts",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await fetchData("products");
+
+      console.log(response);
+
+      if (response.result === "error") {
+        dispatch(
+          showNotification({
+            notificationType: "error",
+            notificationMessage: response.message,
+          }),
+        );
+        throw new Error();
+      }
+      return response;
+    } catch (err) {
+      return rejectWithValue();
+    }
+  },
+);
