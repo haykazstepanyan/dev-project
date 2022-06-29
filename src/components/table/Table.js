@@ -38,7 +38,7 @@ function Table({ type, tableData, deleteProduct }) {
         <TableBody>
           {tableData.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.id}
               sx={{
                 "&:last-child td, &:last-child th": {
                   border: 0,
@@ -47,21 +47,27 @@ function Table({ type, tableData, deleteProduct }) {
               }}
             >
               <TableCell>
-                <ClearIcon />
+                <ClearIcon onClick={(event) => deleteProduct(event, row.id)} />
               </TableCell>
               <TableCell component="th" scope="row">
-                <img src={row.image} alt="product" />
+                <img
+                  src="https://www.jquery-az.com/html/images/banana.jpg"
+                  alt="product"
+                />
               </TableCell>
-              <TableCell>{row.name}</TableCell>
+              <TableCell>
+                {row.name}
+                {row.id}
+              </TableCell>
               <TableCell className="price">
                 <p>£{row.price}</p>
               </TableCell>
-              <TableCell className="stockStatus">{row.stockStatus}</TableCell>
+              <TableCell className="stockStatus">In Stock</TableCell>
               {type === "wishlist" ? (
                 <TableCell>
                   <Button
                     type="primary"
-                    onClick={() => deleteProduct(row.productId)}
+                    onClick={() => deleteProduct(row.id)}
                     disableRipple
                   >
                     Add to cart
@@ -76,7 +82,8 @@ function Table({ type, tableData, deleteProduct }) {
                     </label>
                   </TableCell>
                   <TableCell className="price">
-                    <p>£{row.total}</p>
+                    <p>£150</p>
+                    {/* {row.total} */}
                   </TableCell>
                 </>
               )}

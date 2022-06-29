@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   Container,
@@ -8,29 +9,60 @@ import {
   Divider,
   TextField,
   Button,
-  Link,
 } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { getProductById } from "../helpers/helpers";
 import { productViewStyles } from "./styles";
+import { getProductById } from "../helpers/helpers";
+
+import {
+  deleteItemFromWishlist,
+  addToWishlist,
+} from "../redux/wishlist/actions";
 
 function Product() {
-  const classes = productViewStyles();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.userData);
+  const wishlist = useSelector((state) => state.wishlist.wishlistData);
+  // const [isAdded, setIsAdded] = useState(false);
   const [product, setProduct] = useState({ category: {} });
   const { productId } = useParams();
+  const [isAdded, setIsAdded] = useState(false);
+   const classes = productViewStyles();
+
+  useEffect(() => {
+    console.log(wishlist);
+    const productInWishlist = wishlist.find(
+      (item) => item.productId === Number(productId),
+    );
+    // console.log("dsasdsa",productInWishlist);
+    setIsAdded(productInWishlist);
+  }, []);
+
   useEffect(() => {
     async function getProduct() {
       const { data: productData } = await getProductById(productId);
       setProduct(productData);
     }
     getProduct();
-  }, [productId]);
+    // const productInWishlist = wishlist.find(
+    //   (item) => item.productId === Number(productId),
+    // );
+    // if (productInWishlist) {
+    //   setIsAdded(true);
+    // }
+  }, [productId, isAdded, dispatch]);
 
   const handleAddToWishlist = (e) => {
     e.preventDefault();
-    console.log(product);
+    if (isAdded) {
+      dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
+    } else {
+      dispatch(addToWishlist({ userId: user.id, productId }));
+      // addToWishlist(user.id, productId);
+    }
+    setIsAdded(!isAdded);
   };
 
   return (
@@ -89,9 +121,14 @@ function Product() {
               marginTop={3}
             >
               {/* Redux WISHLIST state needed and DB table WISHLIST needed!!! */}
-              <Link href="/" fontSize={12} onClick={handleAddToWishlist}>
-                +Add to wishlist
-              </Link>
+
+              <Button
+                sx={{ fontSize: 12, cursor: "pointer" }}
+                onClick={handleAddToWishlist}
+              >
+                {isAdded ? "-Remove from wishlist" : "+Add to wishlist"}
+              </Button>
+
             </Box>
             <Box sx={{ marginTop: 3 }}>
               <Typography>

@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
+
+import { nanoid } from "nanoid";
+
 import { useDispatch, useSelector } from "react-redux";
+
 import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -9,19 +13,28 @@ import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import Loader from "../components/loader";
 import { shopStyles } from "./styles";
+
+import { getWishlistData } from "../redux/wishlist/actions";
 import {
   getProductsPagination,
   getProductsCount,
 } from "../redux/product/actions";
 
 function Shop() {
-  const [page, setPage] = useState(1);
-
   const dispatch = useDispatch();
-  const classes = shopStyles();
+  const user = useSelector((state) => state.auth.userData);
+  const wishlist = useSelector((state) => state.wishlist.wishlistData);
+//   const [count, setCount] = useState(0);
+  const[isFilled, setIsFilled] = useState(false)
+  const [page, setPage] = useState(1);
   const products = useSelector((state) => state.products.paginationProducts);
   const productsLength = useSelector((state) => state.products.productsLength);
   const loading = useSelector((state) => state.products.loading);
+  const classes = shopStyles();
+
+  useEffect(() => {
+    dispatch(getWishlistData(user.id));
+  }, [page]);
 
   useEffect(() => {
     dispatch(getProductsCount());
@@ -52,13 +65,24 @@ function Shop() {
             <Grid item md={9}>
               <Grid container className={classes.shopItemContainer}>
                 {products &&
-                  products.map(({ id, name, price, productImg }) => (
-                    <Grid item sm={4} key={id} className={classes.shopItem}>
+                  wishlist &&
+                  products.map(({ id, name, price }) => (
+                    <Grid
+                      item
+                      sm={4}
+                      key={nanoid()}
+                      className={classes.shopItem}
+                    >
                       <ProductItem
                         id={id}
                         title={name}
-                        image={productImg}
+                        image="https://www.jquery-az.com/html/images/banana.jpg"
                         price={price}
+                        isFilled={
+                          wishlist.find((item) => item.productId === id)
+                            ? true
+                            : false
+                        }
                       />
                     </Grid>
                   ))}
