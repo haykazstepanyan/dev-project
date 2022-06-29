@@ -6,7 +6,6 @@ import wishlistSlice from "./wishlist/wishlistSlice";
 import productSlice from "./product/productSlice";
 import categorySlice from "./category/categorySlice";
 
-
 const store = configureStore({
   reducer: {
     app: appSlice.reducer,

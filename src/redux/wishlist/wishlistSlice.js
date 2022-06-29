@@ -4,8 +4,6 @@ import {
   deleteItemFromWishlist,
   addToWishlist,
 } from "./actions";
-import { useDispatch } from "react-redux";
-import { showNotification } from "../app/appSlice";
 
 const wishlistSlice = createSlice({
   name: "wishlist",

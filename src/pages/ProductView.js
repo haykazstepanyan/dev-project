@@ -29,7 +29,7 @@ function Product() {
   const [product, setProduct] = useState({ category: {} });
   const { productId } = useParams();
   const [isAdded, setIsAdded] = useState(false);
-   const classes = productViewStyles();
+  const classes = productViewStyles();
 
   useEffect(() => {
     console.log(wishlist);
@@ -128,7 +128,6 @@ function Product() {
               >
                 {isAdded ? "-Remove from wishlist" : "+Add to wishlist"}
               </Button>
-
             </Box>
             <Box sx={{ marginTop: 3 }}>
               <Typography>

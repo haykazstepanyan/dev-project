@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-
 import { nanoid } from "nanoid";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -24,8 +21,8 @@ function Shop() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
   const wishlist = useSelector((state) => state.wishlist.wishlistData);
-//   const [count, setCount] = useState(0);
-  const[isFilled, setIsFilled] = useState(false)
+  //   const [count, setCount] = useState(0);
+  // const [isFilled, setIsFilled] = useState(false);
   const [page, setPage] = useState(1);
   const products = useSelector((state) => state.products.paginationProducts);
   const productsLength = useSelector((state) => state.products.productsLength);
