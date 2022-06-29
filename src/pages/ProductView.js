@@ -13,7 +13,9 @@ import {
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { productViewStyles } from "./styles";
 import { getProductById } from "../helpers/helpers";
+
 import {
   deleteItemFromWishlist,
   addToWishlist,
@@ -27,6 +29,7 @@ function Product() {
   const [product, setProduct] = useState({ category: {} });
   const { productId } = useParams();
   const [isAdded, setIsAdded] = useState(false);
+   const classes = productViewStyles();
 
   useEffect(() => {
     console.log(wishlist);
@@ -36,8 +39,6 @@ function Product() {
     // console.log("dsasdsa",productInWishlist);
     setIsAdded(productInWishlist);
   }, []);
-
-  console.log("is added",isAdded);
 
   useEffect(() => {
     async function getProduct() {
@@ -56,7 +57,6 @@ function Product() {
   const handleAddToWishlist = (e) => {
     e.preventDefault();
     if (isAdded) {
-      console.log("delete");
       dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
     } else {
       dispatch(addToWishlist({ userId: user.id, productId }));
@@ -73,7 +73,7 @@ function Product() {
             <img
               src={`${product.productImg}`}
               alt="some img"
-              style={{ maxWidth: "100%" }}
+              style={{ width: "100%" }}
             />
           </Box>
         </Grid>
@@ -86,22 +86,11 @@ function Product() {
             </Box>
             <Box component="div" marginBottom={3}>
               <Typography>
-                <span
-                  className="current-price"
-                  style={{ fontWeight: 500, fontSize: 23, color: "#79a206" }}
-                >
+                <span className={classes["product_current-price"]}>
                   £{product.price}
                 </span>
                 {!!product.discount && (
-                  <span
-                    className="old-price"
-                    style={{
-                      textDecoration: "line-through",
-                      fontWeight: 400,
-                      fontSize: 20,
-                      marginLeft: 10,
-                    }}
-                  >
+                  <span className={classes["product_old-price"]}>
                     £{product.price + (product.price * product.discount) / 100}
                   </span>
                 )}
@@ -126,32 +115,38 @@ function Product() {
                 <Button variant="contained">Add To Cart</Button>
               </Box>
             </Box>
-            <Box marginTop={3}>
+
+            <Box
+              // className={classes["product_add-to-wishlist_container"]}
+              marginTop={3}
+            >
               {/* Redux WISHLIST state needed and DB table WISHLIST needed!!! */}
+
               <Button
                 sx={{ fontSize: 12, cursor: "pointer" }}
                 onClick={handleAddToWishlist}
               >
                 {isAdded ? "-Remove from wishlist" : "+Add to wishlist"}
               </Button>
+
             </Box>
-            <Box marginTop={3}>
+            <Box sx={{ marginTop: 3 }}>
               <Typography>
-                <b style={{ marginRight: 4 }}>Category: </b>
+                <b className={classes.product_category_text}>Category:</b>
                 <span>{product.category.name}</span>
               </Typography>
             </Box>
             <Box
-              marginTop={3}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 width: 100,
+                marginTop: 3,
               }}
             >
-              <FacebookIcon sx={{ cursor: "pointer", color: "#4267B2" }} />
-              <PinterestIcon sx={{ cursor: "pointer", color: "#E60023" }} />
-              <LinkedInIcon sx={{ cursor: "pointer", color: "#0072b1" }} />
+              <FacebookIcon className={classes.fb_icon} />
+              <PinterestIcon className={classes.pinterest_icon} />
+              <LinkedInIcon className={classes.linkedIn_icon} />
             </Box>
           </Box>
         </Grid>

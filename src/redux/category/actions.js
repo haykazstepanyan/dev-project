@@ -2,11 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { showNotification } from "../app/appSlice";
 import { BASE_URL } from "../../constants/constants";
 
-export const getBrands = createAsyncThunk(
-  "brands/getBrands",
+export const getCategories = createAsyncThunk(
+  "categories/getCategories",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${BASE_URL}/brands`, {
+      const response = await fetch(`${BASE_URL}/categories`, {
         credentials: "include",
       });
       if (!response.ok) {
@@ -20,11 +20,11 @@ export const getBrands = createAsyncThunk(
     }
   },
 );
-export const addBrands = createAsyncThunk(
-  "brands/addBrands",
+export const addCategories = createAsyncThunk(
+  "categories/addCategories",
   async (data, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch(`${BASE_URL}/brands/brand`, {
+      const response = await fetch(`${BASE_URL}/categories/category`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export const addBrands = createAsyncThunk(
       dispatch(
         showNotification({
           notificationType: "success",
-          notificationMessage: "Your brand is successfully added.",
+          notificationMessage: "Your category is successfully added.",
         }),
       );
 
@@ -52,11 +52,11 @@ export const addBrands = createAsyncThunk(
   },
 );
 
-export const deleteBrands = createAsyncThunk(
-  "brands/deleteBrands",
+export const deleteCategories = createAsyncThunk(
+  "categories/deleteCategories",
   async (id, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch(`${BASE_URL}/brands/brand/${id}`, {
+      const response = await fetch(`${BASE_URL}/categories/category/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export const deleteBrands = createAsyncThunk(
       dispatch(
         showNotification({
           notificationType: "success",
-          notificationMessage: "Your brand is successfully deleted.",
+          notificationMessage: "Your category is successfully deleted.",
         }),
       );
 
@@ -83,11 +83,11 @@ export const deleteBrands = createAsyncThunk(
   },
 );
 
-export const updateBrands = createAsyncThunk(
-  "brands/updateBrands",
+export const updateCategories = createAsyncThunk(
+  "categories/updateCategories",
   async ({ id, name }, { rejectWithValue, dispatch }) => {
     try {
-      const response = await fetch(`${BASE_URL}/brands/brand/${id}`, {
+      const response = await fetch(`${BASE_URL}/categories/category/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -104,7 +104,7 @@ export const updateBrands = createAsyncThunk(
       dispatch(
         showNotification({
           notificationType: "success",
-          notificationMessage: "Your brand is successfully updated.",
+          notificationMessage: "Your category is successfully updated.",
         }),
       );
 

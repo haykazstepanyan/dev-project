@@ -7,12 +7,31 @@ const adminModalStyles = createUseStyles({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
-    backgroundColor: `${colors.white}`,
+    width: 600,
+    height: "max-content",
+    maxHeight: "90vh",
+    overflow: "auto",
     borderRadius: 10,
+    backgroundColor: `${colors.white}`,
     boxShadow: 24,
     padding: 30,
     boxSizing: "border-box",
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "transparent",
+      opacity: 0,
+      visibility: "hidden",
+    },
+    "&::-webkit-scrollbar": {
+      width: 10,
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "transparent",
+      borderTopRightRadius: 10,
+      borderBottomRightRadius: 10,
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: "#555",
+    },
   },
   textRight: {
     textAlign: "right",

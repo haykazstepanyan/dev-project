@@ -10,12 +10,14 @@ const useStyles = createUseStyles({
   },
 });
 
-function Pagination({ count, onChange }) {
+function Pagination({ count, page, onChange }) {
   const classes = useStyles();
+
   return (
     <MuiPagination
       className={classes.paginationStyle}
       count={count}
+      page={page}
       onChange={onChange}
       variant="outlined"
       shape="rounded"
@@ -25,6 +27,7 @@ function Pagination({ count, onChange }) {
 
 Pagination.propTypes = {
   count: PropTypes.number,
+  page: PropTypes.number,
   onChange: PropTypes.func.isRequired,
 };
 

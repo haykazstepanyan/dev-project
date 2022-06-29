@@ -8,18 +8,25 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import { useDispatch } from "react-redux";
 import SettingsIcon from "@mui/icons-material/Settings";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
+import { deleteBrands, updateBrands } from "../../redux/brand/actions";
 import { adminTableStyles } from "./styles";
+import {
+  deleteCategories,
+  updateCategories,
+} from "../../redux/category/actions";
 
-function AdminMainTable({ tableData }) {
+function AdminMainTable({ tableData, type }) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const dispatch = useDispatch();
 
   const filterById = (id) => {
     const rowData = tableData.filter((elem) => elem.id === id);
@@ -42,10 +49,22 @@ function AdminMainTable({ tableData }) {
   };
 
   const editData = (value) => {
-    console.log(value);
+    if (type === "brand") {
+      dispatch(updateBrands(value));
+    } else {
+      dispatch(updateCategories(value));
+    }
+    handleClose();
   };
   const deleteData = (value) => {
-    console.log(value);
+    if (Number.isInteger(value)) {
+      if (type === "brand") {
+        dispatch(deleteBrands(value));
+      } else {
+        dispatch(deleteCategories(value));
+      }
+      handleCloseDelete();
+    }
   };
 
   const classes = adminTableStyles();
@@ -68,7 +87,7 @@ function AdminMainTable({ tableData }) {
           <TableBody>
             {tableData.map((row) => (
               <TableRow
-                key={row.name}
+                key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
@@ -124,6 +143,7 @@ function AdminMainTable({ tableData }) {
 }
 
 AdminMainTable.propTypes = {
+  type: PropTypes.string,
   tableData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
 };

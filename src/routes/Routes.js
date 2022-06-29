@@ -21,7 +21,7 @@ const AccountDetails = lazy(() => import("../pages/account/AccountDetails"));
 const AdminDashboard = lazy(() => import("../pages/admin/AdminDashboard"));
 const Brand = lazy(() => import("../pages/admin/Brand"));
 const Category = lazy(() => import("../pages/admin/Category"));
-const Product = lazy(() => import("../pages/admin/Product"));
+const Product = lazy(() => import("../pages/admin/products/Product"));
 const ContactMessage = lazy(() => import("../pages/admin/ContactMessage"));
 
 function PageRoutes() {

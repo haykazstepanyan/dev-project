@@ -1,13 +1,31 @@
 import { useState } from "react";
-// import { FormControl, Select, MenuItem } from "@mui/material";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import Typography from "@mui/material/Typography";
+import { FormLabel } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import { v4 } from "uuid";
+import { Formik } from "formik";
+import CircularProgress from "@mui/material/CircularProgress";
+import { styled } from "@mui/material/styles";
+import { useDispatch } from "react-redux/es/exports";
+import { showNotification } from "../../redux/app/appSlice";
+import { storage } from "../../firebase/firebase";
 import Button from "../button";
 import Input from "../input/Input";
 import Textarea from "../textarea/Textarea";
 import { adminModalStyles } from "./styles";
+import validations from "../../pages/admin/products/validations";
+
+const MuiInput = styled("input")({
+  display: "none",
+});
 
 function AdminProductsModal({
   modalData,
@@ -18,72 +36,60 @@ function AdminProductsModal({
   selectBrandData,
   selectCategoryData,
 }) {
+  const dispatch = useDispatch();
+  const { productsValidation } = validations;
   const data = type === "add" ? "" : modalData[0];
-  const [inputValue, setInputValue] = useState(type === "add" ? "" : data.name);
-  const [description, setDescription] = useState(
-    type === "add" ? "" : data.description,
+  const [imageUpload, setImageUpload] = useState(null);
+  const [productImg, setProductImg] = useState(
+    type === "edit" ? data.productImg : "",
   );
-  const [price, setPrice] = useState(type === "add" ? "" : data.price);
-  const [discount, setDiscount] = useState(type === "add" ? "" : data.discount);
-  const [brandId, setBrandId] = useState(type === "add" ? 0 : data.brandId);
-  const [categoryId, setCategoryId] = useState(
-    type === "add" ? 0 : data.categoryId,
-  );
+  const [imageLoader, setImageLoader] = useState(false);
+  const uploadFile = () => {
+    setImageLoader(true);
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      if (productImg !== "") {
+        const pictureRef = ref(storage, productImg);
+        deleteObject(pictureRef)
+          .then(() => {
+            getDownloadURL(snapshot.ref).then((url) => {
+              setProductImg(url);
+              setImageLoader(false);
+            });
+          })
+          .catch(() => {
+            dispatch(
+              showNotification({
+                notificationType: "error",
+                notificationMessage: "Oops! Something went wrong",
+              }),
+            );
+          });
+      } else {
+        getDownloadURL(snapshot.ref).then((url) => {
+          setProductImg(url);
+          setImageLoader(false);
+        });
+      }
+    });
+  };
 
-  const handleBrandId = (e) => {
-    // console.log(e.target.value);
-    setBrandId(+e.target.value);
-  };
-  const handleCategoryId = (e) => {
-    // console.log(e.target.value);
-    setCategoryId(+e.target.value);
-  };
-
-  const handleValue = (e) => {
-    setInputValue(e.target.value);
-  };
-  const handlePrice = (e) => {
-    if (e.target.value === "") {
-      setPrice("");
-    } else {
-      setPrice(+e.target.value);
-    }
-  };
-  const handleDescription = (e) => {
-    setDescription(e.target.value);
-  };
-  const handleDiscount = (e) => {
-    if (e.target.value === "") {
-      setDiscount("");
-    } else {
-      setDiscount(+e.target.value);
-    }
-  };
-  const editData = () => {
-    const brandData = {
-      id: data.id,
-      name: inputValue,
-      description,
-      price,
-      discount,
-      brandId,
-      categoryId,
-    };
-    onSubmit(brandData);
-  };
   const deleteData = () => {
     onSubmit(data.id);
   };
-  const addData = () => {
-    const brandData = {
-      name: inputValue,
-      description,
-      price,
-      discount,
-      brandId,
-      categoryId,
-    };
-    onSubmit(brandData);
+
+  const submitProductForm = (value) => {
+    if (productImg === "") {
+      return;
+    }
+    value.productImg = productImg;
+    console.log(value);
+    if (type === "add") {
+      onSubmit(value);
+    } else {
+      onSubmit(value);
+    }
   };
 
   const classes = adminModalStyles();
@@ -96,108 +102,216 @@ function AdminProductsModal({
       aria-describedby="modal-modal-description"
     >
       <Box className={classes.boxStyle}>
-        {type === "edit" || type === "add" ? (
-          <>
-            <h2 className={classes.deleteTextStyle}>Edit</h2>
-            <div className={classes.mb10}>
-              <Input
-                type="text"
-                placeholder="Name"
-                size="large"
-                borders="square"
-                state="noFocus"
-                htmlFor="subject"
-                value={inputValue}
-                onChange={handleValue}
-              />
-            </div>
-            <div className={classes.mb10}>
-              <Input
-                type="number"
-                placeholder="Price"
-                size="large"
-                borders="square"
-                state="noFocus"
-                htmlFor="subject"
-                value={price}
-                onChange={handlePrice}
-              />
-            </div>
-            <div className={classes.mb10}>
-              <Input
-                type="number"
-                placeholder="Discount"
-                size="large"
-                borders="square"
-                state="noFocus"
-                htmlFor="subject"
-                value={discount}
-                onChange={handleDiscount}
-              />
-            </div>
-            <div className={classes.mb10}>
-              <Textarea
-                value={description}
-                id="description"
-                placeholder="Description"
-                htmlFor="description"
-                type="standard"
-                onChange={handleDescription}
-              />
-            </div>
-            <div className={classes.mb10}>
-              <select
-                className={classes.selectStyle}
-                value={brandId}
-                onChange={handleBrandId}
+        <Formik
+          initialValues={{
+            name: type === "add" ? "" : data.name,
+            price: type === "add" ? "" : data.price,
+            discount: type === "add" ? "" : data.discount,
+            description: type === "add" ? "" : data.description,
+            brandId: type === "edit" ? data.brandId : selectBrandData[0].id,
+            categoryId:
+              type === "edit" ? data.categoryId : selectCategoryData[0].id,
+          }}
+          validationSchema={productsValidation}
+          onSubmit={(values) => submitProductForm(values)}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <h2
+                className={classes.deleteTextStyle}
+                style={{ textTransform: "capitalize" }}
               >
-                {selectBrandData.map((elem, index) => (
-                  <option key={elem} value={index}>
-                    {elem}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className={classes.mb10}>
-              <select
-                className={classes.selectStyle}
-                value={categoryId}
-                onChange={handleCategoryId}
-              >
-                {selectCategoryData.map((elem, index) => (
-                  <option key={elem} value={index}>
-                    {elem}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {type === "edit" ? (
+                {type}
+              </h2>
+              <div className={classes.mb10}>
+                <Input
+                  name="name"
+                  type="text"
+                  placeholder="Name"
+                  size="large"
+                  borders="square"
+                  state="noFocus"
+                  htmlFor="subject"
+                  value={values.name}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                {errors.name && touched.name && errors.name}
+              </div>
+              <div className={classes.mb10}>
+                <Input
+                  name="price"
+                  type="number"
+                  placeholder="Price"
+                  size="large"
+                  borders="square"
+                  state="noFocus"
+                  htmlFor="subject"
+                  value={values.price}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                {errors.price && touched.price && errors.price}
+              </div>
+              <div className={classes.mb10}>
+                <Input
+                  name="discount"
+                  type="number"
+                  placeholder="Discount"
+                  size="large"
+                  borders="square"
+                  state="noFocus"
+                  htmlFor="subject"
+                  value={values.discount}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                {errors.discount && touched.discount && errors.discount}
+              </div>
+              <div className={classes.mb10}>
+                <Textarea
+                  name="description"
+                  value={values.description}
+                  id="description"
+                  placeholder="Description"
+                  htmlFor="description"
+                  type="standard"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  style={{ marginBottom: 10 }}
+                />
+                {errors.description &&
+                  touched.description &&
+                  errors.description}
+              </div>
+              <div className={classes.mb10}>
+                <select
+                  name="brandId"
+                  className={classes.selectStyle}
+                  value={values.brandId}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                >
+                  {selectBrandData.map((elem) => (
+                    <option key={elem.id} value={elem.id}>
+                      {elem.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.brandId && touched.brandId && errors.brandId}
+              </div>
+              <div className={classes.mb10}>
+                <select
+                  name="categoryId"
+                  className={classes.selectStyle}
+                  value={values.categoryId}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                >
+                  {selectCategoryData.map((elem) => (
+                    <option key={elem.id} value={elem.id}>
+                      {elem.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.categoryId && touched.categoryId && errors.categoryId}
+              </div>
+              {productImg === "" ? (
+                <div style={{ marginBottom: 5 }}>Please select an image.</div>
+              ) : (
+                ""
+              )}
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>
+                  <FormLabel htmlFor="contained-button-file">
+                    <MuiInput
+                      accept="image/*"
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      onChange={(event) => {
+                        setImageUpload(event.target.files[0]);
+                      }}
+                    />
+                    <Button
+                      variant="contained"
+                      component="span"
+                      style={{
+                        backgroundColor: "#24695c",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      Upload Image
+                    </Button>
+                    <div
+                      style={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        width: "130px",
+                      }}
+                    >
+                      {imageUpload ? imageUpload.name : ""}
+                    </div>
+                  </FormLabel>
+                </div>
+                <div>
+                  {imageLoader ? (
+                    <CircularProgress style={{ color: "#717171" }} />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div>
+                  <Button
+                    onClick={() => uploadFile()}
+                    style={{ textTransform: "capitalize" }}
+                    color="secondary"
+                    disableRipple
+                    page="admin"
+                  >
+                    Upload To Storage
+                  </Button>
+                </div>
+              </div>
+
+              {productImg === "" ? (
+                ""
+              ) : (
+                <div>
+                  <img
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      objectFit: "contain",
+                    }}
+                    src={productImg}
+                    alt="uploaded"
+                  />
+                </div>
+              )}
               <div className={classes.textRight}>
                 <Button
-                  onClick={() => editData()}
                   style={{ marginTop: 20 }}
                   page="admin"
+                  type="submit"
+                  disabled={isSubmitting}
                   disableRipple
                 >
                   Save
                 </Button>
               </div>
-            ) : (
-              <div className={classes.textRight}>
-                <Button
-                  onClick={() => addData()}
-                  style={{ marginTop: 20 }}
-                  page="admin"
-                  disableRipple
-                >
-                  Save
-                </Button>
-              </div>
-            )}
-          </>
-        ) : (
-          ""
-        )}
+            </form>
+          )}
+        </Formik>
         {type === "delete" ? (
           <>
             <Typography
@@ -230,8 +344,10 @@ AdminProductsModal.propTypes = {
   modalData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  selectBrandData: PropTypes.arrayOf([PropTypes.string]),
-  selectCategoryData: PropTypes.arrayOf([PropTypes.string]),
+  selectBrandData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
+  selectCategoryData: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object]),
+  ),
   type: PropTypes.string,
   onSubmit: PropTypes.func,
 };
