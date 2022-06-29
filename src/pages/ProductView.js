@@ -38,7 +38,7 @@ function Product() {
     );
     // console.log("dsasdsa",productInWishlist);
     setIsAdded(productInWishlist);
-  }, []);
+  }, [wishlist, productId]);
 
   useEffect(() => {
     async function getProduct() {

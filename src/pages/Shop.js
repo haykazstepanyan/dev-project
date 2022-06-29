@@ -31,7 +31,7 @@ function Shop() {
 
   useEffect(() => {
     dispatch(getWishlistData(user.id));
-  }, [page]);
+  }, [page, user.id, dispatch]);
 
   useEffect(() => {
     dispatch(getProductsCount());
@@ -75,11 +75,11 @@ function Shop() {
                         title={name}
                         image="https://www.jquery-az.com/html/images/banana.jpg"
                         price={price}
-                        isFilled={
-                          wishlist.find((item) => item.productId === id)
-                            ? true
-                            : false
-                        }
+                        // isFilled={
+                        //   wishlist.find((item) => item.productId === id)
+                        //     ? true
+                        //     : false
+                        // }
                       />
                     </Grid>
                   ))}

@@ -7,7 +7,7 @@ import Banner from "../components/common/Banner";
 import { setWishlistProducts } from "../redux/wishlist/wishlistSlice";
 import { globalStyles } from "../components/styles/styles";
 import { getWishlistData } from "../redux/wishlist/actions";
-import { deleteItemFromWishlist } from "../redux/wishlist/actions";
+// import { deleteItemFromWishlist } from "../redux/wishlist/actions";
 
 export default function Wishlist() {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export default function Wishlist() {
 
   useEffect(() => {
     dispatch(getWishlistData(user.id));
-  }, [dispatch, products]);
+  }, [dispatch, products, user.id]);
 
   // useEffect(() => {
   //   getAllProducts().then((data) => {
@@ -37,7 +37,7 @@ export default function Wishlist() {
   // }, [dispatch, page]);
 
   useEffect(() => {
-    //backendova linelu
+    // backendova linelu
     const productsId = [];
     const filteredProducts = [];
     wishlist?.forEach((item) => productsId.push(item.productId));
@@ -48,13 +48,13 @@ export default function Wishlist() {
     if (filteredProducts.length > 0) {
       dispatch(setWishlistProducts(filteredProducts));
     }
-  }, [dispatch, wishlist]);
+  }, [dispatch, wishlist, products]);
 
-  function deleteFromWishlist(event, productId) {
-    const data = wishlistProducts.filter((item) => item.id !== productId);
-    dispatch(setWishlistProducts(data));
-    dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
-  }
+  // function deleteFromWishlist(event, productId) {
+  //   const data = wishlistProducts.filter((item) => item.id !== productId);
+  //   dispatch(setWishlistProducts(data));
+  //   dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
+  // }
   return (
     <>
       <Banner name="Wishlist" />
@@ -62,7 +62,7 @@ export default function Wishlist() {
         <Table
           type="wishlist"
           tableData={wishlistProducts}
-          deleteProduct={deleteFromWishlist}
+          // deleteProduct={deleteFromWishlist}
         />
       </Container>
     </>

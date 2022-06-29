@@ -40,7 +40,6 @@ export const fetchData = async (
   }
 };
 
-
 // export async function getProductsDataByPage(pageNumber, limit = 9) {
 //   let res;
 //   try {
@@ -86,7 +85,6 @@ export async function getAllProducts() {
 //   }
 //   return res;
 // }
-
 
 export async function getProductById(id) {
   const { data: result } = await fetchData(`products/getProducts/${id}`);
