@@ -12,6 +12,7 @@ import {
   deleteItemFromWishlist,
   addToWishlist,
 } from "../../redux/wishlist/actions";
+import { showNotification } from "../../redux/app/appSlice";
 
 function ProductItem({ id, title, price, image, discount, isFilled }) {
   const dispatch = useDispatch();
@@ -22,11 +23,16 @@ function ProductItem({ id, title, price, image, discount, isFilled }) {
 
   const handleAddToWishList = (event, productId) => {
     event.preventDefault();
-    if (isFilled) {
+    if (filled) {
       dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
     } else {
       dispatch(addToWishlist({ userId: user.id, productId }));
-      // addToWishlist(user.id, productId);
+      dispatch(
+        showNotification({
+          notificationType: "success",
+          notificationMessage: "Successfully added to wishlist!!!",
+        }),
+      );
     }
     setFilled(!filled);
   };

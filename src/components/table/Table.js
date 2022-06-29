@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import {
   Table as MuiTable,
@@ -13,25 +11,10 @@ import {
 import ClearIcon from "@mui/icons-material/Clear";
 import Button from "../button";
 import { tableStyles } from "./styles";
-// import { setWishlistProducts } from "../../redux/wishlist/wishlistSlice";
-// import { deleteItemFromWishlist } from "../../redux/wishlist/actions";
 
 function Table({ type, tableData, deleteProduct }) {
-  console.log(tableData, "tableData");
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.userData);
-  // const wishlistProducts = useSelector(
-  //   (state) => state.wishlist.wishlisProducts,
-  // );
   const classes = tableStyles();
 
-  // useEffect(() => {}, [wishlistProducts]);
-
-  // function deleteFromWishlist(event, productId) {
-  //   const data = wishlistProducts.filter((item) => item.id !== productId);
-  //   dispatch(setWishlistProducts(data));
-  //   dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
-  // }
   return (
     <TableContainer component={Paper} className={classes.tableStyle}>
       <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">

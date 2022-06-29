@@ -23,27 +23,40 @@ function Product() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
   const wishlist = useSelector((state) => state.wishlist.wishlistData);
-  const [isAdded, setIsAdded] = useState(false);
+  // const [isAdded, setIsAdded] = useState(false);
   const [product, setProduct] = useState({ category: {} });
   const { productId } = useParams();
+  const [isAdded, setIsAdded] = useState(false);
+
+  useEffect(() => {
+    console.log(wishlist);
+    const productInWishlist = wishlist.find(
+      (item) => item.productId === Number(productId),
+    );
+    // console.log("dsasdsa",productInWishlist);
+    setIsAdded(productInWishlist);
+  }, []);
+
+  console.log("is added",isAdded);
+
   useEffect(() => {
     async function getProduct() {
       const { data: productData } = await getProductById(productId);
       setProduct(productData);
     }
     getProduct();
-    const productInWishlist = wishlist.find(
-      (item) => item.productId === Number(productId),
-    );
-    if (productInWishlist) {
-      setIsAdded(true);
-    }
-  }, [productId, isAdded]);
+    // const productInWishlist = wishlist.find(
+    //   (item) => item.productId === Number(productId),
+    // );
+    // if (productInWishlist) {
+    //   setIsAdded(true);
+    // }
+  }, [productId, isAdded, dispatch]);
 
   const handleAddToWishlist = (e) => {
     e.preventDefault();
-    console.log(product);
     if (isAdded) {
+      console.log("delete");
       dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
     } else {
       dispatch(addToWishlist({ userId: user.id, productId }));

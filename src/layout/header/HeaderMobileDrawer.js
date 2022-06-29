@@ -1,20 +1,20 @@
 import { Grid } from "@mui/material";
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
-import SearchBox from "./SearchBox";
-import Navbar from "./Navbar";
+// import SearchBox from "./SearchBox";
+// import Navbar from "./Navbar";
 import Drawer from "../../components/drawer";
-import { drawerStyles } from "./styles";
+// import { drawerStyles } from "./styles";
 
 function HeaderMobileDrawer() {
-  const classes = drawerStyles();
+  // const classes = drawerStyles();
   return (
     <Grid>
       <Drawer anchorDirection="left" OpenIcon={FormatAlignJustifyIcon} outline>
-        <div className={classes.welcomeText}>
+        {/* <div className={classes.welcomeText}>
           <p>Free Delivery: Take advantage of our time to save event</p>
-        </div>
-        <SearchBox distance={1} />
-        <Navbar />
+        </div> */}
+        {/* <SearchBox distance={1} /> */}
+        {/* <Navbar /> */}
       </Drawer>
     </Grid>
   );

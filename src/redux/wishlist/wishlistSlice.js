@@ -4,6 +4,8 @@ import {
   deleteItemFromWishlist,
   addToWishlist,
 } from "./actions";
+import { useDispatch } from "react-redux";
+import { showNotification } from "../app/appSlice";
 
 const wishlistSlice = createSlice({
   name: "wishlist",
@@ -28,11 +30,14 @@ const wishlistSlice = createSlice({
       state.loading = true;
     },
     [deleteItemFromWishlist.fulfilled]: (state, { payload }) => {
-      console.log(payload);
+      console.log(payload, "deleteItemFromWishlist.fulfilled");
+      state.wishlistData = state.wishlistData.filter(
+        (item) => item.productId !== Number(payload),
+      );
       state.loading = false;
     },
     [addToWishlist.fulfilled]: (state, { payload }) => {
-      console.log(payload);
+      state.wishlistData.push(payload);
       state.loading = false;
     },
   },
