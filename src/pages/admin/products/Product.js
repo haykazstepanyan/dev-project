@@ -9,13 +9,14 @@ import AdminProductsModal from "../../../components/adminProductsModal/AdminProd
 import { getBrands } from "../../../redux/brand/actions";
 import { getCategories } from "../../../redux/category/actions";
 import {
+  addProducts,
   getProductsCount,
   getProductsPagination,
 } from "../../../redux/product/actions";
-import validations from "./validations";
+// import validations from "./validations";
 
 export default function Product() {
-  const { productsValidation } = validations;
+  // const { productsValidation } = validations;
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
   const products = useSelector((state) => state.products.paginationProducts);
@@ -47,12 +48,15 @@ export default function Product() {
     setOpen(true);
   };
   const addData = (value) => {
-    value.productImg = "https://fontawesome.com/v5/icons/trash?s=solid";
-    console.log(value);
-    productsValidation.isValid(value).then((err, valid) => {
-      console.log(err);
-      console.log(valid);
-    });
+    // console.log("addData", value);
+    dispatch(addProducts(value));
+
+    // value.productImg = "https://fontawesome.com/v5/icons/trash?s=solid";
+    // console.log(value);
+    // productsValidation.isValid(value).then((err, valid) => {
+    //   console.log(err);
+    //   console.log(valid);
+    // });
   };
   return (
     <>

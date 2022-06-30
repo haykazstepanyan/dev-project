@@ -45,8 +45,8 @@ function AdminProductsModal({
   );
   const [imageLoader, setImageLoader] = useState(false);
   const uploadFile = () => {
-    setImageLoader(true);
     if (imageUpload == null) return;
+    setImageLoader(true);
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       if (productImg !== "") {
@@ -86,8 +86,10 @@ function AdminProductsModal({
     value.productImg = productImg;
     console.log(value);
     if (type === "add") {
+      // console.log("add", value);
       onSubmit(value);
     } else {
+      // console.log("edit", value);
       onSubmit(value);
     }
   };
@@ -122,7 +124,6 @@ function AdminProductsModal({
             handleChange,
             handleBlur,
             handleSubmit,
-            isSubmitting,
           }) => (
             <form onSubmit={handleSubmit}>
               <h2
@@ -144,7 +145,9 @@ function AdminProductsModal({
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {errors.name && touched.name && errors.name}
+                <div style={{ color: "#d22d3d" }}>
+                  {errors.name && touched.name && errors.name}
+                </div>
               </div>
               <div className={classes.mb10}>
                 <Input
@@ -159,7 +162,9 @@ function AdminProductsModal({
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {errors.price && touched.price && errors.price}
+                <div style={{ color: "#d22d3d" }}>
+                  {errors.price && touched.price && errors.price}
+                </div>
               </div>
               <div className={classes.mb10}>
                 <Input
@@ -174,7 +179,9 @@ function AdminProductsModal({
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {errors.discount && touched.discount && errors.discount}
+                <div style={{ color: "#d22d3d" }}>
+                  {errors.discount && touched.discount && errors.discount}
+                </div>
               </div>
               <div className={classes.mb10}>
                 <Textarea
@@ -188,9 +195,11 @@ function AdminProductsModal({
                   onChange={handleChange}
                   style={{ marginBottom: 10 }}
                 />
-                {errors.description &&
-                  touched.description &&
-                  errors.description}
+                <div style={{ color: "#d22d3d" }}>
+                  {errors.description &&
+                    touched.description &&
+                    errors.description}
+                </div>
               </div>
               <div className={classes.mb10}>
                 <select
@@ -206,7 +215,9 @@ function AdminProductsModal({
                     </option>
                   ))}
                 </select>
-                {errors.brandId && touched.brandId && errors.brandId}
+                <div style={{ color: "#d22d3d" }}>
+                  {errors.brandId && touched.brandId && errors.brandId}
+                </div>
               </div>
               <div className={classes.mb10}>
                 <select
@@ -222,7 +233,9 @@ function AdminProductsModal({
                     </option>
                   ))}
                 </select>
-                {errors.categoryId && touched.categoryId && errors.categoryId}
+                <div style={{ color: "#d22d3d" }}>
+                  {errors.categoryId && touched.categoryId && errors.categoryId}
+                </div>
               </div>
               {productImg === "" ? (
                 <div style={{ marginBottom: 5 }}>Please select an image.</div>
@@ -303,7 +316,6 @@ function AdminProductsModal({
                   style={{ marginTop: 20 }}
                   page="admin"
                   type="submit"
-                  disabled={isSubmitting}
                   disableRipple
                 >
                   Save

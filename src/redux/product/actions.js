@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchData } from "../../helpers/helpers";
 import { showNotification } from "../app/appSlice";
-import { setAuthAndUser } from "../auth/authSlice";
 
 export const getProductsPagination = createAsyncThunk(
   "products/getProductsPagination",
@@ -20,13 +19,6 @@ export const getProductsPagination = createAsyncThunk(
         );
         throw new Error();
       }
-
-      dispatch(
-        setAuthAndUser({
-          isAuth: response.data.isAuth,
-          userData: response.data.user,
-        }),
-      );
       return response;
     } catch {
       return rejectWithValue();
@@ -79,3 +71,77 @@ export const getProducts = createAsyncThunk(
     }
   },
 );
+
+export const addProducts = createAsyncThunk(
+  "products/addProducts",
+  async (data, { rejectWithValue, dispatch }) => {
+    try {
+      const requestOptions = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const response = await fetchData(
+        "products/product",
+        data,
+        requestOptions,
+        "POST",
+      );
+
+      console.log("response", response);
+
+      if (response.result === "error") {
+        dispatch(
+          showNotification({
+            notificationType: "error",
+            notificationMessage: response.message,
+          }),
+        );
+        throw new Error();
+      }
+
+      dispatch(
+        showNotification({
+          notificationType: "success",
+          notificationMessage: "Your product is successfully added.",
+        }),
+      );
+
+      return response;
+    } catch (err) {
+      return rejectWithValue({ message: err.message });
+    }
+  },
+);
+
+// export const updateProducts = createAsyncThunk(
+//   "brands/updateBrands",
+//   async ({ id, name }, { rejectWithValue, dispatch }) => {
+//     try {
+//       const response = await fetch(`${BASE_URL}/brands/brand/${id}`, {
+//         method: "PATCH",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         credentials: "include",
+//         body: JSON.stringify({ name }),
+//       });
+
+//       if (!response.ok) {
+//         throw new Error(response.statusText);
+//       }
+//       const result = await response.json();
+
+//       dispatch(
+//         showNotification({
+//           notificationType: "success",
+//           notificationMessage: "Your brand is successfully updated.",
+//         }),
+//       );
+
+//       return result;
+//     } catch (err) {
+//       return rejectWithValue({ message: err.message });
+//     }
+//   },
+// );

@@ -3,6 +3,7 @@ import {
   getProductsPagination,
   getProductsCount,
   getProducts,
+  addProducts,
 } from "./actions";
 
 const productSlice = createSlice({
@@ -41,6 +42,12 @@ const productSlice = createSlice({
     },
     [getProducts.rejected]: (state) => {
       state.loading = true;
+    },
+    [addProducts.fulfilled]: (state, { payload }) => {
+      console.log(payload);
+      console.log("payload", payload.data.product.data);
+      state.products.push(payload.data.product.data);
+      state.loading = false;
     },
   },
 });

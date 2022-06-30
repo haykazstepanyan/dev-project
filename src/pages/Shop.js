@@ -11,7 +11,7 @@ import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import Loader from "../components/loader";
 import { shopStyles } from "./styles";
 
-import { getWishlistData } from "../redux/wishlist/actions";
+// import { getWishlistData } from "../redux/wishlist/actions";
 import {
   getProductsPagination,
   getProductsCount,
@@ -19,7 +19,7 @@ import {
 
 function Shop() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.userData);
+  // const user = useSelector((state) => state.auth.userData);
   const wishlist = useSelector((state) => state.wishlist.wishlistData);
   //   const [count, setCount] = useState(0);
   // const [isFilled, setIsFilled] = useState(false);
@@ -29,9 +29,9 @@ function Shop() {
   const loading = useSelector((state) => state.products.loading);
   const classes = shopStyles();
 
-  useEffect(() => {
-    dispatch(getWishlistData(user.id));
-  }, [page, user.id, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getWishlistData(user.id));
+  // }, [page, user.id, dispatch]);
 
   useEffect(() => {
     dispatch(getProductsCount());
