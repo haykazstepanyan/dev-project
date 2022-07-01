@@ -4,6 +4,7 @@ const appSlice = createSlice({
   name: "app",
   initialState: {
     isMobile: false,
+    loading: [],
     notification: {
       show: false,
       type: "",
@@ -13,6 +14,17 @@ const appSlice = createSlice({
   reducers: {
     setIsMobileVersion(state, { payload }) {
       state.isMobile = payload.isMobile;
+    },
+    setLoader(state, { payload }) {
+      const loaderIndex = state.loading.findIndex((item) => {
+        return item?.key === payload.key;
+      });
+
+      if (loaderIndex === -1) {
+        state.loading.push(payload);
+      } else {
+        state.loading.splice(loaderIndex, 1);
+      }
     },
     showNotification(state, { payload }) {
       state.notification = {
@@ -31,7 +43,11 @@ const appSlice = createSlice({
   },
 });
 
-export const { setIsMobileVersion, showNotification, hideNotification } =
-  appSlice.actions;
+export const {
+  setIsMobileVersion,
+  setLoader,
+  showNotification,
+  hideNotification,
+} = appSlice.actions;
 
 export default appSlice;

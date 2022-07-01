@@ -1,35 +1,38 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/exports";
 import { Container } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
-import { addBrands, getBrands } from "../../redux/brand/actions";
+import { addBrands } from "../../redux/brand/actions";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
-import Loader from "../../components/loader";
+import useFetch from "../../hooks/useFetch";
+import { showNotification } from "../../redux/app/appSlice";
 
 function createData(id, name, createdAt, updatedAt) {
   return { id, name, createdAt, updatedAt };
 }
 
 export default function Brand() {
-  const brandsData = useSelector((state) => state.brands);
-  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [brandsRows, setBrandsRows] = useState([]);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getBrands());
-  }, [dispatch]);
+  const { data: brandsData, error: brandsError } = useFetch("/brands");
 
   useEffect(() => {
-    if (!brandsData?.loading) {
-      setLoading(false);
+    if (brandsError) {
+      dispatch(
+        showNotification({
+          notificationType: "error",
+          notificationMessage: "Oops! Something went wrong!",
+        }),
+      );
     }
+  }, [dispatch, brandsError]);
 
+  useEffect(() => {
     const rows = [];
     if (!brandsData.loading) {
       brandsData.brands.forEach((elem) => {
@@ -65,11 +68,7 @@ export default function Brand() {
             <AddIcon />
           </Button>
         </div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <AdminMainTable type="brand" tableData={brandsRows} />
-        )}
+        <AdminMainTable type="brand" tableData={brandsRows} />
       </Container>
       {open ? (
         <AdminModal

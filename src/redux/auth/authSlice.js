@@ -4,20 +4,17 @@ import { checkIsAuth, signUp, signIn, signOut } from "./actions";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isAuth: false,
-    userData: {},
+    userData: undefined,
     loading: false,
     authLoading: true,
   },
   reducers: {
-    setAuthAndUser(state, { payload }) {
-      state.isAuth = payload.isAuth;
-      state.userData = payload.userData;
+    setUser(state, { payload }) {
+      state.userData = payload;
     },
   },
   extraReducers: {
     [checkIsAuth.fulfilled]: (state, { payload }) => {
-      state.isAuth = payload.isAuth;
       state.userData = payload.user;
       state.authLoading = false;
     },
@@ -29,7 +26,6 @@ const authSlice = createSlice({
     },
     [signUp.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.isAuth = payload.data.isAuth;
       state.userData = payload.data.user;
     },
     [signUp.rejected]: (state) => {
@@ -40,7 +36,6 @@ const authSlice = createSlice({
     },
     [signIn.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.isAuth = payload.data.isAuth;
       state.userData = payload.data.user;
     },
     [signIn.rejected]: (state) => {
@@ -51,8 +46,7 @@ const authSlice = createSlice({
     },
     [signOut.fulfilled]: (state) => {
       state.loading = false;
-      state.isAuth = false;
-      state.userData = {};
+      state.userData = null;
     },
     [signOut.rejected]: (state) => {
       state.loading = false;
@@ -60,6 +54,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuthAndUser } = authSlice.actions;
+export const { setUser } = authSlice.actions;
 
 export default authSlice;

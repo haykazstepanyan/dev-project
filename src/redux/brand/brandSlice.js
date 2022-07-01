@@ -1,23 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getBrands, addBrands, deleteBrands, updateBrands } from "./actions";
+import { addBrands, deleteBrands, updateBrands } from "./actions";
 
 const brandSlice = createSlice({
   name: "brands",
   initialState: {
     brands: [],
-    loading: true,
+    loading: false,
   },
   extraReducers: {
-    [getBrands.pending]: (state) => {
-      state.loading = true;
-    },
-    [getBrands.fulfilled]: (state, { payload }) => {
-      state.brands = payload.brands;
-      state.loading = false;
-    },
-    [getBrands.rejected]: (state) => {
-      state.loading = true;
-    },
     [addBrands.fulfilled]: (state, { payload }) => {
       state.brands.push(payload.brand.data);
       state.loading = false;

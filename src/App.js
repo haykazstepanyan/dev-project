@@ -7,12 +7,16 @@ import Routes from "./routes";
 import Notification from "./components/notification";
 import { documentStyles } from "./components/styles/styles";
 import mainTheme from "./components/styles/mainTheme";
+import Loader from "./components/loader";
+import { getCategories } from "./redux/category/actions";
 
 function App() {
   const dispatch = useDispatch();
   const notification = useSelector((state) => state.app.notification);
+  const loading = useSelector((state) => state.app.loading);
   useEffect(() => {
     dispatch(checkIsAuth());
+    dispatch(getCategories());
   }, [dispatch]);
 
   useEffect(() => {
@@ -30,18 +34,21 @@ function App() {
   documentStyles();
 
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={mainTheme}>
-        <Routes />
-        {notification.show && (
-          <Notification
-            open
-            type={notification.type}
-            message={notification.message}
-          />
-        )}
-      </ThemeProvider>
-    </StyledEngineProvider>
+    <>
+      {!!loading.length && <Loader />}
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={mainTheme}>
+          <Routes />
+          {notification.show && (
+            <Notification
+              open
+              type={notification.type}
+              message={notification.message}
+            />
+          )}
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </>
   );
 }
 

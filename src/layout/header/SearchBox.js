@@ -1,20 +1,21 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { ClickableDropdown } from "../../components/dropdown";
-import { categories } from "../../DUMMY_DATA";
 import { searchBoxStyles } from "./styles";
 
 function SearchBox({ distance }) {
   const [category, setCategory] = useState("All categories");
   const [inputValue, setInputValue] = useState("");
-  const categoriesArray = ["All categories", ...categories];
+  const categories = useSelector((state) => state.categories.categories);
+
   const classes = searchBoxStyles();
 
-  const handleCategory = (value) => {
-    return categoriesArray.includes(value) && setCategory(value);
+  const handleCategory = (name) => {
+    setCategory(name);
   };
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -25,7 +26,10 @@ function SearchBox({ distance }) {
       <div className={classes.filterContainerContent}>
         <div className={classes.searchCategories}>
           <ClickableDropdown
-            options={categoriesArray}
+            options={[
+              { id: "All Categories", name: "All Categories" },
+              ...categories,
+            ]}
             icon={<KeyboardArrowDownIcon />}
             change={handleCategory}
             value={category}

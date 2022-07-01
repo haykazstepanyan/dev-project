@@ -1,31 +1,26 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { createUseStyles } from "react-jss";
 import { Menu, MenuItem } from "@mui/material";
 import Button from "../button";
-
-const useStyles = createUseStyles({
-  dropdownMenu: ({ topDistance = 0 }) => ({
-    "& .MuiPaper-root": {
-      marginTop: topDistance,
-      minWidth: 200,
-    },
-  }),
-});
+import { clickableDropdownStyles } from "./styles";
 
 function ClickableDropdown({ icon, options, value, change, topDistance }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const classes = clickableDropdownStyles({ topDistance });
+  const open = !!anchorEl;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (selectedOption) => {
+  const handleClose = () => {
     setAnchorEl(null);
-    return change && change(selectedOption);
+  };
+  const handleSelectChange = (name) => {
+    setAnchorEl(null);
+    return change && change(name);
   };
 
-  const classes = useStyles({ topDistance });
+  // const classes = useStyles();
 
   return (
     <div>
@@ -49,13 +44,13 @@ function ClickableDropdown({ icon, options, value, change, topDistance }) {
         onClose={handleClose}
         className={classes.dropdownMenu}
       >
-        {options.map((option) => (
+        {options.map(({ item, name, id }) => (
           <MenuItem
             className={classes.dropdownMenuItems}
-            key={option}
-            onClick={() => handleClose(option)}
+            key={id}
+            onClick={() => handleSelectChange(name)}
           >
-            {option}
+            {item || name}
           </MenuItem>
         ))}
       </Menu>

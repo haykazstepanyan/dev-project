@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import MuiDrawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
-import { useToggle } from "../../hooks/hooks";
+import useToggle from "../../hooks/useToggle";
 import drawerStyles from "./styles";
 
 function Drawer({ children, anchorDirection, OpenIcon, outline }) {

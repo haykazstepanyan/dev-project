@@ -20,4 +20,18 @@ const hoverableDropdownStyles = createUseStyles({
   },
 });
 
-export { hoverableDropdownStyles };
+const clickableDropdownStyles = createUseStyles({
+  dropdownMenu: ({ topDistance = 0 }) => ({
+    "& .MuiPaper-root": {
+      marginTop: topDistance,
+      minWidth: 200,
+    },
+  }),
+  dropdownMenuItems: {
+    "& a": {
+      width: "100%",
+    },
+  },
+});
+
+export { hoverableDropdownStyles, clickableDropdownStyles };
