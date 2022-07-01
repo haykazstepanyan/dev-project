@@ -1,15 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  getProductsPagination,
-  getProductsCount,
-  getProducts,
-} from "./actions";
+import { getProductsPagination, getProductsCount } from "./actions";
 
 const productSlice = createSlice({
   name: "products",
   initialState: {
     paginationProducts: [],
-    products: [],
     loading: false,
     productsLength: 0,
   },
@@ -30,16 +25,6 @@ const productSlice = createSlice({
     },
     [getProductsCount.fulfilled]: (state, { payload }) => {
       state.productsLength = payload.data.productsLength;
-      state.loading = true;
-    },
-    [getProducts.pending]: (state) => {
-      state.loading = true;
-    },
-    [getProducts.fulfilled]: (state, { payload }) => {
-      state.products = payload.products;
-      state.loading = false;
-    },
-    [getProducts.rejected]: (state) => {
       state.loading = true;
     },
   },

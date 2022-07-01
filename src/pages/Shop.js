@@ -10,7 +10,6 @@ import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import Loader from "../components/loader";
 import { shopStyles } from "./styles";
-
 import { getWishlistData } from "../redux/wishlist/actions";
 import {
   getProductsPagination,
@@ -19,19 +18,18 @@ import {
 
 function Shop() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.userData);
   const wishlist = useSelector((state) => state.wishlist.wishlistData);
-  //   const [count, setCount] = useState(0);
-  // const [isFilled, setIsFilled] = useState(false);
-  const [page, setPage] = useState(1);
   const products = useSelector((state) => state.products.paginationProducts);
   const productsLength = useSelector((state) => state.products.productsLength);
   const loading = useSelector((state) => state.products.loading);
+  const [page, setPage] = useState(1);
   const classes = shopStyles();
 
   useEffect(() => {
-    dispatch(getWishlistData(user.id));
-  }, [page]);
+    dispatch(getWishlistData());
+  }, []);
+
+  useEffect(() => {}, [wishlist]);
 
   useEffect(() => {
     dispatch(getProductsCount());
@@ -39,10 +37,9 @@ function Shop() {
 
   useEffect(() => {
     dispatch(getProductsPagination({ page }));
-  }, [dispatch, page]);
+  }, [page]);
 
   const gotoPage = (_, pageNum) => {
-    console.log("pageNum - ", pageNum);
     setPage(pageNum);
   };
 
@@ -73,13 +70,11 @@ function Shop() {
                       <ProductItem
                         id={id}
                         title={name}
-                        image="https://www.jquery-az.com/html/images/banana.jpg"
+                        image="https://images.unsplash.com/photo-1514826786317-59744fe2a548?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bWFjYm9vayUyMHByb3xlbnwwfHwwfHw%3D&w=1000&q=80"
                         price={price}
-                        isFilled={
-                          wishlist.find((item) => item.productId === id)
-                            ? true
-                            : false
-                        }
+                        isFilled={wishlist.some(
+                          (item) => item.productId === id,
+                        )}
                       />
                     </Grid>
                   ))}

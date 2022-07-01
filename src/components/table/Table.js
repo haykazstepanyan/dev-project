@@ -36,59 +36,62 @@ function Table({ type, tableData, deleteProduct }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableData.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{
-                "&:last-child td, &:last-child th": {
-                  border: 0,
-                },
-                height: "122px",
-              }}
-            >
-              <TableCell>
-                <ClearIcon onClick={(event) => deleteProduct(event, row.id)} />
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <img
-                  src="https://www.jquery-az.com/html/images/banana.jpg"
-                  alt="product"
-                />
-              </TableCell>
-              <TableCell>
-                {row.name}
-                {row.id}
-              </TableCell>
-              <TableCell className="price">
-                <p>£{row.price}</p>
-              </TableCell>
-              <TableCell className="stockStatus">In Stock</TableCell>
-              {type === "wishlist" ? (
+          {tableData &&
+            tableData.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{
+                  "&:last-child td, &:last-child th": {
+                    border: 0,
+                  },
+                  height: "122px",
+                }}
+              >
                 <TableCell>
-                  <Button
-                    type="primary"
-                    onClick={() => deleteProduct(row.id)}
-                    disableRipple
-                  >
-                    Add to cart
-                  </Button>
+                  <ClearIcon
+                    onClick={(event) => deleteProduct(event, row.productId)}
+                  />
                 </TableCell>
-              ) : (
-                <>
-                  <TableCell className="qty-input">
-                    <label htmlFor="quantity">
-                      Quantity
-                      <input id="quantity" type="number" />
-                    </label>
+                <TableCell component="th" scope="row">
+                  <img
+                    src="https://www.jquery-az.com/html/images/banana.jpg"
+                    alt="product"
+                  />
+                </TableCell>
+                <TableCell>
+                  {row.Product?.name}
+                  {row.productId}
+                </TableCell>
+                <TableCell className="price">
+                  <p>£{row.Product?.price}</p>
+                </TableCell>
+                <TableCell className="stockStatus">In Stock</TableCell>
+                {type === "wishlist" ? (
+                  <TableCell>
+                    <Button
+                      type="primary"
+                      onClick={() => deleteProduct(row.productId)}
+                      disableRipple
+                    >
+                      Add to cart
+                    </Button>
                   </TableCell>
-                  <TableCell className="price">
-                    <p>£150</p>
-                    {/* {row.total} */}
-                  </TableCell>
-                </>
-              )}
-            </TableRow>
-          ))}
+                ) : (
+                  <>
+                    <TableCell className="qty-input">
+                      <label htmlFor="quantity">
+                        Quantity
+                        <input id="quantity" type="number" />
+                      </label>
+                    </TableCell>
+                    <TableCell className="price">
+                      <p>£150</p>
+                      {/* {row.total} */}
+                    </TableCell>
+                  </>
+                )}
+              </TableRow>
+            ))}
         </TableBody>
       </MuiTable>
     </TableContainer>

@@ -16,7 +16,6 @@ import { showNotification } from "../../redux/app/appSlice";
 
 function ProductItem({ id, title, price, image, discount, isFilled }) {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.userData);
   const [filled, setFilled] = useState(isFilled);
   const classes = productItemStyles();
   useEffect(() => {}, [filled]);
@@ -24,9 +23,9 @@ function ProductItem({ id, title, price, image, discount, isFilled }) {
   const handleAddToWishList = (event, productId) => {
     event.preventDefault();
     if (filled) {
-      dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
+      dispatch(deleteItemFromWishlist({ productId }));
     } else {
-      dispatch(addToWishlist({ userId: user.id, productId }));
+      dispatch(addToWishlist({ productId }));
       dispatch(
         showNotification({
           notificationType: "success",
@@ -44,6 +43,7 @@ function ProductItem({ id, title, price, image, discount, isFilled }) {
         <CardContent className={classes.CardContent}>
           <Typography gutterBottom className={classes.productName}>
             {title}
+            {id}
           </Typography>
           <div>
             <span className={classes.productDiscountedPrice}>
