@@ -14,8 +14,7 @@ import { iconsStyles } from "./styles";
 
 function AccountLinks() {
   const [openModal, setOpenModal] = useState(false);
-  const user = useSelector((state) => state.auth.userData);
-  const { id, role } = user;
+  const role = useSelector((state) => state.auth.role);
   const dispatch = useDispatch();
 
   const classes = iconsStyles();
@@ -27,7 +26,7 @@ function AccountLinks() {
     setOpenModal(true);
   };
   const handleSignOut = () => {
-    dispatch(signOut(id));
+    dispatch(signOut());
     onModalClose();
   };
   const logoutModal = (
@@ -53,7 +52,7 @@ function AccountLinks() {
 
   let linkNameToAccount;
   let allowedLinks;
-  if (role) {
+  if (role !== "") {
     linkNameToAccount =
       role === "ADMIN" || role === "MAIN_ADMIN"
         ? "/admin"

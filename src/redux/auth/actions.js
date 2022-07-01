@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { showNotification } from "../app/appSlice";
 import { fetchData } from "../../helpers/helpers";
+import { errorKeys } from "../../errorKeys";
 
 export const checkIsAuth = createAsyncThunk(
   "auth/isAuth",
@@ -30,12 +31,16 @@ export const signUp = createAsyncThunk(
         "POST",
       );
       if (response.result === "error") {
-        dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
-          }),
-        );
+        const result = JSON.parse(response.message);
+        if (result.key) {
+          const { key } = result;
+          dispatch(
+            showNotification({
+              notificationType: "error",
+              notificationMessage: errorKeys[key],
+            }),
+          );
+        }
         throw new Error();
       }
 
@@ -55,7 +60,7 @@ export const signUp = createAsyncThunk(
 
 export const signOut = createAsyncThunk(
   "auth/signOut",
-  async (id, { rejectWithValue, dispatch }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
       const requestOptions = {
         headers: {
@@ -65,7 +70,7 @@ export const signOut = createAsyncThunk(
 
       const response = await fetchData(
         "users/signOut",
-        { id },
+        null,
         requestOptions,
         "POST",
       );
@@ -103,12 +108,17 @@ export const signIn = createAsyncThunk(
       );
 
       if (response.result === "error") {
-        dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
-          }),
-        );
+        const result = JSON.parse(response.message);
+        if (result.key) {
+          const { key } = result;
+          dispatch(
+            showNotification({
+              notificationType: "error",
+              notificationMessage: errorKeys[key],
+            }),
+          );
+        }
+        // console.log("ssss", result);
         throw new Error();
       }
 

@@ -46,7 +46,8 @@ function AdminProductsTable({
   };
 
   const editData = (value) => {
-    console.log(value);
+    console.log("editData", value);
+    // console.log(value);
   };
   const deleteData = (value) => {
     console.log(value);

@@ -25,12 +25,11 @@ function Shop() {
   const [page, setPage] = useState(1);
   const classes = shopStyles();
 
+
   useEffect(() => {
     dispatch(getWishlistData());
   }, []);
-
-  useEffect(() => {}, [wishlist]);
-
+  
   useEffect(() => {
     dispatch(getProductsCount());
   }, [dispatch]);

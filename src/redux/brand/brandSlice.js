@@ -19,6 +19,7 @@ const brandSlice = createSlice({
       state.loading = true;
     },
     [addBrands.fulfilled]: (state, { payload }) => {
+      console.log("payload brand", payload);
       state.brands.push(payload.brand.data);
       state.loading = false;
     },

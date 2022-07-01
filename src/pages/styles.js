@@ -259,6 +259,8 @@ const mainStyles = createUseStyles({
     position: "relative",
     "& img": {
       width: "100%",
+      height: 300,
+      objectFit: "cover",
     },
   },
   bannerContent: {

@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProductsPagination, getProductsCount } from "./actions";
+import {
+  getProductsPagination,
+  getProductsCount,
+  addProducts,
+} from "./actions";
+
 
 const productSlice = createSlice({
   name: "products",
@@ -27,6 +32,7 @@ const productSlice = createSlice({
       state.productsLength = payload.data.productsLength;
       state.loading = true;
     },
+
   },
 });
 

@@ -25,12 +25,12 @@ const Product = lazy(() => import("../pages/admin/products/Product"));
 const ContactMessage = lazy(() => import("../pages/admin/ContactMessage"));
 
 function PageRoutes() {
-  const userRole = useSelector((state) => state.auth.userData?.role);
+  const userRole = useSelector((state) => state.auth.role);
   const loading = useSelector((state) => state.auth.authLoading);
 
   let allowedRoutes;
 
-  if (!userRole) {
+  if (userRole === "") {
     allowedRoutes = (
       <>
         <Route path="signin" element={<SignIn />} />
