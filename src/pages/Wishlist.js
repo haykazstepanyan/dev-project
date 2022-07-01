@@ -5,7 +5,7 @@ import Table from "../components/table/Table";
 import Banner from "../components/common/Banner";
 import { globalStyles } from "../components/styles/styles";
 import { getWishlistData } from "../redux/wishlist/actions";
-// import { deleteItemFromWishlist } from "../redux/wishlist/actions";
+import { deleteItemFromWishlist } from "../redux/wishlist/actions";
 
 export default function Wishlist() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function Wishlist() {
   }, [dispatch]);
 
   const deleteFromWishlist = (event, productId) => {
-    dispatch(deleteItemFromWishlist({productId }));
+    dispatch(deleteItemFromWishlist({ productId }));
   };
 
   return (

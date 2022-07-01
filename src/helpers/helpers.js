@@ -40,7 +40,6 @@ export const fetchData = async (
   }
 };
 
-
 // export async function getProductsDataByPage(pageNumber, limit = 9) {
 //   let res;
 //   try {

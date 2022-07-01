@@ -10,12 +10,7 @@ const wishlistSlice = createSlice({
   initialState: {
     wishlistData: [],
   },
-  // reducers: {
-  //   setWishlistProducts(state, { payload }) {
-  //     console.log(payload);
-  //     state.wishlistProducts.push(payload);
-  //   },
-  // },
+
   extraReducers: {
     [getWishlistData.pending]: (state) => {
       state.loading = true;

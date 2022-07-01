@@ -66,7 +66,6 @@ export const getProductsCount = createAsyncThunk(
 //     } catch (err) {
 //       return rejectWithValue();
 
-
 export const addProducts = createAsyncThunk(
   "products/addProducts",
   async (data, { rejectWithValue, dispatch }) => {

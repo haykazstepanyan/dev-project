@@ -5,11 +5,11 @@ import {
   addProducts,
 } from "./actions";
 
-
 const productSlice = createSlice({
   name: "products",
   initialState: {
     paginationProducts: [],
+    products: [],
     loading: false,
     productsLength: 0,
   },
@@ -32,7 +32,12 @@ const productSlice = createSlice({
       state.productsLength = payload.data.productsLength;
       state.loading = true;
     },
-
+    [addProducts.fulfilled]: (state, { payload }) => {
+      console.log(payload);
+      console.log("payload", payload.data.product.data);
+      state.products.push(payload.data.product.data);
+      state.loading = false;
+    },
   },
 });
 

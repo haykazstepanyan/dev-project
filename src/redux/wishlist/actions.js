@@ -6,11 +6,9 @@ import { showNotification } from "../app/appSlice";
 
 export const getWishlistData = createAsyncThunk(
   "wishlist/getWishlist",
-  async (userId, { dispatch, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/wishlist/getWishlist/${userId}`,
-      );
+      const response = await fetch(`${BASE_URL}/wishlist/getWishlist`);
 
       if (response.result === "error") {
         dispatch(
@@ -31,16 +29,13 @@ export const getWishlistData = createAsyncThunk(
 );
 export const deleteItemFromWishlist = createAsyncThunk(
   "wishlist/delete",
-  async ({ userId, productId }, { dispatch, rejectWithValue }) => {
+  async ({ productId }, { dispatch, rejectWithValue }) => {
     try {
       const response = await fetch(`${BASE_URL}/wishlist/delete/${productId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify({
-          userId,
-        }),
       });
 
       if (response.result === "error") {
@@ -52,7 +47,6 @@ export const deleteItemFromWishlist = createAsyncThunk(
         );
         throw new Error();
       }
-
       const result = await response.json();
 
       return result;
@@ -64,18 +58,14 @@ export const deleteItemFromWishlist = createAsyncThunk(
 
 export const addToWishlist = createAsyncThunk(
   "wishlist/create",
-  async ({ userId, productId }, { dispatch, rejectWithValue }) => {
+  async ({ productId }, { dispatch, rejectWithValue }) => {
     try {
       const response = await fetch(`${BASE_URL}/wishlist/create/${productId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify({
-          userId,
-        }),
       });
-
       if (response.result === "error") {
         dispatch(
           showNotification({
@@ -86,8 +76,6 @@ export const addToWishlist = createAsyncThunk(
         throw new Error();
       }
       const result = await response.json();
-      // dispatch(setWishlistProducts(result.product));
-
       return result;
     } catch {
       return rejectWithValue();
