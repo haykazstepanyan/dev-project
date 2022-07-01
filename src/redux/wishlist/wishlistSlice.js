@@ -9,13 +9,13 @@ const wishlistSlice = createSlice({
   name: "wishlist",
   initialState: {
     wishlistData: [],
-    wishlisProducts: [],
   },
-  reducers: {
-    setWishlistProducts(state, { payload }) {
-      state.wishlisProducts = payload;
-    },
-  },
+  // reducers: {
+  //   setWishlistProducts(state, { payload }) {
+  //     console.log(payload);
+  //     state.wishlistProducts.push(payload);
+  //   },
+  // },
   extraReducers: {
     [getWishlistData.pending]: (state) => {
       state.loading = true;
@@ -28,21 +28,19 @@ const wishlistSlice = createSlice({
       state.loading = true;
     },
     [deleteItemFromWishlist.fulfilled]: (state, { payload }) => {
-      console.log(payload, "deleteItemFromWishlist.fulfilled");
       state.wishlistData = state.wishlistData.filter(
         (item) => item.productId !== Number(payload),
       );
       state.loading = false;
     },
     [addToWishlist.fulfilled]: (state, { payload }) => {
-      state.wishlistData.push(payload);
+      state.wishlistData.push(payload.wishlistItem);
       state.loading = false;
     },
   },
 });
 
 const wishlistActions = wishlistSlice.actions;
-export const { setWishlistProducts } = wishlistSlice.actions;
 export { wishlistActions };
 
 export default wishlistSlice;

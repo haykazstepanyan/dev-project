@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 // import { fetchData } from "../../helpers/helpers";
 import { BASE_URL } from "../../constants/constants";
 import { showNotification } from "../app/appSlice";
+// import { setWishlistProducts } from "./wishlistSlice";
 
 export const getWishlistData = createAsyncThunk(
   "wishlist/getWishlist",
@@ -20,7 +21,6 @@ export const getWishlistData = createAsyncThunk(
         );
         throw new Error();
       }
-
       const result = await response.json();
 
       return result;
@@ -85,8 +85,8 @@ export const addToWishlist = createAsyncThunk(
         );
         throw new Error();
       }
-
       const result = await response.json();
+      // dispatch(setWishlistProducts(result.product));
 
       return result;
     } catch {

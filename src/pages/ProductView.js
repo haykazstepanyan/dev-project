@@ -23,7 +23,6 @@ import {
 
 function Product() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.userData);
   const wishlist = useSelector((state) => state.wishlist.wishlistData);
   // const [isAdded, setIsAdded] = useState(false);
   const [product, setProduct] = useState({ category: {} });
@@ -46,21 +45,14 @@ function Product() {
       setProduct(productData);
     }
     getProduct();
-    // const productInWishlist = wishlist.find(
-    //   (item) => item.productId === Number(productId),
-    // );
-    // if (productInWishlist) {
-    //   setIsAdded(true);
-    // }
   }, [productId, isAdded, dispatch]);
 
   const handleAddToWishlist = (e) => {
     e.preventDefault();
     if (isAdded) {
-      dispatch(deleteItemFromWishlist({ userId: user.id, productId }));
+      dispatch(deleteItemFromWishlist({ productId }));
     } else {
-      dispatch(addToWishlist({ userId: user.id, productId }));
-      // addToWishlist(user.id, productId);
+      dispatch(addToWishlist({ productId }));
     }
     setIsAdded(!isAdded);
   };
@@ -111,17 +103,11 @@ function Product() {
                 InputProps={{ inputProps: { min: 1, max: 10 } }}
               />
               <Box sx={{ display: "inline", marginLeft: 3 }}>
-                {/* Redux CART state needed and DB table CART needed!!! */}
                 <Button variant="contained">Add To Cart</Button>
               </Box>
             </Box>
 
-            <Box
-              // className={classes["product_add-to-wishlist_container"]}
-              marginTop={3}
-            >
-              {/* Redux WISHLIST state needed and DB table WISHLIST needed!!! */}
-
+            <Box marginTop={3}>
               <Button
                 sx={{ fontSize: 12, cursor: "pointer" }}
                 onClick={handleAddToWishlist}
