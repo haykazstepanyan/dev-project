@@ -24,18 +24,15 @@ import {
 function Product() {
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.wishlistData);
-  // const [isAdded, setIsAdded] = useState(false);
   const [product, setProduct] = useState({ category: {} });
   const { productId } = useParams();
   const [isAdded, setIsAdded] = useState(false);
   const classes = productViewStyles();
 
   useEffect(() => {
-    console.log(wishlist);
     const productInWishlist = wishlist.find(
       (item) => item.productId === Number(productId),
     );
-    // console.log("dsasdsa",productInWishlist);
     setIsAdded(productInWishlist);
   }, [wishlist, productId]);
 

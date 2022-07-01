@@ -29,7 +29,7 @@ const wishlistSlice = createSlice({
       state.loading = false;
     },
     [addToWishlist.fulfilled]: (state, { payload }) => {
-      state.wishlistData.push(payload.wishlistItem);
+      state.wishlistData.push(payload);
       state.loading = false;
     },
   },

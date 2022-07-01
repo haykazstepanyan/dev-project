@@ -28,9 +28,8 @@ function Shop() {
   useEffect(() => {
     dispatch(getWishlistData());
   }, []);
-  useEffect(() => {
-    console.log(wishlist, "wishlist");
-  }, [wishlist]);
+
+  useEffect(() => {}, [wishlist]);
   useEffect(() => {
     dispatch(getProductsCount());
   }, [dispatch]);
@@ -73,7 +72,7 @@ function Shop() {
                         image="https://images.unsplash.com/photo-1514826786317-59744fe2a548?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bWFjYm9vayUyMHByb3xlbnwwfHwwfHw%3D&w=1000&q=80"
                         price={price}
                         isFilled={wishlist.some(
-                          (item) => item.productId === id,
+                          (item) => item?.productId === id,
                         )}
                       />
                     </Grid>
