@@ -27,7 +27,7 @@ function Shop() {
 
   useEffect(() => {
     dispatch(getWishlistData());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {}, [wishlist]);
   useEffect(() => {
@@ -36,7 +36,7 @@ function Shop() {
 
   useEffect(() => {
     dispatch(getProductsPagination({ page }));
-  }, [page]);
+  }, [page, dispatch]);
 
   const gotoPage = (_, pageNum) => {
     setPage(pageNum);

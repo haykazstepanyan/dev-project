@@ -60,7 +60,8 @@ function Product() {
         <Grid item md={6} sm={12} padding={10}>
           <Box component="div">
             <img
-              src={`${product.productImg}`}
+              // src={`${product.productImg}`}
+              src="https://images.unsplash.com/photo-1514826786317-59744fe2a548?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bWFjYm9vayUyMHByb3xlbnwwfHwwfHw%3D&w=1000&q=80"
               alt="some img"
               style={{ width: "100%" }}
             />

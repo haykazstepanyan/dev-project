@@ -54,7 +54,7 @@ function Table({ type, tableData, deleteProduct }) {
                 </TableCell>
                 <TableCell component="th" scope="row">
                   <img
-                    src="https://www.jquery-az.com/html/images/banana.jpg"
+                    src="https://images.unsplash.com/photo-1514826786317-59744fe2a548?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bWFjYm9vayUyMHByb3xlbnwwfHwwfHw%3D&w=1000&q=80"
                     alt="product"
                   />
                 </TableCell>
