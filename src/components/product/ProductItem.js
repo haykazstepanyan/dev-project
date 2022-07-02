@@ -43,13 +43,14 @@ function ProductItem({ id, title, price, image, discount, isFilled }) {
         <CardContent className={classes.CardContent}>
           <Typography gutterBottom className={classes.productName}>
             {title}
-            {id}
           </Typography>
           <div>
             <span className={classes.productDiscountedPrice}>
               ${price - (price * discount) / 100}
             </span>
-            <span className={classes.productRealPrice}>${price}</span>
+            {discount ? (
+              <span className={classes.productRealPrice}>${price}</span>
+            ) : null}
           </div>
           <span>
             <IconButton onClick={(event) => handleAddToWishList(event, id)}>
