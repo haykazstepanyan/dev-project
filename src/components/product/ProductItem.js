@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -12,26 +12,26 @@ import {
   deleteItemFromWishlist,
   addToWishlist,
 } from "../../redux/wishlist/actions";
-import { setSnackbar } from "../../redux/app/appSlice";
 
 function ProductItem({ id, title, price, image, discount, isFilled }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const [filled, setFilled] = useState(isFilled);
   const classes = productItemStyles();
   useEffect(() => {}, [filled]);
 
   const handleAddToWishList = (event, productId) => {
     event.preventDefault();
+
+    if (!isAuth) {
+      navigate("../signIn", { replace: true });
+      return;
+    }
     if (filled) {
       dispatch(deleteItemFromWishlist({ productId }));
     } else {
       dispatch(addToWishlist({ productId }));
-      dispatch(
-        setSnackbar({
-          snackbarType: "success",
-          snackbarMessage: "Successfully added to wishlist!!!",
-        }),
-      );
     }
     setFilled(!filled);
   };

@@ -8,7 +8,32 @@ export const checkIsAuth = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetchData("users/auth");
-      return response.data;
+
+      return response;
+    } catch (err) {
+      return rejectWithValue();
+    }
+  },
+);
+export const checkAdminAuth = createAsyncThunk(
+  "auth/checkAdminAuth",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetchData("users/adminAuth");
+
+      return response;
+    } catch (err) {
+      return rejectWithValue();
+    }
+  },
+);
+export const checkMainAdminAuth = createAsyncThunk(
+  "auth/checkMainAdminAuth",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetchData("users/mainAdminAuth");
+
+      return response;
     } catch (err) {
       return rejectWithValue();
     }
