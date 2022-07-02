@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.jpg";
 import { logoStyles } from "./styles";
 
 function Logo() {

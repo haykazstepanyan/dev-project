@@ -11,7 +11,6 @@ import ourHistory from "../assets/images/ourHistory.webp";
 import signature from "../assets/images/signature.webp";
 import Slider from "../components/slider";
 import slideImg1 from "../assets/images/slider1.webp";
-import slideImg2 from "../assets/images/slider2.webp";
 import slideImg3 from "../assets/images/slider3.webp";
 import { mainStyles } from "./styles";
 
@@ -19,10 +18,6 @@ const slideImages = [
   {
     url: `${slideImg1}`,
     caption: "Slide 1",
-  },
-  {
-    url: `${slideImg2}`,
-    caption: "Slide 2",
   },
   {
     url: `${slideImg3}`,
@@ -145,7 +140,11 @@ function Main() {
             <div className={classes.row}>
               <div className={classes.colLg5}>
                 <div className={classes.welcomeHomeThumb}>
-                  <img src={ourHistory} alt="" />
+                  <img
+                    src={ourHistory}
+                    alt=""
+                    style={{ width: "90%", height: 390, objectFit: "cover" }}
+                  />
                 </div>
               </div>
               <div className={classes.colLg7}>

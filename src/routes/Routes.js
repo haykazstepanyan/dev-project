@@ -21,16 +21,16 @@ const AccountDetails = lazy(() => import("../pages/account/AccountDetails"));
 const AdminDashboard = lazy(() => import("../pages/admin/AdminDashboard"));
 const Brand = lazy(() => import("../pages/admin/Brand"));
 const Category = lazy(() => import("../pages/admin/Category"));
-const Product = lazy(() => import("../pages/admin/Product"));
+const Product = lazy(() => import("../pages/admin/products/Product"));
 const ContactMessage = lazy(() => import("../pages/admin/ContactMessage"));
 
 function PageRoutes() {
-  const userRole = useSelector((state) => state.auth.userData?.role);
+  const userRole = useSelector((state) => state.auth.role);
   const loading = useSelector((state) => state.auth.authLoading);
 
   let allowedRoutes;
 
-  if (!userRole) {
+  if (userRole === "") {
     allowedRoutes = (
       <>
         <Route path="signin" element={<SignIn />} />

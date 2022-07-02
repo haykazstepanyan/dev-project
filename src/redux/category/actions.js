@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { showNotification } from "../app/appSlice";
+import { setSnackbar } from "../app/appSlice";
 import { BASE_URL } from "../../constants/constants";
 import { fetchData } from "../../helpers/helpers";
 
@@ -37,9 +37,9 @@ export const addCategories = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your category is successfully added.",
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your category is successfully added.",
         }),
       );
 
@@ -68,9 +68,9 @@ export const deleteCategories = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your category is successfully deleted.",
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your category is successfully deleted.",
         }),
       );
 
@@ -100,9 +100,9 @@ export const updateCategories = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your category is successfully updated.",
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your category is successfully updated.",
         }),
       );
 

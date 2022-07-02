@@ -10,7 +10,8 @@ import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import { shopStyles } from "./styles";
 import useFetch from "../hooks/useFetch";
-import { setLoader, showNotification } from "../redux/app/appSlice";
+import { setLoader, setSnackbar } from "../redux/app/appSlice";
+import { getWishlistData } from "../redux/wishlist/actions";
 
 function Shop() {
   const [selectedBrands, setSelectedBrands] = useState([]);
@@ -23,6 +24,7 @@ function Shop() {
   const dispatch = useDispatch();
   const classes = shopStyles();
 
+  const wishlist = useSelector((state) => state.wishlist.wishlistData);
   const categories = useSelector((state) => state.categories.categories);
 
   const {
@@ -44,7 +46,9 @@ function Shop() {
   } = useFetch("/products/getHighestPrice");
 
   useEffect(() => {
-    dispatch(setLoader({ key: "getHighestPrice" }));
+    if (highestPriceLoading) {
+      dispatch(setLoader({ key: "getHighestPrice" }));
+    }
   }, [dispatch, highestPriceLoading]);
 
   useEffect(() => {
@@ -60,9 +64,9 @@ function Shop() {
   useEffect(() => {
     if (brandsError || productsError) {
       dispatch(
-        showNotification({
-          notificationType: "error",
-          notificationMessage: "Oops! Something went wrong!",
+        setSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
         }),
       );
     }
@@ -165,6 +169,10 @@ function Shop() {
     setSelectedBrands(newBrands);
   };
 
+  useEffect(() => {
+    dispatch(getWishlistData());
+  }, [dispatch]);
+
   const handleCategoryCheckbox = (id) => {
     const selectedIndex = selectedCategories.indexOf(id);
     const newCategories = [...selectedCategories];
@@ -252,6 +260,7 @@ function Shop() {
             <Grid item md={9}>
               <Grid container className={classes.shopItemContainer}>
                 {products?.data &&
+                  wishlist &&
                   products.data.map(
                     ({ id, name, price, productImg, discount }) => (
                       <Grid item sm={4} key={id} className={classes.shopItem}>
@@ -266,13 +275,13 @@ function Shop() {
                     ),
                   )}
               </Grid>
-              {products?.dataCount && (
+              {products?.dataCount ? (
                 <Pagination
                   count={Math.ceil((products?.dataCount || 0) / 9)}
                   page={page}
                   onChange={gotoPage}
                 />
-              )}
+              ) : null}
             </Grid>
           </Grid>
         </Box>

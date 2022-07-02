@@ -13,11 +13,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import Button from "../button";
-import { categories, brands } from "../../DUMMY_DATA";
 import AdminProductsModal from "../adminProductsModal/AdminProductsModal";
 import { adminTableStyles } from "./styles";
 
-function AdminProductsTable({ tableData }) {
+function AdminProductsTable({
+  tableData,
+  selectBrandData,
+  selectCategoryData,
+}) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -43,7 +46,8 @@ function AdminProductsTable({ tableData }) {
   };
 
   const editData = (value) => {
-    console.log(value);
+    console.log("editData", value);
+    // console.log(value);
   };
   const deleteData = (value) => {
     console.log(value);
@@ -59,6 +63,7 @@ function AdminProductsTable({ tableData }) {
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell align="right">Name</TableCell>
+              <TableCell align="right">Image</TableCell>
               <TableCell align="right">Price</TableCell>
               <TableCell align="right">Discount</TableCell>
               <TableCell align="right">Description</TableCell>
@@ -79,6 +84,13 @@ function AdminProductsTable({ tableData }) {
                   {row.id}
                 </TableCell>
                 <TableCell align="right">{row.name}</TableCell>
+                <TableCell align="right">
+                  <img
+                    src={row.productImg}
+                    alt="product-img"
+                    style={{ width: "70px", objectFit: "contain" }}
+                  />
+                </TableCell>
                 <TableCell align="right">{row.price}</TableCell>
                 <TableCell align="right">{row.discount}</TableCell>
                 <TableCell align="right">
@@ -94,8 +106,8 @@ function AdminProductsTable({ tableData }) {
                     {row.description}
                   </p>
                 </TableCell>
-                <TableCell align="right">{row.brand}</TableCell>
-                <TableCell align="right">{row.category}</TableCell>
+                <TableCell align="right">{row.brand.name}</TableCell>
+                <TableCell align="right">{row.category.name}</TableCell>
                 <TableCell align="right">
                   <Button
                     onClick={() => handleOpen(row.id)}
@@ -121,8 +133,8 @@ function AdminProductsTable({ tableData }) {
           onClose={() => handleClose()}
           open={open}
           modalData={modalData}
-          selectCategoryData={categories}
-          selectBrandData={brands}
+          selectCategoryData={selectCategoryData}
+          selectBrandData={selectBrandData}
           onSubmit={(value) => editData(value)}
         />
       ) : (
@@ -135,8 +147,8 @@ function AdminProductsTable({ tableData }) {
           onClose={() => handleCloseDelete()}
           open={openDelete}
           modalData={modalData}
-          selectCategoryData={categories}
-          selectBrandData={brands}
+          selectCategoryData={selectCategoryData}
+          selectBrandData={selectBrandData}
           onSubmit={(value) => deleteData(value)}
         />
       ) : (
@@ -147,7 +159,12 @@ function AdminProductsTable({ tableData }) {
 }
 
 AdminProductsTable.propTypes = {
-  tableData: PropTypes.arrayOf([PropTypes.object]).isRequired,
+  tableData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
+  selectBrandData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
+  selectCategoryData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
 };
 
 export default AdminProductsTable;

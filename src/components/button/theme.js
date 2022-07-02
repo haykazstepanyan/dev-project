@@ -33,6 +33,17 @@ const theme = createTheme({
           },
         },
         {
+          props: { color: "secondary", page: "admin" },
+          style: {
+            textTransform: "capitalize",
+            color: colors.white,
+            background: "#ba895d",
+            "&:hover": {
+              background: colors.black,
+            },
+          },
+        },
+        {
           props: { page: "admin", letter: "capitalize" },
           style: {
             color: "white",

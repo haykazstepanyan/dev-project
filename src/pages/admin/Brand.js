@@ -7,15 +7,10 @@ import { addBrands } from "../../redux/brand/actions";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
 import useFetch from "../../hooks/useFetch";
-import { showNotification } from "../../redux/app/appSlice";
+import { setSnackbar } from "../../redux/app/appSlice";
 
-function createData(id, name, createdAt, updatedAt) {
-  return { id, name, createdAt, updatedAt };
-}
-
-export default function Brand() {
+function Brand() {
   const [open, setOpen] = useState(false);
-  const [brandsRows, setBrandsRows] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -24,24 +19,13 @@ export default function Brand() {
   useEffect(() => {
     if (brandsError) {
       dispatch(
-        showNotification({
-          notificationType: "error",
-          notificationMessage: "Oops! Something went wrong!",
+        setSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
         }),
       );
     }
   }, [dispatch, brandsError]);
-
-  useEffect(() => {
-    const rows = [];
-    if (!brandsData.loading) {
-      brandsData.brands.forEach((elem) => {
-        const { id, name, createdAt, updatedAt } = elem;
-        rows.push(createData(id, name, createdAt, updatedAt));
-      });
-    }
-    setBrandsRows(rows);
-  }, [brandsData]);
 
   const handleClose = () => {
     setOpen(false);
@@ -68,7 +52,7 @@ export default function Brand() {
             <AddIcon />
           </Button>
         </div>
-        <AdminMainTable type="brand" tableData={brandsRows} />
+        {brandsData && <AdminMainTable type="brand" tableData={brandsData} />}
       </Container>
       {open ? (
         <AdminModal
@@ -77,9 +61,9 @@ export default function Brand() {
           open={open}
           onSubmit={(value) => addData(value)}
         />
-      ) : (
-        ""
-      )}
+      ) : null}
     </>
   );
 }
+
+export default Brand;

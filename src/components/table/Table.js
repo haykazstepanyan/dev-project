@@ -36,52 +36,62 @@ function Table({ type, tableData, deleteProduct }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableData.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{
-                "&:last-child td, &:last-child th": {
-                  border: 0,
-                },
-                height: "122px",
-              }}
-            >
-              <TableCell>
-                <ClearIcon />
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <img src={row.image} alt="product" />
-              </TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell className="price">
-                <p>£{row.price}</p>
-              </TableCell>
-              <TableCell className="stockStatus">{row.stockStatus}</TableCell>
-              {type === "wishlist" ? (
+          {tableData &&
+            tableData.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{
+                  "&:last-child td, &:last-child th": {
+                    border: 0,
+                  },
+                  height: "122px",
+                }}
+              >
                 <TableCell>
-                  <Button
-                    type="primary"
-                    onClick={() => deleteProduct(row.productId)}
-                    disableRipple
-                  >
-                    Add to cart
-                  </Button>
+                  <ClearIcon
+                    onClick={(event) => deleteProduct(event, row.productId)}
+                  />
                 </TableCell>
-              ) : (
-                <>
-                  <TableCell className="qty-input">
-                    <label htmlFor="quantity">
-                      Quantity
-                      <input id="quantity" type="number" />
-                    </label>
+                <TableCell component="th" scope="row">
+                  <img
+                    src="https://images.unsplash.com/photo-1514826786317-59744fe2a548?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bWFjYm9vayUyMHByb3xlbnwwfHwwfHw%3D&w=1000&q=80"
+                    alt="product"
+                  />
+                </TableCell>
+                <TableCell>
+                  {row.Product?.name}
+                  {row.productId}
+                </TableCell>
+                <TableCell className="price">
+                  <p>£{row.Product?.price}</p>
+                </TableCell>
+                <TableCell className="stockStatus">In Stock</TableCell>
+                {type === "wishlist" ? (
+                  <TableCell>
+                    <Button
+                      type="primary"
+                      onClick={() => deleteProduct(row.productId)}
+                      disableRipple
+                    >
+                      Add to cart
+                    </Button>
                   </TableCell>
-                  <TableCell className="price">
-                    <p>£{row.total}</p>
-                  </TableCell>
-                </>
-              )}
-            </TableRow>
-          ))}
+                ) : (
+                  <>
+                    <TableCell className="qty-input">
+                      <label htmlFor="quantity">
+                        Quantity
+                        <input id="quantity" type="number" />
+                      </label>
+                    </TableCell>
+                    <TableCell className="price">
+                      <p>£150</p>
+                      {/* {row.total} */}
+                    </TableCell>
+                  </>
+                )}
+              </TableRow>
+            ))}
         </TableBody>
       </MuiTable>
     </TableContainer>

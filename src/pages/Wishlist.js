@@ -1,42 +1,33 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Container } from "@mui/material";
 import Table from "../components/table/Table";
 import Banner from "../components/common/Banner";
-import product1 from "../assets/images/product.webp";
-import product2 from "../assets/images/product2.webp";
-import product3 from "../assets/images/product3.webp";
 import { globalStyles } from "../components/styles/styles";
-
-function createData(image, name, price, stockStatus, productId) {
-  return {
-    image,
-    name,
-    price,
-    stockStatus,
-    productId,
-  };
-}
-
-const rows = [
-  createData(product1, "Handbag Fringilla", 65.0, "In Stock", 1),
-  createData(product2, "Handbags Justo", 90.0, "In Stock", 2),
-  createData(product3, "Handbag Elit", 80.0, "In Stock", 3),
-];
-
-// function deleteProduct(productId) {
-// console.log(productId);
-// }
+import { getWishlistData } from "../redux/wishlist/actions";
+import { deleteItemFromWishlist } from "../redux/wishlist/actions";
 
 export default function Wishlist() {
+  const dispatch = useDispatch();
+  const wishlist = useSelector((state) => state.wishlist.wishlistData);
   const globalClasses = globalStyles();
+
+  useEffect(() => {
+    dispatch(getWishlistData());
+  }, [dispatch]);
+
+  const deleteFromWishlist = (event, productId) => {
+    dispatch(deleteItemFromWishlist({ productId }));
+  };
 
   return (
     <>
       <Banner name="Wishlist" />
       <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
         <Table
-          tableData={rows}
           type="wishlist"
-          // deleteProduct={deleteProduct}
+          tableData={wishlist || []}
+          deleteProduct={deleteFromWishlist}
         />
       </Container>
     </>

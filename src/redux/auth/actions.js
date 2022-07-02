@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { showNotification } from "../app/appSlice";
+import { setSnackbar } from "../app/appSlice";
 import { fetchData } from "../../helpers/helpers";
+import { errorKeys } from "../../errorKeys";
 
 export const checkIsAuth = createAsyncThunk(
   "auth/isAuth",
@@ -30,19 +31,23 @@ export const signUp = createAsyncThunk(
         "POST",
       );
       if (response.result === "error") {
-        dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
-          }),
-        );
+        const result = JSON.parse(response.message);
+        if (result.key) {
+          const { key } = result;
+          dispatch(
+            setSnackbar({
+              snackbarType: "error",
+              snackbarMessage: errorKeys[key],
+            }),
+          );
+        }
         throw new Error();
       }
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "You have successfully signed up!",
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "You have successfully signed up!",
         }),
       );
 
@@ -55,7 +60,7 @@ export const signUp = createAsyncThunk(
 
 export const signOut = createAsyncThunk(
   "auth/signOut",
-  async (id, { rejectWithValue, dispatch }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
       const requestOptions = {
         headers: {
@@ -65,15 +70,15 @@ export const signOut = createAsyncThunk(
 
       const response = await fetchData(
         "users/signOut",
-        { id },
+        null,
         requestOptions,
         "POST",
       );
       if (response.result === "error") {
         dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
+          setSnackbar({
+            snackbarType: "error",
+            snackbarMessage: response.message,
           }),
         );
         throw new Error();
@@ -103,19 +108,24 @@ export const signIn = createAsyncThunk(
       );
 
       if (response.result === "error") {
-        dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
-          }),
-        );
+        const result = JSON.parse(response.message);
+        if (result.key) {
+          const { key } = result;
+          dispatch(
+            setSnackbar({
+              snackbarType: "error",
+              snackbarMessage: errorKeys[key],
+            }),
+          );
+        }
+        // console.log("ssss", result);
         throw new Error();
       }
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: `Welcome back, ${response.data.user.firstName} ${response.data.user.lastName}!`,
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: `Welcome back, ${response.data.user.firstName} ${response.data.user.lastName}!`,
         }),
       );
 

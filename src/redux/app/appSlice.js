@@ -5,10 +5,9 @@ const appSlice = createSlice({
   initialState: {
     isMobile: false,
     loading: [],
-    notification: {
-      show: false,
-      type: "",
-      message: "",
+    snackbar: {
+      type: null,
+      message: null,
     },
   },
   reducers: {
@@ -26,28 +25,22 @@ const appSlice = createSlice({
         state.loading.splice(loaderIndex, 1);
       }
     },
-    showNotification(state, { payload }) {
-      state.notification = {
-        show: true,
-        type: payload.notificationType,
-        message: payload.notificationMessage,
+    setSnackbar(state, { payload }) {
+      state.snackbar = {
+        type: payload.snackbarType,
+        message: payload.snackbarMessage,
       };
     },
-    hideNotification(state) {
-      state.notification = {
-        show: false,
-        type: "",
-        message: "",
+    resetSnackbar(state) {
+      state.snackbar = {
+        type: null,
+        message: null,
       };
     },
   },
 });
 
-export const {
-  setIsMobileVersion,
-  setLoader,
-  showNotification,
-  hideNotification,
-} = appSlice.actions;
+export const { setIsMobileVersion, setLoader, setSnackbar, resetSnackbar } =
+  appSlice.actions;
 
 export default appSlice;

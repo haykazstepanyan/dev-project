@@ -4,7 +4,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import GoogleIcon from "@mui/icons-material/Google";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.jpg";
 import styles from "./styles";
 
 const useStyles = createUseStyles(styles);

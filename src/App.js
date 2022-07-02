@@ -4,7 +4,7 @@ import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import { setIsMobileVersion } from "./redux/app/appSlice";
 import { checkIsAuth } from "./redux/auth/actions";
 import Routes from "./routes";
-import Notification from "./components/notification";
+import Snackbar from "./components/snackbar";
 import { documentStyles } from "./components/styles/styles";
 import mainTheme from "./components/styles/mainTheme";
 import Loader from "./components/loader";
@@ -12,8 +12,9 @@ import { getCategories } from "./redux/category/actions";
 
 function App() {
   const dispatch = useDispatch();
-  const notification = useSelector((state) => state.app.notification);
+  const snackbar = useSelector((state) => state.app.snackbar);
   const loading = useSelector((state) => state.app.loading);
+
   useEffect(() => {
     dispatch(checkIsAuth());
     dispatch(getCategories());
@@ -32,19 +33,18 @@ function App() {
   }, [dispatch]);
 
   documentStyles();
-
+  // console.log(snackbar);
   return (
     <>
       {!!loading.length && <Loader />}
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={mainTheme}>
           <Routes />
-          {notification.show && (
-            <Notification
-              open
-              type={notification.type}
-              message={notification.message}
-            />
+          {(snackbar.type || snackbar.message) && (
+            <>
+              {console.log(snackbar)}
+              <Snackbar type={snackbar.type} message={snackbar.message} />
+            </>
           )}
         </ThemeProvider>
       </StyledEngineProvider>

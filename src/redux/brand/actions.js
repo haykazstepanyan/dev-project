@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { showNotification } from "../app/appSlice";
+import { setSnackbar } from "../app/appSlice";
 import { BASE_URL } from "../../constants/constants";
 
 export const addBrands = createAsyncThunk(
@@ -21,9 +21,9 @@ export const addBrands = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your brand is successfully added.",
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your brand is successfully added.",
         }),
       );
 
@@ -52,9 +52,9 @@ export const deleteBrands = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your brand is successfully deleted.",
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your brand is successfully deleted.",
         }),
       );
 
@@ -84,9 +84,9 @@ export const updateBrands = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your brand is successfully updated.",
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your brand is successfully updated.",
         }),
       );
 

@@ -4,7 +4,8 @@ import { checkIsAuth, signUp, signIn, signOut } from "./actions";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    userData: undefined,
+    isAuth: false,
+    role: "",
     loading: false,
     authLoading: true,
   },
@@ -15,7 +16,10 @@ const authSlice = createSlice({
   },
   extraReducers: {
     [checkIsAuth.fulfilled]: (state, { payload }) => {
-      state.userData = payload.user;
+      state.isAuth = payload.isAuth;
+      if (payload.role) {
+        state.role = payload.role;
+      }
       state.authLoading = false;
     },
     [checkIsAuth.rejected]: (state) => {
@@ -26,7 +30,8 @@ const authSlice = createSlice({
     },
     [signUp.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.userData = payload.data.user;
+      state.isAuth = payload.data.isAuth;
+      state.role = payload.data.user.role;
     },
     [signUp.rejected]: (state) => {
       state.loading = false;
@@ -36,7 +41,8 @@ const authSlice = createSlice({
     },
     [signIn.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.userData = payload.data.user;
+      state.isAuth = payload.data.isAuth;
+      state.role = payload.data.user.role;
     },
     [signIn.rejected]: (state) => {
       state.loading = false;
@@ -46,7 +52,8 @@ const authSlice = createSlice({
     },
     [signOut.fulfilled]: (state) => {
       state.loading = false;
-      state.userData = null;
+      state.isAuth = false;
+      state.role = "";
     },
     [signOut.rejected]: (state) => {
       state.loading = false;
