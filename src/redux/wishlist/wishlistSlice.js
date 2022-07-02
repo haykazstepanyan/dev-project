@@ -16,8 +16,13 @@ const wishlistSlice = createSlice({
       state.loading = true;
     },
     [getWishlistData.fulfilled]: (state, { payload }) => {
-      state.wishlistData = payload;
+      // if(payload)
+      state.wishlistData = [];
+      if (payload.wishlist) {
+        state.wishlistData = payload.wishlist;
+      }
       state.loading = false;
+      console.log("wishlist", payload);
     },
     [getWishlistData.rejected]: (state) => {
       state.loading = true;

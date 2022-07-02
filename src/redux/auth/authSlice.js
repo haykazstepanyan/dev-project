@@ -9,17 +9,23 @@ const authSlice = createSlice({
     loading: false,
     authLoading: true,
   },
-  reducers: {
-    setAuthAndUser(state, { payload }) {
-      state.isAuth = payload.isAuth;
-      state.userData = payload.userData;
-    },
-  },
   extraReducers: {
     [checkIsAuth.fulfilled]: (state, { payload }) => {
-      state.isAuth = payload.isAuth;
-      if (payload.role) {
-        state.role = payload.role;
+      if (payload.result === "error") {
+        const data = JSON.parse(payload.message);
+        if (data.error === "Unauthorized") {
+          // sign out
+          state.loading = false;
+          state.isAuth = false;
+          state.role = "";
+        }
+      } else {
+        state.isAuth = payload.data.isAuth;
+        if (payload.data.role) {
+          state.role = payload.data.role;
+        } else {
+          state.role = "";
+        }
       }
       state.authLoading = false;
     },
@@ -61,7 +67,5 @@ const authSlice = createSlice({
     },
   },
 });
-
-export const { setAuthAndUser } = authSlice.actions;
 
 export default authSlice;

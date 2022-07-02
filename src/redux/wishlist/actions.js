@@ -1,22 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchData } from "../../helpers/helpers";
 import { showNotification } from "../app/appSlice";
+import { checkIsAuth } from "../auth/actions";
 
 export const getWishlistData = createAsyncThunk(
   "wishlist/getWishlist",
-  async (_, { dispatch, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await fetchData("wishlist/getWishlist");
 
-      if (response.result === "error") {
-        dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
-          }),
-        );
-        throw new Error();
-      }
       return response.data;
     } catch {
       return rejectWithValue();
@@ -25,7 +17,7 @@ export const getWishlistData = createAsyncThunk(
 );
 export const deleteItemFromWishlist = createAsyncThunk(
   "wishlist/delete",
-  async ({ productId }, { dispatch, rejectWithValue }) => {
+  async ({ productId }, { rejectWithValue }) => {
     try {
       const requestOptions = {
         headers: {
@@ -39,15 +31,15 @@ export const deleteItemFromWishlist = createAsyncThunk(
         "DELETE",
       );
 
-      if (response.result === "error") {
-        dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
-          }),
-        );
-        throw new Error();
-      }
+      // if (response.result === "error") {
+      //   dispatch(
+      //     showNotification({
+      //       notificationType: "error",
+      //       notificationMessage: response.message,
+      //     }),
+      //   );
+      //   throw new Error();
+      // }
 
       return response.data;
     } catch {
@@ -71,14 +63,16 @@ export const addToWishlist = createAsyncThunk(
         requestOptions,
         "POST",
       );
-      if (response.result === "error") {
+
+      dispatch(checkIsAuth());
+
+      if (response.result !== "error") {
         dispatch(
           showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
+            notificationType: "success",
+            notificationMessage: "Successfully added to wishlist!!!",
           }),
         );
-        throw new Error();
       }
       return response.data;
     } catch {
