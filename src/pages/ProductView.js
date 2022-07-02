@@ -71,12 +71,7 @@ function Product() {
         <Grid container alignItems="center">
           <Grid item md={6} sm={12} padding={10}>
             <Box component="div">
-              <img
-                // src={`${product.productImg}`}
-                src={productImg}
-                alt={name}
-                style={{ width: "100%" }}
-              />
+              <img src={productImg} alt="some img" style={{ width: "100%" }} />
             </Box>
           </Grid>
           <Grid item md={6} sm={10} padding={5}>
@@ -115,30 +110,6 @@ function Product() {
                 <Box sx={{ display: "inline", marginLeft: 3 }}>
                   <Button variant="contained">Add To Cart</Button>
                 </Box>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item md={6} sm={10} padding={5}>
-            <Box maxWidth="100%">
-              <Box component="div" marginBottom={3}>
-                <Typography component="h4" variant="h5">
-                  {name}
-                </Typography>
-              </Box>
-              <Box component="div" marginBottom={3}>
-                <Typography>
-                  <span className={classes["product_current-price"]}>
-                    £{price}
-                  </span>
-                  {!!discount && (
-                    <span className={classes["product_old-price"]}>
-                      £{price + (price * discount) / 100}
-                    </span>
-                  )}
-                </Typography>
-              </Box>
-              <Box marginBottom={6}>
-                <Typography component="p">{description}</Typography>
               </Box>
 
               <Box marginTop={3}>
