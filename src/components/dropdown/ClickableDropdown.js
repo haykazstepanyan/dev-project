@@ -15,12 +15,10 @@ function ClickableDropdown({ icon, options, value, change, topDistance }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleSelectChange = (name) => {
+  const handleSelectChange = (id, name) => {
     setAnchorEl(null);
-    return change && change(name);
+    return change && change(id, name);
   };
-
-  // const classes = useStyles();
 
   return (
     <div>
@@ -48,7 +46,7 @@ function ClickableDropdown({ icon, options, value, change, topDistance }) {
           <MenuItem
             className={classes.dropdownMenuItems}
             key={id}
-            onClick={() => handleSelectChange(name)}
+            onClick={() => handleSelectChange(id, name)}
           >
             {item || name}
           </MenuItem>

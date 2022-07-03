@@ -6,13 +6,43 @@ const productItemStyles = createUseStyles({
     position: "relative",
     maxWidth: 255,
     textAlign: "center",
+    overflow: "visible",
+  },
+  productImgContainer: {
+    "&:hover $productImg": {
+      position: "relative",
+      transform: "rotate(-15deg) translateX(-35px)",
+    },
+    "&:hover $productIcons": {
+      opacity: 1,
+      transition: "opacity 1.2s",
+    },
+  },
+  productImg: {
+    transition: "transform 0.6s ease",
+    zIndex: 20,
+  },
+  productIcons: {
+    position: "absolute",
+    top: 85,
+    right: 5,
+
+    // visibility: "hidden",
+    opacity: 0,
+  },
+  productIconButton: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  cardContent: {
+    padding: 5,
     background: colors.lightGrey,
+    // color: colors.black,
   },
   productName: {
     fontSize: 14,
     color: colors.black,
     textTransform: "Capitalize",
-    height: 48,
   },
   productDiscountedPrice: {
     fontWeight: 500,

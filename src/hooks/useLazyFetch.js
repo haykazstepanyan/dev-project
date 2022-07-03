@@ -13,14 +13,13 @@ const useLazyFetch = () => {
       const response = await fetch(`${BASE_URL}${url}`, {
         credentials: "include",
         method,
-        ...(options && {}),
+        ...(options || {}),
       });
       if (!response.ok) {
         const errText = await response.text();
         throw new Error(errText);
       }
       const result = await response.json();
-
       setData(result.data);
     } catch (err) {
       setError(err.message);

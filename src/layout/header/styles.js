@@ -3,7 +3,7 @@ import { colors } from "../../constants/constants";
 
 const logoStyles = createUseStyles({
   pageLogo: {
-    width: 80,
+    width: 100,
     height: 80,
   },
   "@media screen and (max-width: 900px)": {
