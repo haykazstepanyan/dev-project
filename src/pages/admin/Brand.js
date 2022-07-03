@@ -3,18 +3,49 @@ import { useDispatch } from "react-redux";
 import { Container } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
-import { addBrands } from "../../redux/brand/actions";
+// import { addBrands } from "../../redux/brand/actions";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
 import useFetch from "../../hooks/useFetch";
+import useLazyFetch from "../../hooks/useLazyFetch";
 import { setSnackbar } from "../../redux/app/appSlice";
 
 function Brand() {
   const [open, setOpen] = useState(false);
+  const [brands, setBrands] = useState([]);
 
   const dispatch = useDispatch();
 
   const { data: brandsData, error: brandsError } = useFetch("/brands");
+  const {
+    data: addBrandData,
+    error: addBrandError,
+    loading: addBrandLoading,
+    lazyRefetch: addBrand,
+  } = useLazyFetch();
+
+  useEffect(() => {
+    if (addBrandData?.data) {
+      setBrands((prev) => [...prev, addBrandData.data]);
+    }
+  }, [addBrandData]);
+
+  useEffect(() => {
+    if (brandsData) {
+      setBrands(brandsData.data);
+    }
+  }, [brandsData]);
+
+  useEffect(() => {
+    if (addBrandError) {
+      console.log("error", addBrandError);
+    }
+  }, [addBrandError]);
+  useEffect(() => {
+    if (addBrandLoading) {
+      console.log("loading", addBrandLoading);
+    }
+  }, [addBrandLoading]);
 
   useEffect(() => {
     if (brandsError) {
@@ -35,9 +66,33 @@ function Brand() {
   };
   const addData = (value) => {
     const brandData = { name: value };
-    dispatch(addBrands(brandData));
+
+    addBrand(
+      "/brands/brand",
+      {
+        body: JSON.stringify(brandData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      "POST",
+    );
+
     handleClose();
   };
+
+  function setEditBrandData(brandData) {
+    const { id } = brandData;
+    const newState = brands.map((elem) => (elem.id === id ? brandData : elem));
+    setBrands(newState);
+  }
+  function setDeleteBrandData(brandData) {
+    console.log(brandData);
+    const { id } = brandData;
+    const newState = brands.filter((elem) => elem.id !== id);
+    setBrands(newState);
+  }
+
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
@@ -52,7 +107,14 @@ function Brand() {
             <AddIcon />
           </Button>
         </div>
-        {brandsData && <AdminMainTable type="brand" tableData={brandsData} />}
+        {brands && (
+          <AdminMainTable
+            setEditBrandData={(value) => setEditBrandData(value)}
+            setDeleteBrandData={(value) => setDeleteBrandData(value)}
+            type="brand"
+            tableData={brands}
+          />
+        )}
       </Container>
       {open ? (
         <AdminModal

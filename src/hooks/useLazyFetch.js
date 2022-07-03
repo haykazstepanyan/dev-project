@@ -10,10 +10,15 @@ const useLazyFetch = () => {
     setData(null);
     setError(null);
     try {
+      console.log("options", {
+        credentials: "include",
+        method,
+        ...(options || {}),
+      });
       const response = await fetch(`${BASE_URL}${url}`, {
         credentials: "include",
         method,
-        ...(options && {}),
+        ...(options || {}),
       });
       if (!response.ok) {
         const errText = await response.text();

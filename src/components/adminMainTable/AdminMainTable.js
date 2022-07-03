@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Table as MuiTable,
@@ -12,21 +13,74 @@ import { useDispatch } from "react-redux";
 import SettingsIcon from "@mui/icons-material/Settings";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
-import { deleteBrands, updateBrands } from "../../redux/brand/actions";
+// import { deleteBrands, updateBrands } from "../../redux/brand/actions";
 import { adminTableStyles } from "./styles";
 import {
   deleteCategories,
   updateCategories,
 } from "../../redux/category/actions";
+import useLazyFetch from "../../hooks/useLazyFetch";
 
-function AdminMainTable({ tableData, type }) {
+function AdminMainTable({
+  tableData,
+  type,
+  setEditBrandData,
+  setDeleteBrandData,
+}) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const dispatch = useDispatch();
+
+  const {
+    data: editBrandData,
+    error: editBrandError,
+    loading: editBrandLoading,
+    lazyRefetch: editBrand,
+  } = useLazyFetch();
+  const {
+    data: deleteBrandData,
+    error: deleteBrandError,
+    loading: deleteBrandLoading,
+    lazyRefetch: deleteBrand,
+  } = useLazyFetch();
+
+  useEffect(() => {
+    if (editBrandData) {
+      setEditBrandData(editBrandData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editBrandData]);
+
+  useEffect(() => {
+    if (editBrandError) {
+      console.log("error", editBrandError);
+    }
+  }, [editBrandError]);
+  useEffect(() => {
+    if (editBrandLoading) {
+      console.log("loading", editBrandLoading);
+    }
+  }, [editBrandLoading]);
+  useEffect(() => {
+    if (deleteBrandData) {
+      setDeleteBrandData(deleteBrandData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deleteBrandData]);
+
+  useEffect(() => {
+    if (deleteBrandError) {
+      console.log("error", deleteBrandError);
+    }
+  }, [deleteBrandError]);
+  useEffect(() => {
+    if (deleteBrandLoading) {
+      console.log("loading", deleteBrandLoading);
+    }
+  }, [deleteBrandLoading]);
 
   const filterById = (id) => {
     const rowData = tableData.filter((elem) => elem.id === id);
@@ -50,7 +104,19 @@ function AdminMainTable({ tableData, type }) {
 
   const editData = (value) => {
     if (type === "brand") {
-      dispatch(updateBrands(value));
+      console.log(value);
+      const { id, name } = value;
+      editBrand(
+        `/brands/brand/${id}`,
+        {
+          body: JSON.stringify({ name }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        "PATCH",
+      );
+      // dispatch(updateBrands(value));
     } else {
       dispatch(updateCategories(value));
     }
@@ -59,7 +125,16 @@ function AdminMainTable({ tableData, type }) {
   const deleteData = (value) => {
     if (Number.isInteger(value)) {
       if (type === "brand") {
-        dispatch(deleteBrands(value));
+        console.log("delete", value);
+        deleteBrand(
+          `/brands/brand/${value}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+          "DELETE",
+        );
       } else {
         dispatch(deleteCategories(value));
       }
@@ -146,6 +221,8 @@ AdminMainTable.propTypes = {
   type: PropTypes.string,
   tableData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
+  setEditBrandData: PropTypes.func,
+  setDeleteBrandData: PropTypes.func,
 };
 
 export default AdminMainTable;
