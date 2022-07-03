@@ -92,7 +92,6 @@ function Brand() {
     const newState = brands.filter((elem) => elem.id !== id);
     setBrands(newState);
   }
-
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>

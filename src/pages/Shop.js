@@ -27,6 +27,49 @@ function Shop() {
   const wishlist = useSelector((state) => state.wishlist.wishlistData);
   const categories = useSelector((state) => state.categories.categories);
 
+  // useEffect(() => {
+  //   if (page === 1 && !searchParams.get("page")) {
+  //     searchParams.append("page", 1);
+  //     setSearchParams(searchParams);
+  //   }
+  // }, [page, searchParams, setSearchParams]);
+
+  const setInitialBrandCategories = useCallback(() => {
+    const defaultBrandParams = searchParams.getAll("brand");
+    if (Array.isArray(defaultBrandParams)) {
+      setSelectedBrands(defaultBrandParams.map((param) => +param));
+    } else {
+      setSelectedBrands([+defaultBrandParams]);
+    }
+
+    const defaultCategoryParams = searchParams.getAll("category");
+    if (Array.isArray(defaultBrandParams)) {
+      setSelectedCategories(defaultCategoryParams.map((param) => +param));
+    } else {
+      setSelectedCategories([+defaultCategoryParams]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const setInitialMinMaxValues = useCallback(() => {
+    const defaultMinValue = searchParams.get("min");
+    const defaultMaxValue = searchParams.get("max");
+    if (defaultMinValue) {
+      setPriceSliderValues((prevState) => [defaultMinValue, prevState[1]]);
+    }
+    if (defaultMaxValue) {
+      setPriceSliderValues((prevState) => [prevState[0], defaultMaxValue]);
+    }
+  }, []);
+
+  useEffect(() => {
+    setInitialBrandCategories();
+  }, [setInitialBrandCategories]);
+
+  useEffect(() => {
+    setInitialMinMaxValues();
+  }, [setInitialMinMaxValues]);
+
   const {
     data: brands,
     error: brandsError,
@@ -95,49 +138,6 @@ function Shop() {
       dispatch(setLoader({ key: "getBrands" }));
     }
   }, [dispatch, brands, brandsError]);
-
-  const setInitialBrandCategories = useCallback(() => {
-    const defaultBrandParams = searchParams.getAll("brand");
-    if (Array.isArray(defaultBrandParams)) {
-      setSelectedBrands(defaultBrandParams.map((param) => +param));
-    } else {
-      setSelectedBrands([+defaultBrandParams]);
-    }
-
-    const defaultCategoryParams = searchParams.getAll("category");
-    if (Array.isArray(defaultBrandParams)) {
-      setSelectedCategories(defaultCategoryParams.map((param) => +param));
-    } else {
-      setSelectedCategories([+defaultCategoryParams]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const setInitialMinMaxValues = useCallback(() => {
-    const defaultMinValue = searchParams.get("min");
-    const defaultMaxValue = searchParams.get("max");
-    if (defaultMinValue) {
-      setPriceSliderValues((prevState) => [defaultMinValue, prevState[1]]);
-    }
-    if (defaultMaxValue) {
-      setPriceSliderValues((prevState) => [prevState[0], defaultMaxValue]);
-    }
-  }, []);
-
-  useEffect(() => {
-    setInitialBrandCategories();
-  }, [setInitialBrandCategories]);
-
-  useEffect(() => {
-    setInitialMinMaxValues();
-  }, [setInitialMinMaxValues]);
-
-  useEffect(() => {
-    if (page === 1 && !searchParams.get("page")) {
-      searchParams.append("page", 1);
-      setSearchParams(searchParams);
-    }
-  }, [page, searchParams, setSearchParams]);
 
   const handleBrandCheckbox = (id) => {
     const selectedIndex = selectedBrands.indexOf(id);

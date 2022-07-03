@@ -25,7 +25,6 @@ const useLazyFetch = () => {
         throw new Error(errText);
       }
       const result = await response.json();
-
       setData(result.data);
     } catch (err) {
       setError(err.message);
