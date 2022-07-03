@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Table as MuiTable,
@@ -11,19 +13,28 @@ import {
 import SettingsIcon from "@mui/icons-material/Settings";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
 import Button from "../button";
 import AdminProductsModal from "../adminProductsModal/AdminProductsModal";
 import { adminTableStyles } from "./styles";
+import useLazyFetch from "../../hooks/useLazyFetch";
+import { setSnackbar } from "../../redux/app/appSlice";
 
 function AdminProductsTable({
   tableData,
   selectBrandData,
   selectCategoryData,
+  setEditProductData,
 }) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const dispatch = useDispatch();
+
+  const {
+    data: editProductData,
+    error: editProductError,
+    lazyRefetch: editProduct,
+  } = useLazyFetch();
 
   const filterById = (id) => {
     const rowData = tableData.filter((elem) => elem.id === id);
@@ -45,8 +56,41 @@ function AdminProductsTable({
     setOpenDelete(false);
   };
 
+  useEffect(() => {
+    if (editProductData) {
+      setEditProductData(editProductData);
+      handleClose();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editProductData]);
+
+  useEffect(() => {
+    if (editProductError) {
+      dispatch(
+        setSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+      console.log("error", editProductError);
+    }
+  }, [editProductError, dispatch]);
+
   const editData = (value) => {
-    console.log("editData", value);
+    const { id } = value;
+    delete value.id;
+
+    editProduct(
+      `/products/product/${id}`,
+      {
+        body: JSON.stringify(value),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      "PATCH",
+    );
+
     // console.log(value);
   };
   const deleteData = (value) => {
@@ -77,7 +121,7 @@ function AdminProductsTable({
           <TableBody>
             {tableData.map((row) => (
               <TableRow
-                key={row.name}
+                key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
@@ -106,8 +150,8 @@ function AdminProductsTable({
                     {row.description}
                   </p>
                 </TableCell>
-                <TableCell align="right">{row.brand.name}</TableCell>
-                <TableCell align="right">{row.category.name}</TableCell>
+                <TableCell align="right">{row?.brand?.name}</TableCell>
+                <TableCell align="right">{row?.category?.name}</TableCell>
                 <TableCell align="right">
                   <Button
                     onClick={() => handleOpen(row.id)}
@@ -165,6 +209,7 @@ AdminProductsTable.propTypes = {
     .isRequired,
   selectCategoryData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
+  setEditProductData: PropTypes.func,
 };
 
 export default AdminProductsTable;

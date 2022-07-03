@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { Container } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
-// import { addBrands } from "../../redux/brand/actions";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
 import useFetch from "../../hooks/useFetch";
@@ -20,15 +19,29 @@ function Brand() {
   const {
     data: addBrandData,
     error: addBrandError,
-    loading: addBrandLoading,
     lazyRefetch: addBrand,
   } = useLazyFetch();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   useEffect(() => {
     if (addBrandData?.data) {
       setBrands((prev) => [...prev, addBrandData.data]);
+
+      dispatch(
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Brand is added successfully!",
+        }),
+      );
+      handleClose();
     }
-  }, [addBrandData]);
+  }, [addBrandData, dispatch]);
 
   useEffect(() => {
     if (brandsData) {
@@ -37,18 +50,7 @@ function Brand() {
   }, [brandsData]);
 
   useEffect(() => {
-    if (addBrandError) {
-      console.log("error", addBrandError);
-    }
-  }, [addBrandError]);
-  useEffect(() => {
-    if (addBrandLoading) {
-      console.log("loading", addBrandLoading);
-    }
-  }, [addBrandLoading]);
-
-  useEffect(() => {
-    if (brandsError) {
+    if (addBrandError || brandsError) {
       dispatch(
         setSnackbar({
           snackbarType: "error",
@@ -56,14 +58,8 @@ function Brand() {
         }),
       );
     }
-  }, [dispatch, brandsError]);
+  }, [addBrandError, brandsError, dispatch]);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
   const addData = (value) => {
     const brandData = { name: value };
 
@@ -77,8 +73,6 @@ function Brand() {
       },
       "POST",
     );
-
-    handleClose();
   };
 
   function setEditBrandData(brandData) {
@@ -87,7 +81,6 @@ function Brand() {
     setBrands(newState);
   }
   function setDeleteBrandData(brandData) {
-    console.log(brandData);
     const { id } = brandData;
     const newState = brands.filter((elem) => elem.id !== id);
     setBrands(newState);

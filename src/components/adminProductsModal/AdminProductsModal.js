@@ -85,11 +85,13 @@ function AdminProductsModal({
     }
     value.productImg = productImg;
     console.log(value);
+    value.brandId = +value.brandId;
+    value.categoryId = +value.categoryId;
+
     if (type === "add") {
-      // console.log("add", value);
       onSubmit(value);
     } else {
-      // console.log("edit", value);
+      value.id = data.id;
       onSubmit(value);
     }
   };
@@ -103,227 +105,238 @@ function AdminProductsModal({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className={classes.boxStyle}>
-        <Formik
-          initialValues={{
-            name: type === "add" ? "" : data.name,
-            price: type === "add" ? "" : data.price,
-            discount: type === "add" ? "" : data.discount,
-            description: type === "add" ? "" : data.description,
-            brandId: type === "edit" ? data.brandId : selectBrandData[0].id,
-            categoryId:
-              type === "edit" ? data.categoryId : selectCategoryData[0].id,
-          }}
-          validationSchema={productsValidation}
-          onSubmit={(values) => submitProductForm(values)}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-          }) => (
-            <form onSubmit={handleSubmit}>
-              <h2
-                className={classes.deleteTextStyle}
-                style={{ textTransform: "capitalize" }}
-              >
-                {type}
-              </h2>
-              <div className={classes.mb10}>
-                <Input
-                  name="name"
-                  type="text"
-                  placeholder="Name"
-                  size="large"
-                  borders="square"
-                  state="noFocus"
-                  htmlFor="subject"
-                  value={values.name}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.name && touched.name && errors.name}
-                </div>
-              </div>
-              <div className={classes.mb10}>
-                <Input
-                  name="price"
-                  type="number"
-                  placeholder="Price"
-                  size="large"
-                  borders="square"
-                  state="noFocus"
-                  htmlFor="subject"
-                  value={values.price}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.price && touched.price && errors.price}
-                </div>
-              </div>
-              <div className={classes.mb10}>
-                <Input
-                  name="discount"
-                  type="number"
-                  placeholder="Discount"
-                  size="large"
-                  borders="square"
-                  state="noFocus"
-                  htmlFor="subject"
-                  value={values.discount}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.discount && touched.discount && errors.discount}
-                </div>
-              </div>
-              <div className={classes.mb10}>
-                <Textarea
-                  name="description"
-                  value={values.description}
-                  id="description"
-                  placeholder="Description"
-                  htmlFor="description"
-                  type="standard"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  style={{ marginBottom: 10 }}
-                />
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.description &&
-                    touched.description &&
-                    errors.description}
-                </div>
-              </div>
-              <div className={classes.mb10}>
-                <select
-                  name="brandId"
-                  className={classes.selectStyle}
-                  value={values.brandId}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
+      <Box
+        style={{ width: type === "add" || type === "edit" ? "600px" : "400px" }}
+        className={classes.boxStyle}
+      >
+        {type === "add" || type === "edit" ? (
+          <Formik
+            initialValues={{
+              name: type === "add" ? "" : data.name,
+              price: type === "add" ? "" : data.price,
+              discount: type === "add" ? "" : data.discount,
+              description: type === "add" ? "" : data.description,
+              brandId: type === "edit" ? data.brandId : selectBrandData[0].id,
+              categoryId:
+                type === "edit" ? data.categoryId : selectCategoryData[0].id,
+            }}
+            validationSchema={productsValidation}
+            onSubmit={(values) => submitProductForm(values)}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+            }) => (
+              <form onSubmit={handleSubmit}>
+                <h2
+                  className={classes.deleteTextStyle}
+                  style={{ textTransform: "capitalize" }}
                 >
-                  {selectBrandData.map((elem) => (
-                    <option key={elem.id} value={elem.id}>
-                      {elem.name}
-                    </option>
-                  ))}
-                </select>
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.brandId && touched.brandId && errors.brandId}
+                  {type}
+                </h2>
+                <div className={classes.mb10}>
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder="Name"
+                    size="large"
+                    borders="square"
+                    state="noFocus"
+                    htmlFor="subject"
+                    value={values.name}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <div style={{ color: "#d22d3d" }}>
+                    {errors.name && touched.name && errors.name}
+                  </div>
                 </div>
-              </div>
-              <div className={classes.mb10}>
-                <select
-                  name="categoryId"
-                  className={classes.selectStyle}
-                  value={values.categoryId}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                >
-                  {selectCategoryData.map((elem) => (
-                    <option key={elem.id} value={elem.id}>
-                      {elem.name}
-                    </option>
-                  ))}
-                </select>
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.categoryId && touched.categoryId && errors.categoryId}
+                <div className={classes.mb10}>
+                  <Input
+                    name="price"
+                    type="number"
+                    placeholder="Price"
+                    size="large"
+                    borders="square"
+                    state="noFocus"
+                    htmlFor="subject"
+                    value={values.price}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <div style={{ color: "#d22d3d" }}>
+                    {errors.price && touched.price && errors.price}
+                  </div>
                 </div>
-              </div>
-              {productImg === "" ? (
-                <div style={{ marginBottom: 5 }}>Please select an image.</div>
-              ) : (
-                ""
-              )}
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <FormLabel htmlFor="contained-button-file">
-                    <MuiInput
-                      accept="image/*"
-                      id="contained-button-file"
-                      multiple
-                      type="file"
-                      onChange={(event) => {
-                        setImageUpload(event.target.files[0]);
-                      }}
-                    />
-                    <Button
-                      variant="contained"
-                      component="span"
-                      style={{
-                        backgroundColor: "#24695c",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      Upload Image
-                    </Button>
-                    <div
-                      style={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        width: "130px",
-                      }}
-                    >
-                      {imageUpload ? imageUpload.name : ""}
-                    </div>
-                  </FormLabel>
+                <div className={classes.mb10}>
+                  <Input
+                    name="discount"
+                    type="number"
+                    placeholder="Discount"
+                    size="large"
+                    borders="square"
+                    state="noFocus"
+                    htmlFor="subject"
+                    value={values.discount}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <div style={{ color: "#d22d3d" }}>
+                    {errors.discount && touched.discount && errors.discount}
+                  </div>
                 </div>
-                <div>
-                  {imageLoader ? (
-                    <CircularProgress style={{ color: "#717171" }} />
-                  ) : (
-                    ""
-                  )}
+                <div className={classes.mb10}>
+                  <Textarea
+                    name="description"
+                    value={values.description}
+                    id="description"
+                    placeholder="Description"
+                    htmlFor="description"
+                    type="standard"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    style={{ marginBottom: 10 }}
+                  />
+                  <div style={{ color: "#d22d3d" }}>
+                    {errors.description &&
+                      touched.description &&
+                      errors.description}
+                  </div>
                 </div>
-                <div>
-                  <Button
-                    onClick={() => uploadFile()}
-                    style={{ textTransform: "capitalize" }}
-                    color="secondary"
-                    disableRipple
-                    page="admin"
+                <div className={classes.mb10}>
+                  <select
+                    name="brandId"
+                    className={classes.selectStyle}
+                    value={values.brandId}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
                   >
-                    Upload To Storage
+                    {selectBrandData.map((elem) => (
+                      <option key={elem.id} value={elem.id}>
+                        {elem.name}
+                      </option>
+                    ))}
+                  </select>
+                  <div style={{ color: "#d22d3d" }}>
+                    {errors.brandId && touched.brandId && errors.brandId}
+                  </div>
+                </div>
+                <div className={classes.mb10}>
+                  <select
+                    name="categoryId"
+                    className={classes.selectStyle}
+                    value={values.categoryId}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  >
+                    {selectCategoryData.map((elem) => (
+                      <option key={elem.id} value={elem.id}>
+                        {elem.name}
+                      </option>
+                    ))}
+                  </select>
+                  <div style={{ color: "#d22d3d" }}>
+                    {errors.categoryId &&
+                      touched.categoryId &&
+                      errors.categoryId}
+                  </div>
+                </div>
+                {productImg === "" ? (
+                  <div style={{ marginBottom: 5 }}>Please select an image.</div>
+                ) : (
+                  ""
+                )}
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div>
+                    <FormLabel htmlFor="contained-button-file">
+                      <MuiInput
+                        accept="image/*"
+                        id="contained-button-file"
+                        multiple
+                        type="file"
+                        onChange={(event) => {
+                          setImageUpload(event.target.files[0]);
+                        }}
+                      />
+                      <Button
+                        variant="contained"
+                        component="span"
+                        style={{
+                          backgroundColor: "#24695c",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        Upload Image
+                      </Button>
+                      <div
+                        style={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          width: "130px",
+                        }}
+                      >
+                        {imageUpload ? imageUpload.name : ""}
+                      </div>
+                    </FormLabel>
+                  </div>
+                  <div>
+                    {imageLoader ? (
+                      <CircularProgress style={{ color: "#717171" }} />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div>
+                    <Button
+                      onClick={() => uploadFile()}
+                      style={{ textTransform: "capitalize" }}
+                      color="secondary"
+                      disableRipple
+                      page="admin"
+                    >
+                      Upload To Storage
+                    </Button>
+                  </div>
+                </div>
+
+                {productImg === "" ? (
+                  ""
+                ) : (
+                  <div>
+                    <img
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        objectFit: "contain",
+                      }}
+                      src={productImg}
+                      alt="uploaded"
+                    />
+                  </div>
+                )}
+                <div className={classes.textRight}>
+                  <Button
+                    style={{ marginTop: 20 }}
+                    page="admin"
+                    type="submit"
+                    disableRipple
+                  >
+                    Save
                   </Button>
                 </div>
-              </div>
-
-              {productImg === "" ? (
-                ""
-              ) : (
-                <div>
-                  <img
-                    style={{
-                      width: "200px",
-                      height: "200px",
-                      objectFit: "contain",
-                    }}
-                    src={productImg}
-                    alt="uploaded"
-                  />
-                </div>
-              )}
-              <div className={classes.textRight}>
-                <Button
-                  style={{ marginTop: 20 }}
-                  page="admin"
-                  type="submit"
-                  disableRipple
-                >
-                  Save
-                </Button>
-              </div>
-            </form>
-          )}
-        </Formik>
+              </form>
+            )}
+          </Formik>
+        ) : (
+          ""
+        )}
         {type === "delete" ? (
           <>
             <Typography

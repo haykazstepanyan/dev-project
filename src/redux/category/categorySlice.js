@@ -17,14 +17,14 @@ const categorySlice = createSlice({
       state.loading = true;
     },
     [getCategories.fulfilled]: (state, { payload }) => {
-      state.categories = payload.data.categories;
+      state.categories = payload.data.data;
       state.loading = false;
     },
     [getCategories.rejected]: (state) => {
       state.loading = false;
     },
     [addCategories.fulfilled]: (state, { payload }) => {
-      state.categories.push(payload.category.data);
+      state.categories.push(payload.data.data);
       state.loading = false;
     },
     [deleteCategories.fulfilled]: (state, { payload }) => {

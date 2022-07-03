@@ -60,6 +60,7 @@ function Shop() {
     if (defaultMaxValue) {
       setPriceSliderValues((prevState) => [prevState[0], defaultMaxValue]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -80,7 +81,7 @@ function Shop() {
     data: products,
     error: productsError,
     loading: productsLoading,
-  } = useFetch(`/products/getShopProducts${window.location.search}`);
+  } = useFetch(`/products/getShopProducts/shop${window.location.search}`);
 
   const {
     data: highestPrice,
@@ -102,6 +103,7 @@ function Shop() {
       ]);
       dispatch(setLoader({ key: "getHighestPrice" }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, highestPrice, highestPriceError]);
 
   useEffect(() => {

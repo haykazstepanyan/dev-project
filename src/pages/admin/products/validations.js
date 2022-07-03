@@ -19,7 +19,9 @@ export default {
       .positive()
       .integer()
       .required("Please write a valid price."),
-    discount: Yup.number().required().integer(),
-    // productImg: Yup.string().url().required(),
+    discount: Yup.number().test(
+      "The number must be greater or equal to 0",
+      (value) => value >= 0,
+    ),
   }),
 };

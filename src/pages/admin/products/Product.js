@@ -1,60 +1,28 @@
 import { useState, useEffect } from "react";
 import { Container } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../../components/pagination/Pagination";
 import Button from "../../../components/button/Button";
 import AdminProductsTable from "../../../components/adminProductsTable/AdminProductsTable";
 import AdminProductsModal from "../../../components/adminProductsModal/AdminProductsModal";
-import { getCategories } from "../../../redux/category/actions";
-import {
-  addProducts,
-  getProductsCount,
-  getProductsPagination,
-} from "../../../redux/product/actions";
-import { setLoader } from "../../../redux/app/appSlice";
+import { setSnackbar } from "../../../redux/app/appSlice";
 import useFetch from "../../../hooks/useFetch";
+import useLazyFetch from "../../../hooks/useLazyFetch";
 
 export default function Product() {
   const [open, setOpen] = useState(false);
-  const [page, setPage] = useState(1);
-  const products = useSelector((state) => state.products.paginationProducts);
-  const productsLength = useSelector((state) => state.products.productsLength);
-  const categories = useSelector((state) => state.categories);
-
+  const [productsData, setProductsData] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState(+searchParams.get("page") || 1);
+  const { data: brands, error: brandsError } = useFetch("/brands");
+  const { data: categories, error: categoriesError } = useFetch("/categories");
   const {
-    data: brands,
-    error: brandsError,
-    loading: brandsLoading,
-  } = useFetch("/brands");
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProductsCount());
-    dispatch(getCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (brandsLoading) {
-      dispatch(setLoader({ key: "getAdminBrands" }));
-    }
-  }, [dispatch, brandsLoading]);
-
-  useEffect(() => {
-    if (brands?.data || brandsError) {
-      dispatch(setLoader({ key: "getAdminBrands" }));
-    }
-  }, [dispatch, brands, brandsError]);
-
-  useEffect(() => {
-    dispatch(getProductsPagination({ page }));
-  }, [dispatch, page]);
-
-  const gotoPage = (_, pageNum) => {
-    console.log("pageNum - ", pageNum);
-    setPage(pageNum);
-  };
+    data: addProductData,
+    error: addProductError,
+    lazyRefetch: addProduct,
+  } = useLazyFetch();
 
   const handleClose = () => {
     setOpen(false);
@@ -62,17 +30,80 @@ export default function Product() {
   const handleOpen = () => {
     setOpen(true);
   };
-  const addData = (value) => {
-    // console.log("addData", value);
-    dispatch(addProducts(value));
 
-    // value.productImg = "https://fontawesome.com/v5/icons/trash?s=solid";
-    // console.log(value);
-    // productsValidation.isValid(value).then((err, valid) => {
-    //   console.log(err);
-    //   console.log(valid);
-    // });
+  const {
+    data: products,
+    error: productsError,
+    refetch: productFetch,
+  } = useFetch(`/products/getShopProducts/admin${window.location.search}`);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (brandsError || productsError || categoriesError || addProductError) {
+      dispatch(
+        setSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+    }
+  }, [dispatch, brandsError, productsError, categoriesError, addProductError]);
+
+  const gotoPage = (_, pageNum) => {
+    setPage(pageNum);
+    searchParams.delete("page");
+    searchParams.append("page", pageNum);
+    setSearchParams(searchParams);
   };
+
+  useEffect(() => {
+    if (addProductData?.data) {
+      setProductsData((prev) => [...prev, addProductData.data]);
+
+      dispatch(
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Product is added successfully!",
+        }),
+      );
+      productFetch();
+      handleClose();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addProductData, dispatch]);
+
+  useEffect(() => {
+    if (products?.data) {
+      setProductsData(products.data);
+    }
+  }, [products]);
+
+  const addData = (value) => {
+    console.log("addData", value);
+
+    addProduct(
+      "/products/product",
+      {
+        body: JSON.stringify(value),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      "POST",
+    );
+  };
+
+  function setEditProductData(value) {
+    console.log("editData", value);
+
+    const { id } = value;
+    const newState = productsData.map((elem) =>
+      elem.id === id ? value : elem,
+    );
+    setProductsData(newState);
+  }
+
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
@@ -87,24 +118,27 @@ export default function Product() {
             <AddIcon />
           </Button>
         </div>
-        {products && categories.categories && brands.brands && (
+        {productsData && categories?.data && brands?.data && (
           <AdminProductsTable
-            selectCategoryData={categories.categories}
-            selectBrandData={brands.brands}
+            setEditProductData={(value) => setEditProductData(value)}
+            selectCategoryData={categories.data}
+            selectBrandData={brands.data}
             type="product"
-            tableData={products}
+            tableData={productsData}
           />
         )}
-        <Pagination
-          count={Math.ceil(productsLength / 9)}
-          page={page}
-          onChange={gotoPage}
-        />
+        {products?.dataCount ? (
+          <Pagination
+            count={Math.ceil((products?.dataCount || 0) / 9)}
+            page={page}
+            onChange={gotoPage}
+          />
+        ) : null}
       </Container>
-      {open && categories.categories && brands.brands ? (
+      {open && productsData && categories?.data && brands?.data ? (
         <AdminProductsModal
-          selectCategoryData={categories.categories}
-          selectBrandData={brands.brands}
+          selectCategoryData={categories.data}
+          selectBrandData={brands.data}
           type="add"
           onClose={() => handleClose()}
           open={open}

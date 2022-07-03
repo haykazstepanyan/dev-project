@@ -15,72 +15,26 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
-// import { deleteBrands, updateBrands } from "../../redux/brand/actions";
 import { adminTableStyles } from "./styles";
-import {
-  deleteCategories,
-  updateCategories,
-} from "../../redux/category/actions";
+// import {
+// deleteCategories,
+// updateCategories,
+// } from "../../redux/category/actions";
 import useLazyFetch from "../../hooks/useLazyFetch";
+import { setSnackbar } from "../../redux/app/appSlice";
 
 function AdminMainTable({
   tableData,
   type,
   setEditBrandData,
   setDeleteBrandData,
+  setEditCategoryData,
+  setDeleteCategoryData,
 }) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const dispatch = useDispatch();
-
-  const {
-    data: editBrandData,
-    error: editBrandError,
-    loading: editBrandLoading,
-    lazyRefetch: editBrand,
-  } = useLazyFetch();
-  const {
-    data: deleteBrandData,
-    error: deleteBrandError,
-    loading: deleteBrandLoading,
-    lazyRefetch: deleteBrand,
-  } = useLazyFetch();
-
-  useEffect(() => {
-    if (editBrandData) {
-      setEditBrandData(editBrandData);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editBrandData]);
-
-  useEffect(() => {
-    if (editBrandError) {
-      console.log("error", editBrandError);
-    }
-  }, [editBrandError]);
-  useEffect(() => {
-    if (editBrandLoading) {
-      console.log("loading", editBrandLoading);
-    }
-  }, [editBrandLoading]);
-  useEffect(() => {
-    if (deleteBrandData) {
-      setDeleteBrandData(deleteBrandData);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteBrandData]);
-
-  useEffect(() => {
-    if (deleteBrandError) {
-      console.log("error", deleteBrandError);
-    }
-  }, [deleteBrandError]);
-  useEffect(() => {
-    if (deleteBrandLoading) {
-      console.log("loading", deleteBrandLoading);
-    }
-  }, [deleteBrandLoading]);
 
   const filterById = (id) => {
     const rowData = tableData.filter((elem) => elem.id === id);
@@ -102,10 +56,87 @@ function AdminMainTable({
     setOpenDelete(false);
   };
 
+  const {
+    data: editBrandData,
+    error: editBrandError,
+    lazyRefetch: editBrand,
+  } = useLazyFetch();
+
+  const {
+    data: deleteBrandData,
+    error: deleteBrandError,
+    lazyRefetch: deleteBrand,
+  } = useLazyFetch();
+  const {
+    data: editCategoryData,
+    error: editCategoryError,
+    lazyRefetch: editCategory,
+  } = useLazyFetch();
+
+  const {
+    data: deleteCategoryData,
+    error: deleteCategoryError,
+    lazyRefetch: deleteCategory,
+  } = useLazyFetch();
+
+  useEffect(() => {
+    if (editBrandData) {
+      setEditBrandData(editBrandData);
+      handleClose();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editBrandData]);
+
+  useEffect(() => {
+    if (editCategoryData) {
+      setEditCategoryData(editCategoryData);
+      handleClose();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editCategoryData]);
+
+  useEffect(() => {
+    if (editBrandError || deleteBrandError) {
+      dispatch(
+        setSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+      console.log("error", editBrandError);
+    }
+  }, [editBrandError, deleteBrandError, dispatch]);
+
+  useEffect(() => {
+    if (editCategoryError || deleteCategoryError) {
+      dispatch(
+        setSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+      console.log("error", editCategoryError);
+    }
+  }, [editCategoryError, deleteCategoryError, dispatch]);
+
+  useEffect(() => {
+    if (deleteBrandData) {
+      setDeleteBrandData(deleteBrandData);
+      handleCloseDelete();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deleteBrandData]);
+  useEffect(() => {
+    if (deleteCategoryData) {
+      setDeleteCategoryData(deleteCategoryData);
+      handleCloseDelete();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deleteCategoryData]);
+
   const editData = (value) => {
+    const { id, name } = value;
     if (type === "brand") {
-      console.log(value);
-      const { id, name } = value;
       editBrand(
         `/brands/brand/${id}`,
         {
@@ -116,16 +147,22 @@ function AdminMainTable({
         },
         "PATCH",
       );
-      // dispatch(updateBrands(value));
     } else {
-      dispatch(updateCategories(value));
+      editCategory(
+        `/categories/category/${id}`,
+        {
+          body: JSON.stringify({ name }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        "PATCH",
+      );
     }
-    handleClose();
   };
   const deleteData = (value) => {
     if (Number.isInteger(value)) {
       if (type === "brand") {
-        console.log("delete", value);
         deleteBrand(
           `/brands/brand/${value}`,
           {
@@ -136,9 +173,16 @@ function AdminMainTable({
           "DELETE",
         );
       } else {
-        dispatch(deleteCategories(value));
+        deleteCategory(
+          `/categories/category/${value}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+          "DELETE",
+        );
       }
-      handleCloseDelete();
     }
   };
 
@@ -223,6 +267,8 @@ AdminMainTable.propTypes = {
     .isRequired,
   setEditBrandData: PropTypes.func,
   setDeleteBrandData: PropTypes.func,
+  setEditCategoryData: PropTypes.func,
+  setDeleteCategoryData: PropTypes.func,
 };
 
 export default AdminMainTable;
