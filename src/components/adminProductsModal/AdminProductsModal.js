@@ -84,7 +84,6 @@ function AdminProductsModal({
       return;
     }
     value.productImg = productImg;
-    console.log(value);
     value.brandId = +value.brandId;
     value.categoryId = +value.categoryId;
 

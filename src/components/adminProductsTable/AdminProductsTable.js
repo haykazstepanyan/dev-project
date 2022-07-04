@@ -24,6 +24,7 @@ function AdminProductsTable({
   selectBrandData,
   selectCategoryData,
   setEditProductData,
+  setDeleteProductData,
 }) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
@@ -34,6 +35,12 @@ function AdminProductsTable({
     data: editProductData,
     error: editProductError,
     lazyRefetch: editProduct,
+  } = useLazyFetch();
+
+  const {
+    data: deleteProductData,
+    error: deleteProductError,
+    lazyRefetch: deleteProduct,
   } = useLazyFetch();
 
   const filterById = (id) => {
@@ -65,16 +72,23 @@ function AdminProductsTable({
   }, [editProductData]);
 
   useEffect(() => {
-    if (editProductError) {
+    if (deleteProductData) {
+      setDeleteProductData(deleteProductData);
+      handleCloseDelete();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deleteProductData]);
+
+  useEffect(() => {
+    if (editProductError || deleteProductError) {
       dispatch(
         setSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),
       );
-      console.log("error", editProductError);
     }
-  }, [editProductError, dispatch]);
+  }, [editProductError, dispatch, deleteProductError]);
 
   const editData = (value) => {
     const { id } = value;
@@ -90,11 +104,17 @@ function AdminProductsTable({
       },
       "PATCH",
     );
-
-    // console.log(value);
   };
   const deleteData = (value) => {
-    console.log(value);
+    deleteProduct(
+      `/products/product/${value}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      "DELETE",
+    );
   };
 
   const classes = adminTableStyles();
@@ -210,6 +230,7 @@ AdminProductsTable.propTypes = {
   selectCategoryData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
   setEditProductData: PropTypes.func,
+  setDeleteProductData: PropTypes.func,
 };
 
 export default AdminProductsTable;

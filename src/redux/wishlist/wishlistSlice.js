@@ -22,7 +22,6 @@ const wishlistSlice = createSlice({
         state.wishlistData = payload.wishlist;
       }
       state.loading = false;
-      console.log("wishlist", payload);
     },
     [getWishlistData.rejected]: (state) => {
       state.loading = true;

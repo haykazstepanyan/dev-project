@@ -103,7 +103,6 @@ function AdminMainTable({
           snackbarMessage: "Oops! Something went wrong!",
         }),
       );
-      console.log("error", editBrandError);
     }
   }, [editBrandError, deleteBrandError, dispatch]);
 
@@ -115,7 +114,6 @@ function AdminMainTable({
           snackbarMessage: "Oops! Something went wrong!",
         }),
       );
-      console.log("error", editCategoryError);
     }
   }, [editCategoryError, deleteCategoryError, dispatch]);
 

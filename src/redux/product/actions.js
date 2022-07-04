@@ -82,8 +82,6 @@ export const addProducts = createAsyncThunk(
         "POST",
       );
 
-      console.log("response", response);
-
       if (response.result === "error") {
         dispatch(
           setSnackbar({

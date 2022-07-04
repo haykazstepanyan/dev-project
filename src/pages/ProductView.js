@@ -60,7 +60,6 @@ function Product() {
     }
     setIsAdded(!isAdded);
   };
-  console.log(productData?.data);
 
   const { name, price, discount, description, category, productImg } =
     productData?.data || {};

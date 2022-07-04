@@ -75,8 +75,6 @@ export default function Category() {
     }
   }, [addCategoryError, categoriesError, dispatch]);
 
-  console.log("categories", categories);
-
   const addData = (value) => {
     const categoryData = { name: value };
     // dispatch(addCategories(categoryData));
