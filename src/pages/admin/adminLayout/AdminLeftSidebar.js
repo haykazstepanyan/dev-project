@@ -16,7 +16,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { adminLayoutStyles } from "./styles";
 
 export default function AdminLeftSidebar() {
-  const userData = useSelector((state) => state.auth.userData);
+  const userData = useSelector((state) => state.auth);
 
   const classes = adminLayoutStyles();
   return (
