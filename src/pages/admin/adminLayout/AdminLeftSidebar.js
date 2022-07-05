@@ -7,13 +7,17 @@ import {
   Avatar,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux/es/exports";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import CategoryIcon from "@mui/icons-material/Category";
 import AppleIcon from "@mui/icons-material/Apple";
 import EmailIcon from "@mui/icons-material/Email";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { adminLayoutStyles } from "./styles";
 
 export default function AdminLeftSidebar() {
+  const userData = useSelector((state) => state.auth.userData);
+
   const classes = adminLayoutStyles();
   return (
     <nav className={classes.leftSidebar}>
@@ -101,6 +105,29 @@ export default function AdminLeftSidebar() {
             </ListItemButton>
           </ListItem>
         </NavLink>
+        {userData.role === "MAIN_ADMIN" ? (
+          <NavLink
+            to="user"
+            className={(data) =>
+              `${
+                data.isActive
+                  ? classes.activeLink
+                  : `${classes.linkStyle} notActive`
+              }`
+            }
+          >
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Users" />
+              </ListItemButton>
+            </ListItem>
+          </NavLink>
+        ) : (
+          ""
+        )}
       </List>
     </nav>
   );

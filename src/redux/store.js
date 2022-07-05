@@ -4,6 +4,7 @@ import authSlice from "./auth/authSlice";
 import brandSlice from "./brand/brandSlice";
 import productSlice from "./product/productSlice";
 import categorySlice from "./category/categorySlice";
+import userSlice from "./users/userSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     brands: brandSlice.reducer,
     products: productSlice.reducer,
     categories: categorySlice.reducer,
+    users: userSlice.reducer,
   },
 });
 

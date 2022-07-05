@@ -69,7 +69,7 @@ const detailsStyles = createUseStyles({
     marginBottom: "20px",
     width: "100%",
     "& input": {
-      height: "40px",
+      height: "50px",
       maxWidth: "100%",
       padding: [0, 20],
       width: "100%",
