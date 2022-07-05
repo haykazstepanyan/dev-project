@@ -67,7 +67,7 @@ function AccountDetails() {
           </div>
           <div className={classes.inputContainer}>
             <TextField
-              id="outlined-basic"
+              id="outlined-basic1"
               variant="outlined"
               label="Last Name"
               placeholder={lastName}
@@ -76,7 +76,7 @@ function AccountDetails() {
           </div>
           <div className={classes.inputContainer}>
             <TextField
-              id="outlined-basic"
+              id="outlined-basic2"
               variant="outlined"
               label="Email"
               placeholder={email}
@@ -93,7 +93,7 @@ function AccountDetails() {
           </div>
           <div className={classes.inputContainer}>
             <TextField
-              id="outlined-password-input"
+              id="outlined-password-input1"
               label="Confirm Password"
               type="password"
               onChange={(e) => setPassword(e.target.value)}
