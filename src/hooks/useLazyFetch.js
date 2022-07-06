@@ -24,7 +24,7 @@ const useLazyFetch = () => {
       return result;
     } catch (err) {
       setError(err.message);
-      return err;
+      return undefined;
     } finally {
       setLoading(false);
     }

@@ -6,38 +6,32 @@ const useFetch = (url, options, method = "GET") => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const refetch = useCallback(
-    async (refetchData, refetchURL = url) => {
-      setLoading(true);
-      setData(null);
-      setError(null);
+  const refetch = useCallback(async () => {
+    setLoading(true);
+    setData(null);
+    setError(null);
 
-      try {
-        if (refetchData) {
-          options.body = JSON.stringify(refetchData);
-        }
-        const response = await fetch(`${BASE_URL}${refetchURL}`, {
-          credentials: "include",
-          method,
-          ...(options && {}),
-        });
+    try {
+      const response = await fetch(`${BASE_URL}${url}`, {
+        credentials: "include",
+        method,
+        ...(options || {}),
+      });
 
-        if (!response.ok) {
-          const errText = await response.text();
-          throw new Error(errText);
-        }
-        const result = await response.json();
-        setData(result);
-        return result;
-      } catch (err) {
-        setError(err.message);
-        return err;
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(errText);
       }
-    },
-    [url, options, method],
-  );
+      const result = await response.json();
+      setData(result);
+      return result;
+    } catch (err) {
+      setError(err.message);
+      return undefined;
+    } finally {
+      setLoading(false);
+    }
+  }, [url, options, method]);
   useEffect(() => {
     refetch();
   }, [refetch]);

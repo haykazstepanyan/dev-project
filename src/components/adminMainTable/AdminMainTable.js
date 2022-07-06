@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Table as MuiTable,
@@ -12,17 +13,20 @@ import { useDispatch } from "react-redux";
 import SettingsIcon from "@mui/icons-material/Settings";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
-import { deleteBrands, updateBrands } from "../../redux/brand/actions";
 import { adminTableStyles } from "./styles";
-import {
-  deleteCategories,
-  updateCategories,
-} from "../../redux/category/actions";
+import useLazyFetch from "../../hooks/useLazyFetch";
+import { setSnackbar } from "../../redux/app/appSlice";
 
-function AdminMainTable({ tableData, type }) {
+function AdminMainTable({
+  tableData,
+  type,
+  setEditBrandData,
+  setDeleteBrandData,
+  setEditCategoryData,
+  setDeleteCategoryData,
+}) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -48,22 +52,117 @@ function AdminMainTable({ tableData, type }) {
     setOpenDelete(false);
   };
 
-  const editData = (value) => {
-    if (type === "brand") {
-      dispatch(updateBrands(value));
-    } else {
-      dispatch(updateCategories(value));
+  const { error: editBrandError, lazyRefetch: editBrand } = useLazyFetch();
+  const { error: deleteBrandError, lazyRefetch: deleteBrand } = useLazyFetch();
+  const { error: editCategoryError, lazyRefetch: editCategory } =
+    useLazyFetch();
+
+  const { error: deleteCategoryError, lazyRefetch: deleteCategory } =
+    useLazyFetch();
+
+  useEffect(() => {
+    if (editBrandError || deleteBrandError) {
+      dispatch(
+        setSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
     }
-    handleClose();
+  }, [editBrandError, deleteBrandError, dispatch]);
+
+  useEffect(() => {
+    if (editCategoryError || deleteCategoryError) {
+      dispatch(
+        setSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+    }
+  }, [editCategoryError, deleteCategoryError, dispatch]);
+
+  const editData = (value) => {
+    const { id, name } = value;
+    if (type === "brand") {
+      editBrand(
+        `/brands/brand/${id}`,
+        {
+          body: JSON.stringify({ name }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        "PATCH",
+      ).then((e) => {
+        if (e) {
+          setEditBrandData(e);
+          handleClose();
+        }
+      });
+    } else {
+      editCategory(
+        `/categories/category/${id}`,
+        {
+          body: JSON.stringify({ name }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        "PATCH",
+      ).then((e) => {
+        if (e) {
+          setEditCategoryData(e);
+          handleClose();
+        }
+      });
+    }
   };
   const deleteData = (value) => {
     if (Number.isInteger(value)) {
       if (type === "brand") {
-        dispatch(deleteBrands(value));
+        deleteBrand(
+          `/brands/brand/${value}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+          "DELETE",
+        ).then((e) => {
+          setDeleteBrandData(e);
+
+          dispatch(
+            setSnackbar({
+              snackbarType: "success",
+              snackbarMessage: "Brand is successfully deleted!",
+            }),
+          );
+
+          handleCloseDelete();
+        });
       } else {
-        dispatch(deleteCategories(value));
+        deleteCategory(
+          `/categories/category/${value}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+          "DELETE",
+        ).then((e) => {
+          setDeleteCategoryData(e);
+
+          dispatch(
+            setSnackbar({
+              snackbarType: "success",
+              snackbarMessage: "Category is successfully deleted!",
+            }),
+          );
+
+          handleCloseDelete();
+        });
       }
-      handleCloseDelete();
     }
   };
 
@@ -146,6 +245,10 @@ AdminMainTable.propTypes = {
   type: PropTypes.string,
   tableData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
+  setEditBrandData: PropTypes.func,
+  setDeleteBrandData: PropTypes.func,
+  setEditCategoryData: PropTypes.func,
+  setDeleteCategoryData: PropTypes.func,
 };
 
 export default AdminMainTable;

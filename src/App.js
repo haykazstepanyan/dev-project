@@ -33,7 +33,6 @@ function App() {
   }, [dispatch]);
 
   documentStyles();
-  // console.log(snackbar);
   return (
     <>
       {!!loading.length && <Loader />}

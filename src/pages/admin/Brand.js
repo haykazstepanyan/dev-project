@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { Container } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
-// import { addBrands } from "../../redux/brand/actions";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
 import useFetch from "../../hooks/useFetch";
@@ -12,6 +11,7 @@ import { setSnackbar } from "../../redux/app/appSlice";
 
 function Brand() {
   const [open, setOpen] = useState(false);
+  const [brands, setBrands] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -19,40 +19,8 @@ function Brand() {
   const {
     data: addBrandData,
     error: addBrandError,
-    loading: addBrandLoading,
     lazyRefetch: addBrand,
   } = useLazyFetch();
-
-  console.log(addBrandData);
-
-  useEffect(() => {
-    if (addBrandData) {
-      console.log("data", addBrandData);
-    }
-  }, [addBrandData]);
-  useEffect(() => {
-    if (addBrandError) {
-      console.log("error", addBrandError);
-    }
-  }, [addBrandError]);
-  useEffect(() => {
-    if (addBrandLoading) {
-      console.log("loading", addBrandLoading);
-    }
-  }, [addBrandLoading]);
-
-  // console.log("brandsData", brandsData?.data);
-
-  useEffect(() => {
-    if (brandsError) {
-      dispatch(
-        setSnackbar({
-          snackbarType: "error",
-          snackbarMessage: "Oops! Something went wrong!",
-        }),
-      );
-    }
-  }, [dispatch, brandsError]);
 
   const handleClose = () => {
     setOpen(false);
@@ -60,6 +28,38 @@ function Brand() {
   const handleOpen = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    if (addBrandData?.data) {
+      setBrands((prev) => [...prev, addBrandData.data]);
+
+      dispatch(
+        setSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Brand is added successfully!",
+        }),
+      );
+      handleClose();
+    }
+  }, [addBrandData, dispatch]);
+
+  useEffect(() => {
+    if (brandsData) {
+      setBrands(brandsData.data);
+    }
+  }, [brandsData]);
+
+  useEffect(() => {
+    if (addBrandError || brandsError) {
+      dispatch(
+        setSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+    }
+  }, [addBrandError, brandsError, dispatch]);
+
   const addData = (value) => {
     const brandData = { name: value };
 
@@ -73,10 +73,18 @@ function Brand() {
       },
       "POST",
     );
-
-    handleClose();
   };
 
+  function setEditBrandData(brandData) {
+    const { id } = brandData;
+    const newState = brands.map((elem) => (elem.id === id ? brandData : elem));
+    setBrands(newState);
+  }
+  function setDeleteBrandData(brandData) {
+    const { id } = brandData;
+    const newState = brands.filter((elem) => elem.id !== id);
+    setBrands(newState);
+  }
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
@@ -91,8 +99,13 @@ function Brand() {
             <AddIcon />
           </Button>
         </div>
-        {brandsData?.data && (
-          <AdminMainTable type="brand" tableData={brandsData?.data} />
+        {brands && (
+          <AdminMainTable
+            setEditBrandData={(value) => setEditBrandData(value)}
+            setDeleteBrandData={(value) => setDeleteBrandData(value)}
+            type="brand"
+            tableData={brands}
+          />
         )}
       </Container>
       {open ? (

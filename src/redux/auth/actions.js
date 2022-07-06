@@ -143,7 +143,6 @@ export const signIn = createAsyncThunk(
             }),
           );
         }
-        // console.log("ssss", result);
         throw new Error();
       }
 
