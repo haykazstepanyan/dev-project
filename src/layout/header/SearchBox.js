@@ -27,17 +27,16 @@ function SearchBox({ distance }) {
     setSearchValue(e.target.value);
   };
   const handleSearch = () => {
-    if (searchValue === "") {
-      searchParams.delete("keyword");
-    } else {
+    searchParams.delete("category");
+    searchParams.delete("keyword");
+    if (searchValue) {
       searchParams.set("keyword", searchValue);
     }
+    if (category.id) {
+      searchParams.set("category", category.id);
+    }
     setSearchParams(searchParams);
-    navigate(
-      `/shop${window.location.search || "?"}${
-        category.id ? `category=${category.id}` : ""
-      }`,
-    );
+    navigate(`/shop${window.location.search}`);
   };
 
   return (
