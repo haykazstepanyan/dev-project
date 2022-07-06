@@ -74,8 +74,8 @@ function Shop() {
     data: products,
     error: productsError,
     loading: productsLoading,
-  } = useFetch(`/products/getShopProducts${window.location.search}`);
-  console.log(products);
+  } = useFetch(`/products/getShopProducts/shop${window.location.search}`);
+
   const {
     data: highestPrice,
     error: highestPriceError,
