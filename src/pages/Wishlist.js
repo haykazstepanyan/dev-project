@@ -1,34 +1,94 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Container } from "@mui/material";
 import Table from "../components/table/Table";
 import Banner from "../components/common/Banner";
 import { globalStyles } from "../components/styles/styles";
-import { getWishlistData } from "../redux/wishlist/actions";
-import { deleteItemFromWishlist } from "../redux/wishlist/actions";
+import useFetch from "../hooks/useFetch";
+import { removeLoader, showLoader } from "../redux/app/appSlice";
+import NoData from "../components/common/NoData";
+import useLazyFetch from "../hooks/useLazyFetch";
 
 export default function Wishlist() {
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.wishlist.wishlistData);
   const globalClasses = globalStyles();
 
-  useEffect(() => {
-    dispatch(getWishlistData());
-  }, [dispatch]);
+  const {
+    data: wishlist,
+    loading: wishlistLoading,
+    refetch: wishlistRefetch,
+  } = useFetch("/wishlist/getWishlist");
 
-  const deleteFromWishlist = (event, productId) => {
-    dispatch(deleteItemFromWishlist({ productId }));
+  const {
+    data: wishlistDeleteData,
+    loading: wishlistDeleteLoading,
+    lazyRefetch: wishlistLazyRefetch,
+  } = useLazyFetch();
+
+  useEffect(() => {
+    if (wishlistLoading) {
+      dispatch(
+        showLoader({
+          key: "wishlist/getWishlist",
+        }),
+      );
+    }
+  }, [dispatch, wishlistLoading]);
+
+  useEffect(() => {
+    if (wishlist) {
+      dispatch(
+        removeLoader({
+          key: "wishlist/getWishlist",
+        }),
+      );
+    }
+  }, [dispatch, wishlist]);
+
+  useEffect(() => {
+    if (wishlistDeleteLoading) {
+      dispatch(
+        showLoader({
+          key: "wishlist/deleteWishlist",
+        }),
+      );
+    }
+  }, [dispatch, wishlistDeleteLoading]);
+
+  useEffect(() => {
+    if (wishlistDeleteData) {
+      dispatch(
+        removeLoader({
+          key: "wishlist/deleteWishlist",
+        }),
+      );
+    }
+  }, [dispatch, wishlistDeleteData]);
+
+  const handleDeleteWishlist = (id) => {
+    wishlistLazyRefetch(`/wishlist/delete/${id}`, null, "DELETE").then(
+      (result) => {
+        if (result.data.id) {
+          wishlistRefetch();
+        }
+      },
+    );
   };
 
   return (
     <>
       <Banner name="Wishlist" />
       <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
-        <Table
-          type="wishlist"
-          tableData={wishlist || []}
-          deleteProduct={deleteFromWishlist}
-        />
+        {wishlist &&
+          (wishlist.data.length ? (
+            <Table
+              type="wishlist"
+              tableData={wishlist.data}
+              deleteData={handleDeleteWishlist}
+            />
+          ) : (
+            <NoData />
+          ))}
       </Container>
     </>
   );

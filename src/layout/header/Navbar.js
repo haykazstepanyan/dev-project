@@ -1,9 +1,10 @@
+import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import { NAV_LINKS } from "../../constants/constants";
 import { navbarStyles } from "./styles";
 
-function NavBar() {
+function NavBar({ toggleDrawer }) {
   const classes = navbarStyles();
   return (
     <Grid item md={9}>
@@ -11,16 +12,23 @@ function NavBar() {
         <ul className={classes.navList}>
           {NAV_LINKS.map(({ route, name }) => (
             <li className={classes.navListItems} key={name}>
-              <NavLink
-                to={route}
-                className={(data) =>
-                  `${data.isActive ? classes.activeLink : ""} ${
-                    classes.navLinks
-                  }`
-                }
+              <div
+                onClick={toggleDrawer}
+                role="button"
+                tabIndex={0}
+                onKeyDown={toggleDrawer}
               >
-                {name}
-              </NavLink>
+                <NavLink
+                  to={route}
+                  className={(data) =>
+                    `${data.isActive ? classes.activeLink : ""} ${
+                      classes.navLinks
+                    }`
+                  }
+                >
+                  {name}
+                </NavLink>
+              </div>
             </li>
           ))}
         </ul>
@@ -28,5 +36,9 @@ function NavBar() {
     </Grid>
   );
 }
+
+NavBar.propTypes = {
+  toggleDrawer: PropTypes.func,
+};
 
 export default NavBar;

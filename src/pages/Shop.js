@@ -10,8 +10,8 @@ import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import { shopStyles } from "./styles";
 import useFetch from "../hooks/useFetch";
-import { setLoader, setSnackbar } from "../redux/app/appSlice";
-import { getWishlistData } from "../redux/wishlist/actions";
+import { showLoader, removeLoader, setSnackbar } from "../redux/app/appSlice";
+import NoData from "../components/common/NoData";
 
 function Shop() {
   const [selectedBrands, setSelectedBrands] = useState([]);
@@ -22,17 +22,10 @@ function Shop() {
   const [page, setPage] = useState(+searchParams.get("page") || 1);
 
   const dispatch = useDispatch();
+
   const classes = shopStyles();
 
-  const wishlist = useSelector((state) => state.wishlist.wishlistData);
   const categories = useSelector((state) => state.categories.categories);
-
-  // useEffect(() => {
-  //   if (page === 1 && !searchParams.get("page")) {
-  //     searchParams.append("page", 1);
-  //     setSearchParams(searchParams);
-  //   }
-  // }, [page, searchParams, setSearchParams]);
 
   const setInitialBrandCategories = useCallback(() => {
     const defaultBrandParams = searchParams.getAll("brand");
@@ -90,7 +83,7 @@ function Shop() {
 
   useEffect(() => {
     if (highestPriceLoading) {
-      dispatch(setLoader({ key: "getHighestPrice" }));
+      dispatch(showLoader({ key: "getHighestPrice" }));
     }
   }, [dispatch, highestPriceLoading]);
 
@@ -100,7 +93,7 @@ function Shop() {
         prevState[0],
         searchParams.get("max") || highestPrice?.data.price,
       ]);
-      dispatch(setLoader({ key: "getHighestPrice" }));
+      dispatch(removeLoader({ key: "getHighestPrice" }));
     }
   }, [dispatch, highestPrice, highestPriceError]);
 
@@ -117,25 +110,25 @@ function Shop() {
 
   useEffect(() => {
     if (productsLoading) {
-      dispatch(setLoader({ key: "getFilteredProducts" }));
+      dispatch(showLoader({ key: "getFilteredProducts" }));
     }
   }, [dispatch, productsLoading]);
 
   useEffect(() => {
     if (products?.data || productsError) {
-      dispatch(setLoader({ key: "getFilteredProducts" }));
+      dispatch(removeLoader({ key: "getFilteredProducts" }));
     }
   }, [dispatch, products, productsError]);
 
   useEffect(() => {
     if (brandsLoading) {
-      dispatch(setLoader({ key: "getBrands" }));
+      dispatch(showLoader({ key: "getBrands" }));
     }
   }, [dispatch, brandsLoading]);
 
   useEffect(() => {
     if (brands?.data || brandsError) {
-      dispatch(setLoader({ key: "getBrands" }));
+      dispatch(removeLoader({ key: "getBrands" }));
     }
   }, [dispatch, brands, brandsError]);
 
@@ -168,10 +161,6 @@ function Shop() {
     setSearchParams(searchParams);
     setSelectedBrands(newBrands);
   };
-
-  useEffect(() => {
-    dispatch(getWishlistData());
-  }, [dispatch]);
 
   const handleCategoryCheckbox = (id) => {
     const selectedIndex = selectedCategories.indexOf(id);
@@ -233,6 +222,8 @@ function Shop() {
     setPriceSliderValues((prevState) => [prevState[0], +e.target.value]);
   };
 
+  console.log(products?.data);
+
   return (
     <>
       <Banner name="Shop" />
@@ -260,20 +251,24 @@ function Shop() {
             <Grid item md={9}>
               <Grid container className={classes.shopItemContainer}>
                 {products?.data &&
-                  wishlist &&
-                  products.data.map(
-                    ({ id, name, price, productImg, discount }) => (
-                      <Grid item sm={4} key={id} className={classes.shopItem}>
-                        <ProductItem
-                          id={id}
-                          title={name}
-                          image={productImg}
-                          price={price}
-                          discount={discount}
-                        />
-                      </Grid>
-                    ),
-                  )}
+                  (products.data.length ? (
+                    products.data.map(
+                      ({ id, name, price, productImg, discount, wishlist }) => (
+                        <Grid item sm={4} key={id} className={classes.shopItem}>
+                          <ProductItem
+                            id={id}
+                            title={name}
+                            image={productImg}
+                            price={price}
+                            discount={discount}
+                            wishlistId={wishlist[0]?.id}
+                          />
+                        </Grid>
+                      ),
+                    )
+                  ) : (
+                    <NoData />
+                  ))}
               </Grid>
               {products?.dataCount ? (
                 <Pagination

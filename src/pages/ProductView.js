@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Container,
   Grid,
@@ -8,37 +8,66 @@ import {
   Typography,
   Divider,
   TextField,
-  Button,
+  IconButton,
 } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
+import Button from "../components/button";
 import { productViewStyles } from "./styles";
 import useFetch from "../hooks/useFetch";
-
-import {
-  deleteItemFromWishlist,
-  addToWishlist,
-} from "../redux/wishlist/actions";
-import { setSnackbar } from "../redux/app/appSlice";
+import { showLoader, removeLoader, setSnackbar } from "../redux/app/appSlice";
+import useLazyFetch from "../hooks/useLazyFetch";
 
 function Product() {
+  const [isProductLiked, setIsProductLiked] = useState(false);
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.wishlist.wishlistData);
   const { productId } = useParams();
-  const [isAdded, setIsAdded] = useState(false);
+  const navigate = useNavigate();
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const classes = productViewStyles();
 
   const { data: productData, error: productError } = useFetch(
     `/products/getProducts/${productId}`,
   );
 
+  const {
+    data: wishlistChangeData,
+    loading: wishlistChangeLoading,
+    lazyRefetch: wishlistRefetch,
+  } = useLazyFetch();
+
+  const {
+    id,
+    name,
+    price,
+    discount,
+    description,
+    category,
+    productImg,
+    wishlist,
+  } = productData?.data || {};
+
   useEffect(() => {
-    const productInWishlist = wishlist.find(
-      (item) => item.productId === Number(productId),
-    );
-    setIsAdded(productInWishlist);
-  }, [wishlist, productId]);
+    if (wishlistChangeLoading) {
+      dispatch(
+        showLoader({
+          key: "wishlist/change",
+        }),
+      );
+    }
+  }, [dispatch, wishlistChangeLoading]);
+
+  useEffect(() => {
+    if (wishlistChangeData) {
+      dispatch(
+        removeLoader({
+          key: "wishlist/change",
+        }),
+      );
+    }
+  }, [dispatch, wishlistChangeData]);
 
   useEffect(() => {
     if (productError) {
@@ -51,25 +80,65 @@ function Product() {
     }
   }, [productError, dispatch]);
 
-  const handleAddToWishlist = (e) => {
-    e.preventDefault();
-    if (isAdded) {
-      dispatch(deleteItemFromWishlist({ productId }));
-    } else {
-      dispatch(addToWishlist({ productId }));
+  useEffect(() => {
+    if (productData) {
+      setIsProductLiked(
+        productData.data.wishlist && productData.data.wishlist.length,
+      );
     }
-    setIsAdded(!isAdded);
-  };
-  console.log(productData?.data);
+  }, [productData]);
 
-  const { name, price, discount, description, category, productImg } =
-    productData?.data || {};
+  const handleWishlistChange = () => {
+    if (!isAuth) {
+      navigate("../signIn", { replace: true });
+      return;
+    }
+    if (isProductLiked) {
+      wishlistRefetch(
+        `/wishlist/delete/${wishlistChangeData?.data?.id || wishlist[0].id}`,
+        null,
+        "DELETE",
+      ).then((result) => {
+        if (result.data.id) {
+          setIsProductLiked(false);
+        }
+      });
+    } else {
+      wishlistRefetch(
+        "/wishlist/create",
+        {
+          body: JSON.stringify({ productId: id }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        "POST",
+      ).then((result) => {
+        if (result.data.id) {
+          setIsProductLiked(true);
+        }
+      });
+    }
+  };
 
   return (
     productData?.data && (
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className={classes.productContainer}>
+        <IconButton
+          className={classes.goBackIcon}
+          onClick={() => navigate(-1)}
+          disableRipple
+        >
+          <KeyboardBackspaceOutlinedIcon />
+        </IconButton>
         <Grid container alignItems="center">
-          <Grid item md={6} sm={12} padding={10}>
+          <Grid
+            item
+            md={6}
+            sm={12}
+            padding={10}
+            className={classes.productImgContainer}
+          >
             <Box component="div">
               <img src={productImg} alt="some img" style={{ width: "100%" }} />
             </Box>
@@ -84,13 +153,13 @@ function Product() {
               <Box component="div" marginBottom={3}>
                 <Typography>
                   <span className={classes["product_current-price"]}>
-                    £{price}
+                    ${price - (price * discount) / 100}
                   </span>
-                  {!!discount && (
+                  {discount ? (
                     <span className={classes["product_old-price"]}>
-                      £{price + (price * discount) / 100}
+                      ${price}
                     </span>
-                  )}
+                  ) : null}
                 </Typography>
               </Box>
               <Box marginBottom={6}>
@@ -108,16 +177,15 @@ function Product() {
                   InputProps={{ inputProps: { min: 1, max: 10 } }}
                 />
                 <Box sx={{ display: "inline", marginLeft: 3 }}>
-                  <Button variant="contained">Add To Cart</Button>
+                  <Button color="secondary">Add To Cart</Button>
                 </Box>
               </Box>
 
               <Box marginTop={3}>
-                <Button
-                  sx={{ fontSize: 12, cursor: "pointer" }}
-                  onClick={handleAddToWishlist}
-                >
-                  {isAdded ? "-Remove from wishlist" : "+Add to wishlist"}
+                <Button color="info" onClick={handleWishlistChange}>
+                  {isProductLiked
+                    ? "- Remove from wishlist"
+                    : "+ Add to wishlist"}
                 </Button>
               </Box>
               <Box sx={{ marginTop: 3 }}>

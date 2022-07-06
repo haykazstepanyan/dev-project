@@ -14,14 +14,14 @@ const appSlice = createSlice({
     setIsMobileVersion(state, { payload }) {
       state.isMobile = payload.isMobile;
     },
-    setLoader(state, { payload }) {
+    showLoader(state, { payload }) {
+      state.loading.push(payload);
+    },
+    removeLoader(state, { payload }) {
       const loaderIndex = state.loading.findIndex((item) => {
         return item?.key === payload.key;
       });
-
-      if (loaderIndex === -1) {
-        state.loading.push(payload);
-      } else {
+      if (loaderIndex > -1) {
         state.loading.splice(loaderIndex, 1);
       }
     },
@@ -40,7 +40,12 @@ const appSlice = createSlice({
   },
 });
 
-export const { setIsMobileVersion, setLoader, setSnackbar, resetSnackbar } =
-  appSlice.actions;
+export const {
+  setIsMobileVersion,
+  showLoader,
+  removeLoader,
+  setSnackbar,
+  resetSnackbar,
+} = appSlice.actions;
 
 export default appSlice;

@@ -28,8 +28,10 @@ const useFetch = (url, options, method = "GET") => {
         }
         const result = await response.json();
         setData(result);
+        return result;
       } catch (err) {
         setError(err.message);
+        return err;
       } finally {
         setLoading(false);
       }

@@ -77,12 +77,12 @@ function Cart() {
                 <div>
                   <div>
                     <p>Subtotal</p>
-                    <p>£215.00</p>
+                    <p>$215.00</p>
                   </div>
                   <div>
                     <p>Shipping</p>
                     <p>
-                      <span>Flat Rate:</span> £255.00
+                      <span>Flat Rate:</span> $255.00
                     </p>
                   </div>
                   <div
@@ -92,7 +92,7 @@ function Cart() {
                     }}
                   >
                     <p>Total</p>
-                    <p>£215.00</p>
+                    <p>$215.00</p>
                   </div>
                 </div>
                 <div style={{ textAlign: "right" }}>

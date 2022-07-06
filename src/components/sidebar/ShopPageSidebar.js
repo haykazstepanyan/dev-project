@@ -48,7 +48,7 @@ function ShopPageSidebar({
               onClick={filterByPrice}
               disableRipple
             >
-              Filter
+              Apply
             </Button>
           </div>
           <div className={classes.minMaxValues}>

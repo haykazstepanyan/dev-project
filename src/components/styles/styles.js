@@ -58,6 +58,17 @@ const globalStyles = createUseStyles({
       marginBottom: 23,
     },
   },
+  noData: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: [[0, "auto"]],
+    color: colors.black,
+    "& img": {
+      width: 400,
+      height: 225,
+    },
+  },
   textCenter: {
     textAlign: "center",
   },

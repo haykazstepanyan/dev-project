@@ -1,21 +1,22 @@
 import { createUseStyles } from "react-jss";
+import { colors } from "../../constants/constants";
 
 const tableStyles = createUseStyles({
   tableStyle: {
     "& .MuiTableCell-head": {
       textTransform: "capitalize",
-      borderBottom: "3px solid #79a206",
-      borderRight: "1px solid #e1e1e1",
+      borderBottom: `3px solid ${colors.green}`,
+      borderRight: `1px solid ${colors.milky}`,
       fontSize: 16,
       fontWeight: 600,
       padding: 10,
       textAlign: "center",
-      backgroundColor: "#e1e1e1",
+      backgroundColor: colors.milky,
     },
     "& .MuiTableCell-body": {
-      borderBottom: "1px solid #e1e1e1 !important",
-      borderRight: "1px solid #e1e1e1 !important",
-      borderLeft: "1px solid #e1e1e1 !important",
+      borderBottom: `1px solid ${colors.milky} !important`,
+      borderRight: `1px solid ${colors.milky} !important`,
+      borderLeft: `1px solid ${colors.milky} !important`,
       textAlign: "center",
     },
     "& img": {
@@ -27,7 +28,7 @@ const tableStyles = createUseStyles({
       height: "40px",
       padding: "0 5px 0 10px",
       background: "none",
-      border: "1px solid #e1e1e1",
+      border: `1px solid ${colors.milky}`,
     },
     "& .qty-input input:focus": {
       outline: "none",
@@ -37,16 +38,20 @@ const tableStyles = createUseStyles({
       marginRight: "5px",
     },
     "& .price p": {
-      color: "#222222",
+      color: colors.black,
       fontSize: 16,
       fontWeight: 600,
     },
     "& .stockStatus": {
-      color: "#222222",
+      color: colors.black,
       fontSize: 16,
       fontWeight: 500,
     },
     boxShadow: "none !important",
+  },
+  deleteIcon: {
+    color: colors.green,
+    cursor: "pointer",
   },
 });
 

@@ -1,4 +1,4 @@
-import { BASE_URL, WISHLIST_URL } from "../constants/constants";
+import { BASE_URL } from "../constants/constants";
 
 export const fetchData = async (
   urlEndPart,
@@ -39,52 +39,3 @@ export const fetchData = async (
     };
   }
 };
-export async function addToWishlist(userId, productId) {
-  let response;
-  try {
-    response = await fetch(`${WISHLIST_URL}/create/${productId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({
-        userId,
-      }),
-    });
-    return response;
-  } catch (e) {
-    console.log(e.message);
-  }
-  return response;
-}
-
-export async function deleteItemFromWishlist(userId, productId) {
-  let response;
-  try {
-    response = await fetch(`${WISHLIST_URL}/delete/${productId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({
-        userId,
-      }),
-    });
-    return response;
-  } catch (e) {
-    console.log(e.message);
-  }
-  return response;
-}
-
-export async function getWishlistData(userId) {
-  let res;
-  try {
-    const response = await fetch(`${WISHLIST_URL}/getWishlist/${userId}`);
-    res = await response.json();
-    return res;
-  } catch (err) {
-    console.log(err.message);
-  }
-  return res;
-}

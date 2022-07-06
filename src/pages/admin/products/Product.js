@@ -12,7 +12,7 @@ import {
   getProductsCount,
   getProductsPagination,
 } from "../../../redux/product/actions";
-import { setLoader } from "../../../redux/app/appSlice";
+import { showLoader, removeLoader } from "../../../redux/app/appSlice";
 import useFetch from "../../../hooks/useFetch";
 
 export default function Product() {
@@ -37,13 +37,13 @@ export default function Product() {
 
   useEffect(() => {
     if (brandsLoading) {
-      dispatch(setLoader({ key: "getAdminBrands" }));
+      dispatch(showLoader({ key: "getAdminBrands" }));
     }
   }, [dispatch, brandsLoading]);
 
   useEffect(() => {
     if (brands?.data || brandsError) {
-      dispatch(setLoader({ key: "getAdminBrands" }));
+      dispatch(removeLoader({ key: "getAdminBrands" }));
     }
   }, [dispatch, brands, brandsError]);
 

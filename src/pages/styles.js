@@ -501,6 +501,19 @@ const signUpInStyles = createUseStyles({
 });
 
 const productViewStyles = createUseStyles({
+  productContainer: {
+    position: "relative",
+  },
+  goBackIcon: {
+    position: "absolute",
+    top: 40,
+    left: 25,
+    "& svg": {
+      fontSize: 40,
+      color: colors.green,
+      cursor: "pointer",
+    },
+  },
   "container_grid-container": {
     alignItems: "center",
   },

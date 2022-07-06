@@ -18,8 +18,7 @@ export const NAV_LINKS = [
   { route: "/about", name: "About Us" },
 ];
 export const BASE_URL = "http://localhost:5000";
-export const WISHLIST_URL = `${BASE_URL}/wishlist`;
-export const PRODUCTS_URL = `${BASE_URL}/products`;
+
 // --c-blue: #0d6efd;
 // --c-indigo: #6610f2;
 // --c-purple: #6f42c1;

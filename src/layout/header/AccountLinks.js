@@ -11,11 +11,17 @@ import MiniShoppingCart from "../../components/miniShoppingCart";
 import Drawer from "../../components/drawer";
 import Button from "../../components/button";
 import { iconsStyles } from "./styles";
+import useToggle from "../../hooks/useToggle";
 
 function AccountLinks() {
   const [openModal, setOpenModal] = useState(false);
+  const [anchor, setAnchor] = useToggle();
   const role = useSelector((state) => state.auth.role);
   const dispatch = useDispatch();
+
+  const toggleDrawer = () => {
+    setAnchor();
+  };
 
   const classes = iconsStyles();
 
@@ -113,6 +119,8 @@ function AccountLinks() {
         <FavoriteBorderIcon className={classes.icons} />
       </Link>
       <Drawer
+        open={anchor}
+        toggleDrawer={toggleDrawer}
         anchorDirection="right"
         OpenIcon={WorkOutlineIcon}
         outline={false}

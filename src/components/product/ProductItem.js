@@ -1,45 +1,87 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import AddCardIcon from "@mui/icons-material/AddCard";
 import Sale from "./Sale";
 import { productItemStyles } from "./styles";
-import {
-  deleteItemFromWishlist,
-  addToWishlist,
-} from "../../redux/wishlist/actions";
+import useLazyFetch from "../../hooks/useLazyFetch";
+import { removeLoader, showLoader } from "../../redux/app/appSlice";
 
-function ProductItem({ id, title, price, image, discount, isFilled }) {
+function ProductItem({ id, title, price, image, discount, wishlistId }) {
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  const [isProductLiked, setIsProductLiked] = useState(!!wishlistId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  const [filled, setFilled] = useState(isFilled);
   const classes = productItemStyles();
 
-  const handleAddToWishList = (event, productId) => {
-    event.preventDefault();
+  const {
+    data: wishlistChangeData,
+    loading: wishlistChangeLoading,
+    lazyRefetch: wishlistRefetch,
+  } = useLazyFetch();
 
+  useEffect(() => {
+    if (wishlistChangeLoading) {
+      dispatch(
+        showLoader({
+          key: "wishlist/change",
+        }),
+      );
+    }
+  }, [dispatch, wishlistChangeLoading]);
+
+  useEffect(() => {
+    if (wishlistChangeData) {
+      dispatch(
+        removeLoader({
+          key: "wishlist/change",
+        }),
+      );
+    }
+  }, [dispatch, wishlistChangeData]);
+
+  const handleWishlistChange = () => {
     if (!isAuth) {
-      navigate("../signIn", { replace: true });
+      navigate("/signin");
       return;
     }
-    if (filled) {
-      dispatch(deleteItemFromWishlist({ productId }));
+    if (isProductLiked) {
+      wishlistRefetch(
+        `/wishlist/delete/${wishlistChangeData?.data?.id || wishlistId}`,
+        null,
+        "DELETE",
+      ).then((result) => {
+        if (result.data.id) {
+          setIsProductLiked(false);
+        }
+      });
     } else {
-      dispatch(addToWishlist({ productId }));
+      wishlistRefetch(
+        "/wishlist/create",
+        {
+          body: JSON.stringify({ productId: id }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        "POST",
+      ).then((result) => {
+        if (result.data.id) {
+          setIsProductLiked(true);
+        }
+      });
     }
-    setFilled(!filled);
   };
 
   return (
     <Card className={classes.productCard}>
       <Link to={`/product/${id}`}>
-        <CardContent className={classes.cardContent}>
+        <CardMedia component="img" alt={title} height="180" image={image} />
+        <CardContent>
           <Typography gutterBottom className={classes.productName}>
             {title}
           </Typography>
@@ -50,30 +92,15 @@ function ProductItem({ id, title, price, image, discount, isFilled }) {
             {discount ? (
               <span className={classes.productRealPrice}>${price}</span>
             ) : null}
-            <Sale discount={5} />
           </div>
+          <Sale discount={5} />
         </CardContent>
       </Link>
-      <div className={classes.productImgContainer}>
-        <div className={classes.productIcons}>
-          <IconButton
-            className={classes.productIconButton}
-            onClick={(event) => handleAddToWishList(event, id)}
-          >
-            {filled ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
-          </IconButton>
-          <IconButton className={classes.productIconButton}>
-            <AddCardIcon />
-          </IconButton>
-        </div>
-        <CardMedia
-          className={classes.productImg}
-          component="img"
-          alt={title}
-          height="280"
-          image={image}
-        />
-      </div>
+      <span>
+        <IconButton onClick={handleWishlistChange}>
+          {isProductLiked ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
+        </IconButton>
+      </span>
     </Card>
   );
 }
@@ -88,7 +115,7 @@ ProductItem.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   discount: PropTypes.number,
-  isFilled: PropTypes.bool,
+  wishlistId: PropTypes.oneOfType(PropTypes.number, undefined),
 };
 
 export default ProductItem;
