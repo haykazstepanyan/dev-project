@@ -97,12 +97,12 @@ function Table({ type, tableData, deleteData }) {
                   </TableCell>
                   <TableCell component="th" scope="row">
                     <Link to={`/product/${row.productId}`}>
-                      <img src={row.Product.productImg} alt="product" />
+                      <img src={row.product.productImg} alt="product" />
                     </Link>
                   </TableCell>
-                  <TableCell>{row.Product.name}</TableCell>
+                  <TableCell>{row.product.name}</TableCell>
                   <TableCell className="price">
-                    <p>${row.Product.price}</p>
+                    <p>${row.product.price}</p>
                   </TableCell>
                   {type === "wishlist" ? (
                     <TableCell>

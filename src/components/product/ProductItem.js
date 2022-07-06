@@ -87,7 +87,7 @@ function ProductItem({ id, title, price, image, discount, wishlistId }) {
           </Typography>
           <div>
             <span className={classes.productDiscountedPrice}>
-              ${price - (price * discount) / 100}
+              ${parseFloat((price - (price * discount) / 100).toFixed(2))}
             </span>
             {discount ? (
               <span className={classes.productRealPrice}>${price}</span>

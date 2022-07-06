@@ -40,10 +40,7 @@ function App() {
         <ThemeProvider theme={mainTheme}>
           <Routes />
           {(snackbar.type || snackbar.message) && (
-            <>
-              {console.log(snackbar)}
-              <Snackbar type={snackbar.type} message={snackbar.message} />
-            </>
+            <Snackbar type={snackbar.type} message={snackbar.message} />
           )}
         </ThemeProvider>
       </StyledEngineProvider>

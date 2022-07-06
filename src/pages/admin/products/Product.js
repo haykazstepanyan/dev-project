@@ -100,7 +100,6 @@ export default function Product() {
   }
   function setDeleteProductData(value) {
     const { id, productImg } = value;
-    console.log(value);
     const newState = productsData.filter((elem) => elem.id !== id);
     setProductsData(newState);
 
@@ -135,7 +134,7 @@ export default function Product() {
             <AddIcon />
           </Button>
         </div>
-        {productsData && categories?.data && brands?.data && (
+        {productsData && categories?.categories && brands?.data && (
           <AdminProductsTable
             setEditProductData={(value) => setEditProductData(value)}
             setDeleteProductData={(value) => setDeleteProductData(value)}

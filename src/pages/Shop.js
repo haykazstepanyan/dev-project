@@ -224,8 +224,6 @@ function Shop() {
     setPriceSliderValues((prevState) => [prevState[0], +e.target.value]);
   };
 
-  console.log(products?.data);
-
   return (
     <>
       <Banner name="Shop" />

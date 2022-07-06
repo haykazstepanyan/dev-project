@@ -31,7 +31,7 @@ export default function Category() {
 
   useEffect(() => {
     if (categoriesData) {
-      setCategories(categoriesData.data);
+      setCategories(categoriesData.categories);
     }
   }, [categoriesData]);
 
