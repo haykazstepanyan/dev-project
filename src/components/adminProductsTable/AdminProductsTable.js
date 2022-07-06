@@ -31,17 +31,10 @@ function AdminProductsTable({
   const [openDelete, setOpenDelete] = useState(false);
   const dispatch = useDispatch();
 
-  const {
-    data: editProductData,
-    error: editProductError,
-    lazyRefetch: editProduct,
-  } = useLazyFetch();
+  const { error: editProductError, lazyRefetch: editProduct } = useLazyFetch();
 
-  const {
-    data: deleteProductData,
-    error: deleteProductError,
-    lazyRefetch: deleteProduct,
-  } = useLazyFetch();
+  const { error: deleteProductError, lazyRefetch: deleteProduct } =
+    useLazyFetch();
 
   const filterById = (id) => {
     const rowData = tableData.filter((elem) => elem.id === id);
@@ -62,22 +55,6 @@ function AdminProductsTable({
   const handleCloseDelete = () => {
     setOpenDelete(false);
   };
-
-  useEffect(() => {
-    if (editProductData) {
-      setEditProductData(editProductData);
-      handleClose();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editProductData]);
-
-  useEffect(() => {
-    if (deleteProductData) {
-      setDeleteProductData(deleteProductData);
-      handleCloseDelete();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteProductData]);
 
   useEffect(() => {
     if (editProductError || deleteProductError) {
@@ -103,7 +80,12 @@ function AdminProductsTable({
         },
       },
       "PATCH",
-    );
+    ).then((e) => {
+      if (e) {
+        setEditProductData(e);
+        handleClose();
+      }
+    });
   };
   const deleteData = (value) => {
     deleteProduct(
@@ -114,7 +96,12 @@ function AdminProductsTable({
         },
       },
       "DELETE",
-    );
+    ).then((e) => {
+      if (e) {
+        setDeleteProductData(e);
+        handleCloseDelete();
+      }
+    });
   };
 
   const classes = adminTableStyles();

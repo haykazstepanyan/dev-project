@@ -14,7 +14,9 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
   const handleValue = (e) => {
     setInputValue(e.target.value);
   };
-  const editData = () => {
+  const editData = (e) => {
+    e.preventDefault();
+
     const brandData = {
       id: data.id,
       name: inputValue,
@@ -24,7 +26,9 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
   const deleteData = () => {
     onSubmit(data.id);
   };
-  const addData = () => {
+  const addData = (e) => {
+    e.preventDefault();
+
     onSubmit(inputValue);
   };
 
@@ -39,7 +43,7 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
     >
       <Box className={classes.boxStyle}>
         {type === "edit" ? (
-          <>
+          <form onSubmit={(e) => editData(e)}>
             <h2 className={classes.deleteTextStyle}>Edit</h2>
             <Input
               type="text"
@@ -53,7 +57,7 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
             />
             <div className={classes.textRight}>
               <Button
-                onClick={() => editData()}
+                type="submit"
                 style={{ marginTop: 20 }}
                 page="admin"
                 disableRipple
@@ -61,12 +65,12 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
                 Save
               </Button>
             </div>
-          </>
+          </form>
         ) : (
           ""
         )}
         {type === "add" ? (
-          <>
+          <form onSubmit={(e) => addData(e)}>
             <h2 className={classes.deleteTextStyle}>Add</h2>
             <Input
               type="text"
@@ -80,15 +84,16 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
             />
             <div className={classes.textRight}>
               <Button
-                onClick={() => addData()}
+                type="submit"
                 style={{ marginTop: 20 }}
+                letter="capitalize"
                 page="admin"
                 disableRipple
               >
                 Save
               </Button>
             </div>
-          </>
+          </form>
         ) : (
           ""
         )}
@@ -102,6 +107,15 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
               Are you sure?
             </Typography>
             <div className={classes.textRight}>
+              <Button
+                onClick={() => onClose()}
+                style={{ marginTop: 20, marginRight: 10 }}
+                page="admin"
+                letter="capitalize"
+                disableRipple
+              >
+                Cancel
+              </Button>
               <Button
                 onClick={() => deleteData()}
                 style={{ marginTop: 20 }}

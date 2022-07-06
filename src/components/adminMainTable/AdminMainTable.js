@@ -16,10 +16,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
 import { adminTableStyles } from "./styles";
-// import {
-// deleteCategories,
-// updateCategories,
-// } from "../../redux/category/actions";
 import useLazyFetch from "../../hooks/useLazyFetch";
 import { setSnackbar } from "../../redux/app/appSlice";
 
@@ -56,44 +52,13 @@ function AdminMainTable({
     setOpenDelete(false);
   };
 
-  const {
-    data: editBrandData,
-    error: editBrandError,
-    lazyRefetch: editBrand,
-  } = useLazyFetch();
+  const { error: editBrandError, lazyRefetch: editBrand } = useLazyFetch();
+  const { error: deleteBrandError, lazyRefetch: deleteBrand } = useLazyFetch();
+  const { error: editCategoryError, lazyRefetch: editCategory } =
+    useLazyFetch();
 
-  const {
-    data: deleteBrandData,
-    error: deleteBrandError,
-    lazyRefetch: deleteBrand,
-  } = useLazyFetch();
-  const {
-    data: editCategoryData,
-    error: editCategoryError,
-    lazyRefetch: editCategory,
-  } = useLazyFetch();
-
-  const {
-    data: deleteCategoryData,
-    error: deleteCategoryError,
-    lazyRefetch: deleteCategory,
-  } = useLazyFetch();
-
-  useEffect(() => {
-    if (editBrandData) {
-      setEditBrandData(editBrandData);
-      handleClose();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editBrandData]);
-
-  useEffect(() => {
-    if (editCategoryData) {
-      setEditCategoryData(editCategoryData);
-      handleClose();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editCategoryData]);
+  const { error: deleteCategoryError, lazyRefetch: deleteCategory } =
+    useLazyFetch();
 
   useEffect(() => {
     if (editBrandError || deleteBrandError) {
@@ -117,21 +82,6 @@ function AdminMainTable({
     }
   }, [editCategoryError, deleteCategoryError, dispatch]);
 
-  useEffect(() => {
-    if (deleteBrandData) {
-      setDeleteBrandData(deleteBrandData);
-      handleCloseDelete();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteBrandData]);
-  useEffect(() => {
-    if (deleteCategoryData) {
-      setDeleteCategoryData(deleteCategoryData);
-      handleCloseDelete();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteCategoryData]);
-
   const editData = (value) => {
     const { id, name } = value;
     if (type === "brand") {
@@ -144,7 +94,12 @@ function AdminMainTable({
           },
         },
         "PATCH",
-      );
+      ).then((e) => {
+        if (e) {
+          setEditBrandData(e);
+          handleClose();
+        }
+      });
     } else {
       editCategory(
         `/categories/category/${id}`,
@@ -155,7 +110,12 @@ function AdminMainTable({
           },
         },
         "PATCH",
-      );
+      ).then((e) => {
+        if (e) {
+          setEditCategoryData(e);
+          handleClose();
+        }
+      });
     }
   };
   const deleteData = (value) => {
@@ -169,7 +129,18 @@ function AdminMainTable({
             },
           },
           "DELETE",
-        );
+        ).then((e) => {
+          setDeleteBrandData(e);
+
+          dispatch(
+            setSnackbar({
+              snackbarType: "success",
+              snackbarMessage: "Brand is successfully deleted!",
+            }),
+          );
+
+          handleCloseDelete();
+        });
       } else {
         deleteCategory(
           `/categories/category/${value}`,
@@ -179,7 +150,18 @@ function AdminMainTable({
             },
           },
           "DELETE",
-        );
+        ).then((e) => {
+          setDeleteCategoryData(e);
+
+          dispatch(
+            setSnackbar({
+              snackbarType: "success",
+              snackbarMessage: "Category is successfully deleted!",
+            }),
+          );
+
+          handleCloseDelete();
+        });
       }
     }
   };

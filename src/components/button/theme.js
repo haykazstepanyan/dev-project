@@ -28,6 +28,7 @@ const theme = createTheme({
         {
           props: { page: "admin" },
           style: {
+            textTransform: "capitalize",
             color: colors.white,
             background: "#24695c",
           },
@@ -46,6 +47,7 @@ const theme = createTheme({
         {
           props: { page: "admin", letter: "capitalize" },
           style: {
+            height: 37,
             color: "white",
             background: "#a3a3a3",
             textTransform: "capitalize",

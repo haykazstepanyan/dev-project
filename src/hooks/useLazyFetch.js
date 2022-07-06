@@ -21,8 +21,11 @@ const useLazyFetch = () => {
       }
       const result = await response.json();
       setData(result.data);
+      return result.data;
     } catch (err) {
       setError(err.message);
+
+      return undefined;
     } finally {
       setLoading(false);
     }

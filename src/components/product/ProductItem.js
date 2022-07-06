@@ -39,6 +39,13 @@ function ProductItem({ id, title, price, image, discount, isFilled }) {
   return (
     <Card className={classes.productCard}>
       <Link to={`/product/${id}`}>
+        <CardMedia
+          className={classes.productImg}
+          component="img"
+          alt={title}
+          height="280"
+          image={image}
+        />
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom className={classes.productName}>
             {title}
@@ -66,13 +73,6 @@ function ProductItem({ id, title, price, image, discount, isFilled }) {
             <AddCardIcon />
           </IconButton>
         </div>
-        <CardMedia
-          className={classes.productImg}
-          component="img"
-          alt={title}
-          height="280"
-          image={image}
-        />
       </div>
     </Card>
   );

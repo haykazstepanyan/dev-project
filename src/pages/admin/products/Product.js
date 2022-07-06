@@ -21,11 +21,7 @@ export default function Product() {
   const [page, setPage] = useState(+searchParams.get("page") || 1);
   const { data: brands, error: brandsError } = useFetch("/brands");
   const { data: categories, error: categoriesError } = useFetch("/categories");
-  const {
-    data: addProductData,
-    error: addProductError,
-    lazyRefetch: addProduct,
-  } = useLazyFetch();
+  const { error: addProductError, lazyRefetch: addProduct } = useLazyFetch();
 
   const handleClose = () => {
     setOpen(false);
@@ -61,22 +57,6 @@ export default function Product() {
   };
 
   useEffect(() => {
-    if (addProductData?.data) {
-      setProductsData((prev) => [...prev, addProductData.data]);
-
-      dispatch(
-        setSnackbar({
-          snackbarType: "success",
-          snackbarMessage: "Product is added successfully!",
-        }),
-      );
-      productFetch();
-      handleClose();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addProductData, dispatch]);
-
-  useEffect(() => {
     if (products?.data) {
       setProductsData(products.data);
     }
@@ -92,7 +72,22 @@ export default function Product() {
         },
       },
       "POST",
-    );
+    ).then((e) => {
+      if (e) {
+        if (e?.data) {
+          setProductsData((prev) => [...prev, e.data]);
+
+          dispatch(
+            setSnackbar({
+              snackbarType: "success",
+              snackbarMessage: "Product is added successfully!",
+            }),
+          );
+          productFetch();
+          handleClose();
+        }
+      }
+    });
   };
 
   function setEditProductData(value) {
@@ -101,6 +96,7 @@ export default function Product() {
       elem.id === id ? value : elem,
     );
     setProductsData(newState);
+    productFetch();
   }
   function setDeleteProductData(value) {
     const { id, productImg } = value;

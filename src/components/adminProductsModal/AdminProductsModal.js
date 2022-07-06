@@ -300,7 +300,7 @@ function AdminProductsModal({
                       disableRipple
                       page="admin"
                     >
-                      Upload To Storage
+                      View Image
                     </Button>
                   </div>
                 </div>
@@ -346,6 +346,15 @@ function AdminProductsModal({
               Are you sure?
             </Typography>
             <div className={classes.textRight}>
+              <Button
+                onClick={() => onClose()}
+                style={{ marginTop: 20, marginRight: 10 }}
+                page="admin"
+                letter="capitalize"
+                disableRipple
+              >
+                Cancel
+              </Button>
               <Button
                 onClick={() => deleteData()}
                 style={{ marginTop: 20 }}
