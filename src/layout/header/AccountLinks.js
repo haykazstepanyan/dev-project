@@ -56,19 +56,21 @@ function AccountLinks() {
     </Dialog>
   );
 
-  let linkNameToAccount;
   let allowedLinks;
   if (role !== "") {
     // ??????????? if (role)
-    linkNameToAccount =
+    const linkToAccount =
       role === "ADMIN" || role === "MAIN_ADMIN"
         ? "/admin"
         : "/account/dashboard";
+
     allowedLinks = [
       {
         item: (
-          <Link key="account" to={linkNameToAccount}>
-            My account
+          <Link key="account" to={linkToAccount}>
+            {role === "ADMIN" || role === "MAIN_ADMIN"
+              ? "Admin Panel"
+              : "My account"}
           </Link>
         ),
         key: "account",

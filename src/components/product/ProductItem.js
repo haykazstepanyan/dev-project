@@ -9,7 +9,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Sale from "./Sale";
 import { productItemStyles } from "./styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
-import { removeLoader, showLoader } from "../../redux/app/appSlice";
+import { showLoader, hideLoader } from "../../redux/app/appSlice";
 
 function ProductItem({ id, title, price, image, discount, wishlistId }) {
   const isAuth = useSelector((state) => state.auth.isAuth);
@@ -37,7 +37,7 @@ function ProductItem({ id, title, price, image, discount, wishlistId }) {
   useEffect(() => {
     if (wishlistChangeData) {
       dispatch(
-        removeLoader({
+        hideLoader({
           key: "wishlist/change",
         }),
       );

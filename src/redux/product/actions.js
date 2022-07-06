@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchData } from "../../helpers/helpers";
-import { setSnackbar } from "../app/appSlice";
+import { showSnackbar } from "../app/appSlice";
 
 export const getProductsPagination = createAsyncThunk(
   "products/getProductsPagination",
@@ -12,7 +12,7 @@ export const getProductsPagination = createAsyncThunk(
 
       if (response.result === "error") {
         dispatch(
-          setSnackbar({
+          showSnackbar({
             snackbarType: "error",
             snackbarMessage: response.message,
           }),
@@ -34,7 +34,7 @@ export const getProductsCount = createAsyncThunk(
 
       if (response.result === "error") {
         dispatch(
-          setSnackbar({
+          showSnackbar({
             snackbarType: "error",
             snackbarMessage: response.message,
           }),
@@ -55,7 +55,7 @@ export const getProductsCount = createAsyncThunk(
 //       const response = await fetchData("products");
 //       if (response.result === "error") {
 //         dispatch(
-//           setSnackbar({
+//           showSnackbar({
 //             snackbarType: "error",
 //             snackbarMessage: response.message,
 //           }),
@@ -84,7 +84,7 @@ export const addProducts = createAsyncThunk(
 
       if (response.result === "error") {
         dispatch(
-          setSnackbar({
+          showSnackbar({
             snackbarType: "error",
             snackbarMessage: response.message,
           }),
@@ -93,7 +93,7 @@ export const addProducts = createAsyncThunk(
       }
 
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "success",
           snackbarMessage: "Your product is successfully added.",
         }),
@@ -125,7 +125,7 @@ export const addProducts = createAsyncThunk(
 //       const result = await response.json();
 
 //       dispatch(
-//         setSnackbar({
+//         showSnackbar({
 //           snackbarType: "success",
 //           snackbarMessage: "Your brand is successfully updated.",
 //         }),

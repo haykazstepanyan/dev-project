@@ -44,7 +44,7 @@ function MyAccount() {
       <nav>
         <ul>
           <li>
-            <Link to="/my-account">My Account</Link>
+            <Link to="/account/dashboard">My Account</Link>
           </li>
           <li>
             <Link to="/contact">Contact</Link>

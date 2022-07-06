@@ -7,7 +7,7 @@ import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
 import Button from "../../components/button/Button";
 // import { addCategories, getCategories } from "../../redux/category/actions";
 import useFetch from "../../hooks/useFetch";
-import { setSnackbar } from "../../redux/app/appSlice";
+import { showSnackbar } from "../../redux/app/appSlice";
 import useLazyFetch from "../../hooks/useLazyFetch";
 
 export default function Category() {
@@ -38,7 +38,7 @@ export default function Category() {
   useEffect(() => {
     if (categoriesError) {
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),
@@ -55,7 +55,7 @@ export default function Category() {
       setCategories((prev) => [...prev, addCategoryData.data]);
 
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "success",
           snackbarMessage: "Category is added successfully!",
         }),
@@ -67,7 +67,7 @@ export default function Category() {
   useEffect(() => {
     if (addCategoryError || categoriesError) {
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),

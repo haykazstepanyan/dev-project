@@ -15,7 +15,7 @@ import { Formik } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
 import { useDispatch } from "react-redux/es/exports";
-import { setSnackbar } from "../../redux/app/appSlice";
+import { showSnackbar } from "../../redux/app/appSlice";
 import { storage } from "../../firebase/firebase";
 import Button from "../button";
 import Input from "../input/Input";
@@ -60,7 +60,7 @@ function AdminProductsModal({
           })
           .catch(() => {
             dispatch(
-              setSnackbar({
+              showSnackbar({
                 snackbarType: "error",
                 snackbarMessage: "Oops! Something went wrong",
               }),

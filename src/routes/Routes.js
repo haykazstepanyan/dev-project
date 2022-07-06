@@ -23,6 +23,7 @@ const Brand = lazy(() => import("../pages/admin/Brand"));
 const Category = lazy(() => import("../pages/admin/Category"));
 const Product = lazy(() => import("../pages/admin/products/Product"));
 const ContactMessage = lazy(() => import("../pages/admin/ContactMessage"));
+const Users = lazy(() => import("../pages/admin/Users"));
 
 function PageRoutes() {
   const userRole = useSelector((state) => state.auth.role);
@@ -110,6 +111,14 @@ function PageRoutes() {
           element={
             <Fallback>
               <ContactMessage />
+            </Fallback>
+          }
+        />
+        <Route
+          path="user"
+          element={
+            <Fallback>
+              <Users />
             </Fallback>
           }
         />

@@ -5,7 +5,7 @@ import Table from "../components/table/Table";
 import Banner from "../components/common/Banner";
 import { globalStyles } from "../components/styles/styles";
 import useFetch from "../hooks/useFetch";
-import { removeLoader, showLoader } from "../redux/app/appSlice";
+import { showLoader, hideLoader } from "../redux/app/appSlice";
 import NoData from "../components/common/NoData";
 import useLazyFetch from "../hooks/useLazyFetch";
 
@@ -38,7 +38,7 @@ export default function Wishlist() {
   useEffect(() => {
     if (wishlist) {
       dispatch(
-        removeLoader({
+        hideLoader({
           key: "wishlist/getWishlist",
         }),
       );
@@ -58,7 +58,7 @@ export default function Wishlist() {
   useEffect(() => {
     if (wishlistDeleteData) {
       dispatch(
-        removeLoader({
+        hideLoader({
           key: "wishlist/deleteWishlist",
         }),
       );

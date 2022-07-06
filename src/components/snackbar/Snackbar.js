@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { Snackbar as MuiSnackbar, Alert } from "@mui/material";
-import { resetSnackbar } from "../../redux/app/appSlice";
+import { hideSnackbar } from "../../redux/app/appSlice";
 
 function SnackBar({ type, message }) {
   const [openSnackbar, setOpenSnackbar] = useState({
@@ -24,7 +24,7 @@ function SnackBar({ type, message }) {
   const dispatch = useDispatch();
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      dispatch(resetSnackbar());
+      dispatch(hideSnackbar());
     }, 3000);
     return () => clearTimeout(timeoutId);
   }, [dispatch]);

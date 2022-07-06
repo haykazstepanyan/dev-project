@@ -10,7 +10,7 @@ import { storage } from "../../../firebase/firebase";
 import Button from "../../../components/button/Button";
 import AdminProductsTable from "../../../components/adminProductsTable/AdminProductsTable";
 import AdminProductsModal from "../../../components/adminProductsModal/AdminProductsModal";
-import { setSnackbar } from "../../../redux/app/appSlice";
+import { showSnackbar } from "../../../redux/app/appSlice";
 import useFetch from "../../../hooks/useFetch";
 import useLazyFetch from "../../../hooks/useLazyFetch";
 
@@ -41,7 +41,7 @@ export default function Product() {
   useEffect(() => {
     if (brandsError || productsError || categoriesError || addProductError) {
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),
@@ -78,7 +78,7 @@ export default function Product() {
           setProductsData((prev) => [...prev, e.data]);
 
           dispatch(
-            setSnackbar({
+            showSnackbar({
               snackbarType: "success",
               snackbarMessage: "Product is added successfully!",
             }),
@@ -110,7 +110,7 @@ export default function Product() {
         .then(() => {})
         .catch(() => {
           dispatch(
-            setSnackbar({
+            showSnackbar({
               snackbarType: "error",
               snackbarMessage: "Oops! Couldn't delete image",
             }),

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setSnackbar } from "../app/appSlice";
+import { showSnackbar } from "../app/appSlice";
 import { fetchData } from "../../helpers/helpers";
 import { errorKeys } from "../../errorKeys";
 
@@ -60,7 +60,7 @@ export const signUp = createAsyncThunk(
         if (result.key) {
           const { key } = result;
           dispatch(
-            setSnackbar({
+            showSnackbar({
               snackbarType: "error",
               snackbarMessage: errorKeys[key],
             }),
@@ -70,7 +70,7 @@ export const signUp = createAsyncThunk(
       }
 
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "success",
           snackbarMessage: "You have successfully signed up!",
         }),
@@ -101,7 +101,7 @@ export const signOut = createAsyncThunk(
       );
       if (response.result === "error") {
         dispatch(
-          setSnackbar({
+          showSnackbar({
             snackbarType: "error",
             snackbarMessage: response.message,
           }),
@@ -137,7 +137,7 @@ export const signIn = createAsyncThunk(
         if (result.key) {
           const { key } = result;
           dispatch(
-            setSnackbar({
+            showSnackbar({
               snackbarType: "error",
               snackbarMessage: errorKeys[key],
             }),
@@ -147,7 +147,7 @@ export const signIn = createAsyncThunk(
       }
 
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "success",
           snackbarMessage: `Welcome back, ${response.data.user.firstName} ${response.data.user.lastName}!`,
         }),

@@ -17,7 +17,7 @@ import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
 import { adminTableStyles } from "./styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
-import { setSnackbar } from "../../redux/app/appSlice";
+import { showSnackbar } from "../../redux/app/appSlice";
 
 function AdminMainTable({
   tableData,
@@ -63,7 +63,7 @@ function AdminMainTable({
   useEffect(() => {
     if (editBrandError || deleteBrandError) {
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),
@@ -74,7 +74,7 @@ function AdminMainTable({
   useEffect(() => {
     if (editCategoryError || deleteCategoryError) {
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),
@@ -133,7 +133,7 @@ function AdminMainTable({
           setDeleteBrandData(e);
 
           dispatch(
-            setSnackbar({
+            showSnackbar({
               snackbarType: "success",
               snackbarMessage: "Brand is successfully deleted!",
             }),
@@ -154,7 +154,7 @@ function AdminMainTable({
           setDeleteCategoryData(e);
 
           dispatch(
-            setSnackbar({
+            showSnackbar({
               snackbarType: "success",
               snackbarMessage: "Category is successfully deleted!",
             }),

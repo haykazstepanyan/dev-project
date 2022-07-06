@@ -10,7 +10,7 @@ import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import { shopStyles } from "./styles";
 import useFetch from "../hooks/useFetch";
-import { showLoader, removeLoader, setSnackbar } from "../redux/app/appSlice";
+import { showLoader, hideLoader, showSnackbar } from "../redux/app/appSlice";
 import NoData from "../components/common/NoData";
 
 function Shop() {
@@ -74,8 +74,8 @@ function Shop() {
     data: products,
     error: productsError,
     loading: productsLoading,
-  } = useFetch(`/products/getShopProducts/shop${window.location.search}`);
-
+  } = useFetch(`/products/getShopProducts${window.location.search}`);
+  console.log(products);
   const {
     data: highestPrice,
     error: highestPriceError,
@@ -94,7 +94,7 @@ function Shop() {
         prevState[0],
         searchParams.get("max") || highestPrice?.data.price,
       ]);
-      dispatch(removeLoader({ key: "getHighestPrice" }));
+      dispatch(hideLoader({ key: "getHighestPrice" }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, highestPrice, highestPriceError]);
@@ -102,7 +102,7 @@ function Shop() {
   useEffect(() => {
     if (brandsError || productsError) {
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),
@@ -118,7 +118,7 @@ function Shop() {
 
   useEffect(() => {
     if (products?.data || productsError) {
-      dispatch(removeLoader({ key: "getFilteredProducts" }));
+      dispatch(hideLoader({ key: "getFilteredProducts" }));
     }
   }, [dispatch, products, productsError]);
 
@@ -130,7 +130,7 @@ function Shop() {
 
   useEffect(() => {
     if (brands?.data || brandsError) {
-      dispatch(removeLoader({ key: "getBrands" }));
+      dispatch(hideLoader({ key: "getBrands" }));
     }
   }, [dispatch, brands, brandsError]);
 
@@ -263,7 +263,7 @@ function Shop() {
                             image={productImg}
                             price={price}
                             discount={discount}
-                            wishlistId={wishlist[0]?.id}
+                            wishlistId={wishlist && wishlist[0]?.id}
                           />
                         </Grid>
                       ),

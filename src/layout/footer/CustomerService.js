@@ -53,7 +53,7 @@ function CustomerService() {
             <Link to="/contact">Site Map</Link>
           </li>
           <li>
-            <Link to="/my-account">My Account</Link>
+            <Link to="/account/dashboard">My Account</Link>
           </li>
           <li>
             <Link to="/">Returns</Link>

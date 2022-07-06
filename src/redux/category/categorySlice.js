@@ -17,7 +17,7 @@ const categorySlice = createSlice({
       state.loading = true;
     },
     [getCategories.fulfilled]: (state, { payload }) => {
-      state.categories = payload.data.data;
+      state.categories = payload.data.categories;
       state.loading = false;
     },
     [getCategories.rejected]: (state) => {

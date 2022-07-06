@@ -17,7 +17,7 @@ import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspace
 import Button from "../components/button";
 import { productViewStyles } from "./styles";
 import useFetch from "../hooks/useFetch";
-import { showLoader, removeLoader, setSnackbar } from "../redux/app/appSlice";
+import { showLoader, hideLoader, showSnackbar } from "../redux/app/appSlice";
 import useLazyFetch from "../hooks/useLazyFetch";
 
 function Product() {
@@ -62,7 +62,7 @@ function Product() {
   useEffect(() => {
     if (wishlistChangeData) {
       dispatch(
-        removeLoader({
+        hideLoader({
           key: "wishlist/change",
         }),
       );
@@ -72,7 +72,7 @@ function Product() {
   useEffect(() => {
     if (productError) {
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),

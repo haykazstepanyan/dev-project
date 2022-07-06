@@ -7,7 +7,7 @@ import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
 import useFetch from "../../hooks/useFetch";
 import useLazyFetch from "../../hooks/useLazyFetch";
-import { setSnackbar } from "../../redux/app/appSlice";
+import { showSnackbar } from "../../redux/app/appSlice";
 
 function Brand() {
   const [open, setOpen] = useState(false);
@@ -34,7 +34,7 @@ function Brand() {
       setBrands((prev) => [...prev, addBrandData.data]);
 
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "success",
           snackbarMessage: "Brand is added successfully!",
         }),
@@ -52,7 +52,7 @@ function Brand() {
   useEffect(() => {
     if (addBrandError || brandsError) {
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),

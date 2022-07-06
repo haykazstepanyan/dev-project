@@ -17,7 +17,7 @@ const appSlice = createSlice({
     showLoader(state, { payload }) {
       state.loading.push(payload);
     },
-    removeLoader(state, { payload }) {
+    hideLoader(state, { payload }) {
       const loaderIndex = state.loading.findIndex((item) => {
         return item?.key === payload.key;
       });
@@ -25,13 +25,13 @@ const appSlice = createSlice({
         state.loading.splice(loaderIndex, 1);
       }
     },
-    setSnackbar(state, { payload }) {
+    showSnackbar(state, { payload }) {
       state.snackbar = {
         type: payload.snackbarType,
         message: payload.snackbarMessage,
       };
     },
-    resetSnackbar(state) {
+    hideSnackbar(state) {
       state.snackbar = {
         type: null,
         message: null,
@@ -43,9 +43,9 @@ const appSlice = createSlice({
 export const {
   setIsMobileVersion,
   showLoader,
-  removeLoader,
-  setSnackbar,
-  resetSnackbar,
+  hideLoader,
+  showSnackbar,
+  hideSnackbar,
 } = appSlice.actions;
 
 export default appSlice;

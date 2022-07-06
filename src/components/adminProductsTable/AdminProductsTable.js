@@ -17,7 +17,7 @@ import Button from "../button";
 import AdminProductsModal from "../adminProductsModal/AdminProductsModal";
 import { adminTableStyles } from "./styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
-import { setSnackbar } from "../../redux/app/appSlice";
+import { showSnackbar } from "../../redux/app/appSlice";
 
 function AdminProductsTable({
   tableData,
@@ -59,7 +59,7 @@ function AdminProductsTable({
   useEffect(() => {
     if (editProductError || deleteProductError) {
       dispatch(
-        setSnackbar({
+        showSnackbar({
           snackbarType: "error",
           snackbarMessage: "Oops! Something went wrong!",
         }),
