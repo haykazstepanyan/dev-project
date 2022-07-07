@@ -14,6 +14,7 @@ import SignInModal from "../modals/SignInModal";
 
 function ProductItem({ id, title, price, image, discount, wishlistId }) {
   const isAuth = useSelector((state) => state.auth.isAuth);
+  const role = useSelector((state) => state.auth.role);
   const [isProductLiked, setIsProductLiked] = useState(!!wishlistId);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
@@ -106,9 +107,15 @@ function ProductItem({ id, title, price, image, discount, wishlistId }) {
           </CardContent>
         </Link>
         <span>
-          <IconButton onClick={handleWishlistChange}>
-            {isProductLiked ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
-          </IconButton>
+          {role !== "ADMIN" && role !== "MAIN_ADMIN" && (
+            <IconButton onClick={handleWishlistChange}>
+              {isProductLiked ? (
+                <FavoriteIcon />
+              ) : (
+                <FavoriteBorderOutlinedIcon />
+              )}
+            </IconButton>
+          )}
         </span>
       </Card>
       <SignInModal open={openModal} closeModal={onModalClose} />

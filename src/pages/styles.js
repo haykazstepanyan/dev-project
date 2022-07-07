@@ -475,6 +475,14 @@ const signUpInStyles = createUseStyles({
   },
 });
 
+const shopStyles = createUseStyles({
+  shopContainer: {
+    "@media screen and (max-width: 900px)": {
+      flexDirection: "column-reverse",
+    },
+  },
+});
+
 const productViewStyles = createUseStyles({
   productContainer: {
     position: "relative",
@@ -582,4 +590,5 @@ export {
   mainStyles,
   signUpInStyles,
   productViewStyles,
+  shopStyles,
 };

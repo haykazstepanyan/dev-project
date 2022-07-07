@@ -14,27 +14,33 @@ function FooterTop() {
 
   return (
     <div className={classes.footerTop}>
-      <Container maxWidth="lg" className={classes.footerContainer}>
+      <Container maxWidth="lg">
         <Grid
-          classes={{ root: classes.row }}
+          className={classes.footerGrid}
           container
           direction="row"
           justifyContent="space-between"
           alignItems="center"
         >
-          <Grid item sm={2} className={classes.gridRow}>
+          <Grid item sm={4} xs={12} className={classes.gridRow}>
             <OpeningTime />
-          </Grid>
-          <Grid item sm={2} className={classes.gridRow}>
             <Information />
           </Grid>
-          <Grid item sm={4} className={classes.gridRow}>
+          <Grid
+            item
+            sm={4}
+            xs={12}
+            className={`${classes.gridRow} ${classes.gridRowLogo}`}
+          >
             <ContactLinks />
           </Grid>
-          <Grid item sm={2} className={classes.gridRow}>
+          <Grid
+            item
+            sm={4}
+            xs={12}
+            className={`${classes.gridRow} ${classes.rightGrid}`}
+          >
             <MyAccount />
-          </Grid>
-          <Grid item sm={2} className={classes.gridRow}>
             <CustomerService />
           </Grid>
         </Grid>

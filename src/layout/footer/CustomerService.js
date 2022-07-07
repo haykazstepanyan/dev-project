@@ -11,9 +11,8 @@ function CustomerService() {
   const theme = createTheme({
     typography: {
       h3: {
-        lineHeight: "24px",
-        fontSize: "14px",
-        marginBottom: "31px",
+        fontSize: "13px",
+        marginBottom: "20px",
         paddingBottom: "10px",
         textTransform: "uppercase",
         fontWeight: "600!important",
@@ -27,7 +26,7 @@ function CustomerService() {
           bottom: "0",
           left: "0",
         },
-        "@media only screen and (max-width: 767px)": {
+        "@media only screen and (max-width: 900px)": {
           marginBottom: "12px",
           fontSize: "14px",
           display: "inline-block",
@@ -36,6 +35,13 @@ function CustomerService() {
     },
   });
 
+  const data = [
+    { name: "Contact Us", link: "/contact" },
+    { name: "Terms of use", link: "/" },
+    { name: "Site Map", link: "/contact" },
+    { name: "My Account", link: "/account/dashboard" },
+  ];
+
   return (
     <div className={classes.footerContainer}>
       <ThemeProvider theme={theme}>
@@ -43,21 +49,11 @@ function CustomerService() {
       </ThemeProvider>
       <nav>
         <ul>
-          <li>
-            <Link to="/contact">Contact Us</Link>
-          </li>
-          <li>
-            <Link to="/">Terms of use</Link>
-          </li>
-          <li>
-            <Link to="/contact">Site Map</Link>
-          </li>
-          <li>
-            <Link to="/account/dashboard">My Account</Link>
-          </li>
-          <li>
-            <Link to="/">Returns</Link>
-          </li>
+          {data.map(({ name, link }) => (
+            <li key={link}>
+              <Link to={link}>{name}</Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </div>

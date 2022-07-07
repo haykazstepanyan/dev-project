@@ -10,8 +10,7 @@ function OpeningTime() {
   const theme = createTheme({
     typography: {
       h3: {
-        lineHeight: "24px",
-        fontSize: "14px",
+        fontSize: "13px",
         paddingBottom: "10px",
         textTransform: "uppercase",
         fontWeight: "600!important",
@@ -44,17 +43,14 @@ function OpeningTime() {
         <Typography variant="h3">Opening Time</Typography>
       </ThemeProvider>
       <p>
-        <span>Mon - Fri:</span> 8AM - 10PM
+        <span>Mon - Fri:</span> 8 AM - 10 PM
       </p>
       <p>
-        <span>Sat:</span> 9AM-8PM
+        <span>Sat:</span> 9 AM - 8 PM
       </p>
       <p>
-        <span>Suns:</span> 14hPM-18hPM
+        <span>Suns:</span> 14 PM - 18 PM
       </p>
-      {/* <h6 className={classes.whenWeOpen}>
-        <b>We Work All The Holidays</b>
-      </h6> */}
     </div>
   );
 }

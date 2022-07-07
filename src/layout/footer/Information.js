@@ -11,9 +11,8 @@ function Information() {
   const theme = createTheme({
     typography: {
       h3: {
-        lineHeight: "24px",
-        fontSize: "14px",
-        marginBottom: "31px",
+        fontSize: "13px",
+        marginBottom: "20px",
         paddingBottom: "10px",
         textTransform: "uppercase",
         fontWeight: "600!important",
@@ -36,6 +35,13 @@ function Information() {
     },
   });
 
+  const data = [
+    { name: "About us", link: "/about" },
+    { name: "Contact", link: "/contact" },
+    { name: "Frequently Questions", link: "/faq" },
+    { name: "Wishlist", link: "/wishlist" },
+  ];
+
   return (
     <div className={classes.infoContainer}>
       <ThemeProvider theme={theme}>
@@ -43,21 +49,11 @@ function Information() {
       </ThemeProvider>
       <nav>
         <ul>
-          <li>
-            <Link to="/about">About Us</Link>
-          </li>
-          <li>
-            <Link to="/checkouts">Checkout</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li>
-            <Link to="/faq">Frequently Questions</Link>
-          </li>
-          <li>
-            <Link to="/wishlist">Wishlist</Link>
-          </li>
+          {data.map(({ name, link }) => (
+            <li key={link}>
+              <Link to={link}>{name}</Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </div>

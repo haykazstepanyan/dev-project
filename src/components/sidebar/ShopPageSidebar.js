@@ -23,7 +23,7 @@ function ShopPageSidebar({
   const classes = shopSidebarStyles();
 
   return (
-    <Grid item md={3}>
+    <Grid item md={3} sm={12} className={classes.shopSidebarContainer}>
       <div className={classes.shopSidebar}>
         <div className={classes.filterBox}>
           <h3 className={classes.filterName}>Filter by Price</h3>

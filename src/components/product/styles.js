@@ -21,7 +21,12 @@ const productItemStyles = createUseStyles({
     fontSize: 14,
     color: colors.black,
     textTransform: "Capitalize",
-    height: 48,
+    height: 42,
+    display: "-webkit-box",
+    "-webkit-line-clamp": 2,
+    "-webkit-box-orient": "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   productDiscountedPrice: {
     fontWeight: 500,
@@ -33,6 +38,11 @@ const productItemStyles = createUseStyles({
     textDecoration: "line-through",
     fontWeight: 400,
     fontSize: 12,
+  },
+  "@media screen and (max-width: 600px)": {
+    productCard: {
+      margin: [[0, "auto"]],
+    },
   },
 });
 
@@ -49,11 +59,8 @@ const saleStyles = createUseStyles({
 });
 
 const shopPageProductsStyles = createUseStyles({
-  shopItemContainer: {
-    marginLeft: 25,
-  },
   shopItem: {
-    padding: "0 !important",
+    padding: [[0, 5]],
     marginBottom: 24,
   },
 });

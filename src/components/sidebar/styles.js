@@ -2,6 +2,9 @@ import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
 const shopSidebarStyles = createUseStyles({
+  shopSidebarContainer: {
+    paddingRight: 20,
+  },
   shopSidebar: {
     marginRight: 16,
   },

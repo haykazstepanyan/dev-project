@@ -11,6 +11,12 @@ const useStyles = createUseStyles(styles);
 
 function ContactLinks() {
   const classes = useStyles();
+  const links = [
+    { icon: <FacebookOutlinedIcon />, key: "facebook" },
+    { icon: <TwitterIcon />, key: "twitter" },
+    { icon: <GoogleIcon />, key: "google" },
+    { icon: <YouTubeIcon />, key: "youtube" },
+  ];
 
   return (
     <div className={classes.contactContainer}>
@@ -21,26 +27,11 @@ function ContactLinks() {
       </div>
       <div className={classes.socialBtnList}>
         <ul>
-          <li>
-            <Link to="/">
-              <FacebookOutlinedIcon />
-            </Link>
-          </li>
-          <li>
-            <Link to="/">
-              <TwitterIcon />
-            </Link>
-          </li>
-          <li>
-            <Link to="/">
-              <GoogleIcon />
-            </Link>
-          </li>
-          <li>
-            <Link to="/">
-              <YouTubeIcon />
-            </Link>
-          </li>
+          {links.map(({ icon, key }) => (
+            <li key={key}>
+              <span className={classes.socialLinks}>{icon}</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

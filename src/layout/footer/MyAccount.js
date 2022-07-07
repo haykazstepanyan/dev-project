@@ -11,9 +11,8 @@ function MyAccount() {
   const theme = createTheme({
     typography: {
       h3: {
-        lineHeight: "24px",
-        fontSize: "14px",
-        marginBottom: "31px",
+        fontSize: "13px",
+        marginBottom: "20px",
         paddingBottom: "10px",
         textTransform: "uppercase",
         fontWeight: "600!important",
@@ -36,6 +35,13 @@ function MyAccount() {
     },
   });
 
+  const data = [
+    { name: "My Account", link: "/account/dashboard" },
+    { name: "Contact", link: "/contact" },
+    { name: "Shopping cart", link: "/cart" },
+    { name: "Shop", link: "/shop" },
+  ];
+
   return (
     <div className={classes.footerContainer}>
       <ThemeProvider theme={theme}>
@@ -43,21 +49,11 @@ function MyAccount() {
       </ThemeProvider>
       <nav>
         <ul>
-          <li>
-            <Link to="/account/dashboard">My Account</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li>
-            <Link to="/cart">Shopping cart</Link>
-          </li>
-          <li>
-            <Link to="/chekouts">Checkout</Link>
-          </li>
-          <li>
-            <Link to="/shop">Shop</Link>
-          </li>
+          {data.map(({ name, link }) => (
+            <li key={link}>
+              <Link to={link}>{name}</Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </div>

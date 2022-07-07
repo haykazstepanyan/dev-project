@@ -13,25 +13,51 @@ const styles = {
     boxSizing: "border-box",
   },
   footerContainer: {
-    width: "100%",
-    marginRight: "auto",
-    marginLleft: "auto",
-    "@media only screen and (max-width: 767px)": {
-      maxWidth: "100%",
+    "@media only screen and (max-width: 900px)": {
+      marginBottom: 25,
     },
-    "@media only screen and (max-width: 479px)": {
-      width: "100%",
-      textAlign: "center",
+    "@media only screen and (max-width: 600px)": {
+      width: 150,
     },
   },
+  footerGrid: {
+    alignItems: "start",
+  },
   gridRow: {
-    "@media only screen and (max-width: 767px)": {
-      width: "100%",
-      textAlign: "center",
+    display: "flex",
+    justifyContent: "space-between",
+    "@media only screen and (max-width: 900px)": {
+      flexDirection: "column",
+    },
+    "@media only screen and (max-width: 600px)": {
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+    },
+  },
+  gridRowLogo: {
+    justifyContent: "center",
+  },
+  rightGrid: {
+    "@media only screen and (max-width: 900px)": {
+      textAlign: "right",
+      "& h3": {
+        "&:before": {
+          left: "auto",
+          right: 0,
+        },
+      },
+    },
+    "@media only screen and (max-width: 600px)": {
+      textAlign: "inherit",
+      "& h3": {
+        "&:before": {
+          left: 0,
+        },
+      },
     },
   },
   footerTop: {
-    padding: "99px 0 89px",
+    padding: "60px 0 40px",
     borderTop: "1px solid #e1e1e1",
     borderBottom: "1px solid #e1e1e1",
     "@media only screen and (max-width: 767px)": {
@@ -43,25 +69,18 @@ const styles = {
       padding: "0",
     },
     "& li": {
-      paddingBottom: "2px",
-      "@media only screen and (max-width: 767px)": {
-        lineHeight: "22px",
-        fontSize: "13px",
-      },
+      paddingBottom: 2,
     },
     "& a": {
-      display: "block",
       fontWeight: "400",
-      fontSize: "15px",
+      fontSize: "13px",
       transition: "all 0.3s ease 0s",
       color: "inherit",
       textDecoration: "none",
       cursor: "pointer",
+      display: "inline-block",
       "&:hover": {
         color: "#79a206",
-      },
-      "@media only screen and (max-width: 767px)": {
-        fontSize: "13px",
       },
     },
   },
@@ -69,24 +88,19 @@ const styles = {
     boxSizing: "border-box",
     "& h3": {
       textAlign: "left",
-      marginBottom: 68,
+      marginBottom: 20,
     },
     "& p": {
       textAlign: "left",
-      fontSize: "14px",
-      lineHeight: "30px",
-      marginBottom: "0",
-      marginTop: "0",
-      "@media only screen and (max-width: 767px)": {
-        fontSize: "13px",
-        textAlign: "center",
-      },
+      fontSize: 13,
+      marginBottom: 0,
+      marginTop: 0,
     },
-    "@media only screen and (max-width: 575px)": {
-      textAlign: "center",
+    "@media only screen and (max-width: 900px)": {
+      marginBottom: 25,
     },
-    "@media only screen and (max-width: 767px)": {
-      marginBottom: "43px",
+    "@media only screen and (max-width: 600px)": {
+      width: 150,
     },
   },
   whenWeOpen: {
@@ -100,11 +114,8 @@ const styles = {
     },
   },
   infoContainer: {
-    "@media only screen and (max-width: 767px)": {
-      marginBottom: "48px",
-    },
-    "@media only screen and (max-width: 575px)": {
-      textAlign: "center",
+    "@media only screen and (max-width: 600px)": {
+      widht: 150,
     },
   },
   footerInfoMenu: {
@@ -126,10 +137,10 @@ const styles = {
     },
   },
   contactLinksHeader: {
-    marginBottom: "30px",
     textAlign: "center",
-    "@media only screen and (max-width: 767px)": {
-      marginBottom: "20px",
+    "@media only screen and (max-width: 900px)": {
+      width: 120,
+      margin: [[0, "auto"]],
     },
     "& a": {
       color: "inherit",
@@ -143,28 +154,25 @@ const styles = {
       height: "auto",
     },
   },
-  socialBtnList: {
-    marginTop: "23px",
-    textAlign: "center",
-    "& a": {
-      width: "42px",
-      height: "42px",
-      lineHeight: "50px",
-      display: "block",
-      textAlign: "center",
-      fontSize: "14px",
-      background: "#f2f2f2",
-      borderRadius: "50%",
-      color: "inherit",
-      textDecoration: "none",
-      cursor: "pointer",
-      "&:hover": {
-        color: "#79a206",
-      },
-      "@media only screen and (max-width: 767px)": {
-        marginTop: "15px",
-      },
+  socialLinks: {
+    display: "flex !important",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "42px",
+    height: "42px",
+    background: "#f2f2f2",
+    borderRadius: "50%",
+    cursor: "pointer",
+    "&:hover": {
+      color: "#79a206",
     },
+    "@media only screen and (max-width: 900px)": {
+      width: 36,
+      height: 36,
+    },
+  },
+  socialBtnList: {
+    textAlign: "center",
     "& li": {
       display: "inline-block",
       marginRight: "8px",

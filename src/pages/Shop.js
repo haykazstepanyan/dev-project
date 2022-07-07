@@ -9,6 +9,7 @@ import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
 import useFetch from "../hooks/useFetch";
 import { showLoader, hideLoader, showSnackbar } from "../redux/app/appSlice";
 import ShopPageProducts from "../components/product/ShopPageProducts";
+import { shopStyles } from "./styles";
 
 function Shop() {
   const [selectedBrands, setSelectedBrands] = useState([]);
@@ -18,6 +19,7 @@ function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(+searchParams.get("page") || 1);
 
+  const classes = shopStyles();
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.categories.categories);
@@ -227,7 +229,7 @@ function Shop() {
       <Banner name="Shop" />
       <Container maxWidth="lg">
         <Box mt={12.5}>
-          <Grid container>
+          <Grid container className={classes.shopContainer}>
             {brands?.data && categories && (
               <ShopPageSidebar
                 brands={brands.data}
