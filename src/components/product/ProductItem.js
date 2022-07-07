@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -10,11 +10,12 @@ import Sale from "./Sale";
 import { productItemStyles } from "./styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
 import { showLoader, hideLoader } from "../../redux/app/appSlice";
+import SignInModal from "../modals/SignInModal";
 
 function ProductItem({ id, title, price, image, discount, wishlistId }) {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const [isProductLiked, setIsProductLiked] = useState(!!wishlistId);
-  const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
   const classes = productItemStyles();
 
@@ -44,9 +45,16 @@ function ProductItem({ id, title, price, image, discount, wishlistId }) {
     }
   }, [dispatch, wishlistChangeData]);
 
+  const onModalOpen = () => {
+    setOpenModal(true);
+  };
+  const onModalClose = () => {
+    setOpenModal(false);
+  };
+
   const handleWishlistChange = () => {
     if (!isAuth) {
-      navigate("/signin");
+      onModalOpen();
       return;
     }
     if (isProductLiked) {
@@ -78,30 +86,33 @@ function ProductItem({ id, title, price, image, discount, wishlistId }) {
   };
 
   return (
-    <Card className={classes.productCard}>
-      <Link to={`/product/${id}`}>
-        <CardMedia component="img" alt={title} height="180" image={image} />
-        <CardContent>
-          <Typography gutterBottom className={classes.productName}>
-            {title}
-          </Typography>
-          <div>
-            <span className={classes.productDiscountedPrice}>
-              ${parseFloat((price - (price * discount) / 100).toFixed(2))}
-            </span>
-            {discount ? (
-              <span className={classes.productRealPrice}>${price}</span>
-            ) : null}
-          </div>
-          <Sale discount={5} />
-        </CardContent>
-      </Link>
-      <span>
-        <IconButton onClick={handleWishlistChange}>
-          {isProductLiked ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
-        </IconButton>
-      </span>
-    </Card>
+    <>
+      <Card className={classes.productCard}>
+        <Link to={`/product/${id}`}>
+          <CardMedia component="img" alt={title} height="180" image={image} />
+          <CardContent>
+            <Typography gutterBottom className={classes.productName}>
+              {title}
+            </Typography>
+            <div>
+              <span className={classes.productDiscountedPrice}>
+                ${parseFloat((price - (price * discount) / 100).toFixed(2))}
+              </span>
+              {discount ? (
+                <span className={classes.productRealPrice}>${price}</span>
+              ) : null}
+            </div>
+            <Sale discount={5} />
+          </CardContent>
+        </Link>
+        <span>
+          <IconButton onClick={handleWishlistChange}>
+            {isProductLiked ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
+          </IconButton>
+        </span>
+      </Card>
+      <SignInModal open={openModal} closeModal={onModalClose} />
+    </>
   );
 }
 
@@ -115,7 +126,7 @@ ProductItem.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   discount: PropTypes.number,
-  wishlistId: PropTypes.oneOfType(PropTypes.number, undefined),
+  wishlistId: PropTypes.number,
 };
 
 export default ProductItem;

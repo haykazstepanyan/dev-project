@@ -29,6 +29,7 @@ function SearchBox({ distance }) {
   const handleSearch = () => {
     searchParams.delete("category");
     searchParams.delete("keyword");
+    searchParams.delete("page");
     if (searchValue) {
       searchParams.set("keyword", searchValue);
     }

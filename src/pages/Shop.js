@@ -4,14 +4,11 @@ import { useSearchParams } from "react-router-dom";
 import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Pagination from "../components/pagination";
 import Banner from "../components/common/Banner";
-import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
-import { shopStyles } from "./styles";
 import useFetch from "../hooks/useFetch";
 import { showLoader, hideLoader, showSnackbar } from "../redux/app/appSlice";
-import NoData from "../components/common/NoData";
+import ShopPageProducts from "../components/product/ShopPageProducts";
 
 function Shop() {
   const [selectedBrands, setSelectedBrands] = useState([]);
@@ -22,8 +19,6 @@ function Shop() {
   const [page, setPage] = useState(+searchParams.get("page") || 1);
 
   const dispatch = useDispatch();
-
-  const classes = shopStyles();
 
   const categories = useSelector((state) => state.categories.categories);
 
@@ -195,13 +190,16 @@ function Shop() {
     setSelectedCategories(newCategories);
   };
 
-  const gotoPage = (_, pageNum) => {
-    if (pageNum === page) return;
-    setPage(pageNum);
-    searchParams.delete("page");
-    searchParams.append("page", pageNum);
-    setSearchParams(searchParams);
-  };
+  const goToPage = useCallback(
+    (_, pageNum) => {
+      if (pageNum === page) return;
+      setPage(pageNum);
+      searchParams.delete("page");
+      searchParams.append("page", pageNum);
+      setSearchParams(searchParams);
+    },
+    [page, searchParams, setSearchParams],
+  );
 
   const handlePriceFiltering = () => {
     searchParams.delete("min");
@@ -230,54 +228,29 @@ function Shop() {
       <Container maxWidth="lg">
         <Box mt={12.5}>
           <Grid container>
-            <Grid item md={3}>
-              {brands?.data && categories && (
-                <ShopPageSidebar
-                  brands={brands.data}
-                  brandsChange={handleBrandCheckbox}
-                  selectedBrands={selectedBrands}
-                  categories={categories}
-                  categoriesChange={handleCategoryCheckbox}
-                  selectedCategories={selectedCategories}
-                  filterByPrice={handlePriceFiltering}
-                  values={priceSliderValues}
-                  defaultMaxValue={highestPrice?.data?.price}
-                  valueChange={handleValueChange}
-                  minValueChange={handleMinValueChange}
-                  maxValueChange={handleMaxValueChange}
-                />
-              )}
-            </Grid>
-            <Grid item md={9}>
-              <Grid container className={classes.shopItemContainer}>
-                {products?.data &&
-                  (products.data.length ? (
-                    products.data.map(
-                      ({ id, name, price, productImg, discount, wishlist }) => (
-                        <Grid item sm={4} key={id} className={classes.shopItem}>
-                          <ProductItem
-                            id={id}
-                            title={name}
-                            image={productImg}
-                            price={price}
-                            discount={discount}
-                            wishlistId={wishlist && wishlist[0]?.id}
-                          />
-                        </Grid>
-                      ),
-                    )
-                  ) : (
-                    <NoData />
-                  ))}
-              </Grid>
-              {products?.dataCount ? (
-                <Pagination
-                  count={Math.ceil((products?.dataCount || 0) / 9)}
-                  page={page}
-                  onChange={gotoPage}
-                />
-              ) : null}
-            </Grid>
+            {brands?.data && categories && (
+              <ShopPageSidebar
+                brands={brands.data}
+                brandsChange={handleBrandCheckbox}
+                selectedBrands={selectedBrands}
+                categories={categories}
+                categoriesChange={handleCategoryCheckbox}
+                selectedCategories={selectedCategories}
+                filterByPrice={handlePriceFiltering}
+                values={priceSliderValues}
+                defaultMaxValue={highestPrice?.data?.price}
+                valueChange={handleValueChange}
+                minValueChange={handleMinValueChange}
+                maxValueChange={handleMaxValueChange}
+              />
+            )}
+            {products?.data && (
+              <ShopPageProducts
+                products={products}
+                page={page}
+                goToPage={goToPage}
+              />
+            )}
           </Grid>
         </Box>
       </Container>

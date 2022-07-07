@@ -48,4 +48,14 @@ const saleStyles = createUseStyles({
   },
 });
 
-export { productItemStyles, saleStyles };
+const shopPageProductsStyles = createUseStyles({
+  shopItemContainer: {
+    marginLeft: 25,
+  },
+  shopItem: {
+    padding: "0 !important",
+    marginBottom: 24,
+  },
+});
+
+export { productItemStyles, saleStyles, shopPageProductsStyles };

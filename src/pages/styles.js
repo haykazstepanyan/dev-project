@@ -92,16 +92,6 @@ const accountStyles = createUseStyles({
   },
 });
 
-const shopStyles = createUseStyles({
-  shopItemContainer: {
-    marginLeft: 25,
-  },
-  shopItem: {
-    padding: "0 !important",
-    marginBottom: 24,
-  },
-});
-
 const cartStyles = createUseStyles({
   couponBlock: {
     backgroundColor: colors.black,
@@ -122,19 +112,6 @@ const cartStyles = createUseStyles({
       fontSize: "14px",
       marginBottom: "20px",
     },
-    // "& input": {
-    //   border: "1px solid #e1e1e1",
-    //   maxHeight: 45,
-    //   height: 35,
-    //   background: "#ffffff",
-    //   textIndent: 20,
-    //   color: "#757575",
-    //   marginRight: 10,
-    //   marginBottom: 10,
-    // },
-    // "& input:focus-visible": {
-    //   outline: "none",
-    // },
   },
   cartTotalsBottom: {
     padding: "25px",
@@ -318,9 +295,6 @@ const mainStyles = createUseStyles({
   welcomeHomeThumb: {
     textAlign: "center",
   },
-  "@media only screen and (max-width: 767px)": {
-    // marginBottom: "32px",
-  },
   colLg7: {
     "@media (min-width: 992px)": {
       width: "58.33333333%",
@@ -473,13 +447,14 @@ const mainStyles = createUseStyles({
     transform: "translatey(-50%)",
   },
 });
+
 const signUpInStyles = createUseStyles({
   formContainer: {
     padding: [[50, 0]],
   },
   formStyle: {
     width: 350,
-    border: "1px solid #e1e1e1",
+    border: `1px solid ${colors.milky}`,
     padding: "23px 20px 29px",
     boxSizing: "border-box",
   },
@@ -513,6 +488,11 @@ const productViewStyles = createUseStyles({
       color: colors.green,
       cursor: "pointer",
     },
+  },
+  goBackText: {
+    fontSize: 12,
+    marginLeft: 12,
+    color: colors.green,
   },
   "container_grid-container": {
     alignItems: "center",
@@ -599,7 +579,6 @@ export {
   contactUsStyles,
   accountStyles,
   cartStyles,
-  shopStyles,
   mainStyles,
   signUpInStyles,
   productViewStyles,
