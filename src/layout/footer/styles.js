@@ -1,4 +1,6 @@
-const styles = {
+import { createUseStyles } from "react-jss";
+
+const footerStyles = createUseStyles({
   footer: {
     lineHeight: "24px",
     fontSize: "14px",
@@ -115,7 +117,28 @@ const styles = {
   },
   infoContainer: {
     "@media only screen and (max-width: 600px)": {
-      widht: 150,
+      width: 150,
+    },
+  },
+  rowHeading: {
+    fontSize: 13,
+    marginBottom: 20,
+    paddingBottom: 10,
+    textTransform: "uppercase",
+    fontWeight: "600!important",
+    position: "relative",
+    "&:before": {
+      content: "''",
+      width: 35,
+      height: 2,
+      background: "#222222",
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+    },
+    "@media only screen and (max-width: 900px)": {
+      marginBottom: 12,
+      fontSize: 14,
     },
   },
   footerInfoMenu: {
@@ -246,6 +269,6 @@ const styles = {
       "@media only screen and (max-width: 767px)": { width: "100%" },
     },
   },
-};
+});
 
-export default styles;
+export default footerStyles;

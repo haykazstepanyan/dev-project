@@ -1,16 +1,13 @@
 import { Link } from "react-router-dom";
-import { createUseStyles } from "react-jss";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GoogleIcon from "@mui/icons-material/Google";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import logo from "../../assets/images/logo.jpg";
-import styles from "./styles";
-
-const useStyles = createUseStyles(styles);
+import footerStyles from "./styles";
 
 function ContactLinks() {
-  const classes = useStyles();
+  const classes = footerStyles();
   const links = [
     { icon: <FacebookOutlinedIcon />, key: "facebook" },
     { icon: <TwitterIcon />, key: "twitter" },

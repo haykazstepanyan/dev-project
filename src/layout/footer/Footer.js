@@ -1,12 +1,9 @@
-import { createUseStyles } from "react-jss";
 import FooterTop from "./FooterTop";
+import footerStyles from "./styles";
 // import FooterBottom from "./FooterBottom";
-import styles from "./styles";
-
-const useStyles = createUseStyles(styles);
 
 function Footer() {
-  const classes = useStyles();
+  const classes = footerStyles();
   return (
     <div className={classes.footer}>
       <FooterTop />
