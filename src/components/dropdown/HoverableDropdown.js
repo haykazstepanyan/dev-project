@@ -9,15 +9,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "../button";
 import { hoverableDropdownStyles } from "./styles";
 
-function HoverableDropdown({ value, list }) {
+function HoverableDropdown({ value, list, change }) {
   const classes = hoverableDropdownStyles();
   const popupState = usePopupState({
     variant: "popover",
     popupId: "demoMenu",
   });
 
-  const handleDropdownClick = () => {
+  const handleDropdownClick = (key) => {
     popupState.close();
+    return change && change(key);
   };
 
   return (
@@ -37,14 +38,14 @@ function HoverableDropdown({ value, list }) {
         transformOrigin={{ vertical: "top", horizontal: "left" }}
         disableScrollLock
       >
-        {list.map((elem) => (
+        {list.map(({ key, item }) => (
           <MenuItem
             className={classes.menuItems}
-            key={elem.key}
-            onClick={handleDropdownClick}
+            key={key}
+            onClick={() => handleDropdownClick(key)}
             disableRipple
           >
-            {elem.item}
+            {item}
           </MenuItem>
         ))}
       </HoverMenu>
@@ -61,6 +62,7 @@ HoverableDropdown.propTypes = {
       PropTypes.object,
     ]),
   ),
+  change: PropTypes.func,
 };
 
 export default HoverableDropdown;

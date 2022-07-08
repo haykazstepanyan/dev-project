@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Dialog, DialogTitle, DialogActions } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import { HoverableDropdown } from "../../components/dropdown";
 import { signOut } from "../../redux/auth/actions";
 import MiniShoppingCart from "../../components/miniShoppingCart";
@@ -12,18 +13,33 @@ import Drawer from "../../components/drawer";
 import Button from "../../components/button";
 import { iconsStyles } from "./styles";
 import useToggle from "../../hooks/useToggle";
+import { hideLoader, setCurrency, showLoader } from "../../redux/app/appSlice";
+import useLazyFetch from "../../hooks/useLazyFetch";
+import { CURRENCY_API_KEY } from "../../constants/constants";
 
 function AccountLinks() {
   const [openModal, setOpenModal] = useState(false);
   const [anchor, setAnchor] = useToggle();
   const role = useSelector((state) => state.auth.role);
+  const selectedCurrency = useSelector((state) => state.app.currency);
   const dispatch = useDispatch();
+  const classes = iconsStyles();
+
+  const currencyList = ["USD", "EUR", "AMD", "RUB"];
+
+  const currencies = currencyList.map((item) => ({
+    item:
+      item === selectedCurrency ? (
+        <span className={classes.selectedCurrency}>{item}</span>
+      ) : (
+        item
+      ),
+    key: item,
+  }));
 
   const toggleDrawer = () => {
     setAnchor();
   };
-
-  const classes = iconsStyles();
 
   const onModalClose = () => {
     setOpenModal(false);
@@ -35,6 +51,61 @@ function AccountLinks() {
     dispatch(signOut());
     onModalClose();
   };
+  const {
+    data: ratesData,
+    error: ratesError,
+    loading: ratesLoading,
+    lazyRefetch: ratesRefetch,
+  } = useLazyFetch();
+
+  useEffect(() => {
+    if (ratesLoading) {
+      dispatch(showLoader({ key: "getRates" }));
+    }
+  }, [dispatch, ratesLoading]);
+
+  useEffect(() => {
+    if (ratesData || ratesError) {
+      dispatch(hideLoader({ key: "getRates" }));
+    }
+  }, [dispatch, ratesData, ratesError]);
+
+  const handleCurrencyChange = (key) => {
+    localStorage.removeItem("currency");
+    localStorage.setItem("currency", key);
+
+    const rates = localStorage.getItem("rates");
+    if (!rates || (rates && new Date(rates.date) < Date.now())) {
+      console.log("There is no rates or date is expired");
+      ratesRefetch(
+        `https://api.apilayer.com/exchangerates_data/latest?symbols=${currencyList.join(
+          ",",
+        )}&base=USD`,
+        {
+          redirect: "follow",
+          headers: {
+            apikey: CURRENCY_API_KEY,
+          },
+        },
+        undefined,
+        true,
+      ).then((res) => {
+        const ratesDate = new Date(res.date);
+        ratesDate.setHours(12, 0, 0, 0);
+
+        const dataForStorage = JSON.stringify({
+          base: "USD",
+          date: ratesDate.toLocaleString(),
+          currencyRates: res.rates,
+        });
+
+        localStorage.setItem("rates", dataForStorage);
+      });
+    }
+    console.log("checking localstorage - ", JSON.parse(rates));
+    dispatch(setCurrency(key));
+  };
+
   const logoutModal = (
     <Dialog
       open={openModal}
@@ -57,8 +128,7 @@ function AccountLinks() {
   );
 
   let allowedLinks;
-  if (role !== "") {
-    // ??????????? if (role)
+  if (role) {
     const linkToAccount =
       role === "ADMIN" || role === "MAIN_ADMIN"
         ? "/admin"
@@ -75,7 +145,6 @@ function AccountLinks() {
         ),
         key: "account",
       },
-
       { item: "Shopping cart", key: "shoppingCart" },
       { item: "Wishlist", key: "wishlist" },
       {
@@ -129,6 +198,11 @@ function AccountLinks() {
       >
         <MiniShoppingCart />
       </Drawer>
+      <HoverableDropdown
+        value={<CurrencyExchangeIcon />}
+        list={currencies}
+        change={handleCurrencyChange}
+      />
       {logoutModal}
     </Grid>
   );

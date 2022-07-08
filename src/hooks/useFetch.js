@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { BASE_URL } from "../constants/constants";
 
-const useFetch = (url, options, method = "GET") => {
+const useFetch = (url, options, method = "GET", withoutBaseURL = false) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,11 +12,14 @@ const useFetch = (url, options, method = "GET") => {
     setError(null);
 
     try {
-      const response = await fetch(`${BASE_URL}${url}`, {
-        credentials: "include",
-        method,
-        ...(options || {}),
-      });
+      const response = await fetch(
+        `${withoutBaseURL ? null : BASE_URL}${url}`,
+        {
+          credentials: "include",
+          method,
+          ...(options || {}),
+        },
+      );
 
       if (!response.ok) {
         const errText = await response.text();
@@ -31,7 +34,7 @@ const useFetch = (url, options, method = "GET") => {
     } finally {
       setLoading(false);
     }
-  }, [url, options, method]);
+  }, [url, options, method, withoutBaseURL]);
   useEffect(() => {
     refetch();
   }, [refetch]);

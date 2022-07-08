@@ -11,14 +11,28 @@ import { productItemStyles } from "./styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
 import { showLoader, hideLoader } from "../../redux/app/appSlice";
 import SignInModal from "../modals/SignInModal";
+import { currencySymbols } from "../../constants/constants";
 
 function ProductItem({ id, title, price, image, discount, wishlistId }) {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const role = useSelector((state) => state.auth.role);
+  const selectedCurrency = useSelector((state) => state.app.currency);
   const [isProductLiked, setIsProductLiked] = useState(!!wishlistId);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
   const classes = productItemStyles();
+  const ratesData = JSON.parse(localStorage.getItem("rates"));
+  const rates = ratesData.currencyRates;
+  let convertedPrice = price * rates[selectedCurrency];
+  let discountedPrice = convertedPrice - (convertedPrice * discount) / 100;
+  if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+    convertedPrice = Math.trunc(convertedPrice);
+    discountedPrice = Math.trunc(discountedPrice);
+  } else {
+    convertedPrice = parseFloat(convertedPrice.toFixed(2));
+    discountedPrice = parseFloat(discountedPrice.toFixed(2));
+  }
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   const {
     data: wishlistChangeData,
@@ -97,10 +111,14 @@ function ProductItem({ id, title, price, image, discount, wishlistId }) {
             </Typography>
             <div>
               <span className={classes.productDiscountedPrice}>
-                ${parseFloat((price - (price * discount) / 100).toFixed(2))}
+                {convertedSymbol}
+                {discountedPrice}
               </span>
               {discount ? (
-                <span className={classes.productRealPrice}>${price}</span>
+                <span className={classes.productRealPrice}>
+                  {convertedSymbol}
+                  {convertedPrice}
+                </span>
               ) : null}
             </div>
             <Sale discount={5} />

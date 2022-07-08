@@ -20,14 +20,16 @@ import useFetch from "../hooks/useFetch";
 import { showLoader, hideLoader, showSnackbar } from "../redux/app/appSlice";
 import useLazyFetch from "../hooks/useLazyFetch";
 import SignInModal from "../components/modals/SignInModal";
+import { currencySymbols } from "../constants/constants";
 
 function Product() {
   const [isProductLiked, setIsProductLiked] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const selectedCurrency = useSelector((state) => state.app.currency);
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
   const { productId } = useParams();
   const navigate = useNavigate();
-  const isAuth = useSelector((state) => state.auth.isAuth);
   const classes = productViewStyles();
 
   const { data: productData, error: productError } = useFetch(
@@ -50,6 +52,19 @@ function Product() {
     productImg,
     wishlist,
   } = productData?.data || {};
+
+  const ratesData = JSON.parse(localStorage.getItem("rates"));
+  const rates = ratesData.currencyRates;
+  let convertedPrice = price * rates[selectedCurrency];
+  let discountedPrice = convertedPrice - (convertedPrice * discount) / 100;
+  if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+    convertedPrice = Math.trunc(convertedPrice);
+    discountedPrice = Math.trunc(discountedPrice);
+  } else {
+    convertedPrice = parseFloat(convertedPrice.toFixed(2));
+    discountedPrice = parseFloat(discountedPrice.toFixed(2));
+  }
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   useEffect(() => {
     if (wishlistChangeLoading) {
@@ -175,11 +190,13 @@ function Product() {
                 <Box component="div" marginBottom={3}>
                   <Typography>
                     <span className={classes["product_current-price"]}>
-                      ${price - (price * discount) / 100}
+                      {convertedSymbol}
+                      {discountedPrice}
                     </span>
                     {discount ? (
                       <span className={classes["product_old-price"]}>
-                        ${price}
+                        {convertedSymbol}
+                        {convertedPrice}
                       </span>
                     ) : null}
                   </Typography>
