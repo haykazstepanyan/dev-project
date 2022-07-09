@@ -11,14 +11,11 @@ const useLazyFetch = () => {
       setData(null);
       setError(null);
       try {
-        const response = await fetch(
-          `${withoutBaseURL ? null : BASE_URL}${url}`,
-          {
-            credentials: "include",
-            method,
-            ...(options || {}),
-          },
-        );
+        const response = await fetch(withoutBaseURL ? url : BASE_URL + url, {
+          credentials: "include",
+          method,
+          ...(options || {}),
+        });
         if (!response.ok) {
           const errText = await response.text();
           throw new Error(errText);

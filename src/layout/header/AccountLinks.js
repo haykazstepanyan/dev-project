@@ -74,7 +74,8 @@ function AccountLinks() {
     localStorage.removeItem("currency");
     localStorage.setItem("currency", key);
 
-    const rates = localStorage.getItem("rates");
+    const rates = JSON.parse(localStorage.getItem("rates"));
+
     if (!rates || (rates && new Date(rates.date) < Date.now())) {
       console.log("There is no rates or date is expired");
       ratesRefetch(
@@ -91,7 +92,9 @@ function AccountLinks() {
         true,
       ).then((res) => {
         const ratesDate = new Date(res.date);
+
         ratesDate.setHours(12, 0, 0, 0);
+        ratesDate.setDate(ratesDate.getDate() + 1);
 
         const dataForStorage = JSON.stringify({
           base: "USD",
@@ -102,7 +105,7 @@ function AccountLinks() {
         localStorage.setItem("rates", dataForStorage);
       });
     }
-    console.log("checking localstorage - ", JSON.parse(rates));
+    console.log("checking localstorage - ", rates);
     dispatch(setCurrency(key));
   };
 

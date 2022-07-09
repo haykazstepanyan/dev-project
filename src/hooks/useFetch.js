@@ -12,14 +12,11 @@ const useFetch = (url, options, method = "GET", withoutBaseURL = false) => {
     setError(null);
 
     try {
-      const response = await fetch(
-        `${withoutBaseURL ? null : BASE_URL}${url}`,
-        {
-          credentials: "include",
-          method,
-          ...(options || {}),
-        },
-      );
+      const response = await fetch(withoutBaseURL ? url : BASE_URL + url, {
+        credentials: "include",
+        method,
+        ...(options || {}),
+      });
 
       if (!response.ok) {
         const errText = await response.text();
