@@ -81,9 +81,11 @@ function Brand() {
     setBrands(newState);
   }
   function setDeleteBrandData(brandData) {
-    const { id } = brandData;
-    const newState = brands.filter((elem) => elem.id !== id);
-    setBrands(newState);
+    if (brandData?.data) {
+      const { id } = brandData.data;
+      const newState = brands.filter((elem) => elem.id !== id);
+      setBrands(newState);
+    }
   }
   return (
     <>
