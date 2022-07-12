@@ -20,6 +20,20 @@ const adminModalStyles = createUseStyles({
     color: "#2d3351",
     marginBottom: 20,
   },
+  toggleButtonStyle: {
+    "& button.Mui-selected": {
+      color: "white",
+      backgroundColor: "rgb(190 185 172)",
+    },
+    "& button.Mui-selected:hover": {
+      color: "white",
+      backgroundColor: "rgb(190 185 172)",
+    },
+    "& button:hover": {
+      backgroundColor: "white",
+      color: "rgba(0, 0, 0, 0.54)",
+    },
+  },
 });
 
 export { adminModalStyles };

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { showLoader } from "../app/appSlice";
+import { showSnackbar } from "../app/appSlice";
 import { BASE_URL } from "../../constants/constants";
 
 export const getUsers = createAsyncThunk(
@@ -38,9 +38,9 @@ export const deleteUsers = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showLoader({
-          notificationType: "success",
-          notificationMessage: "User is successfully deleted.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "User is successfully deleted.",
         }),
       );
 
@@ -69,9 +69,9 @@ export const updateUsersRole = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showLoader({
-          notificationType: "success",
-          notificationMessage: "User is successfully updated.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "User is successfully updated.",
         }),
       );
 
@@ -109,18 +109,18 @@ export const updateUsersDashboard = createAsyncThunk(
 
       if (result.type === "error") {
         dispatch(
-          showLoader({
-            notificationType: "error",
-            notificationMessage: result.message,
+          showSnackbar({
+            snackbarType: "error",
+            snackbarMessage: result.message,
           }),
         );
         throw new Error();
       }
 
       dispatch(
-        showLoader({
-          notificationType: "success",
-          notificationMessage: "User is successfully updated.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "User is successfully updated.",
         }),
       );
       return result;

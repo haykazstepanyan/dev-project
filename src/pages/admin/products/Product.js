@@ -120,11 +120,21 @@ export default function Product() {
     productFetch();
   }
 
+  const categoriesLength = categories?.categories.length;
+  const brandsLength = brands?.data.length;
+
+  let disabled = true;
+
+  if (categoriesLength && brandsLength) {
+    disabled = false;
+  }
+
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
         <div>
           <Button
+            disabled={disabled}
             letter="capitalize"
             style={{ marginBottom: 20 }}
             page="admin"
@@ -138,10 +148,11 @@ export default function Product() {
           <AdminProductsTable
             setEditProductData={(value) => setEditProductData(value)}
             setDeleteProductData={(value) => setDeleteProductData(value)}
-            selectCategoryData={categories.data}
+            selectCategoryData={categories.categories}
             selectBrandData={brands.data}
             type="product"
             tableData={productsData}
+            disabled={disabled}
           />
         )}
         {products?.dataCount ? (
@@ -152,17 +163,15 @@ export default function Product() {
           />
         ) : null}
       </Container>
-      {open && productsData && categories?.data && brands?.data ? (
+      {open && productsData && categories?.categories && brands?.data && (
         <AdminProductsModal
-          selectCategoryData={categories.data}
+          selectCategoryData={categories.categories}
           selectBrandData={brands.data}
           type="add"
           onClose={() => handleClose()}
           open={open}
           onSubmit={(value) => addData(value)}
         />
-      ) : (
-        ""
       )}
     </>
   );

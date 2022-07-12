@@ -17,6 +17,7 @@ export const NAV_LINKS = [
   { route: "/contact", name: "Contact" },
   { route: "/about", name: "About Us" },
 ];
+export const sortingData = ["price", "date", "name", "quantity"];
 export const BASE_URL = "http://localhost:5000";
 export const CURRENCY_API_KEY = "Ub04rgtiZD7bvvPn8DUHzj6jWdovmbB8";
 export const currencySymbols = {

@@ -5,6 +5,9 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { Checkbox } from "@mui/material";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Button from "../button";
 import Input from "../input/Input";
 import { adminModalStyles } from "./styles";
@@ -13,6 +16,7 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
   const data = type === "add" ? "" : modalData[0];
   const [inputValue, setInputValue] = useState(type === "add" ? "" : data.name);
   const [inputValueUser, setInputValueUser] = useState(data.role);
+  const [relatedProductsDelete, setRelatedProductsDelete] = useState(false);
 
   const handleValue = (e) => {
     setInputValue(e.target.value);
@@ -20,7 +24,8 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
   const handleValueUser = (e) => {
     setInputValueUser(e.target.value);
   };
-  const editData = () => {
+  const editData = (e) => {
+    e.preventDefault();
     const brandData = {
       id: data.id,
       name: inputValue,
@@ -37,12 +42,20 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
   };
 
   const deleteData = () => {
-    onSubmit(data.id);
+    const deletedData = {
+      relatedProductsDelete,
+      id: data.id,
+    };
+    onSubmit(deletedData);
   };
   const addData = (e) => {
     e.preventDefault();
 
     onSubmit(inputValue);
+  };
+
+  const productsDeleteCheck = (e) => {
+    setRelatedProductsDelete(e.target.checked);
   };
 
   const classes = adminModalStyles();
@@ -59,6 +72,7 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
           <>
             <h2 className={classes.deleteTextStyle}>Edit</h2>
             <ToggleButtonGroup
+              className={classes.toggleButtonStyle}
               color="primary"
               value={inputValueUser}
               exclusive
@@ -145,6 +159,12 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
             >
               Are you sure?
             </Typography>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox onChange={(e) => productsDeleteCheck(e)} />}
+                label="Delete all products related to this"
+              />
+            </FormGroup>
             <div className={classes.textRight}>
               <Button
                 onClick={() => onClose()}

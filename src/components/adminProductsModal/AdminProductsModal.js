@@ -14,8 +14,8 @@ import { v4 } from "uuid";
 import { Formik } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
-import { useDispatch } from "react-redux/es/exports";
-import { showSnackbar } from "../../redux/app/appSlice";
+// import { useDispatch } from "react-redux/es/exports";
+// import { showSnackbar } from "../../redux/app/appSlice";
 import { storage } from "../../firebase/firebase";
 import Button from "../button";
 import Input from "../input/Input";
@@ -36,7 +36,7 @@ function AdminProductsModal({
   selectBrandData,
   selectCategoryData,
 }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { productsValidation } = validations;
   const data = type === "add" ? "" : modalData[0];
   const [imageUpload, setImageUpload] = useState(null);
@@ -44,27 +44,29 @@ function AdminProductsModal({
     type === "edit" ? data.productImg : "",
   );
   const [imageLoader, setImageLoader] = useState(false);
-  const uploadFile = () => {
-    if (imageUpload == null) return;
+  const uploadFile = (image) => {
+    if (image == null) return;
+    setImageUpload(image);
     setImageLoader(true);
-    const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+    const imageRef = ref(storage, `images/${image.name + v4()}`);
+    uploadBytes(imageRef, image).then((snapshot) => {
       if (productImg !== "") {
         const pictureRef = ref(storage, productImg);
         deleteObject(pictureRef)
-          .then(() => {
+          .then(() => {})
+          .catch(() => {
+            // dispatch(
+            //   showSnackbar({
+            //     snackbarType: "error",
+            //     snackbarMessage: "Oops! Couldn't delete image.",
+            //   }),
+            // );
+          })
+          .finally(() => {
             getDownloadURL(snapshot.ref).then((url) => {
               setProductImg(url);
               setImageLoader(false);
             });
-          })
-          .catch(() => {
-            dispatch(
-              showSnackbar({
-                snackbarType: "error",
-                snackbarMessage: "Oops! Something went wrong",
-              }),
-            );
           });
       } else {
         getDownloadURL(snapshot.ref).then((url) => {
@@ -115,9 +117,14 @@ function AdminProductsModal({
               price: type === "add" ? "" : data.price,
               discount: type === "add" ? "" : data.discount,
               description: type === "add" ? "" : data.description,
-              brandId: type === "edit" ? data.brandId : selectBrandData[0].id,
+              brandId:
+                type === "edit" && data.brandId
+                  ? data.brandId
+                  : selectBrandData[0].id,
               categoryId:
-                type === "edit" ? data.categoryId : selectCategoryData[0].id,
+                type === "edit" && data.categoryId
+                  ? data.categoryId
+                  : selectCategoryData[0].id,
             }}
             validationSchema={productsValidation}
             onSubmit={(values) => submitProductForm(values)}
@@ -260,7 +267,7 @@ function AdminProductsModal({
                         multiple
                         type="file"
                         onChange={(event) => {
-                          setImageUpload(event.target.files[0]);
+                          uploadFile(event.target.files[0]);
                         }}
                       />
                       <Button
@@ -293,7 +300,7 @@ function AdminProductsModal({
                     )}
                   </div>
                   <div>
-                    <Button
+                    {/* <Button
                       onClick={() => uploadFile()}
                       style={{ textTransform: "capitalize" }}
                       color="secondary"
@@ -301,7 +308,7 @@ function AdminProductsModal({
                       page="admin"
                     >
                       View Image
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
 

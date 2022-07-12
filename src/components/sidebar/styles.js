@@ -4,6 +4,9 @@ import { colors } from "../../constants/constants";
 const shopSidebarStyles = createUseStyles({
   shopSidebarContainer: {
     paddingRight: 20,
+    "@media screen and (max-width: 600px)": {
+      padding: 10,
+    },
   },
   shopSidebar: {
     marginRight: 16,

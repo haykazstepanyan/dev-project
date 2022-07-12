@@ -2,20 +2,8 @@ import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
 const productItemStyles = createUseStyles({
-  productCard: {
+  product: {
     position: "relative",
-    maxWidth: 255,
-    textAlign: "center",
-    background: colors.lightGrey,
-  },
-  cardContent: {
-    position: "relative",
-  },
-  goBackIcon: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-    color: colors.green,
   },
   productName: {
     fontSize: 14,
@@ -27,6 +15,18 @@ const productItemStyles = createUseStyles({
     "-webkit-box-orient": "vertical",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    "& a:hover": {
+      color: colors.green,
+    },
+  },
+  productDescription: {
+    display: "none",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    fontSize: 14,
+    color: colors.black,
+    textTransform: "Capitalize",
+    "-webkit-box-orient": "vertical",
   },
   productDiscountedPrice: {
     fontWeight: 500,
@@ -39,11 +39,66 @@ const productItemStyles = createUseStyles({
     fontWeight: 400,
     fontSize: 12,
   },
-  "@media screen and (max-width: 600px)": {
-    productCard: {
-      margin: [[0, "auto"]],
+  productImg: {
+    height: 180,
+  },
+  multipleProductsCard: {
+    textAlign: "center",
+    background: colors.lightGrey,
+  },
+  singleProductCard: {
+    display: "flex",
+    boxShadow: "none",
+    "& $productImg": {
+      width: 250,
+      height: 250,
+    },
+    "& $productName": {
+      fontSize: 18,
+      height: "auto",
+    },
+    "& $productDescription": {
+      height: 63,
+      "-webkit-line-clamp": 3,
+      display: "-webkit-box",
+    },
+    "& $productPrices": {
+      marginTop: 16,
+    },
+    "& $productIcons": {
+      marginTop: 24,
     },
   },
+  "@media screen and (max-width: 600px)": {
+    product: {
+      boxShadow: "none",
+      background: "transparent",
+      marginBottom: 24,
+    },
+    productCardContent: {
+      textAlign: "left",
+    },
+    productName: {
+      fontSize: 18,
+    },
+    productImg: {
+      height: 350,
+    },
+    productImgLink: {
+      width: "fit-content",
+      margin: [[0, "auto"]],
+    },
+    multipleProductsCard: {
+      margin: [[0, "auto"]],
+    },
+    singleProductCard: {
+      flexDirection: "column",
+    },
+  },
+  productCardContent: {},
+  productPrices: {},
+  productIcons: {},
+  productImgLink: {},
 });
 
 const saleStyles = createUseStyles({
@@ -60,9 +115,76 @@ const saleStyles = createUseStyles({
 
 const shopPageProductsStyles = createUseStyles({
   shopItem: {
-    padding: [[0, 5]],
+    padding: [[0, 8]],
     marginBottom: 24,
+    "@media screen and (max-width: 600px)": {
+      padding: 0,
+    },
   },
 });
 
-export { productItemStyles, saleStyles, shopPageProductsStyles };
+const ToolbarStyles = createUseStyles({
+  shopWrapper: {
+    border: `1px solid ${colors.milky}`,
+    padding: 12,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    margin: [[0, 8, 24]],
+  },
+  shopWrapperIconsContainer: {},
+  shopWrapperIcons: {
+    marginRight: 12,
+    cursor: "pointer",
+    padding: 0,
+    "&:hover": {
+      color: colors.green,
+    },
+  },
+  activeOrder: {
+    color: colors.green,
+  },
+  sortingForm: {
+    minWidth: 160,
+  },
+  sortingFormControls: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  radioFormControl: {
+    marginLeft: 16,
+  },
+  radioButtons: {
+    "& span": {
+      paddingTop: 0,
+      paddingBottom: 0,
+      fontSize: 12,
+      "&:hover": {
+        background: "transparent",
+      },
+    },
+    "& svg": {
+      width: 12,
+      height: 12,
+    },
+  },
+  selectedRadioButton: {
+    "& span": {
+      color: colors.green,
+    },
+  },
+  "@media screen and (max-width: 600px)": {
+    shopWrapper: {
+      flexDirection: "column",
+    },
+    shopWrapperIconsContainer: {
+      display: "none",
+    },
+    sortingFormControls: {
+      marginBottom: 16,
+    },
+  },
+});
+
+export { productItemStyles, saleStyles, shopPageProductsStyles, ToolbarStyles };

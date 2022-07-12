@@ -26,10 +26,10 @@ function Table({ type, tableData, deleteData }) {
 
   const selectedCurrency = useSelector((state) => state.app.currency);
   const ratesData = JSON.parse(localStorage.getItem("rates"));
-  const rates = ratesData.currencyRates;
+  const rates = ratesData?.currencyRates;
 
   const countByCurrencyRate = (price) => {
-    const convertedPrice = price * rates[selectedCurrency];
+    const convertedPrice = price * (rates?.[selectedCurrency] || 1);
     if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
       return Math.trunc(convertedPrice);
     }

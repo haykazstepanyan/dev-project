@@ -134,7 +134,7 @@ function AccountLinks() {
   if (role) {
     const linkToAccount =
       role === "ADMIN" || role === "MAIN_ADMIN"
-        ? "/admin"
+        ? "/admin/brand"
         : "/account/dashboard";
 
     allowedLinks = [
