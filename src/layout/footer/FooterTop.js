@@ -1,5 +1,6 @@
 import { Container, Grid, Typography } from "@mui/material";
 // import Information from "./Information";
+import clsx from "clsx";
 import SocialLinks from "./SocialLinks";
 import footerStyles from "./styles";
 import Sections from "./Sections";
@@ -41,7 +42,7 @@ function FooterTop() {
             item
             sm={4}
             xs={12}
-            className={`${classes.gridRow} ${classes.gridRowLogo}`}
+            className={clsx(classes.gridRowm, classes.gridRowLogo)}
           >
             <SocialLinks />
           </Grid>
@@ -49,7 +50,7 @@ function FooterTop() {
             item
             sm={4}
             xs={12}
-            className={`${classes.gridRow} ${classes.rightGrid}`}
+            className={clsx(classes.gridRowm, classes.rightGrid)}
           >
             <div className={classes.infoContainer}>
               <Sections heading="MY ACCOUNT" data={accountData} />

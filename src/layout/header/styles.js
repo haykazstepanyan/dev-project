@@ -105,14 +105,20 @@ const iconsStyles = createUseStyles({
   iconsContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    "& .MuiButton-root": {
+      padding: 0,
+      minWidth: "auto",
+    },
   },
   icons: {
-    marginRight: 20,
     cursor: "pointer",
     "&:hover": {
       color: colors.success,
     },
+  },
+  selectedCurrency: {
+    color: colors.green,
   },
   bottomCategories: {
     display: "flex",

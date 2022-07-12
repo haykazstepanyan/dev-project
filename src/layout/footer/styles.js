@@ -40,7 +40,10 @@ const footerStyles = createUseStyles({
     justifyContent: "center",
   },
   rightGrid: {
+    display: "flex",
+    justifyContent: "space-between",
     "@media only screen and (max-width: 900px)": {
+      flexDirection: "column",
       textAlign: "right",
       "& h3": {
         "&:before": {
@@ -50,6 +53,8 @@ const footerStyles = createUseStyles({
       },
     },
     "@media only screen and (max-width: 600px)": {
+      flexDirection: "row",
+      justifyContent: "space-evenly",
       textAlign: "inherit",
       "& h3": {
         "&:before": {

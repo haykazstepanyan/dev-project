@@ -15,8 +15,9 @@ function Shop() {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [priceSliderValues, setPriceSliderValues] = useState([0, 100]);
-
   const [searchParams, setSearchParams] = useSearchParams();
+  const [orderBy, setOrderBy] = useState(searchParams.get("order") || "date");
+  const [sortBy, setSortBy] = useState(searchParams.get("sort") || "desc");
   const [page, setPage] = useState(+searchParams.get("page") || 1);
 
   const classes = shopStyles();
@@ -224,10 +225,24 @@ function Shop() {
     setPriceSliderValues((prevState) => [prevState[0], +e.target.value]);
   };
 
+  const handleOrderingProducts = (value) => {
+    searchParams.delete("order");
+    searchParams.append("order", value);
+    setSearchParams(searchParams);
+    setOrderBy(value);
+  };
+
+  const handleSortByProducts = (value) => {
+    searchParams.delete("sort");
+    searchParams.append("sort", value);
+    setSearchParams(searchParams);
+    setSortBy(value);
+  };
+
   return (
     <>
       <Banner name="Shop" />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className={classes.shop}>
         <Box mt={12.5}>
           <Grid container className={classes.shopContainer}>
             {brands?.data && categories && (
@@ -251,6 +266,10 @@ function Shop() {
                 products={products}
                 page={page}
                 goToPage={goToPage}
+                orderProductsBy={orderBy}
+                changeOrdering={handleOrderingProducts}
+                sortProductsBy={sortBy}
+                changeSorting={handleSortByProducts}
               />
             )}
           </Grid>

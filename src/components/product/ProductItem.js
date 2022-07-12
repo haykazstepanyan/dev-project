@@ -5,20 +5,46 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import clsx from "clsx";
 import Sale from "./Sale";
 import { productItemStyles } from "./styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
 import { showLoader, hideLoader } from "../../redux/app/appSlice";
 import SignInModal from "../modals/SignInModal";
+import { currencySymbols } from "../../constants/constants";
+import Button from "../button";
 
-function ProductItem({ id, title, price, image, discount, wishlistId }) {
+function ProductItem({
+  id,
+  title,
+  description,
+  price,
+  image,
+  discount,
+  wishlistId,
+  order,
+}) {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const role = useSelector((state) => state.auth.role);
+  const selectedCurrency = useSelector((state) => state.app.currency);
   const [isProductLiked, setIsProductLiked] = useState(!!wishlistId);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
   const classes = productItemStyles();
+  const ratesData = JSON.parse(localStorage.getItem("rates"));
+  const rates = ratesData?.currencyRates;
+  let convertedPrice = price * (rates?.[selectedCurrency] || 1);
+  let discountedPrice = convertedPrice - (convertedPrice * discount) / 100;
+  if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+    convertedPrice = Math.trunc(convertedPrice);
+    discountedPrice = Math.trunc(discountedPrice);
+  } else {
+    convertedPrice = parseFloat(convertedPrice.toFixed(2));
+    discountedPrice = parseFloat(discountedPrice.toFixed(2));
+  }
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   const {
     data: wishlistChangeData,
@@ -88,35 +114,61 @@ function ProductItem({ id, title, price, image, discount, wishlistId }) {
 
   return (
     <>
-      <Card className={classes.productCard}>
-        <Link to={`/product/${id}`}>
-          <CardMedia component="img" alt={title} height="180" image={image} />
-          <CardContent>
-            <Typography gutterBottom className={classes.productName}>
-              {title}
-            </Typography>
-            <div>
-              <span className={classes.productDiscountedPrice}>
-                ${parseFloat((price - (price * discount) / 100).toFixed(2))}
-              </span>
-              {discount ? (
-                <span className={classes.productRealPrice}>${price}</span>
-              ) : null}
-            </div>
-            <Sale discount={5} />
-          </CardContent>
+      <Card
+        className={clsx(classes.product, {
+          [classes.multipleProductsCard]: order === "multiple",
+          [classes.singleProductCard]: order === "single",
+        })}
+      >
+        <Link to={`/product/${id}`} className={classes.productImgLink}>
+          <CardMedia
+            component="img"
+            alt={title}
+            image={image}
+            className={classes.productImg}
+          />
         </Link>
-        <span>
-          {role !== "ADMIN" && role !== "MAIN_ADMIN" && (
-            <IconButton onClick={handleWishlistChange}>
-              {isProductLiked ? (
-                <FavoriteIcon />
-              ) : (
-                <FavoriteBorderOutlinedIcon />
-              )}
-            </IconButton>
-          )}
-        </span>
+        <CardContent className={classes.productCardContent}>
+          <Typography gutterBottom className={classes.productName}>
+            <Link to={`/product/${id}`}>{title}</Link>
+          </Typography>
+          <Typography gutterBottom className={classes.productDescription}>
+            {description}
+          </Typography>
+          <div className={classes.productPrices}>
+            <span className={classes.productDiscountedPrice}>
+              {convertedSymbol}
+              {discountedPrice}
+            </span>
+            {discount ? (
+              <span className={classes.productRealPrice}>
+                {convertedSymbol}
+                {convertedPrice}
+              </span>
+            ) : null}
+          </div>
+          <Sale discount={5} />
+          <div className={classes.productIcons}>
+            {order === "single" ? (
+              <Button color="secondary" borders="rounded" size="small">
+                Add To Cart
+              </Button>
+            ) : (
+              <IconButton>
+                <AddShoppingCartIcon />
+              </IconButton>
+            )}
+            {role !== "ADMIN" && role !== "MAIN_ADMIN" && (
+              <IconButton onClick={handleWishlistChange}>
+                {isProductLiked ? (
+                  <FavoriteIcon />
+                ) : (
+                  <FavoriteBorderOutlinedIcon />
+                )}
+              </IconButton>
+            )}
+          </div>
+        </CardContent>
       </Card>
       <SignInModal open={openModal} closeModal={onModalClose} />
     </>
@@ -130,10 +182,12 @@ ProductItem.defaultProps = {
 ProductItem.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
+  description: PropTypes.string,
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   discount: PropTypes.number,
   wishlistId: PropTypes.number,
+  order: PropTypes.string,
 };
 
 export default ProductItem;

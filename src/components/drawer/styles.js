@@ -9,7 +9,6 @@ const drawerStyles = createUseStyles({
     },
   },
   icons: {
-    marginRight: 20,
     cursor: "pointer",
     "&:hover": {
       color: colors.success,

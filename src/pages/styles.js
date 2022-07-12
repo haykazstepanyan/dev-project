@@ -476,6 +476,11 @@ const signUpInStyles = createUseStyles({
 });
 
 const shopStyles = createUseStyles({
+  shop: {
+    "@media screen and (max-width: 600px)": {
+      padding: 0,
+    },
+  },
   shopContainer: {
     "@media screen and (max-width: 900px)": {
       flexDirection: "column-reverse",

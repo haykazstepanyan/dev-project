@@ -4,6 +4,7 @@ const appSlice = createSlice({
   name: "app",
   initialState: {
     isMobile: false,
+    currency: localStorage.getItem("currency") || "USD",
     loading: [],
     snackbar: {
       type: null,
@@ -37,6 +38,9 @@ const appSlice = createSlice({
         message: null,
       };
     },
+    setCurrency(state, { payload }) {
+      state.currency = payload;
+    },
   },
 });
 
@@ -46,6 +50,7 @@ export const {
   hideLoader,
   showSnackbar,
   hideSnackbar,
+  setCurrency,
 } = appSlice.actions;
 
 export default appSlice;

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import MuiDrawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
+import clsx from "clsx";
 import drawerStyles from "./styles";
 
 function Drawer({
@@ -16,7 +17,9 @@ function Drawer({
   return (
     <>
       <OpenIcon
-        className={`${classes.icons} ${outline ? classes.outline : ""}`}
+        className={clsx(classes.icons, {
+          [classes.outline]: outline,
+        })}
         onClick={toggleDrawer}
       />
       <MuiDrawer

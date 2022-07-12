@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   Table as MuiTable,
@@ -16,11 +17,26 @@ import {
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Button from "../button";
 import { tableStyles } from "./styles";
+import { currencySymbols } from "../../constants/constants";
 
 function Table({ type, tableData, deleteData }) {
   const [openModal, setOpenModal] = useState(false);
   const [selectedWishlist, setSelectedWishlist] = useState(null);
   const classes = tableStyles();
+
+  const selectedCurrency = useSelector((state) => state.app.currency);
+  const ratesData = JSON.parse(localStorage.getItem("rates"));
+  const rates = ratesData?.currencyRates;
+
+  const countByCurrencyRate = (price) => {
+    const convertedPrice = price * (rates?.[selectedCurrency] || 1);
+    if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+      return Math.trunc(convertedPrice);
+    }
+    return parseFloat(convertedPrice.toFixed(2));
+  };
+
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   const onModalClose = () => {
     setOpenModal(false);
@@ -102,7 +118,10 @@ function Table({ type, tableData, deleteData }) {
                   </TableCell>
                   <TableCell>{row.product.name}</TableCell>
                   <TableCell className="price">
-                    <p>${row.product.price}</p>
+                    <p>
+                      {convertedSymbol}
+                      {countByCurrencyRate(row.product.price)}
+                    </p>
                   </TableCell>
                   {type === "wishlist" ? (
                     <TableCell>
