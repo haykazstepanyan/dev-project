@@ -42,7 +42,7 @@ function Main() {
       </Grid>
       <Grid item xs={8} className={classes.shipingArea}>
         <div className={classes.container}>
-          <div className={classes.row}>
+          <div className={classes.row} style={{ justifyContent: "flex-start" }}>
             <div className={classes.colLg4}>
               <div className={classes.singleShipping}>
                 <div className={classes.shippingIcone}>

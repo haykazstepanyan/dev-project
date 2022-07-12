@@ -13,12 +13,19 @@ import { getCategories } from "./redux/category/actions";
 function App() {
   const dispatch = useDispatch();
   const snackbar = useSelector((state) => state.app.snackbar);
+  // const isAuth = useSelector((state) => state.auth.isAuth);
   const loading = useSelector((state) => state.app.loading);
 
   useEffect(() => {
     dispatch(checkIsAuth());
     dispatch(getCategories());
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   if (!isAuth) {
+  //     console.log("auth", isAuth);
+  //   }
+  // }, [isAuth]);
 
   useEffect(() => {
     const handleIsMobileVersion = () =>

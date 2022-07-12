@@ -110,12 +110,13 @@ const theme = createTheme({
         {
           props: { purpose: "modalCancel" },
           style: {
+            border: "1px solid #ddd",
+            color: "#7b7474",
+            padding: [[3, 8]],
+            height: 36,
             background: "transparent",
-            border: `3px solid ${colors.black}`,
-            color: colors.black,
-            padding: "3px 8px",
             "&:hover": {
-              backgroundColor: colors.black,
+              backgroundColor: "#aeb1b0",
               color: colors.white,
             },
           },

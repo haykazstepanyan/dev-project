@@ -22,11 +22,13 @@ function HeaderMobileDrawer() {
         OpenIcon={FormatAlignJustifyIcon}
         outline
       >
-        <div className={classes.welcomeText}>
-          <p>Free Delivery: Take advantage of our time to save event</p>
+        <div>
+          <div className={classes.welcomeText}>
+            <p>Free Delivery: Take advantage of our time to save event</p>
+          </div>
+          <SearchBox toggleDrawer={toggleDrawer} distance={1} />
+          <Navbar toggleDrawer={toggleDrawer} />
         </div>
-        <SearchBox toggleDrawer={toggleDrawer} distance={1} />
-        <Navbar toggleDrawer={toggleDrawer} />
       </Drawer>
     </Grid>
   );

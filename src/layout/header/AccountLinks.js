@@ -116,17 +116,22 @@ function AccountLinks() {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
-        Are you sure you want to sign out?
-      </DialogTitle>
-      <DialogActions>
-        <Button purpose="modalCancel" onClick={onModalClose} disableRipple>
-          Cancel
-        </Button>
-        <Button color="primary" onClick={handleSignOut} disableRipple>
-          Sign Out
-        </Button>
-      </DialogActions>
+      <div style={{ padding: 20 }}>
+        <DialogTitle
+          id="alert-dialog-title"
+          style={{ padding: 0, marginBottom: 20 }}
+        >
+          Are you sure you want to sign out?
+        </DialogTitle>
+        <DialogActions>
+          <Button purpose="modalCancel" onClick={onModalClose} disableRipple>
+            Cancel
+          </Button>
+          <Button color="primary" onClick={handleSignOut} disableRipple>
+            Sign Out
+          </Button>
+        </DialogActions>
+      </div>
     </Dialog>
   );
 
