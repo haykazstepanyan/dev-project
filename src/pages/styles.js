@@ -252,6 +252,7 @@ const mainStyles = createUseStyles({
       marginBottom: "18px",
       fontWeight: "400",
       marginTop: "0",
+      color: "#2d383f",
     },
     "& h2": {
       fontSize: "21px",
@@ -260,15 +261,26 @@ const mainStyles = createUseStyles({
       fontWeight: "400",
       marginTop: "0",
     },
+    "& h4": {
+      fontWeight: "500",
+      color: "#2d383f",
+    },
+    "& >div": {
+      background: "#ffffff57",
+      padding: 20,
+      borderRadius: 4,
+    },
   },
   bannerContentLink: {
-    fontSize: "13px",
     lineHeight: "17px",
     fontWeight: "500",
     display: "inline-block",
     borderBottom: "2px solid #79a206",
     textTransform: "uppercase",
     marginTop: "36px",
+    fontSize: 16,
+    paddingBottom: 5,
+    color: "#232424",
   },
   imgResponsive: {
     maxWidth: "100%",

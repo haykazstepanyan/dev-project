@@ -98,10 +98,12 @@ function Main() {
                       <img src={banner1} alt="" />
                     </Link>
                     <div className={classes.bannerContent}>
-                      <h3>Big Sale Products</h3>
-                      <h2>
-                        Plants <br /> For Interior
-                      </h2>
+                      <div>
+                        <h3>Big Sale Products</h3>
+                        <h4>
+                          Plants <br /> For Interior
+                        </h4>
+                      </div>
                       <Link className={classes.bannerContentLink} to="/shop">
                         Shop Now
                       </Link>
@@ -119,10 +121,12 @@ function Main() {
                       <img src={banner2} alt="" />
                     </Link>
                     <div className={classes.bannerContent}>
-                      <h3>Top Products</h3>
-                      <h2>
-                        Plants <br /> For Healthy
-                      </h2>
+                      <div>
+                        <h3>Top Products</h3>
+                        <h4>
+                          Plants <br /> For Healthy
+                        </h4>
+                      </div>
                       <Link className={classes.bannerContentLink} to="/shop">
                         Shop Now
                       </Link>
