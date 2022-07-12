@@ -94,8 +94,10 @@ function Toolbar({
           </RadioGroup>
         </FormControl>
       </div>
-      <div>
-        {productsLength > 9 && `Showing 1-9 of ${productsLength} results`}
+      <div className={classes.productsLength}>
+        {productsLength > 9
+          ? `Showing 1-9 of ${productsLength} results`
+          : `Showing ${productsLength} results`}
       </div>
     </div>
   );

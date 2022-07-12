@@ -133,6 +133,7 @@ const ToolbarStyles = createUseStyles({
     margin: [[0, 8, 24]],
   },
   shopWrapperIconsContainer: {},
+  productsLength: {},
   shopWrapperIcons: {
     marginRight: 12,
     cursor: "pointer",
@@ -181,8 +182,8 @@ const ToolbarStyles = createUseStyles({
     shopWrapperIconsContainer: {
       display: "none",
     },
-    sortingFormControls: {
-      marginBottom: 16,
+    productsLength: {
+      paddingTop: 16,
     },
   },
 });
