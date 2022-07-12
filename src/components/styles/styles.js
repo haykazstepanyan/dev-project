@@ -64,9 +64,13 @@ const globalStyles = createUseStyles({
     alignItems: "center",
     margin: [[0, "auto"]],
     color: colors.black,
+    paddingBottom: 32,
     "& img": {
       width: 400,
       height: 225,
+      "@media screen and (max-width: 600px)": {
+        width: "100%",
+      },
     },
   },
   textCenter: {

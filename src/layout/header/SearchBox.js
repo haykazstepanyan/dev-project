@@ -8,7 +8,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { ClickableDropdown } from "../../components/dropdown";
 import { searchBoxStyles } from "./styles";
 
-function SearchBox({ distance }) {
+function SearchBox({ distance, toggleDrawer }) {
   const [category, setCategory] = useState({ id: 0, name: "All categories" });
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState(
@@ -38,6 +38,7 @@ function SearchBox({ distance }) {
     }
     setSearchParams(searchParams);
     navigate(`/shop${window.location.search}`);
+    toggleDrawer();
   };
 
   return (
@@ -68,6 +69,7 @@ function SearchBox({ distance }) {
 
 SearchBox.propTypes = {
   distance: PropTypes.number,
+  toggleDrawer: PropTypes.func,
 };
 
 export default SearchBox;

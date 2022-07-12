@@ -17,6 +17,7 @@ export const NAV_LINKS = [
   { route: "/contact", name: "Contact" },
   { route: "/about", name: "About Us" },
 ];
+export const sortingData = ["price", "date", "name", "quantity"];
 export const BASE_URL = "http://localhost:5000";
 
 // --c-blue: #0d6efd;

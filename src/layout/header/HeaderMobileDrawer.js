@@ -25,7 +25,7 @@ function HeaderMobileDrawer() {
         <div className={classes.welcomeText}>
           <p>Free Delivery: Take advantage of our time to save event</p>
         </div>
-        <SearchBox distance={1} />
+        <SearchBox toggleDrawer={toggleDrawer} distance={1} />
         <Navbar toggleDrawer={toggleDrawer} />
       </Drawer>
     </Grid>
