@@ -25,7 +25,7 @@ function Sections({ heading, data }) {
 
 Sections.propTypes = {
   heading: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf([PropTypes.objectOf(PropTypes.string)]),
+  data: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
 };
 
 export default Sections;

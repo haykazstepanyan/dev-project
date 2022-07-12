@@ -25,6 +25,7 @@ function AdminProductsTable({
   selectCategoryData,
   setEditProductData,
   setDeleteProductData,
+  disabled,
 }) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
@@ -163,12 +164,14 @@ function AdminProductsTable({
                   <Button
                     onClick={() => handleOpen(row.id)}
                     style={{ backgroundColor: "transparent" }}
+                    disabled={disabled}
                   >
                     <EditIcon className="editIcon" />
                   </Button>
                   <Button
                     onClick={() => handleOpenDelete(row.id)}
                     style={{ backgroundColor: "transparent" }}
+                    disabled={disabled}
                   >
                     <DeleteIcon className="deleteIcon" />
                   </Button>
@@ -218,6 +221,7 @@ AdminProductsTable.propTypes = {
     .isRequired,
   setEditProductData: PropTypes.func,
   setDeleteProductData: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default AdminProductsTable;

@@ -96,8 +96,10 @@ function AdminMainTable({
         "PATCH",
       ).then((e) => {
         if (e) {
-          setEditBrandData(e);
-          handleClose();
+          if (e?.data) {
+            setEditBrandData(e.data);
+            handleClose();
+          }
         }
       });
     } else {
@@ -119,14 +121,18 @@ function AdminMainTable({
     }
   };
   const deleteData = (value) => {
-    if (Number.isInteger(value)) {
+    const { id, relatedProductsDelete } = value;
+    if (Number.isInteger(id)) {
       if (type === "brand") {
         deleteBrand(
-          `/brands/brand/${value}`,
+          `/brands/brand/${id}`,
           {
             headers: {
               "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+              relatedProductsDelete,
+            }),
           },
           "DELETE",
         ).then((e) => {
@@ -143,11 +149,14 @@ function AdminMainTable({
         });
       } else {
         deleteCategory(
-          `/categories/category/${value}`,
+          `/categories/category/${id}`,
           {
             headers: {
               "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+              relatedProductsDelete,
+            }),
           },
           "DELETE",
         ).then((e) => {
