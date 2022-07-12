@@ -1,6 +1,5 @@
 import { memo, useState } from "react";
 import PropTypes from "prop-types";
-import { useSearchParams } from "react-router-dom";
 import { Grid } from "@mui/material";
 import NoData from "../common/NoData";
 import Pagination from "../pagination";
@@ -17,18 +16,15 @@ function ShopPageProducts({
   sortProductsBy,
   changeSorting,
 }) {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [productsOrder, setProductsOrder] = useState(
-    searchParams.get("view") || "multiple",
+    localStorage.getItem("view") || "multiple",
   );
   const classes = shopPageProductsStyles({ productsOrder });
 
   const changeProductsOrder = (order) => {
     if (order === productsOrder) return;
     setProductsOrder(order);
-    searchParams.delete("view");
-    searchParams.append("view", order);
-    setSearchParams(searchParams);
+    localStorage.setItem("view", order);
   };
 
   let gridData;
