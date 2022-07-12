@@ -57,11 +57,11 @@ const contactUsStyles = createUseStyles({
       background: "#ffffff",
       textIndent: 20,
       color: "#757575",
-      marginBottom: 20,
       minWidth: "100%",
       maxWidth: "100%",
       paddingTop: 20,
       minHeight: 100,
+      marginBottom: 0,
     },
     "& input:focus, textarea:focus": {
       outline: "none",

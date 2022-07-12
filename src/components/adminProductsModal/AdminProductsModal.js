@@ -8,14 +8,12 @@ import {
   deleteObject,
 } from "firebase/storage";
 import Typography from "@mui/material/Typography";
-import { FormLabel } from "@mui/material";
+import { FormLabel, InputLabel } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { v4 } from "uuid";
 import { Formik } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
-// import { useDispatch } from "react-redux/es/exports";
-// import { showSnackbar } from "../../redux/app/appSlice";
 import { storage } from "../../firebase/firebase";
 import Button from "../button";
 import Input from "../input/Input";
@@ -36,7 +34,6 @@ function AdminProductsModal({
   selectBrandData,
   selectCategoryData,
 }) {
-  // const dispatch = useDispatch();
   const { productsValidation } = validations;
   const data = type === "add" ? "" : modalData[0];
   const [imageUpload, setImageUpload] = useState(null);
@@ -54,14 +51,7 @@ function AdminProductsModal({
         const pictureRef = ref(storage, productImg);
         deleteObject(pictureRef)
           .then(() => {})
-          .catch(() => {
-            // dispatch(
-            //   showSnackbar({
-            //     snackbarType: "error",
-            //     snackbarMessage: "Oops! Couldn't delete image.",
-            //   }),
-            // );
-          })
+          .catch(() => {})
           .finally(() => {
             getDownloadURL(snapshot.ref).then((url) => {
               setProductImg(url);
@@ -145,6 +135,7 @@ function AdminProductsModal({
                   {type}
                 </h2>
                 <div className={classes.mb10}>
+                  <InputLabel className={classes.labelStyle}>Name</InputLabel>
                   <Input
                     name="name"
                     type="text"
@@ -162,6 +153,7 @@ function AdminProductsModal({
                   </div>
                 </div>
                 <div className={classes.mb10}>
+                  <InputLabel className={classes.labelStyle}>Price</InputLabel>
                   <Input
                     name="price"
                     type="number"
@@ -179,6 +171,9 @@ function AdminProductsModal({
                   </div>
                 </div>
                 <div className={classes.mb10}>
+                  <InputLabel className={classes.labelStyle}>
+                    Discount
+                  </InputLabel>
                   <Input
                     name="discount"
                     type="number"
@@ -196,6 +191,9 @@ function AdminProductsModal({
                   </div>
                 </div>
                 <div className={classes.mb10}>
+                  <InputLabel className={classes.labelStyle}>
+                    Description
+                  </InputLabel>
                   <Textarea
                     name="description"
                     value={values.description}
@@ -214,6 +212,7 @@ function AdminProductsModal({
                   </div>
                 </div>
                 <div className={classes.mb10}>
+                  <InputLabel className={classes.labelStyle}>Brands</InputLabel>
                   <select
                     name="brandId"
                     className={classes.selectStyle}
@@ -232,6 +231,9 @@ function AdminProductsModal({
                   </div>
                 </div>
                 <div className={classes.mb10}>
+                  <InputLabel className={classes.labelStyle}>
+                    Categories
+                  </InputLabel>
                   <select
                     name="categoryId"
                     className={classes.selectStyle}
@@ -298,17 +300,6 @@ function AdminProductsModal({
                     ) : (
                       ""
                     )}
-                  </div>
-                  <div>
-                    {/* <Button
-                      onClick={() => uploadFile()}
-                      style={{ textTransform: "capitalize" }}
-                      color="secondary"
-                      disableRipple
-                      page="admin"
-                    >
-                      View Image
-                    </Button> */}
                   </div>
                 </div>
 

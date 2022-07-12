@@ -12,7 +12,7 @@ import Button from "../button";
 import Input from "../input/Input";
 import { adminModalStyles } from "./styles";
 
-function AdminModal({ modalData, open, onClose, type, onSubmit }) {
+function AdminModal({ modalData, open, onClose, type, onSubmit, pageType }) {
   const data = type === "add" ? "" : modalData[0];
   const [inputValue, setInputValue] = useState(type === "add" ? "" : data.name);
   const [inputValueUser, setInputValueUser] = useState(data.role);
@@ -43,7 +43,7 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
 
   const deleteData = () => {
     const deletedData = {
-      relatedProductsDelete,
+      ...(pageType !== "message" ? { relatedProductsDelete } : {}),
       id: data.id,
     };
     onSubmit(deletedData);
@@ -159,12 +159,16 @@ function AdminModal({ modalData, open, onClose, type, onSubmit }) {
             >
               Are you sure?
             </Typography>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox onChange={(e) => productsDeleteCheck(e)} />}
-                label="Delete all products related to this"
-              />
-            </FormGroup>
+            {pageType !== "message" && (
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox onChange={(e) => productsDeleteCheck(e)} />
+                  }
+                  label="Delete all products related to this"
+                />
+              </FormGroup>
+            )}
             <div className={classes.textRight}>
               <Button
                 onClick={() => onClose()}
@@ -198,6 +202,7 @@ AdminModal.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   type: PropTypes.string,
+  pageType: PropTypes.string,
   onSubmit: PropTypes.func,
 };
 

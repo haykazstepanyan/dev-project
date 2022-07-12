@@ -3,6 +3,7 @@ import { Container } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { ref, deleteObject } from "firebase/storage";
 
+import { Tooltip } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../../components/pagination/Pagination";
@@ -132,18 +133,38 @@ export default function Product() {
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
-        <div>
-          <Button
-            disabled={disabled}
-            letter="capitalize"
-            style={{ marginBottom: 20 }}
-            page="admin"
-            onClick={() => handleOpen()}
-            disableRipple
+        {disabled ? (
+          <Tooltip
+            title="Please add at least one category or brand!!!"
+            placement="top-start"
           >
-            <AddIcon />
-          </Button>
-        </div>
+            <div>
+              <Button
+                disabled={disabled}
+                letter="capitalize"
+                style={{ marginBottom: 20 }}
+                page="admin"
+                onClick={() => handleOpen()}
+                disableRipple
+              >
+                <AddIcon />
+              </Button>
+            </div>
+          </Tooltip>
+        ) : (
+          <div>
+            <Button
+              disabled={disabled}
+              letter="capitalize"
+              style={{ marginBottom: 20 }}
+              page="admin"
+              onClick={() => handleOpen()}
+              disableRipple
+            >
+              <AddIcon />
+            </Button>
+          </div>
+        )}
         {productsData && categories?.categories && brands?.data && (
           <AdminProductsTable
             setEditProductData={(value) => setEditProductData(value)}
