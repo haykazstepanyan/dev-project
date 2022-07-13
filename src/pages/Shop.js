@@ -19,11 +19,11 @@ function Shop() {
   const [orderBy, setOrderBy] = useState(searchParams.get("order") || "date");
   const [sortBy, setSortBy] = useState(searchParams.get("sort") || "desc");
   const [page, setPage] = useState(+searchParams.get("page") || 1);
-
   const classes = shopStyles();
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.categories.categories);
+  const isAuth = useSelector((state) => state.auth.isAuth);
 
   const setInitialBrandCategories = useCallback(() => {
     const defaultBrandParams = searchParams.getAll("brand");
@@ -72,6 +72,7 @@ function Shop() {
     data: products,
     error: productsError,
     loading: productsLoading,
+    refetch: productsRefetch,
   } = useFetch(`/products/getShopProducts/shop${window.location.search}`);
 
   const {
@@ -131,6 +132,11 @@ function Shop() {
       dispatch(hideLoader({ key: "getBrands" }));
     }
   }, [dispatch, brands, brandsError]);
+
+  useEffect(() => {
+    productsRefetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
 
   const handleBrandCheckbox = (id) => {
     const selectedIndex = selectedBrands.indexOf(id);
@@ -270,6 +276,7 @@ function Shop() {
                 changeOrdering={handleOrderingProducts}
                 sortProductsBy={sortBy}
                 changeSorting={handleSortByProducts}
+                pageNumber={page}
               />
             )}
           </Grid>

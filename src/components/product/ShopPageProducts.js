@@ -15,6 +15,7 @@ function ShopPageProducts({
   changeOrdering,
   sortProductsBy,
   changeSorting,
+  pageNumber,
 }) {
   const [productsOrder, setProductsOrder] = useState(
     localStorage.getItem("view") || "multiple",
@@ -43,6 +44,7 @@ function ShopPageProducts({
         changeOrdering={changeOrdering}
         sortProductsBy={sortProductsBy}
         changeSorting={changeSorting}
+        pageNumber={pageNumber}
       />
       <Grid container className={classes.shopItemContainer}>
         {products.data.length ? (
@@ -104,6 +106,7 @@ ShopPageProducts.propTypes = {
   changeOrdering: PropTypes.func.isRequired,
   sortProductsBy: PropTypes.string.isRequired,
   changeSorting: PropTypes.func.isRequired,
+  pageNumber: PropTypes.number.isRequired,
 };
 
 export default memo(ShopPageProducts);

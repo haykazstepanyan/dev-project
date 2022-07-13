@@ -24,6 +24,7 @@ function Toolbar({
   changeOrdering,
   sortProductsBy,
   changeSorting,
+  pageNumber,
 }) {
   const classes = ToolbarStyles();
   return (
@@ -96,7 +97,9 @@ function Toolbar({
       </div>
       <div className={classes.productsLength}>
         {productsLength > 9
-          ? `Showing 1-9 of ${productsLength} results`
+          ? `Showing ${(pageNumber - 1) * 9 + 1}-${
+              pageNumber * 9 > productsLength ? productsLength : pageNumber * 9
+            } of ${productsLength} results`
           : `Showing ${productsLength} results`}
       </div>
     </div>
@@ -111,6 +114,7 @@ Toolbar.propTypes = {
   changeOrdering: PropTypes.func.isRequired,
   sortProductsBy: PropTypes.string.isRequired,
   changeSorting: PropTypes.func.isRequired,
+  pageNumber: PropTypes.number.isRequired,
 };
 
 export default Toolbar;
