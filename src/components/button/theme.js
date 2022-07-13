@@ -108,6 +108,16 @@ const theme = createTheme({
           },
         },
         {
+          props: { purpose: "addToCart" },
+          style: {
+            textTransform: "Capitalize",
+            borderRadius: 4,
+            "&:hover": {
+              backgroundColor: "black",
+            },
+          },
+        },
+        {
           props: { purpose: "modalCancel" },
           style: {
             border: "1px solid #ddd",

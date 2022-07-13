@@ -7,12 +7,8 @@ import {
   Box,
   Typography,
   Divider,
-  TextField,
   IconButton,
 } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import PinterestIcon from "@mui/icons-material/Pinterest";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 import Button from "../components/button";
 import { productViewStyles } from "./styles";
@@ -145,13 +141,6 @@ function Product() {
     }
   };
 
-  const handleAddToCart = () => {
-    if (!isAuth) {
-      onModalOpen();
-      // return;
-    }
-  };
-
   return (
     productData?.data && (
       <>
@@ -208,18 +197,16 @@ function Product() {
                 <Divider />
 
                 <Box marginTop={3}>
-                  <TextField
-                    size="small"
-                    label="Quantity"
-                    type="number"
-                    defaultValue={1}
-                    InputProps={{ inputProps: { min: 1, max: 10 } }}
-                  />
-                  <Box sx={{ display: "inline", marginLeft: 3 }}>
-                    <Button color="secondary" onClick={handleAddToCart}>
-                      Add To Cart
+                  <div>
+                    <Button
+                      style={{ width: "120px" }}
+                      color="primary"
+                      purpose="addToCart"
+                      disableRipple
+                    >
+                      Add to cart
                     </Button>
-                  </Box>
+                  </div>
                 </Box>
 
                 <Box marginTop={3}>
@@ -234,18 +221,6 @@ function Product() {
                     <b className={classes.product_category_text}>Category:</b>
                     <span>{category.name}</span>
                   </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: 100,
-                    marginTop: 3,
-                  }}
-                >
-                  <FacebookIcon className={classes.fb_icon} />
-                  <PinterestIcon className={classes.pinterest_icon} />
-                  <LinkedInIcon className={classes.linkedIn_icon} />
                 </Box>
               </Box>
             </Grid>

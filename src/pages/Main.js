@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import Input from "../components/input";
+// import MailOutlineIcon from "@mui/icons-material/MailOutline";
+// import Input from "../components/input";
 import shipping1 from "../assets/images/shipping1.webp";
 import shipping2 from "../assets/images/shipping2.webp";
 import shipping3 from "../assets/images/shipping3.webp";
@@ -87,7 +87,10 @@ function Main() {
       <Grid item xs={8}>
         <div className={classes.bannerArea}>
           <div className={classes.container}>
-            <div className={classes.row}>
+            <div
+              className={classes.row}
+              style={{ justifyContent: "space-between" }}
+            >
               <div
                 className={classes.colLg6}
                 style={{ paddingRight: 10, paddingLeft: 10 }}
@@ -99,10 +102,10 @@ function Main() {
                     </Link>
                     <div className={classes.bannerContent}>
                       <div>
-                        <h3>Big Sale Products</h3>
-                        <h4>
+                        <h2>Big Sale Products</h2>
+                        <h3>
                           Plants <br /> For Interior
-                        </h4>
+                        </h3>
                       </div>
                       <Link className={classes.bannerContentLink} to="/shop">
                         Shop Now
@@ -122,10 +125,10 @@ function Main() {
                     </Link>
                     <div className={classes.bannerContent}>
                       <div>
-                        <h3>Top Products</h3>
-                        <h4>
+                        <h2>Top Products</h2>
+                        <h3>
                           Plants <br /> For Healthy
-                        </h4>
+                        </h3>
                       </div>
                       <Link className={classes.bannerContentLink} to="/shop">
                         Shop Now
@@ -183,7 +186,7 @@ function Main() {
           </div>
         </div>
       </Grid>
-      <Grid item xs={8} className={classes.newsletterAreaStart}>
+      {/* <Grid item xs={8} className={classes.newsletterAreaStart}>
         <div className={classes.container}>
           <div className={classes.row}>
             <div className={classes.col12}>
@@ -213,7 +216,7 @@ function Main() {
             </div>
           </div>
         </div>
-      </Grid>
+      </Grid> */}
     </>
   );
 }

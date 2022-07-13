@@ -25,6 +25,24 @@ const clickableDropdownStyles = createUseStyles({
     "& .MuiPaper-root": {
       marginTop: topDistance,
       minWidth: 200,
+      "&::-webkit-scrollbar": {
+        width: 7,
+      },
+
+      /* Track */
+      "&::-webkit-scrollbar-track": {
+        background: "#f1f1f1",
+      },
+
+      /* Handle */
+      "&::-webkit-scrollbar-thumb": {
+        background: "rgb(211 210 210)",
+      },
+
+      /* Handle on hover */
+      "&::-webkit-scrollbar-thumb:hover": {
+        background: "#555",
+      },
     },
   }),
   dropdownMenuItems: {

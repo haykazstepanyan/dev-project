@@ -46,7 +46,11 @@ function ShopPageProducts({
         changeSorting={changeSorting}
         pageNumber={pageNumber}
       />
-      <Grid container className={classes.shopItemContainer}>
+      <Grid
+        container
+        className={classes.shopItemContainer}
+        style={{ paddingRight: 20, paddingLeft: 20 }}
+      >
         {products.data.length ? (
           products.data.map(
             ({

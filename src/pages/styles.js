@@ -15,6 +15,7 @@ const aboutUsStyles = createUseStyles({
   aboutInfoText: {
     textAlign: "center",
     fontSize: 14,
+    lineHeight: "25px",
   },
   featureBgImage: {
     backgroundRepeat: "no-repeat",
@@ -49,6 +50,7 @@ const contactUsStyles = createUseStyles({
     "& label": {
       fontWeight: 500,
       display: "block",
+      fontSize: 14,
     },
     "& textarea": {
       border: "1px solid #e1e1e1",
@@ -173,9 +175,9 @@ const mainStyles = createUseStyles({
     },
   },
   singleShipping: {
+    borderRight: "1px solid #ebebeb",
     display: "flex",
     alignItems: "center",
-    borderRight: "1px solid #ebebeb",
     "@media only screen and (max-width: 767px)": {
       marginBottom: "23px",
       borderRight: "0",
@@ -198,8 +200,7 @@ const mainStyles = createUseStyles({
       fontSize: "14px",
       lineHeight: "16px",
       textTransform: "capitalize",
-      fontFamily: "'Lora', serif",
-      fontWeight: "700",
+      fontWeight: "500",
       marginBottom: "7px",
       "@media only screen and (max-width: 767px)": {
         fontSize: "13px",
@@ -249,9 +250,9 @@ const mainStyles = createUseStyles({
     "& h3": {
       fontSize: "18px",
       lineHeight: "21px",
-      marginBottom: "18px",
+      // marginBottom: "18px",
       fontWeight: "400",
-      marginTop: "0",
+      marginTop: 20,
       color: "#2d383f",
     },
     "& h2": {
@@ -278,7 +279,7 @@ const mainStyles = createUseStyles({
     borderBottom: "2px solid #79a206",
     textTransform: "uppercase",
     marginTop: "36px",
-    fontSize: 16,
+    fontSize: 14,
     paddingBottom: 5,
     color: "#232424",
   },
@@ -293,8 +294,8 @@ const mainStyles = createUseStyles({
     },
   },
   welcomeHomeContainer: {
-    borderBottom: "1px solid #e1e1e1",
-    padding: "98px 0 100px",
+    // borderBottom: "1px solid #e1e1e1",
+    padding: "70px 0 50px",
     "@media only screen and (max-width: 767px)": {
       padding: "59px 0 53px",
     },
@@ -313,8 +314,13 @@ const mainStyles = createUseStyles({
     },
   },
   welcomHomeContent: {
+    "@media only screen and (max-width: 900px)": {
+      textAlign: "center",
+      width: 565,
+    },
     "@media only screen and (max-width: 767px)": {
       textAlign: "center",
+      width: "100% !important",
     },
   },
   welcomeHomeHeader: {
@@ -489,6 +495,9 @@ const signUpInStyles = createUseStyles({
 
 const shopStyles = createUseStyles({
   shop: {
+    "& >div": {
+      marginTop: "40px !important",
+    },
     "@media screen and (max-width: 600px)": {
       padding: 0,
     },

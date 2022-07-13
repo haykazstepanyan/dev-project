@@ -8,6 +8,25 @@ const listStyles = createUseStyles({
     overflowY: "auto",
     marginTop: 12,
     textTransform: "capitalize",
+    /* width */
+    "&::-webkit-scrollbar": {
+      width: 10,
+    },
+
+    /* Track */
+    "&::-webkit-scrollbar-track": {
+      background: "#f1f1f1",
+    },
+
+    /* Handle */
+    "&::-webkit-scrollbar-thumb": {
+      background: "#e0dfdf",
+    },
+
+    /* Handle on hover */
+    "::-webkit-scrollbar-thumb:hover": {
+      background: "#555",
+    },
   },
   listItems: {
     paddingTop: 0,
@@ -19,7 +38,7 @@ const listStyles = createUseStyles({
   },
   moreLess: {
     display: "inline-block",
-    fontSize: 14,
+    fontSize: 13,
     cursor: "pointer",
     paddingLeft: 18,
     marginTop: 12,

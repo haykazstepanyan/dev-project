@@ -13,6 +13,9 @@ const shopSidebarStyles = createUseStyles({
   },
   filterBox: {
     marginBottom: 32,
+    "& span": {
+      fontSize: 13,
+    },
   },
   filterName: {
     textTransform: "uppercase",

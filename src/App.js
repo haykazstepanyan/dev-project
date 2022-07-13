@@ -31,7 +31,7 @@ function App() {
     const handleIsMobileVersion = () =>
       dispatch(
         setIsMobileVersion({
-          isMobile: window.innerWidth < 900,
+          isMobile: window.innerWidth <= 900,
         }),
       );
     handleIsMobileVersion();

@@ -196,7 +196,7 @@ function ContactUs() {
                         type="submit"
                         disableRipple
                       >
-                        Save
+                        Send
                       </Button>
                     </div>
                   </form>

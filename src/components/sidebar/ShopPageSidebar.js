@@ -43,7 +43,7 @@ function ShopPageSidebar({
           <Container disableGutters className={classes.filterRangeInputs}>
             <div>
               <Button
-                color="secondary"
+                color="primary"
                 borders="rounded"
                 size="small"
                 onClick={filterByPrice}

@@ -48,12 +48,13 @@ const globalStyles = createUseStyles({
     justifyContent: "center",
     textAlign: "center",
     "& h1": {
+      fontWeight: 500,
       fontSize: 42,
       marginBottom: 9,
     },
   },
   featuresSectionStyle: {
-    padding: [[100, 0, 93]],
+    padding: [[100, 40]],
     "& img": {
       marginBottom: 23,
     },

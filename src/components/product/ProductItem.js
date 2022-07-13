@@ -5,16 +5,15 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import clsx from "clsx";
 import Sale from "./Sale";
 import { productItemStyles } from "./styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
+import Button from "../button/Button";
 import { showLoader, hideLoader } from "../../redux/app/appSlice";
 import SignInModal from "../modals/SignInModal";
 import { currencySymbols } from "../../constants/constants";
-import Button from "../button";
 
 function ProductItem({
   id,
@@ -147,17 +146,26 @@ function ProductItem({
               </span>
             ) : null}
           </div>
-          <Sale discount={5} />
-          <div className={classes.productIcons}>
-            {order === "single" ? (
-              <Button color="secondary" borders="rounded" size="small">
-                Add To Cart
+          {order === "single" && (
+            <div>
+              <Button
+                style={{ marginTop: 20, width: "120px" }}
+                color="primary"
+                purpose="addToCart"
+                disableRipple
+              >
+                Add to cart
               </Button>
-            ) : (
-              <IconButton>
-                <AddShoppingCartIcon />
-              </IconButton>
-            )}
+            </div>
+          )}
+          {discount !== 0 && <Sale discount={discount} />}
+          <div
+            className={classes.productIcons}
+            style={{
+              top: order === "single" ? "-15px" : "",
+              right: order === "single" ? "10px" : "",
+            }}
+          >
             {role !== "ADMIN" && role !== "MAIN_ADMIN" && (
               <IconButton onClick={handleWishlistChange}>
                 {isProductLiked ? (
@@ -169,6 +177,18 @@ function ProductItem({
             )}
           </div>
         </CardContent>
+        {order === "multiple" && (
+          <div>
+            <Button
+              style={{ marginTop: 20, width: "100%" }}
+              color="primary"
+              purpose="addToCart"
+              disableRipple
+            >
+              Add to cart
+            </Button>
+          </div>
+        )}
       </Card>
       <SignInModal open={openModal} closeModal={onModalClose} />
     </>
