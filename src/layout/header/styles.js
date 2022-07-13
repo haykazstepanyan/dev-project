@@ -245,7 +245,7 @@ const headerStyles = createUseStyles({
     position: "sticky",
     top: "0px",
     background: colors.white,
-    zIndex: 10,
+    zIndex: 99,
   },
 });
 
