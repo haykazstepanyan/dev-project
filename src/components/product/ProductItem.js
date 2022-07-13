@@ -56,21 +56,17 @@ function ProductItem({
     if (wishlistChangeLoading) {
       dispatch(
         showLoader({
-          key: "wishlist/change",
+          key: "wishlistChange",
+        }),
+      );
+    } else {
+      dispatch(
+        hideLoader({
+          key: "wishlistChange",
         }),
       );
     }
   }, [dispatch, wishlistChangeLoading]);
-
-  useEffect(() => {
-    if (wishlistChangeData) {
-      dispatch(
-        hideLoader({
-          key: "wishlist/change",
-        }),
-      );
-    }
-  }, [dispatch, wishlistChangeData]);
 
   const onModalOpen = () => {
     setOpenModal(true);
