@@ -8,6 +8,10 @@ const authSlice = createSlice({
     role: "",
     loading: false,
     authLoading: true,
+    firstName: "",
+    lastName: "",
+    gender: "",
+    email: "",
   },
   extraReducers: {
     [checkIsAuth.fulfilled]: (state, { payload }) => {
@@ -18,9 +22,17 @@ const authSlice = createSlice({
           state.loading = false;
           state.isAuth = false;
           state.role = "";
+          state.firstName = "";
+          state.lastName = "";
+          state.gender = "";
+          state.email = "";
         }
       } else {
         state.isAuth = payload.data.isAuth;
+        state.firstName = payload.data.firstName;
+        state.lastName = payload.data.lastName;
+        state.gender = payload.data.gender;
+        state.email = payload.data.email;
         if (payload.data.role) {
           state.role = payload.data.role;
         } else {

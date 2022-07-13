@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { showNotification } from "../app/appSlice";
 import { BASE_URL } from "../../constants/constants";
+import { checkIsAuth } from "../auth/actions";
 
 export const getUsers = createAsyncThunk(
   "users/getUsers",
@@ -67,7 +68,7 @@ export const updateUsersRole = createAsyncThunk(
         throw new Error(response.statusText);
       }
       const result = await response.json();
-
+      console.log(result);
       dispatch(
         showNotification({
           notificationType: "success",
@@ -82,15 +83,15 @@ export const updateUsersRole = createAsyncThunk(
   },
 );
 
-export const updateUsersDashboard = createAsyncThunk(
-  "users/updateUsersDashboard",
+export const updateUserPersonalInfo = createAsyncThunk(
+  "users/updateUserPersonalInfo",
   async (
-    { id, firstName, lastName, email, gender, password, newPassword },
+    { firstName, lastName, email, gender },
     { rejectWithValue, dispatch },
   ) => {
     try {
-      const response = await fetch(`${BASE_URL}/users/user/${id}`, {
-        method: "PUT",
+      const response = await fetch(`${BASE_URL}/users/personalInfo`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -100,15 +101,11 @@ export const updateUsersDashboard = createAsyncThunk(
           lastName,
           email,
           gender,
-          password,
-          newPassword,
         }),
       });
 
       const result = await response.json();
-
       if (result.type === "error") {
-        console.log("444");
         dispatch(
           showNotification({
             notificationType: "error",
@@ -117,7 +114,48 @@ export const updateUsersDashboard = createAsyncThunk(
         );
         throw new Error();
       }
+      dispatch(checkIsAuth());
 
+      dispatch(
+        showNotification({
+          notificationType: "success",
+          notificationMessage: "User is successfully updated.",
+        }),
+      );
+      return result;
+    } catch (err) {
+      return rejectWithValue({ message: err.message });
+    }
+  },
+);
+
+export const updateUserPassword = createAsyncThunk(
+  "users/updateUserPassword",
+  async ({ newPassword, password }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch(`${BASE_URL}/users/password`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          newPassword,
+          password,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.type === "error") {
+        dispatch(
+          showNotification({
+            notificationType: "error",
+            notificationMessage: result.message,
+          }),
+        );
+        throw new Error();
+      }
       dispatch(
         showNotification({
           notificationType: "success",

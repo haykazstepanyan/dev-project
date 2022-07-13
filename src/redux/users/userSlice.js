@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  getUsers,
-  deleteUsers,
-  updateUsersRole,
-  updateUsersDashboard,
-} from "./actions";
+import { getUsers, deleteUsers, updateUsersRole } from "./actions";
 
 const userSlice = createSlice({
   name: "users",
@@ -30,14 +25,6 @@ const userSlice = createSlice({
       state.users = newState;
     },
     [updateUsersRole.fulfilled]: (state, { payload }) => {
-      const { userUpdated } = payload;
-      const currState = state.users;
-      const newState = currState.map((elem) =>
-        elem.id === userUpdated.id ? userUpdated : elem,
-      );
-      state.users = newState;
-    },
-    [updateUsersDashboard.fulfilled]: (state, { payload }) => {
       const { userUpdated } = payload;
       const currState = state.users;
       const newState = currState.map((elem) =>

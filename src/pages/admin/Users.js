@@ -6,8 +6,8 @@ import AdminUserTable from "../../components/adminUserTable/AdminUserTable";
 import { getUsers } from "../../redux/users/actions";
 import Loader from "../../components/loader";
 
-function createData(id, firstName, lastName, email, role) {
-  return { id, firstName, lastName, email, role };
+function createData(id, firstName, lastName, email, role, num) {
+  return { id, firstName, lastName, email, role, num };
 }
 
 export default function Users() {
@@ -28,10 +28,12 @@ export default function Users() {
 
     const rows = [];
     if (!usersData.loading) {
+      let num = 0;
       usersData.users.forEach((elem) => {
         const { id, firstName, lastName, email, role } = elem;
         if (elem.role !== "MAIN_ADMIN") {
-          rows.push(createData(id, firstName, lastName, email, role));
+          num += 1;
+          rows.push(createData(id, firstName, lastName, email, role, num));
         }
       });
     }
