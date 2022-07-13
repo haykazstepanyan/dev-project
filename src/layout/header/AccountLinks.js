@@ -15,7 +15,7 @@ import { iconsStyles } from "./styles";
 import useToggle from "../../hooks/useToggle";
 import { hideLoader, setCurrency, showLoader } from "../../redux/app/appSlice";
 import useLazyFetch from "../../hooks/useLazyFetch";
-import { CURRENCY_API_KEY } from "../../constants/constants";
+import { currencyList, CURRENCY_API_KEY } from "../../constants/constants";
 
 function AccountLinks() {
   const [openModal, setOpenModal] = useState(false);
@@ -24,8 +24,6 @@ function AccountLinks() {
   const selectedCurrency = useSelector((state) => state.app.currency);
   const dispatch = useDispatch();
   const classes = iconsStyles();
-
-  const currencyList = ["USD", "EUR", "AMD", "RUB"];
 
   const currencies = currencyList.map((item) => ({
     item:
@@ -51,24 +49,15 @@ function AccountLinks() {
     dispatch(signOut());
     onModalClose();
   };
-  const {
-    data: ratesData,
-    error: ratesError,
-    loading: ratesLoading,
-    lazyRefetch: ratesRefetch,
-  } = useLazyFetch();
+  const { loading: ratesLoading, lazyRefetch: ratesRefetch } = useLazyFetch();
 
   useEffect(() => {
     if (ratesLoading) {
       dispatch(showLoader({ key: "getRates" }));
-    }
-  }, [dispatch, ratesLoading]);
-
-  useEffect(() => {
-    if (ratesData || ratesError) {
+    } else {
       dispatch(hideLoader({ key: "getRates" }));
     }
-  }, [dispatch, ratesData, ratesError]);
+  }, [dispatch, ratesLoading]);
 
   const handleCurrencyChange = (key) => {
     localStorage.removeItem("currency");

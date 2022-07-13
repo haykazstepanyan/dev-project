@@ -19,51 +19,40 @@ export default function Wishlist() {
     refetch: wishlistRefetch,
   } = useFetch("/wishlist/getWishlist");
 
-  const {
-    data: wishlistDeleteData,
-    loading: wishlistDeleteLoading,
-    lazyRefetch: wishlistLazyRefetch,
-  } = useLazyFetch();
+  const { loading: wishlistDeleteLoading, lazyRefetch: wishlistLazyRefetch } =
+    useLazyFetch();
 
   useEffect(() => {
     if (wishlistLoading) {
       dispatch(
         showLoader({
-          key: "wishlist/getWishlist",
+          key: "getWishlist",
+        }),
+      );
+    } else {
+      dispatch(
+        hideLoader({
+          key: "getWishlist",
         }),
       );
     }
   }, [dispatch, wishlistLoading]);
 
   useEffect(() => {
-    if (wishlist) {
-      dispatch(
-        hideLoader({
-          key: "wishlist/getWishlist",
-        }),
-      );
-    }
-  }, [dispatch, wishlist]);
-
-  useEffect(() => {
     if (wishlistDeleteLoading) {
       dispatch(
         showLoader({
-          key: "wishlist/deleteWishlist",
+          key: "deleteWishlist",
+        }),
+      );
+    } else {
+      dispatch(
+        hideLoader({
+          key: "deleteWishlist",
         }),
       );
     }
   }, [dispatch, wishlistDeleteLoading]);
-
-  useEffect(() => {
-    if (wishlistDeleteData) {
-      dispatch(
-        hideLoader({
-          key: "wishlist/deleteWishlist",
-        }),
-      );
-    }
-  }, [dispatch, wishlistDeleteData]);
 
   const handleDeleteWishlist = (id) => {
     wishlistLazyRefetch(`/wishlist/delete/${id}`, null, "DELETE").then(

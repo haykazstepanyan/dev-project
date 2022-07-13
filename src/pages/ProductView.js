@@ -66,21 +66,17 @@ function Product() {
     if (wishlistChangeLoading) {
       dispatch(
         showLoader({
-          key: "wishlist/change",
+          key: "wishlistChange",
         }),
       );
-    }
-  }, [dispatch, wishlistChangeLoading]);
-
-  useEffect(() => {
-    if (wishlistChangeData) {
+    } else {
       dispatch(
         hideLoader({
           key: "wishlist/change",
         }),
       );
     }
-  }, [dispatch, wishlistChangeData]);
+  }, [dispatch, wishlistChangeLoading]);
 
   useEffect(() => {
     if (productError) {
