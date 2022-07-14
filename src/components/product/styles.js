@@ -34,6 +34,43 @@ const productItemStyles = createUseStyles({
     fontWeight: 400,
     fontSize: 12,
   },
+  cartContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "60%",
+    height: "25px",
+    margin: "auto",
+    position: "relative",
+    backgroundColor: "#fff",
+    border: " 2px solid #2cb77e",
+    borderRadius: "100px",
+    overflow: "hidden",
+    "& button": {
+      position: "absolute",
+      display: "block",
+      border: "none",
+      background: "none",
+      color: "#1c1c1c",
+      textAlign: "center",
+      top: 0,
+      fontWeight: 400,
+      fontSize: "20px",
+      cursor: "pointer",
+    },
+  },
+  cartInput: {
+    border: "none",
+    textAlign: "center",
+    fontWeight: 400,
+    fontSize: "15px",
+  },
+  desBtn: {
+    left: "15px",
+  },
+  incBtn: {
+    right: "15px",
+  },
 });
 
 const saleStyles = createUseStyles({

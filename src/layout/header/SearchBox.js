@@ -15,7 +15,7 @@ function SearchBox({ distance }) {
     searchParams.get("keyword") || "",
   );
 
-  const categories = useSelector((state) => state.categories.categories);
+  const categories = useSelector((state) => state.categories?.categories || []);
   const navigate = useNavigate();
 
   const classes = searchBoxStyles();

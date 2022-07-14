@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import Container from "@mui/system/Container";
@@ -224,8 +224,6 @@ function Shop() {
     setPriceSliderValues((prevState) => [prevState[0], +e.target.value]);
   };
 
-  console.log(products?.data);
-
   return (
     <>
       <Banner name="Shop" />
@@ -255,7 +253,15 @@ function Shop() {
                 {products?.data &&
                   (products.data.length ? (
                     products.data.map(
-                      ({ id, name, price, productImg, discount, wishlist }) => (
+                      ({
+                        id,
+                        name,
+                        price,
+                        productImg,
+                        discount,
+                        wishlist,
+                        cart,
+                      }) => (
                         <Grid item sm={4} key={id} className={classes.shopItem}>
                           <ProductItem
                             id={id}
@@ -264,6 +270,7 @@ function Shop() {
                             price={price}
                             discount={discount}
                             wishlistId={wishlist && wishlist[0]?.id}
+                            cartId={cart && cart[0]?.id}
                           />
                         </Grid>
                       ),
@@ -287,4 +294,4 @@ function Shop() {
   );
 }
 
-export default Shop;
+export default memo(Shop);
