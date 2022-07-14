@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   Dialog,
@@ -18,6 +18,7 @@ function SignInModal({ open, closeModal }) {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const classes = signInModalStyles();
 
@@ -29,6 +30,11 @@ function SignInModal({ open, closeModal }) {
     };
     closeModal();
     dispatch(signIn(data));
+  };
+
+  const handleSignUp = () => {
+    closeModal();
+    return navigate("/signup");
   };
 
   return (
@@ -71,9 +77,13 @@ function SignInModal({ open, closeModal }) {
         </DialogContent>
         <DialogActions className={classes.modalActions}>
           <div className={classes.btnContainer}>
-            <Link to="/signup" className={classes.authLink}>
+            <Button
+              color="info"
+              className={classes.authLink}
+              onClick={handleSignUp}
+            >
               Sign Up
-            </Link>
+            </Button>
             <div>
               <Button purpose="modalCancel" onClick={closeModal} disableRipple>
                 Cancel

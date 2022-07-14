@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Grid, Dialog, DialogTitle, DialogActions } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Grid,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  IconButton,
+} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -16,13 +22,17 @@ import useToggle from "../../hooks/useToggle";
 import { hideLoader, setCurrency, showLoader } from "../../redux/app/appSlice";
 import useLazyFetch from "../../hooks/useLazyFetch";
 import { currencyList, CURRENCY_API_KEY } from "../../constants/constants";
+import SignInModal from "../../components/modals/SignInModal";
 
 function AccountLinks() {
-  const [openModal, setOpenModal] = useState(false);
+  const [signOutModal, setSignOutModal] = useState(false);
+  const [signInModal, setSignInModal] = useState(false);
   const [anchor, setAnchor] = useToggle();
   const role = useSelector((state) => state.auth.role);
   const selectedCurrency = useSelector((state) => state.app.currency);
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const classes = iconsStyles();
 
   const currencies = currencyList.map((item) => ({
@@ -39,15 +49,9 @@ function AccountLinks() {
     setAnchor();
   };
 
-  const onModalClose = () => {
-    setOpenModal(false);
-  };
-  const onModalOpen = () => {
-    setOpenModal(true);
-  };
   const handleSignOut = () => {
     dispatch(signOut());
-    onModalClose();
+    setSignOutModal(false);
   };
   const { loading: ratesLoading, lazyRefetch: ratesRefetch } = useLazyFetch();
 
@@ -98,10 +102,18 @@ function AccountLinks() {
     dispatch(setCurrency(key));
   };
 
-  const logoutModal = (
+  const handleWishlistRoute = () => {
+    if (isAuth) {
+      return navigate("/wishlist");
+    }
+    setSignInModal(true);
+    return null;
+  };
+
+  const signOutModalElement = (
     <Dialog
-      open={openModal}
-      onClose={onModalClose}
+      open={signOutModal}
+      onClose={() => setSignOutModal(false)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -113,7 +125,11 @@ function AccountLinks() {
           Are you sure you want to sign out?
         </DialogTitle>
         <DialogActions>
-          <Button purpose="modalCancel" onClick={onModalClose} disableRipple>
+          <Button
+            purpose="modalCancel"
+            onClick={() => setSignOutModal(false)}
+            disableRipple
+          >
             Cancel
           </Button>
           <Button color="primary" onClick={handleSignOut} disableRipple>
@@ -150,7 +166,7 @@ function AccountLinks() {
             key="signout"
             color="info"
             purpose="dropdownBtn"
-            onClick={onModalOpen}
+            onClick={() => setSignOutModal(true)}
             disableRipple
           >
             Sign out
@@ -183,9 +199,12 @@ function AccountLinks() {
   return (
     <Grid item md={2} className={classes.iconsContainer}>
       <HoverableDropdown value={<PeopleOutlineIcon />} list={allowedLinks} />
-      <Link to="/wishlist">
+      <IconButton
+        onClick={handleWishlistRoute}
+        className={classes.wishlistIconBtn}
+      >
         <FavoriteBorderIcon className={classes.icons} />
-      </Link>
+      </IconButton>
       <Drawer
         open={anchor}
         toggleDrawer={toggleDrawer}
@@ -200,7 +219,11 @@ function AccountLinks() {
         list={currencies}
         change={handleCurrencyChange}
       />
-      {logoutModal}
+      {signOutModalElement}
+      <SignInModal
+        open={signInModal}
+        closeModal={() => setSignInModal(false)}
+      />
     </Grid>
   );
 }

@@ -135,6 +135,13 @@ const iconsStyles = createUseStyles({
   categoryLinks: {
     color: colors.black,
   },
+  wishlistIconBtn: {
+    padding: 0,
+    color: colors.black,
+    "& a": {
+      fontSize: 0,
+    },
+  },
   "@media screen and (max-width: 900px)": {
     iconsContainer: {
       "& .MuiButton-root": {
