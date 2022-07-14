@@ -13,6 +13,10 @@ const documentStyles = createUseStyles({
       fontStyle: "normal",
       fontWeight: 400,
       fontFamily: "'Rubik', sans-serif",
+      "& .MuiMenu-paper": {
+        maxHeight: 320,
+        overflow: "auto",
+      },
       "@media screen and (max-width: 900px)": {
         "& .MuiMenu-paper": {
           minWidth: "auto !important",
@@ -44,14 +48,30 @@ const globalStyles = createUseStyles({
     justifyContent: "center",
     textAlign: "center",
     "& h1": {
+      fontWeight: 500,
       fontSize: 42,
       marginBottom: 9,
     },
   },
   featuresSectionStyle: {
-    padding: [[100, 0, 93]],
+    padding: [[100, 40]],
     "& img": {
       marginBottom: 23,
+    },
+  },
+  noData: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: [[0, "auto"]],
+    color: colors.black,
+    paddingBottom: 32,
+    "& img": {
+      width: 400,
+      height: 225,
+      "@media screen and (max-width: 600px)": {
+        width: "100%",
+      },
     },
   },
   textCenter: {

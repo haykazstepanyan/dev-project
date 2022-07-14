@@ -1,22 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { showNotification } from "../app/appSlice";
+import { showSnackbar } from "../app/appSlice";
 import { BASE_URL } from "../../constants/constants";
+import { fetchData } from "../../helpers/helpers";
 
 export const getCategories = createAsyncThunk(
   "categories/getCategories",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${BASE_URL}/categories`, {
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error(response.statusText);
+      const response = await fetchData("categories");
+      if (response.result === "error") {
+        throw new Error();
       }
-      const result = await response.json();
 
-      return result;
+      return response;
     } catch (err) {
-      return rejectWithValue({ message: err.message });
+      return rejectWithValue();
     }
   },
 );
@@ -39,9 +37,9 @@ export const addCategories = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your category is successfully added.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your category is successfully added.",
         }),
       );
 
@@ -70,9 +68,9 @@ export const deleteCategories = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your category is successfully deleted.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your category is successfully deleted.",
         }),
       );
 
@@ -102,9 +100,9 @@ export const updateCategories = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your category is successfully updated.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your category is successfully updated.",
         }),
       );
 

@@ -2,11 +2,20 @@ import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
 const shopSidebarStyles = createUseStyles({
+  shopSidebarContainer: {
+    paddingRight: 20,
+    "@media screen and (max-width: 600px)": {
+      padding: 10,
+    },
+  },
   shopSidebar: {
     marginRight: 16,
   },
   filterBox: {
     marginBottom: 32,
+    "& span": {
+      fontSize: 13,
+    },
   },
   filterName: {
     textTransform: "uppercase",

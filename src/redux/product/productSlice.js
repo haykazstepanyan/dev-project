@@ -33,8 +33,6 @@ const productSlice = createSlice({
       state.loading = true;
     },
     [addProducts.fulfilled]: (state, { payload }) => {
-      console.log(payload);
-      console.log("payload", payload.data.product.data);
       state.products.push(payload.data.product.data);
       state.loading = false;
     },

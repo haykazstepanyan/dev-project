@@ -143,7 +143,7 @@ function PageRoutes() {
       <Fallback>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="shop" element={<Shop />} />
+          <Route path="shop/*" element={<Shop />} />
           <Route path="product/:productId" element={<ProductView />} />
 
           <Route path="about" element={<About />} />

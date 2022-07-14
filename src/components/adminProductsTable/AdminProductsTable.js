@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Table as MuiTable,
@@ -11,19 +13,29 @@ import {
 import SettingsIcon from "@mui/icons-material/Settings";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
 import Button from "../button";
 import AdminProductsModal from "../adminProductsModal/AdminProductsModal";
 import { adminTableStyles } from "./styles";
+import useLazyFetch from "../../hooks/useLazyFetch";
+import { showSnackbar } from "../../redux/app/appSlice";
 
 function AdminProductsTable({
   tableData,
   selectBrandData,
   selectCategoryData,
+  setEditProductData,
+  setDeleteProductData,
+  disabled,
 }) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const dispatch = useDispatch();
+
+  const { error: editProductError, lazyRefetch: editProduct } = useLazyFetch();
+
+  const { error: deleteProductError, lazyRefetch: deleteProduct } =
+    useLazyFetch();
 
   const filterById = (id) => {
     const rowData = tableData.filter((elem) => elem.id === id);
@@ -45,12 +57,52 @@ function AdminProductsTable({
     setOpenDelete(false);
   };
 
+  useEffect(() => {
+    if (editProductError || deleteProductError) {
+      dispatch(
+        showSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+    }
+  }, [editProductError, dispatch, deleteProductError]);
+
   const editData = (value) => {
-    console.log("editData", value);
-    // console.log(value);
+    const { id } = value;
+    delete value.id;
+
+    editProduct(
+      `/products/product/${id}`,
+      {
+        body: JSON.stringify(value),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      "PATCH",
+    ).then((e) => {
+      if (e) {
+        setEditProductData(e);
+        handleClose();
+      }
+    });
   };
   const deleteData = (value) => {
-    console.log(value);
+    deleteProduct(
+      `/products/product/${value}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      "DELETE",
+    ).then((e) => {
+      if (e) {
+        setDeleteProductData(e);
+        handleCloseDelete();
+      }
+    });
   };
 
   const classes = adminTableStyles();
@@ -77,7 +129,7 @@ function AdminProductsTable({
           <TableBody>
             {tableData.map((row) => (
               <TableRow
-                key={row.name}
+                key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
@@ -106,18 +158,20 @@ function AdminProductsTable({
                     {row.description}
                   </p>
                 </TableCell>
-                <TableCell align="right">{row.brand.name}</TableCell>
-                <TableCell align="right">{row.category.name}</TableCell>
+                <TableCell align="right">{row?.brand?.name}</TableCell>
+                <TableCell align="right">{row?.category?.name}</TableCell>
                 <TableCell align="right">
                   <Button
                     onClick={() => handleOpen(row.id)}
                     style={{ backgroundColor: "transparent" }}
+                    disabled={disabled}
                   >
                     <EditIcon className="editIcon" />
                   </Button>
                   <Button
                     onClick={() => handleOpenDelete(row.id)}
                     style={{ backgroundColor: "transparent" }}
+                    disabled={disabled}
                   >
                     <DeleteIcon className="deleteIcon" />
                   </Button>
@@ -165,6 +219,9 @@ AdminProductsTable.propTypes = {
     .isRequired,
   selectCategoryData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
+  setEditProductData: PropTypes.func,
+  setDeleteProductData: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default AdminProductsTable;

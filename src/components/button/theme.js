@@ -28,6 +28,7 @@ const theme = createTheme({
         {
           props: { page: "admin" },
           style: {
+            textTransform: "capitalize",
             color: colors.white,
             background: "#24695c",
           },
@@ -46,6 +47,7 @@ const theme = createTheme({
         {
           props: { page: "admin", letter: "capitalize" },
           style: {
+            height: 37,
             color: "white",
             background: "#a3a3a3",
             textTransform: "capitalize",
@@ -106,14 +108,25 @@ const theme = createTheme({
           },
         },
         {
+          props: { purpose: "addToCart" },
+          style: {
+            textTransform: "Capitalize",
+            borderRadius: 4,
+            "&:hover": {
+              backgroundColor: "black",
+            },
+          },
+        },
+        {
           props: { purpose: "modalCancel" },
           style: {
+            border: "1px solid #ddd",
+            color: "#7b7474",
+            padding: [[3, 8]],
+            height: 36,
             background: "transparent",
-            border: `3px solid ${colors.black}`,
-            color: colors.black,
-            padding: "3px 8px",
             "&:hover": {
-              backgroundColor: colors.black,
+              backgroundColor: "#aeb1b0",
               color: colors.white,
             },
           },

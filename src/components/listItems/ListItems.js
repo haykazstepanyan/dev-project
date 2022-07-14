@@ -1,4 +1,3 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 import {
   List as MuiList,
@@ -6,11 +5,10 @@ import {
   ListItemText as MuiListItemText,
   Checkbox,
 } from "@mui/material";
-import { useToggle } from "../../hooks/hooks";
+import useToggle from "../../hooks/useToggle";
 import { listStyles } from "./styles";
 
-function ListItems({ list }) {
-  const [checked, setChecked] = useState([]);
+function ListItems({ list, checkBoxChange, selected }) {
   const [showMore, setShowMore] = useToggle();
   const classes = listStyles();
 
@@ -18,40 +16,27 @@ function ListItems({ list }) {
     setShowMore((prevState) => !prevState);
   };
 
-  const handleCheckboxToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
-
   const listToShow = showMore ? list : list.slice(0, 4);
 
   return (
     <>
       <MuiList role="list" className={classes.list}>
-        {listToShow.map((value) => (
+        {listToShow.map(({ id, name }) => (
           <MuiListItem
-            key={value}
+            key={id}
             role="listitem"
             button
-            onClick={handleCheckboxToggle(value)}
+            onClick={() => checkBoxChange(id)}
             disableRipple
             className={classes.listItems}
           >
             <Checkbox
-              checked={checked.indexOf(value) !== -1}
+              checked={selected.indexOf(id) !== -1}
               tabIndex={-1}
               disableRipple
               className={classes.listCheckbox}
             />
-            <MuiListItemText primary={value} />
+            <MuiListItemText primary={name} />
           </MuiListItem>
         ))}
       </MuiList>
@@ -69,7 +54,16 @@ function ListItems({ list }) {
 }
 
 ListItems.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.string).isRequired,
+  list: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      createdAt: PropTypes.string,
+      updatedAt: PropTypes.string,
+    }),
+  ),
+  checkBoxChange: PropTypes.func,
+  selected: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default ListItems;

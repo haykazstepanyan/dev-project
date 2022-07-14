@@ -7,7 +7,7 @@ const adminModalStyles = createUseStyles({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 600,
+    // width: 600,
     height: "max-content",
     maxHeight: "90vh",
     overflow: "auto",
@@ -50,6 +50,11 @@ const adminModalStyles = createUseStyles({
   },
   mb10: {
     marginBottom: 10,
+  },
+  labelStyle: {
+    color: "#717482",
+    fontSize: 14,
+    marginBottom: 5,
   },
 });
 

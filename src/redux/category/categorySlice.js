@@ -10,21 +10,21 @@ const categorySlice = createSlice({
   name: "categories",
   initialState: {
     categories: [],
-    loading: true,
+    loading: false,
   },
   extraReducers: {
     [getCategories.pending]: (state) => {
       state.loading = true;
     },
     [getCategories.fulfilled]: (state, { payload }) => {
-      state.categories = payload.categories;
+      state.categories = payload.data.categories;
       state.loading = false;
     },
     [getCategories.rejected]: (state) => {
-      state.loading = true;
+      state.loading = false;
     },
     [addCategories.fulfilled]: (state, { payload }) => {
-      state.categories.push(payload.category.data);
+      state.categories.push(payload.data.data);
       state.loading = false;
     },
     [deleteCategories.fulfilled]: (state, { payload }) => {

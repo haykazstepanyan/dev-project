@@ -1,27 +1,31 @@
 import PropTypes from "prop-types";
 import MuiDrawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
-import { useToggle } from "../../hooks/hooks";
+import clsx from "clsx";
 import drawerStyles from "./styles";
 
-function Drawer({ children, anchorDirection, OpenIcon, outline }) {
-  const [anchor, setAnchor] = useToggle();
+function Drawer({
+  children,
+  anchorDirection,
+  OpenIcon,
+  outline,
+  open,
+  toggleDrawer,
+}) {
   const classes = drawerStyles();
-
-  const toggleDrawer = () => {
-    setAnchor();
-  };
 
   return (
     <>
       <OpenIcon
-        className={`${classes.icons} ${outline ? classes.outline : ""}`}
+        className={clsx(classes.icons, {
+          [classes.outline]: outline,
+        })}
         onClick={toggleDrawer}
       />
       <MuiDrawer
         className={classes.headerDrawer}
         anchor={anchorDirection}
-        open={anchor}
+        open={open}
         onClose={toggleDrawer}
         disableScrollLock
       >
@@ -40,6 +44,8 @@ Drawer.propTypes = {
   ]),
   OpenIcon: PropTypes.elementType,
   outline: PropTypes.bool,
+  open: PropTypes.bool.isRequired,
+  toggleDrawer: PropTypes.func.isRequired,
 };
 
 export default Drawer;

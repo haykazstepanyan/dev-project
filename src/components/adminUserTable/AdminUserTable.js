@@ -11,17 +11,15 @@ import {
 import { useDispatch } from "react-redux";
 import SettingsIcon from "@mui/icons-material/Settings";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
-import { deleteUsers, updateUsersRole } from "../../redux/users/actions";
+import { updateUsersRole } from "../../redux/users/actions";
 import { adminUsersStyles } from "./styles";
 
 function AdminUserTable({ tableData }) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
   const dispatch = useDispatch();
 
   const filterById = (id) => {
@@ -33,27 +31,14 @@ function AdminUserTable({ tableData }) {
     filterById(id);
     setOpen(true);
   };
-  const handleOpenDelete = (id) => {
-    filterById(id);
-    setOpenDelete(true);
-  };
+
   const handleClose = () => {
     setOpen(false);
-  };
-  const handleCloseDelete = () => {
-    setOpenDelete(false);
   };
 
   const editData = (value) => {
     dispatch(updateUsersRole(value));
     handleClose();
-  };
-
-  const deleteData = (value) => {
-    if (Number.isInteger(value)) {
-      dispatch(deleteUsers(value));
-    }
-    handleCloseDelete();
   };
 
   const classes = adminUsersStyles();
@@ -94,12 +79,6 @@ function AdminUserTable({ tableData }) {
                   >
                     <EditIcon className="editIcon" />
                   </Button>
-                  <Button
-                    onClick={() => handleOpenDelete(row.id)}
-                    style={{ backgroundColor: "transparent" }}
-                  >
-                    <DeleteIcon className="deleteIcon" />
-                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -113,18 +92,6 @@ function AdminUserTable({ tableData }) {
           open={open}
           modalData={modalData}
           onSubmit={(value) => editData(value)}
-        />
-      ) : (
-        ""
-      )}
-
-      {openDelete ? (
-        <AdminModal
-          type="delete"
-          onClose={() => handleCloseDelete()}
-          open={openDelete}
-          modalData={modalData}
-          onSubmit={(value) => deleteData(value)}
         />
       ) : (
         ""

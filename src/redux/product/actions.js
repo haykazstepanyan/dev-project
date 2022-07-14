@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchData } from "../../helpers/helpers";
-import { showNotification } from "../app/appSlice";
+import { showSnackbar } from "../app/appSlice";
 
 export const getProductsPagination = createAsyncThunk(
   "products/getProductsPagination",
@@ -12,9 +12,9 @@ export const getProductsPagination = createAsyncThunk(
 
       if (response.result === "error") {
         dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
+          showSnackbar({
+            snackbarType: "error",
+            snackbarMessage: response.message,
           }),
         );
         throw new Error();
@@ -34,9 +34,9 @@ export const getProductsCount = createAsyncThunk(
 
       if (response.result === "error") {
         dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
+          showSnackbar({
+            snackbarType: "error",
+            snackbarMessage: response.message,
           }),
         );
         throw new Error();
@@ -55,9 +55,9 @@ export const getProductsCount = createAsyncThunk(
 //       const response = await fetchData("products");
 //       if (response.result === "error") {
 //         dispatch(
-//           showNotification({
-//             notificationType: "error",
-//             notificationMessage: response.message,
+//           showSnackbar({
+//             snackbarType: "error",
+//             snackbarMessage: response.message,
 //           }),
 //         );
 //         throw new Error();
@@ -82,22 +82,20 @@ export const addProducts = createAsyncThunk(
         "POST",
       );
 
-      console.log("response", response);
-
       if (response.result === "error") {
         dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: response.message,
+          showSnackbar({
+            snackbarType: "error",
+            snackbarMessage: response.message,
           }),
         );
         throw new Error();
       }
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "Your product is successfully added.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your product is successfully added.",
         }),
       );
 
@@ -127,9 +125,9 @@ export const addProducts = createAsyncThunk(
 //       const result = await response.json();
 
 //       dispatch(
-//         showNotification({
-//           notificationType: "success",
-//           notificationMessage: "Your brand is successfully updated.",
+//         showSnackbar({
+//           snackbarType: "success",
+//           snackbarMessage: "Your brand is successfully updated.",
 //         }),
 //       );
 

@@ -16,11 +16,15 @@ import { miniShoppingCartStyles } from "./styles";
 
 function MiniShoppingCart() {
   const classes = miniShoppingCartStyles();
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const user = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
 
   const handleCartPage = () => {
-    return navigate(`${isAuth ? "/cart" : "/signin"}`);
+    if (user) {
+      navigate("/cart");
+    } else if (user === null) {
+      navigate("/signin");
+    }
   };
 
   const handleCheckoutPage = () => {
@@ -96,7 +100,7 @@ function MiniShoppingCart() {
           <Button
             variant="contained"
             onClick={handleCartPage}
-            color="info"
+            color="secondary"
             fullWidth
           >
             <ShoppingCartIcon fontSize="small" sx={{ marginRight: 1 }} />

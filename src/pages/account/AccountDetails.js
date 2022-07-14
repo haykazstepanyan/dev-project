@@ -24,7 +24,7 @@ import {
 } from "../../redux/users/actions";
 import Button from "../../components/button/Button";
 import { detailsStyles } from "./styles";
-import { showNotification } from "../../redux/app/appSlice";
+import { showSnackbar } from "../../redux/app/appSlice";
 
 function AccountDetails() {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ function AccountDetails() {
       dispatch(updateUserPassword(data));
     }
     dispatch(
-      showNotification({
+      showSnackbar({
         notificationType: "error",
         notificationMessage: "passwords do not match",
       }),

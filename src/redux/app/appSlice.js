@@ -4,34 +4,53 @@ const appSlice = createSlice({
   name: "app",
   initialState: {
     isMobile: false,
-    notification: {
-      show: false,
-      type: "",
-      message: "",
+    currency: localStorage.getItem("currency") || "USD",
+    loading: [],
+    snackbar: {
+      type: null,
+      message: null,
     },
   },
   reducers: {
     setIsMobileVersion(state, { payload }) {
       state.isMobile = payload.isMobile;
     },
-    showNotification(state, { payload }) {
-      state.notification = {
-        show: true,
-        type: payload.notificationType,
-        message: payload.notificationMessage,
+    showLoader(state, { payload }) {
+      state.loading.push(payload);
+    },
+    hideLoader(state, { payload }) {
+      const loaderIndex = state.loading.findIndex((item) => {
+        return item?.key === payload.key;
+      });
+      if (loaderIndex > -1) {
+        state.loading.splice(loaderIndex, 1);
+      }
+    },
+    showSnackbar(state, { payload }) {
+      state.snackbar = {
+        type: payload.snackbarType,
+        message: payload.snackbarMessage,
       };
     },
-    hideNotification(state) {
-      state.notification = {
-        show: false,
-        type: "",
-        message: "",
+    hideSnackbar(state) {
+      state.snackbar = {
+        type: null,
+        message: null,
       };
+    },
+    setCurrency(state, { payload }) {
+      state.currency = payload;
     },
   },
 });
 
-export const { setIsMobileVersion, showNotification, hideNotification } =
-  appSlice.actions;
+export const {
+  setIsMobileVersion,
+  showLoader,
+  hideLoader,
+  showSnackbar,
+  hideSnackbar,
+  setCurrency,
+} = appSlice.actions;
 
 export default appSlice;

@@ -6,10 +6,12 @@ const drawerStyles = createUseStyles({
     position: "relative",
     "& .MuiPaper-root ": {
       padding: [[50, 10, 15]],
+      width: 270,
+      height: "100vh",
+      overflow: "scroll",
     },
   },
   icons: {
-    marginRight: 20,
     cursor: "pointer",
     "&:hover": {
       color: colors.success,

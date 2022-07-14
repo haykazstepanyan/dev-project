@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { showNotification } from "../app/appSlice";
+import { showSnackbar } from "../app/appSlice";
 import { BASE_URL } from "../../constants/constants";
 import { checkIsAuth } from "../auth/actions";
 
@@ -39,9 +39,9 @@ export const deleteUsers = createAsyncThunk(
       const result = await response.json();
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "User is successfully deleted.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "User is successfully deleted.",
         }),
       );
 
@@ -70,9 +70,9 @@ export const updateUsersRole = createAsyncThunk(
       const result = await response.json();
       console.log(result);
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "User is successfully updated.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "User is successfully updated.",
         }),
       );
 
@@ -107,9 +107,9 @@ export const updateUserPersonalInfo = createAsyncThunk(
       const result = await response.json();
       if (result.type === "error") {
         dispatch(
-          showNotification({
-            notificationType: "error",
-            notificationMessage: result.message,
+          showSnackbar({
+            snackbarType: "error",
+            snackbarMessage: result.message,
           }),
         );
         throw new Error();
@@ -117,9 +117,9 @@ export const updateUserPersonalInfo = createAsyncThunk(
       dispatch(checkIsAuth());
 
       dispatch(
-        showNotification({
-          notificationType: "success",
-          notificationMessage: "User is successfully updated.",
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "User is successfully updated.",
         }),
       );
       return result;
@@ -149,7 +149,7 @@ export const updateUserPassword = createAsyncThunk(
 
       if (result.type === "error") {
         dispatch(
-          showNotification({
+          showSnackbar({
             notificationType: "error",
             notificationMessage: result.message,
           }),
@@ -157,7 +157,7 @@ export const updateUserPassword = createAsyncThunk(
         throw new Error();
       }
       dispatch(
-        showNotification({
+        showSnackbar({
           notificationType: "success",
           notificationMessage: "User is successfully updated.",
         }),

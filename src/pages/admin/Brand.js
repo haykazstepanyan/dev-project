@@ -1,38 +1,26 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/exports";
 import { Container } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
-import { addBrands, getBrands } from "../../redux/brand/actions";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
+import useFetch from "../../hooks/useFetch";
+import useLazyFetch from "../../hooks/useLazyFetch";
+import { showSnackbar } from "../../redux/app/appSlice";
 
-function createData(id, name, createdAt, updatedAt) {
-  return { id, name, createdAt, updatedAt };
-}
-
-export default function Brand() {
-  const brandsData = useSelector((state) => state.brands);
+function Brand() {
   const [open, setOpen] = useState(false);
-  const [brandsRows, setBrandsRows] = useState([]);
+  const [brands, setBrands] = useState([]);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getBrands());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const rows = [];
-    if (!brandsData.loading) {
-      brandsData.brands.forEach((elem) => {
-        const { id, name, createdAt, updatedAt } = elem;
-        rows.push(createData(id, name, createdAt, updatedAt));
-      });
-    }
-    setBrandsRows(rows);
-  }, [brandsData]);
+  const { data: brandsData, error: brandsError } = useFetch("/brands");
+  const {
+    data: addBrandData,
+    error: addBrandError,
+    lazyRefetch: addBrand,
+  } = useLazyFetch();
 
   const handleClose = () => {
     setOpen(false);
@@ -40,11 +28,65 @@ export default function Brand() {
   const handleOpen = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    if (addBrandData?.data) {
+      setBrands((prev) => [...prev, addBrandData.data]);
+
+      dispatch(
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Brand is added successfully!",
+        }),
+      );
+      handleClose();
+    }
+  }, [addBrandData, dispatch]);
+
+  useEffect(() => {
+    if (brandsData) {
+      setBrands(brandsData.data);
+    }
+  }, [brandsData]);
+
+  useEffect(() => {
+    if (addBrandError || brandsError) {
+      dispatch(
+        showSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+    }
+  }, [addBrandError, brandsError, dispatch]);
+
   const addData = (value) => {
     const brandData = { name: value };
-    dispatch(addBrands(brandData));
-    handleClose();
+
+    addBrand(
+      "/brands/brand",
+      {
+        body: JSON.stringify(brandData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      "POST",
+    );
   };
+
+  function setEditBrandData(brandData) {
+    const { id } = brandData;
+    const newState = brands.map((elem) => (elem.id === id ? brandData : elem));
+    setBrands(newState);
+  }
+  function setDeleteBrandData(brandData) {
+    if (brandData?.data) {
+      const { id } = brandData.data;
+      const newState = brands.filter((elem) => elem.id !== id);
+      setBrands(newState);
+    }
+  }
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
@@ -59,7 +101,14 @@ export default function Brand() {
             <AddIcon />
           </Button>
         </div>
-        {brandsData && <AdminMainTable type="brand" tableData={brandsRows} />}
+        {brands && (
+          <AdminMainTable
+            setEditBrandData={(value) => setEditBrandData(value)}
+            setDeleteBrandData={(value) => setDeleteBrandData(value)}
+            type="brand"
+            tableData={brands}
+          />
+        )}
       </Container>
       {open ? (
         <AdminModal
@@ -68,9 +117,9 @@ export default function Brand() {
           open={open}
           onSubmit={(value) => addData(value)}
         />
-      ) : (
-        ""
-      )}
+      ) : null}
     </>
   );
 }
+
+export default Brand;

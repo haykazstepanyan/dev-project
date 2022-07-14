@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 const slickSliderStyles = createUseStyles({
   slickSlider: {
+    marginBottom: 80,
     "& div:focus-visible": {
       outline: "none",
     },
@@ -19,6 +20,19 @@ const slickSliderStyles = createUseStyles({
     },
     "& .slick-arrow.slick-prev:before": {
       color: "#6b6b6b",
+    },
+    "& .slick-arrow.slick-next": {
+      position: "absolute",
+      right: 30,
+      top: "50%",
+      transform: "translate(0, -50%)",
+    },
+    "& .slick-arrow.slick-prev": {
+      zIndex: 9,
+      position: "absolute",
+      left: 30,
+      top: "50%",
+      transform: "translate(0, -50%)",
     },
   },
   homeSlider: {
@@ -57,11 +71,13 @@ const slickSliderStyles = createUseStyles({
     position: "relative",
   },
   sliderBlockStyle: {
+    color: "#3c3b3b",
     position: "absolute",
     top: "50%",
     left: "10%",
     transform: "translate(0, -50%)",
     "& h1": {
+      fontWeight: 500,
       fontSize: 63,
       marginBottom: 23,
       textTransform: "uppercase",
@@ -69,7 +85,7 @@ const slickSliderStyles = createUseStyles({
     },
     "& p": {
       fontSize: 20,
-      fontWeight: 500,
+      fontWeight: 400,
       marginBottom: 30,
       "& span": {
         color: `${colors.green}`,

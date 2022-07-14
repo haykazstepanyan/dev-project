@@ -1,22 +1,32 @@
 import { Link } from "react-router-dom";
 import { Container, Grid } from "@mui/material";
+import { useSelector } from "react-redux";
+import clsx from "clsx";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Navbar from "./Navbar";
 import { ClickableDropdown } from "../../components/dropdown";
-import { categories } from "../../DUMMY_DATA";
 import { headerStyles } from "./styles";
 
 function StickyHeader() {
   const classes = headerStyles();
-  const categoriesArray = ["All categories", ...categories];
+  const categories = useSelector((state) => state.categories.categories);
 
-  const categoriesToLink = categoriesArray.map((category) => (
-    <Link to="/" className={classes.categoryLinks} key={category}>
-      {category}
-    </Link>
-  ));
+  const categoriesArray = categories.map((category) => ({
+    id: category.id,
+    name: category.name,
+    item: (
+      <Link
+        to={`/shop?category=${category.id}`}
+        className={classes.categoryLinks}
+        key={category.id}
+      >
+        {category.name}
+      </Link>
+    ),
+  }));
+
   return (
-    <div className={`${classes.headerParts} ${classes.stickyLine}`}>
+    <div className={clsx(classes.headerParts, classes.stickyLine)}>
       <Container maxWidth="lg">
         <Grid
           container
@@ -26,7 +36,7 @@ function StickyHeader() {
         >
           <Grid item md={3} className={classes.bottomCategories}>
             <ClickableDropdown
-              options={categoriesToLink}
+              options={categoriesArray}
               icon={<FormatListBulletedIcon />}
               value="Categories"
               topDistance={5}

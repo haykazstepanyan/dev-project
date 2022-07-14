@@ -60,9 +60,8 @@ const adminLayoutStyles = createUseStyles({
     },
   },
   leftSidebar: {
-    borderRight: "1px solid #e5edef",
     padding: [[30, 10]],
-    height: "100vh",
+    maxHeight: "100%",
   },
   adminNameStyle: {
     textAlign: "center",
