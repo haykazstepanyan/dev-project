@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import Container from "@mui/system/Container";
@@ -62,6 +62,13 @@ function Shop() {
     setInitialMinMaxValues();
   }, [setInitialMinMaxValues]);
 
+  useEffect(() => {
+    const categoryParams = searchParams.getAll("category");
+    if (categoryParams.length <= 1) {
+      setSelectedCategories(categoryParams.map((param) => +param));
+    }
+  }, [searchParams]);
+
   const {
     data: brands,
     error: brandsError,
@@ -84,6 +91,8 @@ function Shop() {
   useEffect(() => {
     if (highestPriceLoading) {
       dispatch(showLoader({ key: "getHighestPrice" }));
+    } else {
+      dispatch(hideLoader({ key: "getHighestPrice" }));
     }
   }, [dispatch, highestPriceLoading]);
 
@@ -93,7 +102,6 @@ function Shop() {
         prevState[0],
         searchParams.get("max") || highestPrice?.data.price,
       ]);
-      dispatch(hideLoader({ key: "getHighestPrice" }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, highestPrice, highestPriceError]);
@@ -112,26 +120,18 @@ function Shop() {
   useEffect(() => {
     if (productsLoading) {
       dispatch(showLoader({ key: "getFilteredProducts" }));
+    } else {
+      dispatch(hideLoader({ key: "getFilteredProducts" }));
     }
   }, [dispatch, productsLoading]);
 
   useEffect(() => {
-    if (products?.data || productsError) {
-      dispatch(hideLoader({ key: "getFilteredProducts" }));
-    }
-  }, [dispatch, products, productsError]);
-
-  useEffect(() => {
     if (brandsLoading) {
       dispatch(showLoader({ key: "getBrands" }));
-    }
-  }, [dispatch, brandsLoading]);
-
-  useEffect(() => {
-    if (brands?.data || brandsError) {
+    } else {
       dispatch(hideLoader({ key: "getBrands" }));
     }
-  }, [dispatch, brands, brandsError]);
+  }, [dispatch, brandsLoading]);
 
   useEffect(() => {
     productsRefetch();
@@ -286,4 +286,4 @@ function Shop() {
   );
 }
 
-export default Shop;
+export default memo(Shop);

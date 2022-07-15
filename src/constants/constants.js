@@ -10,7 +10,7 @@ export const colors = {
   red: "#DC0F0F",
 };
 
-export const TABLE_TITLES = ["Date", "Status", "Total", "Actions"];
+export const TABLE_TITLES = ["Date", "Status", "Total", "Products", "Actions"];
 export const NAV_LINKS = [
   { route: "/", name: "Home" },
   { route: "/shop", name: "Shop" },

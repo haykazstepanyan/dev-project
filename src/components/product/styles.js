@@ -4,6 +4,12 @@ import { colors } from "../../constants/constants";
 const productItemStyles = createUseStyles({
   product: {
     position: "relative",
+    border: "1px solid #e8e8e8",
+    boxShadow: "none !important",
+    padding: 15,
+    "& .MuiCardContent-root": {
+      paddingBottom: 0,
+    },
   },
   productName: {
     fontSize: 14,
@@ -40,11 +46,16 @@ const productItemStyles = createUseStyles({
     fontSize: 12,
   },
   productImg: {
+    objectFit: "contain",
     height: 180,
+    "&:hover": {
+      transform: "scale(1.07)",
+      transition: "0.4s all",
+    },
   },
   multipleProductsCard: {
     textAlign: "center",
-    background: colors.lightGrey,
+    // background: colors.lightGrey,
   },
   singleProductCard: {
     display: "flex",
@@ -97,7 +108,12 @@ const productItemStyles = createUseStyles({
   },
   productCardContent: {},
   productPrices: {},
-  productIcons: {},
+  productIcons: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    zIndex: 20,
+  },
   productImgLink: {},
 });
 
@@ -125,12 +141,12 @@ const shopPageProductsStyles = createUseStyles({
 
 const ToolbarStyles = createUseStyles({
   shopWrapper: {
-    border: `1px solid ${colors.milky}`,
+    border: "solid 1px #e8e8e8",
     padding: 12,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    margin: [[0, 8, 24]],
+    margin: [[0, 20, 24]],
   },
   shopWrapperIconsContainer: {},
   productsLength: {},
@@ -147,6 +163,16 @@ const ToolbarStyles = createUseStyles({
   },
   sortingForm: {
     minWidth: 160,
+    "& >div:hover fieldset": {
+      border: "solid 1px #e8e8e8",
+      borderColor: "#e8e8e8 !important",
+    },
+    "& .MuiSelect-select": {
+      fontSize: 14,
+    },
+    "& fieldset": {
+      border: "solid 1px #e8e8e8",
+    },
   },
   sortingFormControls: {
     display: "flex",

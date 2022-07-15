@@ -9,7 +9,7 @@ import { headerStyles } from "./styles";
 
 function StickyHeader() {
   const classes = headerStyles();
-  const categories = useSelector((state) => state.categories.categories);
+  const categories = useSelector((state) => state.categories.categories || []);
 
   const categoriesArray = categories.map((category) => ({
     id: category.id,

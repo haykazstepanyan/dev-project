@@ -84,7 +84,7 @@ const adminLayoutStyles = createUseStyles({
     border: "1px solid #e8eff1",
     position: "sticky",
     top: 0,
-    background: `${colors.white}`,
+    background: colors.white,
     zIndex: 10,
     backgroundColor: "#eff3f5",
   },

@@ -7,40 +7,45 @@ import {
   Box,
   Typography,
   Divider,
-  TextField,
   IconButton,
 } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import PinterestIcon from "@mui/icons-material/Pinterest";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 import Button from "../components/button";
 import { productViewStyles } from "./styles";
+import { addToCartStyles } from "../components/styles/styles";
 import useFetch from "../hooks/useFetch";
 import { showLoader, hideLoader, showSnackbar } from "../redux/app/appSlice";
 import useLazyFetch from "../hooks/useLazyFetch";
 import SignInModal from "../components/modals/SignInModal";
 import { currencySymbols } from "../constants/constants";
+import useDebounce from "../hooks/useDebounce";
+import Input from "../components/input";
 
 function Product() {
   const [isProductLiked, setIsProductLiked] = useState(false);
+  const [count, setCount] = useState(0);
   const [openModal, setOpenModal] = useState(false);
+  const [startToSearch, setStartToSearch] = useState(false);
+
+  const debouncedCount = useDebounce(count, 1500);
   const selectedCurrency = useSelector((state) => state.app.currency);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
   const { productId } = useParams();
   const navigate = useNavigate();
   const classes = productViewStyles();
-
-  const { data: productData, error: productError } = useFetch(
-    `/products/getProducts/${productId}`,
-  );
+  const cartClasses = addToCartStyles();
 
   const {
-    data: wishlistChangeData,
-    loading: wishlistChangeLoading,
-    lazyRefetch: wishlistRefetch,
-  } = useLazyFetch();
+    data: productData,
+    loading: prodcutLoading,
+    error: productError,
+  } = useFetch(`/products/getProducts/${productId}`);
+
+  const { data: wishlistChangeData, lazyRefetch: wishlistRefetch } =
+    useLazyFetch();
+
+  const { data: cartChangeData, lazyRefetch: cartRefetch } = useLazyFetch();
 
   const {
     id,
@@ -51,6 +56,7 @@ function Product() {
     category,
     productImg,
     wishlist,
+    cart,
   } = productData?.data || {};
 
   const ratesData = JSON.parse(localStorage.getItem("rates"));
@@ -67,24 +73,16 @@ function Product() {
   const convertedSymbol = currencySymbols[selectedCurrency];
 
   useEffect(() => {
-    if (wishlistChangeLoading) {
-      dispatch(
-        showLoader({
-          key: "wishlist/change",
-        }),
-      );
+    if (prodcutLoading) {
+      showLoader({
+        key: "getProduct",
+      });
+    } else {
+      hideLoader({
+        key: "getProduct",
+      });
     }
-  }, [dispatch, wishlistChangeLoading]);
-
-  useEffect(() => {
-    if (wishlistChangeData) {
-      dispatch(
-        hideLoader({
-          key: "wishlist/change",
-        }),
-      );
-    }
-  }, [dispatch, wishlistChangeData]);
+  }, [prodcutLoading]);
 
   useEffect(() => {
     if (productError) {
@@ -99,11 +97,10 @@ function Product() {
 
   useEffect(() => {
     if (productData) {
-      setIsProductLiked(
-        productData.data.wishlist && productData.data.wishlist.length,
-      );
+      setIsProductLiked(wishlist && wishlist.length);
+      setCount(cart?.[0]?.count || 0);
     }
-  }, [productData]);
+  }, [productData, wishlist, cart]);
 
   const onModalOpen = () => {
     setOpenModal(true);
@@ -145,10 +142,86 @@ function Product() {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (countToUpdate) => {
     if (!isAuth) {
       onModalOpen();
-      // return;
+      return;
+    }
+    if (countToUpdate) {
+      cartRefetch(
+        "/cart/count",
+        {
+          body: JSON.stringify({
+            count: countToUpdate,
+            cardId: cartChangeData?.data?.id || cart[0]?.id || 0,
+            productId: id,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        "PUT",
+      )
+        .then((result) => {
+          console.log(result.data);
+          if (result.data?.count !== count) {
+            setCount(result.data.count);
+          }
+        })
+        .catch(() => {
+          dispatch(
+            showSnackbar({
+              snackbarType: "error",
+              snackbarMessage: "Oops! Something went wrong!",
+            }),
+          );
+        });
+    } else {
+      cartRefetch(
+        `/cart/delete/${cartChangeData?.data?.id || cart[0].id}`,
+        null,
+        "DELETE",
+      )
+        .then((result) => {
+          if (result.data.id && !count) {
+            setCount(0);
+          }
+        })
+        .catch(() => {
+          dispatch(
+            showSnackbar({
+              snackbarType: "error",
+              snackbarMessage: "Oops! Something went wrong!",
+            }),
+          );
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (startToSearch) {
+      handleAddToCart(debouncedCount || 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedCount]);
+
+  const handleCountChange = (value) => {
+    if (value < 0) {
+      return;
+    }
+    if (value > 50) {
+      dispatch(
+        showSnackbar({
+          snackbarType: "warning",
+          snackbarMessage: "Please contact with us for that quantity",
+        }),
+      );
+      setCount(50);
+      return;
+    }
+    setCount(value || 0);
+    if (!startToSearch) {
+      setStartToSearch(true);
     }
   };
 
@@ -164,6 +237,7 @@ function Product() {
             <KeyboardBackspaceOutlinedIcon />
             <p className={classes.goBackText}>Back to Shop</p>
           </IconButton>
+
           <Grid container alignItems="center">
             <Grid
               item
@@ -208,18 +282,39 @@ function Product() {
                 <Divider />
 
                 <Box marginTop={3}>
-                  <TextField
-                    size="small"
-                    label="Quantity"
-                    type="number"
-                    defaultValue={1}
-                    InputProps={{ inputProps: { min: 1, max: 10 } }}
-                  />
-                  <Box sx={{ display: "inline", marginLeft: 3 }}>
-                    <Button color="secondary" onClick={handleAddToCart}>
-                      Add To Cart
-                    </Button>
-                  </Box>
+                  <div>
+                    {count ? (
+                      <div className={cartClasses.cartContainer}>
+                        <Button
+                          color="info"
+                          onClick={() => handleCountChange(count - 1)}
+                        >
+                          -
+                        </Button>
+                        <Input
+                          state="noFocus"
+                          type="number"
+                          value={count}
+                          onChange={(e) => handleCountChange(+e.target.value)}
+                        />
+                        <Button
+                          color="info"
+                          onClick={() => handleCountChange(count + 1)}
+                        >
+                          +
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        style={{ width: "180px" }}
+                        color="primary"
+                        disableRipple
+                        onClick={() => handleCountChange(count + 1)}
+                      >
+                        Add to cart
+                      </Button>
+                    )}
+                  </div>
                 </Box>
 
                 <Box marginTop={3}>
@@ -231,21 +326,9 @@ function Product() {
                 </Box>
                 <Box sx={{ marginTop: 3 }}>
                   <Typography>
-                    <b className={classes.product_category_text}>Category:</b>
+                    <b className={classes.productCategoryText}>Category:</b>
                     <span>{category.name}</span>
                   </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: 100,
-                    marginTop: 3,
-                  }}
-                >
-                  <FacebookIcon className={classes.fb_icon} />
-                  <PinterestIcon className={classes.pinterest_icon} />
-                  <LinkedInIcon className={classes.linkedIn_icon} />
                 </Box>
               </Box>
             </Grid>

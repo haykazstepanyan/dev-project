@@ -32,6 +32,7 @@ const useFetch = (url, options, method = "GET", withoutBaseURL = false) => {
       setLoading(false);
     }
   }, [url, options, method, withoutBaseURL]);
+
   useEffect(() => {
     refetch();
   }, [refetch]);

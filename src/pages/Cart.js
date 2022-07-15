@@ -1,44 +1,160 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Container, Grid } from "@mui/material";
 import Table from "../components/table/Table";
 import Button from "../components/button";
 import Banner from "../components/common/Banner";
-import product1 from "../assets/images/product.webp";
-import product2 from "../assets/images/product2.webp";
-import product3 from "../assets/images/product3.webp";
 import { globalStyles } from "../components/styles/styles";
 import { cartStyles } from "./styles";
 import Input from "../components/input";
-
-function createData(image, name, price, stockStatus, total) {
-  return {
-    image,
-    name,
-    price,
-    stockStatus,
-    // productId,
-    total,
-  };
-}
-
-const rows = [
-  createData(product1, "Handbag Fringilla", 65.0, "In Stock", 1, 65.0),
-  createData(product2, "Handbags Justo", 90.0, "In Stock", 2, 90.0),
-  createData(product3, "Handbag Elit", 80.0, "In Stock", 3, 80.0),
-];
-
-function deleteProduct() {
-  // console.log(productId);
-}
+import useFetch from "../hooks/useFetch";
+import { showLoader, hideLoader } from "../redux/app/appSlice";
+import NoData from "../components/common/NoData";
+import useLazyFetch from "../hooks/useLazyFetch";
 
 function Cart() {
   const globalClasses = globalStyles();
   const classes = cartStyles();
+  const dispatch = useDispatch();
+  const [count, setCount] = useState([]);
+  const [totalSum, setTotalSum] = useState(0);
+  const [shippingPrice] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {}, [count]);
+  const {
+    data: cartItems,
+    loading: cartLoading,
+    refetch: cartRefetch,
+  } = useFetch("/cart/getCartItems");
+
+  const {
+    data: cartDeleteData,
+    loading: cartDeleteLoading,
+    lazyRefetch: cartLazyRefetch,
+  } = useLazyFetch();
+
+  useEffect(() => {
+    if (cartLoading) {
+      dispatch(
+        showLoader({
+          key: "cart/getCartItems",
+        }),
+      );
+    }
+  }, [dispatch, cartLoading]);
+
+  useEffect(() => {
+    if (cartItems) {
+      const sum = Number(
+        cartItems.data
+          .reduce((prev, current) => {
+            console.log(prev, current.product?.price, "11111111");
+            return Number(
+              Number(prev) +
+                Number(
+                  (Number(current.product?.price) -
+                    (Number(current.product?.price) *
+                      Number(current.product?.discount)) /
+                      100) *
+                    Number(current?.count),
+                ),
+            );
+          }, 0)
+          .toFixed(2),
+      );
+      setTotalSum(sum);
+      console.log(totalSum, "totalSum");
+
+      const qunatities =
+        cartItems &&
+        cartItems.data.map((item) => {
+          console.log(item);
+          return {
+            cardId: item.id,
+            quantity: item.count,
+          };
+        });
+      setCount(qunatities);
+      dispatch(
+        hideLoader({
+          key: "cart/getCartItems",
+        }),
+      );
+    }
+  }, [dispatch, cartItems, totalSum]);
+
+  useEffect(() => {
+    if (cartDeleteLoading) {
+      dispatch(
+        showLoader({
+          key: "cart/deleteCartItem",
+        }),
+      );
+    }
+  }, [dispatch, cartDeleteLoading]);
+
+  useEffect(() => {
+    if (cartDeleteData) {
+      dispatch(
+        hideLoader({
+          key: "cart/deleteCartItem",
+        }),
+      );
+    }
+  }, [dispatch, cartDeleteData]);
+
+  const handleDeleteCartItem = (id) => {
+    cartLazyRefetch(`/cart/delete/${id}`, null, "DELETE").then((result) => {
+      if (result.data.id) {
+        cartRefetch();
+      }
+    });
+  };
+
+  const handleChangeCount = (value, id, index) => {
+    console.log(value, "valueeeeee");
+    const newCount = [...count];
+    newCount[index] = {
+      cardId: id,
+      quantity: +value,
+    };
+    console.log(newCount);
+    setCount(newCount);
+    // cartRefetch(
+    //   `/cart/count/${id}`,
+    //   {
+    //     body: JSON.stringify({ count: value }),
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   },
+    //   "PUT",
+    // );
+  };
+
+  const handleCheckoutClick = () => {
+    return navigate("/checkout");
+  };
 
   return (
     <>
       <Banner name="Cart" />
       <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
-        <Table tableData={rows} type="cart" deleteProduct={deleteProduct} />
+        {cartItems &&
+          (cartItems.data.length ? (
+            <Table
+              tableData={cartItems.data}
+              type="cart"
+              deleteData={handleDeleteCartItem}
+              changeCount={handleChangeCount}
+              count={count}
+            />
+          ) : (
+            <NoData />
+          ))}
+
         <Grid container spacing={2} style={{ marginTop: "20px" }}>
           <Grid item xs={12} lg={6}>
             <div>
@@ -77,12 +193,12 @@ function Cart() {
                 <div>
                   <div>
                     <p>Subtotal</p>
-                    <p>$215.00</p>
+                    <p>${totalSum}</p>
                   </div>
                   <div>
                     <p>Shipping</p>
                     <p>
-                      <span>Flat Rate:</span> $255.00
+                      <span>Flat Rate:</span> ${shippingPrice}
                     </p>
                   </div>
                   <div
@@ -92,11 +208,15 @@ function Cart() {
                     }}
                   >
                     <p>Total</p>
-                    <p>$215.00</p>
+                    <p>${totalSum + shippingPrice}</p>
                   </div>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <Button color="primary" disableRipple>
+                  <Button
+                    color="primary"
+                    disableRipple
+                    onClick={handleCheckoutClick}
+                  >
                     proceed to checkout
                   </Button>
                 </div>

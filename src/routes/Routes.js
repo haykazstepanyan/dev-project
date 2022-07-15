@@ -24,6 +24,8 @@ const Category = lazy(() => import("../pages/admin/Category"));
 const Product = lazy(() => import("../pages/admin/products/Product"));
 const ContactMessage = lazy(() => import("../pages/admin/ContactMessage"));
 const Users = lazy(() => import("../pages/admin/Users"));
+const Checkout = lazy(() => import("../pages/Checkout"));
+// const CheckoutCompletion = lazy(() => import("../pages/payment/Completion"));
 
 function PageRoutes() {
   const userRole = useSelector((state) => state.auth.role);
@@ -43,6 +45,7 @@ function PageRoutes() {
       <>
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="checkout/*" element={<Checkout />} />
         <Route path="account" element={<Account />}>
           <Route
             path="dashboard"
