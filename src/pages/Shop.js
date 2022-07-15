@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import Container from "@mui/system/Container";
@@ -286,4 +286,4 @@ function Shop() {
   );
 }
 
-export default Shop;
+export default memo(Shop);

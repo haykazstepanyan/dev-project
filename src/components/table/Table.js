@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -19,11 +19,26 @@ import Button from "../button";
 import { tableStyles } from "./styles";
 import { currencySymbols } from "../../constants/constants";
 
-function Table({ type, tableData, deleteData }) {
+function Table({
+  type,
+  tableData,
+  deleteData,
+  changeCount,
+  count,
+  ides,
+  handleAddToCart,
+}) {
   const [openModal, setOpenModal] = useState(false);
   const [selectedWishlist, setSelectedWishlist] = useState(null);
+  const [selectedCartItem, setSelectedCartItem] = useState(null);
+  const [productIdes, setProductIdes] = useState([]);
   const classes = tableStyles();
 
+  useEffect(() => {
+    if (ides?.length > 0) {
+      setProductIdes(ides);
+    }
+  }, [ides]);
   const selectedCurrency = useSelector((state) => state.app.currency);
   const ratesData = JSON.parse(localStorage.getItem("rates"));
   const rates = ratesData?.currencyRates;
@@ -40,14 +55,27 @@ function Table({ type, tableData, deleteData }) {
 
   const onModalClose = () => {
     setOpenModal(false);
-    setSelectedWishlist(null);
+    if (type === "wishlist") {
+      setSelectedWishlist(null);
+    } else {
+      setSelectedCartItem(null);
+    }
   };
+
   const onModalOpen = (id) => {
     setOpenModal(true);
-    setSelectedWishlist(id);
+    if (type === "wishlist") {
+      setSelectedWishlist(id);
+    } else {
+      setSelectedCartItem(id);
+    }
   };
   const deleteWishlist = () => {
-    deleteData(selectedWishlist);
+    if (type === "wishlist") {
+      deleteData(selectedWishlist);
+    } else {
+      deleteData(selectedCartItem);
+    }
     onModalClose();
   };
 
@@ -59,7 +87,7 @@ function Table({ type, tableData, deleteData }) {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Are you sure you want to remove from wishlist?
+        Are you sure you want to remove from {type} ?
       </DialogTitle>
       <DialogActions>
         <Button purpose="modalCancel" onClick={onModalClose} disableRipple>
@@ -95,7 +123,7 @@ function Table({ type, tableData, deleteData }) {
           </TableHead>
           <TableBody>
             {tableData &&
-              tableData.map((row) => (
+              tableData.map((row, rowIndex) => (
                 <TableRow
                   key={row.id}
                   sx={{
@@ -125,13 +153,45 @@ function Table({ type, tableData, deleteData }) {
                   </TableCell>
                   {type === "wishlist" ? (
                     <TableCell>
-                      <Button
-                        type="primary"
-                        onClick={() => deleteData(row.productId)}
-                        disableRipple
-                      >
-                        Add to cart
-                      </Button>
+                      {/* <div className={classes.cartContainer}
+                            <button
+                              className={classes.desBtn}
+                              type="button"
+                              onClick={() => handleChangeCount("dec")}
+                            >
+                              -
+                            </button>
+                            <input
+                              className={classes.cartInput}
+                              type="text"
+                              value={count}
+                              onChange={(e) => inputOnchange(e.target.value)}
+                            />
+                            <button
+                              className={classes.incBtn}
+                              type="button"
+                              onClick={() => handleChangeCount("inc")}
+                            >
+                              +
+                            </button>
+                          
+                      </div> */}
+                      {productIdes.length > 0 &&
+                      productIdes.some(
+                        (item) => item.productId === row?.productId,
+                      ) ? (
+                        "Already in cart"
+                      ) : (
+                        <Button
+                          type="primary"
+                          onClick={() =>
+                            handleAddToCart(row?.productId, rowIndex)
+                          }
+                          disableRipple
+                        >
+                          Add to cart
+                        </Button>
+                      )}
                     </TableCell>
                   ) : (
                     <>
@@ -139,12 +199,25 @@ function Table({ type, tableData, deleteData }) {
                       <TableCell className="qty-input">
                         <label htmlFor="quantity">
                           Quantity
-                          <input id="quantity" type="number" />
+                          <input
+                            id="quantity"
+                            type="number"
+                            // defaultValue={1}
+                            value={count[rowIndex]?.quantity || row.count}
+                            onChange={(e) =>
+                              changeCount(e.target.value, row.id, rowIndex)
+                            }
+                          />
                         </label>
                       </TableCell>
                       <TableCell className="price">
-                        <p>$150</p>
-                        {/* {row.total} */}
+                        {(
+                          (Number(row.product?.price) -
+                            (Number(row.product?.price) *
+                              Number(row.product?.discount)) /
+                              100) *
+                          Number(row?.count)
+                        ).toFixed(2)}
                       </TableCell>
                     </>
                   )}
@@ -171,6 +244,19 @@ Table.propTypes = {
   ).isRequired,
   type: PropTypes.string,
   deleteData: PropTypes.func,
+  handleAddToCart: PropTypes.func,
+  changeCount: PropTypes.func,
+  count: PropTypes.arrayOf([
+    PropTypes.shape({
+      cardId: PropTypes.number,
+      quantity: PropTypes.number,
+    }),
+  ]),
+  ides: PropTypes.arrayOf([
+    PropTypes.shape({
+      productId: PropTypes.number,
+    }),
+  ]),
 };
 
 export default Table;
