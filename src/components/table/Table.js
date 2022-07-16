@@ -30,8 +30,9 @@ function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
   const ratesData = JSON.parse(localStorage.getItem("rates"));
   const rates = ratesData?.currencyRates;
 
-  const countByCurrencyRate = (price) => {
-    const convertedPrice = price * (rates?.[selectedCurrency] || 1);
+  const countByCurrencyRate = (price, discount) => {
+    const convertedPrice =
+      (price - (price * discount) / 100) * (rates?.[selectedCurrency] || 1);
     if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
       return Math.trunc(convertedPrice);
     }
@@ -130,7 +131,10 @@ function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
                   <TableCell className="price">
                     <p>
                       {convertedSymbol}
-                      {countByCurrencyRate(row.product.price)}
+                      {countByCurrencyRate(
+                        row.product.price,
+                        row.product.discount,
+                      )}
                     </p>
                   </TableCell>
 
@@ -161,12 +165,11 @@ function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
                     )}
                   </TableCell>
                   {type === "cart" ? (
-                    <TableCell className="price">
-                      {(
-                        (row.product.price -
-                          (row.product.price * row.product.discount) / 100) *
-                        row.count
-                      ).toFixed(2)}
+                    <TableCell>
+                      {countByCurrencyRate(
+                        row.product.price,
+                        row.product.discount,
+                      ) * row.count}
                     </TableCell>
                   ) : null}
                   <TableCell>

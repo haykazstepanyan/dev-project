@@ -9,6 +9,7 @@ export const fetchData = async (
   try {
     if (data) {
       options.body = JSON.stringify(data);
+      options.headers = { "Content-Type": "application/json" };
     }
     const response = await fetch(`${BASE_URL}/${urlEndPart}`, {
       credentials: "include",

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Container } from "@mui/material";
-import Table from "../components/table/Table";
+import Table from "../components/table";
 import Banner from "../components/common/Banner";
 import { globalStyles } from "../components/styles/styles";
 import useFetch from "../hooks/useFetch";

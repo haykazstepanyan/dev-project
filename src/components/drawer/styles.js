@@ -50,6 +50,9 @@ const drawerStyles = createUseStyles({
     icons: {
       marginRight: 8,
     },
+    itemCount: {
+      right: 3,
+    },
   },
 });
 

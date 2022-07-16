@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Container, Grid } from "@mui/material";
 import Table from "../components/table/Table";
 import Button from "../components/button";
@@ -11,6 +11,7 @@ import useFetch from "../hooks/useFetch";
 import { showLoader, hideLoader, setCartCount } from "../redux/app/appSlice";
 import NoData from "../components/common/NoData";
 import useLazyFetch from "../hooks/useLazyFetch";
+import { currencySymbols } from "../constants/constants";
 
 function Cart() {
   const globalClasses = globalStyles();
@@ -30,6 +31,19 @@ function Cart() {
     lazyRefetch: cartDeleteRefetch,
   } = useLazyFetch();
 
+  const selectedCurrency = useSelector((state) => state.app.currency);
+  const ratesData = JSON.parse(localStorage.getItem("rates"));
+  const rates = ratesData?.currencyRates;
+
+  const countByCurrencyRate = (price, discount) => {
+    const convertedPrice =
+      (price - (price * discount) / 100) * (rates?.[selectedCurrency] || 1);
+    if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+      return Math.trunc(convertedPrice);
+    }
+    return parseFloat(convertedPrice.toFixed(2));
+  };
+
   useEffect(() => {
     if (cartLoading) {
       dispatch(
@@ -42,18 +56,16 @@ function Cart() {
 
   useEffect(() => {
     if (cartItems) {
-      const sum = cartItems.data
+      const productsTotalSum = cartItems.data
         .reduce(
-          (prev, current) =>
-            prev +
-            (current.product.price -
-              (current.product.price * current.product.discount) / 100) *
-              current.count,
+          (acc, cur) =>
+            acc +
+            countByCurrencyRate(cur.product.price, cur.product.discount) *
+              cur.count,
           0,
         )
         .toFixed(2);
-
-      setTotalSum(sum);
+      setTotalSum(productsTotalSum);
 
       dispatch(
         hideLoader({
@@ -61,6 +73,7 @@ function Cart() {
         }),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, cartItems]);
 
   useEffect(() => {
@@ -91,6 +104,8 @@ function Cart() {
       }
     });
   };
+
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   return (
     <>
@@ -142,7 +157,10 @@ function Cart() {
                     <div className={classes.couponBottomBlock}>
                       <div className={classes.cartTotals}>
                         <p>Total</p>
-                        <p>${totalSum}</p>
+                        <p>
+                          {convertedSymbol}
+                          {totalSum}
+                        </p>
                       </div>
                       <div style={{ textAlign: "right" }}>
                         <Button color="primary" disableRipple>

@@ -95,4 +95,53 @@ const globalStyles = createUseStyles({
   },
 });
 
-export { documentStyles, globalStyles };
+const addToCartStyles = createUseStyles({
+  cartContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: 180,
+    border: `2px solid ${colors.green}`,
+    borderRadius: 10,
+    padding: 5,
+    "&:focus-within": {
+      borderColor: colors.success,
+    },
+    "& button": {
+      border: "none",
+      background: "none",
+      color: "#1c1c1c",
+      fontSize: 15,
+      lineHeight: 1,
+      minWidth: "auto",
+      textTransform: "capitalize",
+      "&:hover": {
+        background: "transparent",
+      },
+    },
+    "& .MuiInputBase-root:hover fieldset": {
+      border: "none !important",
+    },
+    "& input": {
+      padding: "5px !important",
+      textAlign: "center",
+      "&::-webkit-inner-spin-button": {
+        "-webkit-appearance": "none",
+      },
+    },
+    "& fieldset": {
+      border: "none !important",
+    },
+  },
+  // cartInput: {
+  //   border: "none",
+  //   textAlign: "center",
+  //   fontSize: 15,
+  //   width: "20%",
+  //   "&:focus-visible": {
+  //     outline: "none",
+  //   },
+  // },
+});
+
+export { documentStyles, globalStyles, addToCartStyles };

@@ -8,26 +8,36 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 import { TABLE_TITLES } from "../../constants/constants";
 import { orderStyles } from "./styles";
+import { fetchData } from "../../helpers/helpers";
 
-function createData(order, date, status, total, action) {
-  return {
-    order,
-    date,
-    status,
-    total,
-    action,
-  };
-}
+// function createData(order, date, status, total, action) {
+//   return {
+//     order,
+//     date,
+//     status,
+//     total,
+//     action,
+//   };
+// }
 
-const rows = [
-  createData(1, "May 10 2018", "Completed", "$25.00 For 1 Item", "View"),
-  createData(2, "May 10 2018", "Completed", "$25.00 For 1 Item", "View"),
-];
+// const rows = [
+//   createData(1, "May 10 2018", "Completed", "$25.00 For 1 Item", "View"),
+//   createData(2, "May 10 2018", "Completed", "$25.00 For 1 Item", "View"),
+// ];
 
 function Orders() {
+  const [orders, setOrders] = useState();
   const classes = orderStyles();
+
+  useEffect(() => {
+    (async () => {
+      setOrders(await (await fetchData("orders")).data.data);
+    })();
+  }, []);
+
   return (
     <>
       <h3 className={classes.orderTitle}>Orders</h3>
@@ -44,22 +54,30 @@ function Orders() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.order}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.order}
-                </TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.status}</TableCell>
-                <TableCell align="right">{row.total}</TableCell>
-                <TableCell className={classes.greenText} align="right">
-                  <Link to="cart"> {row.action}</Link>
-                </TableCell>
-              </TableRow>
-            ))}
+            {orders &&
+              orders.map((order) => (
+                <TableRow
+                  key={order.order}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {order.order}
+                  </TableCell>
+                  <TableCell align="right">{order.date}</TableCell>
+                  <TableCell align="right">
+                    {order.isDelivered ? "Delivered" : "On Road"}
+                  </TableCell>
+                  <TableCell align="right">
+                    {order.amount / 100 + order.currency}
+                  </TableCell>
+                  <TableCell align="right">
+                    {order.orderDetails.map(({ product }) => product.name)}
+                  </TableCell>
+                  <TableCell className={classes.greenText} align="right">
+                    <Link to="cart"> {order.action}</Link>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import {
   Stack,
   Typography,
@@ -10,35 +11,55 @@ import {
   Box,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-// import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Button from "../button";
 import { miniShoppingCartStyles } from "./styles";
 import useFetch from "../../hooks/useFetch";
 import Loader from "../loader";
+import { currencySymbols } from "../../constants/constants";
 
 function MiniShoppingCart({ toggleDrawer }) {
   const [totalSum, setTotalSum] = useState(0);
   const classes = miniShoppingCartStyles();
   const navigate = useNavigate();
 
+  const selectedCurrency = useSelector((state) => state.app.currency);
+  const ratesData = JSON.parse(localStorage.getItem("rates"));
+  const rates = ratesData?.currencyRates;
+
   const { data: cartData, loading: cartLoading } =
     useFetch("/cart/getCartItems");
 
+  const countByCurrencyRate = (price, discount) => {
+    const convertedPrice =
+      (price - (price * discount) / 100) * (rates?.[selectedCurrency] || 1);
+    if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+      return Math.trunc(convertedPrice);
+    }
+    return parseFloat(convertedPrice.toFixed(2));
+  };
+
   useEffect(() => {
     if (cartData && cartData.data.length) {
-      setTotalSum(
-        cartData.data.reduce(
-          (acc, cur) => acc + cur.count * cur.product.price,
+      const productsTotalSum = cartData.data
+        .reduce(
+          (acc, cur) =>
+            acc +
+            countByCurrencyRate(cur.product.price, cur.product.discount) *
+              cur.count,
           0,
-        ),
-      );
+        )
+        .toFixed(2);
+      setTotalSum(productsTotalSum);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartData]);
 
   const handleCartPage = () => {
     toggleDrawer();
     return navigate("/cart");
   };
+
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   return cartLoading ? (
     <Loader />
@@ -80,7 +101,11 @@ function MiniShoppingCart({ toggleDrawer }) {
                     variant="span"
                     className={classes.cart_product_quantity_and_price}
                   >
-                    {count} x <b>${product.price}</b>
+                    {count} x{" "}
+                    <b>
+                      {convertedSymbol}
+                      {countByCurrencyRate(product.price, product.discount)}
+                    </b>
                   </Typography>
                 </Box>
               </ListItem>
@@ -93,7 +118,8 @@ function MiniShoppingCart({ toggleDrawer }) {
             Total:
           </Typography>
           <Typography component="b" variant="b">
-            ${totalSum}
+            {convertedSymbol}
+            {totalSum}
           </Typography>
         </Box>
       </Box>

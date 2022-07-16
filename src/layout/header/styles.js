@@ -172,6 +172,9 @@ const iconsStyles = createUseStyles({
       padding: 4,
       border: `1px solid ${colors.black}`,
     },
+    itemCount: {
+      right: 3,
+    },
   },
 });
 
