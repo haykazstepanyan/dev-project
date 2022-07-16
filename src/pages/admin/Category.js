@@ -31,7 +31,7 @@ export default function Category() {
 
   useEffect(() => {
     if (categoriesData) {
-      setCategories(categoriesData.data);
+      setCategories(categoriesData.categories);
     }
   }, [categoriesData]);
 
@@ -92,16 +92,20 @@ export default function Category() {
   };
 
   function setEditCategoryData(categoryData) {
-    const { id } = categoryData;
-    const newState = categories.map((elem) =>
-      elem.id === id ? categoryData : elem,
-    );
-    setCategories(newState);
+    if (categoryData?.data) {
+      const { id } = categoryData.data;
+      const newState = categories.map((elem) =>
+        elem.id === id ? categoryData.data : elem,
+      );
+      setCategories(newState);
+    }
   }
   function setDeleteCategoryData(categoryData) {
-    const { id } = categoryData;
-    const newState = categories.filter((elem) => elem.id !== id);
-    setCategories(newState);
+    if (categoryData?.data) {
+      const { id } = categoryData.data;
+      const newState = categories.filter((elem) => elem.id !== id);
+      setCategories(newState);
+    }
   }
 
   return (

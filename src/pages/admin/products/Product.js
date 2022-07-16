@@ -3,6 +3,7 @@ import { Container } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { ref, deleteObject } from "firebase/storage";
 
+import { Tooltip } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../../components/pagination/Pagination";
@@ -100,7 +101,6 @@ export default function Product() {
   }
   function setDeleteProductData(value) {
     const { id, productImg } = value;
-    console.log(value);
     const newState = productsData.filter((elem) => elem.id !== id);
     setProductsData(newState);
 
@@ -121,28 +121,59 @@ export default function Product() {
     productFetch();
   }
 
+  const categoriesLength = categories?.categories.length;
+  const brandsLength = brands?.data.length;
+
+  let disabled = true;
+
+  if (categoriesLength && brandsLength) {
+    disabled = false;
+  }
+
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
-        <div>
-          <Button
-            letter="capitalize"
-            style={{ marginBottom: 20 }}
-            page="admin"
-            onClick={() => handleOpen()}
-            disableRipple
+        {disabled ? (
+          <Tooltip
+            title="Please add at least one category or brand!!!"
+            placement="top-start"
           >
-            <AddIcon />
-          </Button>
-        </div>
-        {productsData && categories?.data && brands?.data && (
+            <div>
+              <Button
+                disabled={disabled}
+                letter="capitalize"
+                style={{ marginBottom: 20 }}
+                page="admin"
+                onClick={() => handleOpen()}
+                disableRipple
+              >
+                <AddIcon />
+              </Button>
+            </div>
+          </Tooltip>
+        ) : (
+          <div>
+            <Button
+              disabled={disabled}
+              letter="capitalize"
+              style={{ marginBottom: 20 }}
+              page="admin"
+              onClick={() => handleOpen()}
+              disableRipple
+            >
+              <AddIcon />
+            </Button>
+          </div>
+        )}
+        {productsData && categories?.categories && brands?.data && (
           <AdminProductsTable
             setEditProductData={(value) => setEditProductData(value)}
             setDeleteProductData={(value) => setDeleteProductData(value)}
-            selectCategoryData={categories.data}
+            selectCategoryData={categories.categories}
             selectBrandData={brands.data}
             type="product"
             tableData={productsData}
+            disabled={disabled}
           />
         )}
         {products?.dataCount ? (
@@ -153,17 +184,15 @@ export default function Product() {
           />
         ) : null}
       </Container>
-      {open && productsData && categories?.data && brands?.data ? (
+      {open && productsData && categories?.categories && brands?.data && (
         <AdminProductsModal
-          selectCategoryData={categories.data}
+          selectCategoryData={categories.categories}
           selectBrandData={brands.data}
           type="add"
           onClose={() => handleClose()}
           open={open}
           onSubmit={(value) => addData(value)}
         />
-      ) : (
-        ""
       )}
     </>
   );

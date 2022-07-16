@@ -4,28 +4,26 @@ import { useSearchParams } from "react-router-dom";
 import Container from "@mui/system/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Pagination from "../components/pagination";
 import Banner from "../components/common/Banner";
-import ProductItem from "../components/product";
 import ShopPageSidebar from "../components/sidebar/ShopPageSidebar";
-import { shopStyles } from "./styles";
 import useFetch from "../hooks/useFetch";
 import { showLoader, hideLoader, showSnackbar } from "../redux/app/appSlice";
-import NoData from "../components/common/NoData";
+import ShopPageProducts from "../components/product/ShopPageProducts";
+import { shopStyles } from "./styles";
 
 function Shop() {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [priceSliderValues, setPriceSliderValues] = useState([0, 100]);
-
   const [searchParams, setSearchParams] = useSearchParams();
+  const [orderBy, setOrderBy] = useState(searchParams.get("order") || "date");
+  const [sortBy, setSortBy] = useState(searchParams.get("sort") || "desc");
   const [page, setPage] = useState(+searchParams.get("page") || 1);
-
+  const classes = shopStyles();
   const dispatch = useDispatch();
 
-  const classes = shopStyles();
-
   const categories = useSelector((state) => state.categories.categories);
+  const isAuth = useSelector((state) => state.auth.isAuth);
 
   const setInitialBrandCategories = useCallback(() => {
     const defaultBrandParams = searchParams.getAll("brand");
@@ -64,6 +62,13 @@ function Shop() {
     setInitialMinMaxValues();
   }, [setInitialMinMaxValues]);
 
+  useEffect(() => {
+    const categoryParams = searchParams.getAll("category");
+    if (categoryParams.length <= 1) {
+      setSelectedCategories(categoryParams.map((param) => +param));
+    }
+  }, [searchParams]);
+
   const {
     data: brands,
     error: brandsError,
@@ -74,6 +79,7 @@ function Shop() {
     data: products,
     error: productsError,
     loading: productsLoading,
+    refetch: productsRefetch,
   } = useFetch(`/products/getShopProducts/shop${window.location.search}`);
 
   const {
@@ -85,6 +91,8 @@ function Shop() {
   useEffect(() => {
     if (highestPriceLoading) {
       dispatch(showLoader({ key: "getHighestPrice" }));
+    } else {
+      dispatch(hideLoader({ key: "getHighestPrice" }));
     }
   }, [dispatch, highestPriceLoading]);
 
@@ -94,7 +102,6 @@ function Shop() {
         prevState[0],
         searchParams.get("max") || highestPrice?.data.price,
       ]);
-      dispatch(hideLoader({ key: "getHighestPrice" }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, highestPrice, highestPriceError]);
@@ -113,26 +120,30 @@ function Shop() {
   useEffect(() => {
     if (productsLoading) {
       dispatch(showLoader({ key: "getFilteredProducts" }));
+    } else {
+      dispatch(hideLoader({ key: "getFilteredProducts" }));
     }
   }, [dispatch, productsLoading]);
 
   useEffect(() => {
-    if (products?.data || productsError) {
-      dispatch(hideLoader({ key: "getFilteredProducts" }));
-    }
-  }, [dispatch, products, productsError]);
-
-  useEffect(() => {
     if (brandsLoading) {
       dispatch(showLoader({ key: "getBrands" }));
+    } else {
+      dispatch(hideLoader({ key: "getBrands" }));
     }
   }, [dispatch, brandsLoading]);
 
   useEffect(() => {
-    if (brands?.data || brandsError) {
-      dispatch(hideLoader({ key: "getBrands" }));
+    productsRefetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
+
+  useEffect(() => {
+    if (products) {
+      setPage(+searchParams.get("page") || 1);
     }
-  }, [dispatch, brands, brandsError]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [products]);
 
   const handleBrandCheckbox = (id) => {
     const selectedIndex = selectedBrands.indexOf(id);
@@ -195,13 +206,16 @@ function Shop() {
     setSelectedCategories(newCategories);
   };
 
-  const gotoPage = (_, pageNum) => {
-    if (pageNum === page) return;
-    setPage(pageNum);
-    searchParams.delete("page");
-    searchParams.append("page", pageNum);
-    setSearchParams(searchParams);
-  };
+  const goToPage = useCallback(
+    (_, pageNum) => {
+      if (pageNum === page) return;
+      setPage(pageNum);
+      searchParams.delete("page");
+      searchParams.append("page", pageNum);
+      setSearchParams(searchParams);
+    },
+    [page, searchParams, setSearchParams],
+  );
 
   const handlePriceFiltering = () => {
     searchParams.delete("min");
@@ -224,69 +238,54 @@ function Shop() {
     setPriceSliderValues((prevState) => [prevState[0], +e.target.value]);
   };
 
+  const handleOrderingProducts = (value) => {
+    searchParams.delete("order");
+    searchParams.append("order", value);
+    setSearchParams(searchParams);
+    setOrderBy(value);
+  };
+
+  const handleSortByProducts = (value) => {
+    searchParams.delete("sort");
+    searchParams.append("sort", value);
+    setSearchParams(searchParams);
+    setSortBy(value);
+  };
+
   return (
     <>
       <Banner name="Shop" />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className={classes.shop}>
         <Box mt={12.5}>
-          <Grid container>
-            <Grid item md={3}>
-              {brands?.data && categories && (
-                <ShopPageSidebar
-                  brands={brands.data}
-                  brandsChange={handleBrandCheckbox}
-                  selectedBrands={selectedBrands}
-                  categories={categories}
-                  categoriesChange={handleCategoryCheckbox}
-                  selectedCategories={selectedCategories}
-                  filterByPrice={handlePriceFiltering}
-                  values={priceSliderValues}
-                  defaultMaxValue={highestPrice?.data?.price}
-                  valueChange={handleValueChange}
-                  minValueChange={handleMinValueChange}
-                  maxValueChange={handleMaxValueChange}
-                />
-              )}
-            </Grid>
-            <Grid item md={9}>
-              <Grid container className={classes.shopItemContainer}>
-                {products?.data &&
-                  (products.data.length ? (
-                    products.data.map(
-                      ({
-                        id,
-                        name,
-                        price,
-                        productImg,
-                        discount,
-                        wishlist,
-                        cart,
-                      }) => (
-                        <Grid item sm={4} key={id} className={classes.shopItem}>
-                          <ProductItem
-                            id={id}
-                            title={name}
-                            image={productImg}
-                            price={price}
-                            discount={discount}
-                            wishlistId={wishlist && wishlist[0]?.id}
-                            cartId={cart && cart[0]?.id}
-                          />
-                        </Grid>
-                      ),
-                    )
-                  ) : (
-                    <NoData />
-                  ))}
-              </Grid>
-              {products?.dataCount ? (
-                <Pagination
-                  count={Math.ceil((products?.dataCount || 0) / 9)}
-                  page={page}
-                  onChange={gotoPage}
-                />
-              ) : null}
-            </Grid>
+          <Grid container className={classes.shopContainer}>
+            {brands?.data && categories && (
+              <ShopPageSidebar
+                brands={brands.data}
+                brandsChange={handleBrandCheckbox}
+                selectedBrands={selectedBrands}
+                categories={categories}
+                categoriesChange={handleCategoryCheckbox}
+                selectedCategories={selectedCategories}
+                filterByPrice={handlePriceFiltering}
+                values={priceSliderValues}
+                defaultMaxValue={highestPrice?.data?.price}
+                valueChange={handleValueChange}
+                minValueChange={handleMinValueChange}
+                maxValueChange={handleMaxValueChange}
+              />
+            )}
+            {products?.data && (
+              <ShopPageProducts
+                products={products}
+                page={page}
+                goToPage={goToPage}
+                orderProductsBy={orderBy}
+                changeOrdering={handleOrderingProducts}
+                sortProductsBy={sortBy}
+                changeSorting={handleSortByProducts}
+                pageNumber={page}
+              />
+            )}
           </Grid>
         </Box>
       </Container>

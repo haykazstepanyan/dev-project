@@ -55,24 +55,13 @@ const tableStyles = createUseStyles({
       borderRight: `1px solid ${colors.milky} !important`,
       borderLeft: `1px solid ${colors.milky} !important`,
       textAlign: "center",
+      "& > div": {
+        margin: [[0, "auto"]],
+      },
     },
     "& img": {
-      width: 100,
+      maxHeight: 40,
       marginBottom: 0,
-    },
-    "& .qty-input input": {
-      width: "60px",
-      height: "40px",
-      padding: "0 5px 0 10px",
-      background: "none",
-      border: `1px solid ${colors.milky}`,
-    },
-    "& .qty-input input:focus": {
-      outline: "none",
-    },
-    "& .qty-input label": {
-      fontWeight: "600",
-      marginRight: "5px",
     },
     "& .price p": {
       color: colors.black,
@@ -86,9 +75,20 @@ const tableStyles = createUseStyles({
     },
     boxShadow: "none !important",
   },
+  productName: {
+    maxWidth: 250,
+    display: "-webkit-box",
+    "-webkit-line-clamp": 3,
+    "-webkit-box-orient": "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
   deleteIcon: {
     color: colors.green,
     cursor: "pointer",
+  },
+  addToCartBox: {
+    width: "auto",
   },
 });
 

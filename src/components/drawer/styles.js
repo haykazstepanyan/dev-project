@@ -2,14 +2,32 @@ import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
 const drawerStyles = createUseStyles({
-  headerDrawer: {
+  drawer: ({ drawerWidth }) => ({
     position: "relative",
     "& .MuiPaper-root ": {
       padding: [[50, 10, 15]],
+      width: drawerWidth,
+      height: "100vh",
     },
+  }),
+  openIcon: {
+    lineHeight: 0,
+    position: "relative",
+  },
+  itemCount: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    width: 13,
+    height: 13,
+    lineHeight: 1.3,
+    borderRadius: "50%",
+    fontSize: 10,
+    color: colors.white,
+    textAlign: "center",
+    background: colors.lightRed,
   },
   icons: {
-    marginRight: 20,
     cursor: "pointer",
     "&:hover": {
       color: colors.success,

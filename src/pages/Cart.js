@@ -8,7 +8,7 @@ import { globalStyles } from "../components/styles/styles";
 import { cartStyles } from "./styles";
 import Input from "../components/input";
 import useFetch from "../hooks/useFetch";
-import { showLoader, hideLoader } from "../redux/app/appSlice";
+import { showLoader, hideLoader, setCartCount } from "../redux/app/appSlice";
 import NoData from "../components/common/NoData";
 import useLazyFetch from "../hooks/useLazyFetch";
 
@@ -16,11 +16,8 @@ function Cart() {
   const globalClasses = globalStyles();
   const classes = cartStyles();
   const dispatch = useDispatch();
-  const [count, setCount] = useState([]);
   const [totalSum, setTotalSum] = useState(0);
-  const [shippingPrice] = useState(0);
 
-  useEffect(() => {}, [count]);
   const {
     data: cartItems,
     loading: cartLoading,
@@ -30,14 +27,14 @@ function Cart() {
   const {
     data: cartDeleteData,
     loading: cartDeleteLoading,
-    lazyRefetch: cartLazyRefetch,
+    lazyRefetch: cartDeleteRefetch,
   } = useLazyFetch();
 
   useEffect(() => {
     if (cartLoading) {
       dispatch(
         showLoader({
-          key: "cart/getCartItems",
+          key: "getCartItems",
         }),
       );
     }
@@ -45,49 +42,32 @@ function Cart() {
 
   useEffect(() => {
     if (cartItems) {
-      const sum = Number(
-        cartItems.data
-          .reduce((prev, current) => {
-            console.log(prev, current.product?.price, "11111111");
-            return Number(
-              Number(prev) +
-                Number(
-                  (Number(current.product?.price) -
-                    (Number(current.product?.price) *
-                      Number(current.product?.discount)) /
-                      100) *
-                    Number(current?.count),
-                ),
-            );
-          }, 0)
-          .toFixed(2),
-      );
-      setTotalSum(sum);
-      console.log(totalSum, "totalSum");
+      const sum = cartItems.data
+        .reduce(
+          (prev, current) =>
+            prev +
+            (current.product.price -
+              (current.product.price * current.product.discount) / 100) *
+              current.count,
+          0,
+        )
+        .toFixed(2);
 
-      const qunatities =
-        cartItems &&
-        cartItems.data.map((item) => {
-          console.log(item);
-          return {
-            cardId: item.id,
-            quantity: item.count,
-          };
-        });
-      setCount(qunatities);
+      setTotalSum(sum);
+
       dispatch(
         hideLoader({
-          key: "cart/getCartItems",
+          key: "getCartItems",
         }),
       );
     }
-  }, [dispatch, cartItems, totalSum]);
+  }, [dispatch, cartItems]);
 
   useEffect(() => {
     if (cartDeleteLoading) {
       dispatch(
         showLoader({
-          key: "cart/deleteCartItem",
+          key: "deleteCartItem",
         }),
       );
     }
@@ -97,39 +77,19 @@ function Cart() {
     if (cartDeleteData) {
       dispatch(
         hideLoader({
-          key: "cart/deleteCartItem",
+          key: "deleteCartItem",
         }),
       );
     }
   }, [dispatch, cartDeleteData]);
 
   const handleDeleteCartItem = (id) => {
-    cartLazyRefetch(`/cart/delete/${id}`, null, "DELETE").then((result) => {
+    cartDeleteRefetch(`/cart/delete/${id}`, null, "DELETE").then((result) => {
       if (result.data.id) {
+        dispatch(setCartCount(result.count.data));
         cartRefetch();
       }
     });
-  };
-
-  const handleChangeCount = (value, id, index) => {
-    console.log(value, "valueeeeee");
-    const newCount = [...count];
-    newCount[index] = {
-      cardId: id,
-      quantity: +value,
-    };
-    console.log(newCount);
-    setCount(newCount);
-    // cartRefetch(
-    //   `/cart/count/${id}`,
-    //   {
-    //     body: JSON.stringify({ count: value }),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   },
-    //   "PUT",
-    // );
   };
 
   return (
@@ -138,82 +98,65 @@ function Cart() {
       <Container maxWidth="lg" className={globalClasses.featuresSectionStyle}>
         {cartItems &&
           (cartItems.data.length ? (
-            <Table
-              tableData={cartItems.data}
-              type="cart"
-              deleteData={handleDeleteCartItem}
-              changeCount={handleChangeCount}
-              count={count}
-            />
+            <>
+              <Table
+                tableData={cartItems.data}
+                dataRefetch={cartRefetch}
+                type="cart"
+                deleteCart={handleDeleteCartItem}
+              />
+              <Grid container spacing={2} style={{ marginTop: "20px" }}>
+                <Grid item xs={12} md={6}>
+                  <div>
+                    <div className={classes.couponBlock}>
+                      <h3>Coupon</h3>
+                    </div>
+                    <div className={classes.couponBottomBlock}>
+                      <p>Enter your coupon code if you have one.</p>
+                      <div>
+                        <Input
+                          type="text"
+                          placeholder="Coupon code"
+                          size="small"
+                          borders="square"
+                          state="noFocus"
+                          htmlFor="subject"
+                          className={globalClasses.inputStyle}
+                        />
+                        <Button
+                          color="secondary"
+                          disableRipple
+                          style={{ marginTop: 15 }}
+                        >
+                          Apply coupon
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <div>
+                    <div className={classes.couponBlock}>
+                      <h3>Cart Totals</h3>
+                    </div>
+                    <div className={classes.couponBottomBlock}>
+                      <div className={classes.cartTotals}>
+                        <p>Total</p>
+                        <p>${totalSum}</p>
+                      </div>
+                      <div style={{ textAlign: "right" }}>
+                        <Button color="primary" disableRipple>
+                          proceed to checkout
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </>
           ) : (
             <NoData />
           ))}
-
-        <Grid container spacing={2} style={{ marginTop: "20px" }}>
-          <Grid item xs={12} lg={6}>
-            <div>
-              <div className={classes.couponBlock}>
-                <h3>Coupon</h3>
-              </div>
-              <div className={classes.couponBottomBlock}>
-                <p>Enter your coupon code if you have one.</p>
-                <div>
-                  <Input
-                    type="text"
-                    placeholder="Coupon code"
-                    size="small"
-                    borders="square"
-                    state="noFocus"
-                    htmlFor="subject"
-                    className={globalClasses.inputStyle}
-                  />
-                  <Button
-                    color="secondary"
-                    disableRipple
-                    style={{ marginTop: 15 }}
-                  >
-                    Apply coupon
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <div>
-              <div className={classes.couponBlock}>
-                <h3>Cart Totals</h3>
-              </div>
-              <div className={classes.cartTotalsBottom}>
-                <div>
-                  <div>
-                    <p>Subtotal</p>
-                    <p>${totalSum}</p>
-                  </div>
-                  <div>
-                    <p>Shipping</p>
-                    <p>
-                      <span>Flat Rate:</span> ${shippingPrice}
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      paddingTop: "20px",
-                      borderTop: "1px solid #e1e1e1",
-                    }}
-                  >
-                    <p>Total</p>
-                    <p>${totalSum + shippingPrice}</p>
-                  </div>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <Button color="primary" disableRipple>
-                    proceed to checkout
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Grid>
-        </Grid>
       </Container>
     </>
   );

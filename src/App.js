@@ -9,6 +9,7 @@ import { documentStyles } from "./components/styles/styles";
 import mainTheme from "./components/styles/mainTheme";
 import Loader from "./components/loader";
 import { getCategories } from "./redux/category/actions";
+import { getCartCount, getWishlistCount } from "./redux/app/actions";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,13 +19,15 @@ function App() {
   useEffect(() => {
     dispatch(checkIsAuth());
     dispatch(getCategories());
+    dispatch(getWishlistCount());
+    dispatch(getCartCount());
   }, [dispatch]);
 
   useEffect(() => {
     const handleIsMobileVersion = () =>
       dispatch(
         setIsMobileVersion({
-          isMobile: window.innerWidth < 900,
+          isMobile: window.innerWidth <= 900,
         }),
       );
     handleIsMobileVersion();
@@ -40,10 +43,7 @@ function App() {
         <ThemeProvider theme={mainTheme}>
           <Routes />
           {(snackbar.type || snackbar.message) && (
-            <>
-              {console.log(snackbar)}
-              <Snackbar type={snackbar.type} message={snackbar.message} />
-            </>
+            <Snackbar type={snackbar.type} message={snackbar.message} />
           )}
         </ThemeProvider>
       </StyledEngineProvider>

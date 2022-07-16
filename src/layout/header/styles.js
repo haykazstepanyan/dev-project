@@ -3,13 +3,14 @@ import { colors } from "../../constants/constants";
 
 const logoStyles = createUseStyles({
   pageLogo: {
-    width: 100,
-    height: 80,
+    // width: 100,
+    height: 135,
+    // height: 80,
   },
   "@media screen and (max-width: 900px)": {
     pageLogo: {
-      width: 50,
-      height: 50,
+      // width: 50,
+      height: 90,
     },
   },
 });
@@ -18,6 +19,10 @@ const searchBoxStyles = createUseStyles({
   filterContainer: {
     padding: 25,
     borderRight: `1px solid ${colors.milky}`,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 140,
   },
   filterContainerContent: {
     position: "relative",
@@ -38,13 +43,16 @@ const searchBoxStyles = createUseStyles({
       height: 24,
       background: "#a1a1a1",
       position: "absolute",
-      top: "calc(50% - 6px)",
+      top: "calc(50% - 4px)",
       marginTop: -8,
       left: 0,
     },
   },
   searchCategories: {
     flexGrow: 1,
+    "& button": {
+      fontWeight: 400,
+    },
   },
   searchInput: {
     border: 0,
@@ -105,14 +113,33 @@ const iconsStyles = createUseStyles({
   iconsContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    "& .MuiButton-root": {
+      padding: 0,
+      minWidth: "auto",
+    },
   },
   icons: {
-    marginRight: 20,
     cursor: "pointer",
     "&:hover": {
       color: colors.success,
     },
+  },
+  itemCount: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    width: 13,
+    height: 13,
+    lineHeight: 1.3,
+    borderRadius: "50%",
+    fontSize: 10,
+    color: colors.white,
+    textAlign: "center",
+    background: colors.lightRed,
+  },
+  selectedCurrency: {
+    color: colors.green,
   },
   bottomCategories: {
     display: "flex",
@@ -120,6 +147,14 @@ const iconsStyles = createUseStyles({
   },
   categoryLinks: {
     color: colors.black,
+  },
+  iconBtn: {
+    position: "relative",
+    padding: 0,
+    color: colors.black,
+    "& a": {
+      fontSize: 0,
+    },
   },
   "@media screen and (max-width: 900px)": {
     iconsContainer: {
@@ -158,7 +193,7 @@ const navbarStyles = createUseStyles({
     color: colors.black,
     fontSize: 13,
     textTransform: "uppercase",
-    fontWeight: "bold",
+    fontWeight: 500,
     transition: "all 0.3s ease 0s",
     "&:before": {
       position: "absolute",
@@ -231,7 +266,7 @@ const headerStyles = createUseStyles({
     position: "sticky",
     top: "0px",
     background: colors.white,
-    zIndex: 10,
+    zIndex: 99,
   },
 });
 

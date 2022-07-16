@@ -15,6 +15,7 @@ const aboutUsStyles = createUseStyles({
   aboutInfoText: {
     textAlign: "center",
     fontSize: 14,
+    lineHeight: "25px",
   },
   featureBgImage: {
     backgroundRepeat: "no-repeat",
@@ -49,6 +50,7 @@ const contactUsStyles = createUseStyles({
     "& label": {
       fontWeight: 500,
       display: "block",
+      fontSize: 14,
     },
     "& textarea": {
       border: "1px solid #e1e1e1",
@@ -57,11 +59,11 @@ const contactUsStyles = createUseStyles({
       background: "#ffffff",
       textIndent: 20,
       color: "#757575",
-      marginBottom: 20,
       minWidth: "100%",
       maxWidth: "100%",
       paddingTop: 20,
       minHeight: 100,
+      marginBottom: 0,
     },
     "& input:focus, textarea:focus": {
       outline: "none",
@@ -92,16 +94,6 @@ const accountStyles = createUseStyles({
   },
 });
 
-const shopStyles = createUseStyles({
-  shopItemContainer: {
-    marginLeft: 25,
-  },
-  shopItem: {
-    padding: "0 !important",
-    marginBottom: 24,
-  },
-});
-
 const cartStyles = createUseStyles({
   couponBlock: {
     backgroundColor: colors.black,
@@ -115,6 +107,9 @@ const cartStyles = createUseStyles({
       fontWeight: "500",
     },
   },
+  coupon: {
+    height: "100%",
+  },
   couponBottomBlock: {
     padding: "25px",
     border: "1px solid #e1e1e1",
@@ -122,38 +117,18 @@ const cartStyles = createUseStyles({
       fontSize: "14px",
       marginBottom: "20px",
     },
-    // "& input": {
-    //   border: "1px solid #e1e1e1",
-    //   maxHeight: 45,
-    //   height: 35,
-    //   background: "#ffffff",
-    //   textIndent: 20,
-    //   color: "#757575",
-    //   marginRight: 10,
-    //   marginBottom: 10,
-    // },
-    // "& input:focus-visible": {
-    //   outline: "none",
-    // },
   },
-  cartTotalsBottom: {
-    padding: "25px",
-    border: "1px solid #e1e1e1",
-    "& >div>div": {
-      display: "flex",
-      justifyContent: "space-between",
-      marginBottom: "20px",
-      "& p:first-child": {
-        fontWeight: "600",
-        fontSize: "14px",
-      },
-      "& p:last-child": {
-        fontSize: "18px",
-        fontWeight: "500",
-        textAlign: "right",
-        "& span": {
-          marginRight: "20px",
-        },
+  cartTotals: {
+    padding: "15px 0",
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "20px",
+    "& p": {
+      fontSize: "18px",
+      fontWeight: "500",
+      textAlign: "right",
+      "& span": {
+        marginRight: "20px",
       },
     },
   },
@@ -196,9 +171,9 @@ const mainStyles = createUseStyles({
     },
   },
   singleShipping: {
+    borderRight: "1px solid #ebebeb",
     display: "flex",
     alignItems: "center",
-    borderRight: "1px solid #ebebeb",
     "@media only screen and (max-width: 767px)": {
       marginBottom: "23px",
       borderRight: "0",
@@ -221,8 +196,7 @@ const mainStyles = createUseStyles({
       fontSize: "14px",
       lineHeight: "16px",
       textTransform: "capitalize",
-      fontFamily: "'Lora', serif",
-      fontWeight: "700",
+      fontWeight: "500",
       marginBottom: "7px",
       "@media only screen and (max-width: 767px)": {
         fontSize: "13px",
@@ -272,9 +246,10 @@ const mainStyles = createUseStyles({
     "& h3": {
       fontSize: "18px",
       lineHeight: "21px",
-      marginBottom: "18px",
+      // marginBottom: "18px",
       fontWeight: "400",
-      marginTop: "0",
+      marginTop: 20,
+      color: "#2d383f",
     },
     "& h2": {
       fontSize: "21px",
@@ -283,15 +258,26 @@ const mainStyles = createUseStyles({
       fontWeight: "400",
       marginTop: "0",
     },
+    "& h4": {
+      fontWeight: "500",
+      color: "#2d383f",
+    },
+    "& >div": {
+      background: "#ffffff57",
+      padding: 20,
+      borderRadius: 4,
+    },
   },
   bannerContentLink: {
-    fontSize: "13px",
     lineHeight: "17px",
     fontWeight: "500",
     display: "inline-block",
     borderBottom: "2px solid #79a206",
     textTransform: "uppercase",
     marginTop: "36px",
+    fontSize: 14,
+    paddingBottom: 5,
+    color: "#232424",
   },
   imgResponsive: {
     maxWidth: "100%",
@@ -304,8 +290,8 @@ const mainStyles = createUseStyles({
     },
   },
   welcomeHomeContainer: {
-    borderBottom: "1px solid #e1e1e1",
-    padding: "98px 0 100px",
+    // borderBottom: "1px solid #e1e1e1",
+    padding: "70px 0 50px",
     "@media only screen and (max-width: 767px)": {
       padding: "59px 0 53px",
     },
@@ -318,17 +304,19 @@ const mainStyles = createUseStyles({
   welcomeHomeThumb: {
     textAlign: "center",
   },
-  "@media only screen and (max-width: 767px)": {
-    // marginBottom: "32px",
-  },
   colLg7: {
     "@media (min-width: 992px)": {
       width: "58.33333333%",
     },
   },
   welcomHomeContent: {
+    "@media only screen and (max-width: 900px)": {
+      textAlign: "center",
+      width: 565,
+    },
     "@media only screen and (max-width: 767px)": {
       textAlign: "center",
+      width: "100% !important",
     },
   },
   welcomeHomeHeader: {
@@ -473,13 +461,14 @@ const mainStyles = createUseStyles({
     transform: "translatey(-50%)",
   },
 });
+
 const signUpInStyles = createUseStyles({
   formContainer: {
     padding: [[50, 0]],
   },
   formStyle: {
     width: 350,
-    border: "1px solid #e1e1e1",
+    border: `1px solid ${colors.milky}`,
     padding: "23px 20px 29px",
     boxSizing: "border-box",
   },
@@ -500,9 +489,29 @@ const signUpInStyles = createUseStyles({
   },
 });
 
+const shopStyles = createUseStyles({
+  shop: {
+    "& >div": {
+      marginTop: "40px !important",
+    },
+    "@media screen and (max-width: 600px)": {
+      padding: 0,
+    },
+  },
+  shopContainer: {
+    "@media screen and (max-width: 900px)": {
+      flexDirection: "column-reverse",
+    },
+  },
+});
+
 const productViewStyles = createUseStyles({
   productContainer: {
     position: "relative",
+    paddingTop: 24,
+    "& .MuiGrid-root": {
+      alignItems: "start",
+    },
   },
   goBackIcon: {
     position: "absolute",
@@ -513,6 +522,17 @@ const productViewStyles = createUseStyles({
       color: colors.green,
       cursor: "pointer",
     },
+  },
+  goBackText: {
+    fontSize: 12,
+    marginLeft: 12,
+    color: colors.green,
+  },
+  productImgContainer: {
+    paddingTop: 80,
+  },
+  productImg: {
+    width: "100%",
   },
   "container_grid-container": {
     alignItems: "center",
@@ -568,7 +588,7 @@ const productViewStyles = createUseStyles({
     marginTop: "3px !important",
   },
 
-  product_category_text: {
+  productCategoryText: {
     marginRight: 4,
   },
 
@@ -599,8 +619,8 @@ export {
   contactUsStyles,
   accountStyles,
   cartStyles,
-  shopStyles,
   mainStyles,
   signUpInStyles,
   productViewStyles,
+  shopStyles,
 };

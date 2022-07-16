@@ -1,41 +1,63 @@
-import { createUseStyles } from "react-jss";
-import { Container, Grid } from "@mui/material";
-import OpeningTime from "./OpeningTime";
-import Information from "./Information";
-import MyAccount from "./MyAccount";
-import CustomerService from "./CustomerService";
-import ContactLinks from "./ContactLinks";
-import styles from "./styles";
-
-const useStyles = createUseStyles(styles);
+import { Container, Grid, Typography } from "@mui/material";
+// import Information from "./Information";
+import clsx from "clsx";
+import SocialLinks from "./SocialLinks";
+import footerStyles from "./styles";
+import Sections from "./Sections";
+import { infoData, accountData, customerData } from "./constants";
 
 function FooterTop() {
-  const classes = useStyles();
+  const classes = footerStyles();
 
   return (
     <div className={classes.footerTop}>
-      <Container maxWidth="lg" className={classes.footerContainer}>
+      <Container maxWidth="lg">
         <Grid
-          classes={{ root: classes.row }}
+          className={classes.footerGrid}
           container
           direction="row"
           justifyContent="space-between"
           alignItems="center"
         >
-          <Grid item sm={2} className={classes.gridRow}>
-            <OpeningTime />
+          <Grid item sm={4} xs={12} className={classes.gridRow}>
+            <div className={classes.widgetsContainer}>
+              <Typography variant="h3" className={classes.rowHeading}>
+                Opening Time
+              </Typography>
+              <p>
+                <span>Mon - Fri:</span> 8 AM - 10 PM
+              </p>
+              <p>
+                <span>Sat:</span> 9 AM - 8 PM
+              </p>
+              <p>
+                <span>Suns:</span> 14 PM - 18 PM
+              </p>
+            </div>
+            <div className={classes.infoContainer}>
+              <Sections heading="INFORMATION" data={infoData} />
+            </div>
           </Grid>
-          <Grid item sm={2} className={classes.gridRow}>
-            <Information />
+          <Grid
+            item
+            sm={4}
+            xs={12}
+            className={clsx(classes.gridRowm, classes.gridRowLogo)}
+          >
+            <SocialLinks />
           </Grid>
-          <Grid item sm={4} className={classes.gridRow}>
-            <ContactLinks />
-          </Grid>
-          <Grid item sm={2} className={classes.gridRow}>
-            <MyAccount />
-          </Grid>
-          <Grid item sm={2} className={classes.gridRow}>
-            <CustomerService />
+          <Grid
+            item
+            sm={4}
+            xs={12}
+            className={clsx(classes.gridRowm, classes.rightGrid)}
+          >
+            <div className={classes.infoContainer}>
+              <Sections heading="MY ACCOUNT" data={accountData} />
+            </div>
+            <div className={classes.infoContainer}>
+              <Sections heading="CUSTOMER SERVICE" data={customerData} />
+            </div>
           </Grid>
         </Grid>
       </Container>

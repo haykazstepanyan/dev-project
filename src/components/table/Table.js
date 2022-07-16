@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   Table as MuiTable,
@@ -16,27 +17,28 @@ import {
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Button from "../button";
 import { tableStyles } from "./styles";
+import { currencySymbols } from "../../constants/constants";
+import AddToCart from "../addToCart";
 
-function Table({
-  type,
-  tableData,
-  deleteData,
-  changeCount,
-  count,
-  ides,
-  handleAddToCart,
-}) {
+function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
   const [openModal, setOpenModal] = useState(false);
   const [selectedWishlist, setSelectedWishlist] = useState(null);
   const [selectedCartItem, setSelectedCartItem] = useState(null);
-  const [productIdes, setProductIdes] = useState([]);
   const classes = tableStyles();
 
-  useEffect(() => {
-    if (ides?.length > 0) {
-      setProductIdes(ides);
+  const selectedCurrency = useSelector((state) => state.app.currency);
+  const ratesData = JSON.parse(localStorage.getItem("rates"));
+  const rates = ratesData?.currencyRates;
+
+  const countByCurrencyRate = (price) => {
+    const convertedPrice = price * (rates?.[selectedCurrency] || 1);
+    if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+      return Math.trunc(convertedPrice);
     }
-  }, [ides]);
+    return parseFloat(convertedPrice.toFixed(2));
+  };
+
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   const onModalClose = () => {
     setOpenModal(false);
@@ -55,15 +57,14 @@ function Table({
       setSelectedCartItem(id);
     }
   };
-  const deleteWishlist = () => {
+  const deleteItem = () => {
     if (type === "wishlist") {
-      deleteData(selectedWishlist);
+      deleteWishlist(selectedWishlist);
     } else {
-      deleteData(selectedCartItem);
+      deleteCart(selectedCartItem);
     }
     onModalClose();
   };
-
 
   const deleteModal = (
     <Dialog
@@ -79,7 +80,7 @@ function Table({
         <Button purpose="modalCancel" onClick={onModalClose} disableRipple>
           Cancel
         </Button>
-        <Button color="primary" onClick={deleteWishlist} disableRipple>
+        <Button color="primary" onClick={deleteItem} disableRipple>
           Delete
         </Button>
       </DialogActions>
@@ -92,7 +93,6 @@ function Table({
         <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Delete</TableCell>
               <TableCell>Image</TableCell>
               <TableCell>Product</TableCell>
               <TableCell>Price</TableCell>
@@ -100,16 +100,16 @@ function Table({
                 <TableCell>Add to cart</TableCell>
               ) : (
                 <>
-                  <TableCell>Stock Status</TableCell>
                   <TableCell>Quantity</TableCell>
                   <TableCell>Total</TableCell>
                 </>
               )}
+              <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {tableData &&
-              tableData.map((row, rowIndex) => (
+              tableData.map((row) => (
                 <TableRow
                   key={row.id}
                   sx={{
@@ -119,97 +119,62 @@ function Table({
                     height: "122px",
                   }}
                 >
+                  <TableCell component="th" scope="row">
+                    <Link to={`/product/${row.productId}`}>
+                      <img src={row.product.productImg} alt="product" />
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <p className={classes.productName}>{row.product.name}</p>
+                  </TableCell>
+                  <TableCell className="price">
+                    <p>
+                      {convertedSymbol}
+                      {countByCurrencyRate(row.product.price)}
+                    </p>
+                  </TableCell>
+
+                  <TableCell className={classes.addToCartBox}>
+                    {type === "wishlist" ? (
+                      <AddToCart
+                        from="wishlist"
+                        cart={[
+                          {
+                            id: row.product.cart[0]?.id,
+                            count: row.product.cart[0]?.count,
+                          },
+                        ]}
+                        isAuth
+                        btnWidth="180px"
+                        deleteCart={deleteCart}
+                        productId={row.productId}
+                      />
+                    ) : (
+                      <AddToCart
+                        cart={[{ id: row.id, count: row.count }]}
+                        isAuth
+                        productId={row.productId}
+                        btnWidth="180px"
+                        deleteCart={deleteCart}
+                        dataRefetch={dataRefetch}
+                      />
+                    )}
+                  </TableCell>
+                  {type === "cart" ? (
+                    <TableCell className="price">
+                      {(
+                        (row.product.price -
+                          (row.product.price * row.product.discount) / 100) *
+                        row.count
+                      ).toFixed(2)}
+                    </TableCell>
+                  ) : null}
                   <TableCell>
                     <DeleteOutlineOutlinedIcon
                       className={classes.deleteIcon}
                       onClick={() => onModalOpen(row.id)}
                     />
                   </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Link to={`/product/${row.productId}`}>
-                      <img src={row.product?.productImg} alt="product" />
-                    </Link>
-                  </TableCell>
-                  <TableCell>{row.product?.name}</TableCell>
-                  <TableCell className="price">
-                    <p>
-                      $
-                      {Number(row.product?.price) -
-                        (Number(row.product?.price) *
-                          Number(row.product?.discount)) /
-                          100}
-                    </p>
-                  </TableCell>
-                  {type === "wishlist" ? (
-                    <TableCell>
-                      {/* <div className={classes.cartContainer}
-                            <button
-                              className={classes.desBtn}
-                              type="button"
-                              onClick={() => handleChangeCount("dec")}
-                            >
-                              -
-                            </button>
-                            <input
-                              className={classes.cartInput}
-                              type="text"
-                              value={count}
-                              onChange={(e) => inputOnchange(e.target.value)}
-                            />
-                            <button
-                              className={classes.incBtn}
-                              type="button"
-                              onClick={() => handleChangeCount("inc")}
-                            >
-                              +
-                            </button>
-                          
-                      </div> */}
-                      {productIdes.length > 0 &&
-                      productIdes.some(
-                        (item) => item.productId === row?.productId,
-                      ) ? (
-                        "Already in cart"
-                      ) : (
-                        <Button
-                          type="primary"
-                          onClick={() =>
-                            handleAddToCart(row?.productId, rowIndex)
-                          }
-                          disableRipple
-                        >
-                          Add to cart
-                        </Button>
-                      )}
-                    </TableCell>
-                  ) : (
-                    <>
-                      <TableCell className="stockStatus">In Stock</TableCell>
-                      <TableCell className="qty-input">
-                        <label htmlFor="quantity">
-                          Quantity
-                          <input
-                            id="quantity"
-                            type="number"
-                            // defaultValue={1}
-                            value={count[rowIndex]?.quantity || row.count}
-                            onChange={(e) =>
-                              changeCount(e.target.value, row.id, rowIndex)
-                            }
-                          />
-                        </label>
-                      </TableCell>
-                      <TableCell className="price">
-                        {(
-                          (Number(row.product?.price) -
-                            (Number(row.product?.price) *
-                              Number(row.product?.discount)) /
-                              100) *
-                          Number(row?.count)
-                        ).toFixed(2)}
-                      </TableCell>
-                    </>
-                  )}
                 </TableRow>
               ))}
           </TableBody>
@@ -232,20 +197,9 @@ Table.propTypes = {
     }),
   ).isRequired,
   type: PropTypes.string,
-  deleteData: PropTypes.func,
-  handleAddToCart: PropTypes.func,
-  changeCount: PropTypes.func,
-  count: PropTypes.arrayOf([
-    PropTypes.shape({
-      cardId: PropTypes.number,
-      quantity: PropTypes.number,
-    }),
-  ]),
-  productIdes: PropTypes.arrayOf([
-    PropTypes.shape({
-      productId: PropTypes.number,
-    }),
-  ]),
+  deleteCart: PropTypes.func,
+  deleteWishlist: PropTypes.func,
+  dataRefetch: PropTypes.func,
 };
 
 export default Table;

@@ -1,17 +1,9 @@
 import PropTypes from "prop-types";
-import { createUseStyles } from "react-jss";
 import MuiPagination from "@mui/material/Pagination";
-
-const useStyles = createUseStyles({
-  paginationStyle: {
-    display: "flex",
-    justifyContent: "center",
-    margin: 20,
-  },
-});
+import paginationStyles from "./styles";
 
 function Pagination({ count, page, onChange }) {
-  const classes = useStyles();
+  const classes = paginationStyles();
 
   return (
     <MuiPagination
@@ -19,7 +11,6 @@ function Pagination({ count, page, onChange }) {
       count={count}
       page={page}
       onChange={onChange}
-      variant="outlined"
       shape="rounded"
     />
   );

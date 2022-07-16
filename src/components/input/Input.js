@@ -15,6 +15,7 @@ function Input({
   pattern,
   placeholder,
   autoComplete,
+  blur,
   ...otherProps
 }) {
   const inputClasses = globalInputStyles();
@@ -35,6 +36,9 @@ function Input({
           state={state}
           type={type}
           pattern={pattern}
+          inputProps={{
+            onBlur: blur,
+          }}
           {...otherProps}
         />
       </FormControl>
@@ -44,6 +48,7 @@ function Input({
 
 Input.defaultProps = {
   autoComplete: "on",
+  blur: () => {},
 };
 
 Input.propTypes = {
@@ -57,6 +62,7 @@ Input.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   placeholder: PropTypes.string,
   autoComplete: PropTypes.string,
+  blur: PropTypes.func,
 };
 
 export default Input;

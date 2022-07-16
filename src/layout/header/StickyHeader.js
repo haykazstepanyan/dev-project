@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Container, Grid } from "@mui/material";
 import { useSelector } from "react-redux";
+import clsx from "clsx";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Navbar from "./Navbar";
 import { ClickableDropdown } from "../../components/dropdown";
@@ -25,7 +26,7 @@ function StickyHeader() {
   }));
 
   return (
-    <div className={`${classes.headerParts} ${classes.stickyLine}`}>
+    <div className={clsx(classes.headerParts, classes.stickyLine)}>
       <Container maxWidth="lg">
         <Grid
           container

@@ -51,6 +51,11 @@ const adminModalStyles = createUseStyles({
   mb10: {
     marginBottom: 10,
   },
+  labelStyle: {
+    color: "#717482",
+    fontSize: 14,
+    marginBottom: 5,
+  },
 });
 
 export { adminModalStyles };

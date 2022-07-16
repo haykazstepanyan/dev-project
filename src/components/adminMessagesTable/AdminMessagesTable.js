@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Table as MuiTable,
@@ -8,16 +9,22 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import { useDispatch } from "react-redux";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
 import { adminTableStyles } from "./styles";
+import useLazyFetch from "../../hooks/useLazyFetch";
+import { showSnackbar } from "../../redux/app/appSlice";
 
-function AdminMessagesTable({ tableData }) {
+function AdminMessagesTable({ tableData, pageType, setDeleteContactData }) {
   const [modalData, setModalData] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
+  const dispatch = useDispatch();
+
+  const { error: deleteContactError, lazyRefetch: deleteContact } =
+    useLazyFetch();
 
   const filterById = (id) => {
     const rowData = tableData.filter((elem) => elem.id === id);
@@ -32,8 +39,41 @@ function AdminMessagesTable({ tableData }) {
     setOpenDelete(false);
   };
 
+  useEffect(() => {
+    if (deleteContactError) {
+      dispatch(
+        showSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+    }
+  }, [deleteContactError, dispatch]);
+
   const deleteData = (value) => {
-    console.log(value);
+    const { id } = value;
+    if (Number.isInteger(id)) {
+      deleteContact(
+        `/contacts/contact/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        "DELETE",
+      ).then((e) => {
+        setDeleteContactData(e);
+
+        dispatch(
+          showSnackbar({
+            snackbarType: "success",
+            snackbarMessage: "Message is successfully deleted!",
+          }),
+        );
+
+        handleCloseDelete();
+      });
+    }
   };
 
   const classes = adminTableStyles();
@@ -57,7 +97,7 @@ function AdminMessagesTable({ tableData }) {
           <TableBody>
             {tableData.map((row) => (
               <TableRow
-                key={row.name}
+                key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
@@ -84,6 +124,7 @@ function AdminMessagesTable({ tableData }) {
       {openDelete ? (
         <AdminModal
           type="delete"
+          pageType={pageType}
           onClose={() => handleCloseDelete()}
           open={openDelete}
           modalData={modalData}
@@ -97,7 +138,10 @@ function AdminMessagesTable({ tableData }) {
 }
 
 AdminMessagesTable.propTypes = {
-  tableData: PropTypes.arrayOf([PropTypes.object]).isRequired,
+  tableData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
+  pageType: PropTypes.string,
+  setDeleteContactData: PropTypes.func,
 };
 
 export default AdminMessagesTable;

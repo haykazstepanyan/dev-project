@@ -13,6 +13,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import AppleIcon from "@mui/icons-material/Apple";
 import EmailIcon from "@mui/icons-material/Email";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { adminLayoutStyles } from "./styles";
 
 export default function AdminLeftSidebar() {
@@ -102,6 +103,25 @@ export default function AdminLeftSidebar() {
                 <EmailIcon />
               </ListItemIcon>
               <ListItemText primary="Contact Messages" />
+            </ListItemButton>
+          </ListItem>
+        </NavLink>
+        <NavLink
+          to="manageAccount"
+          className={(data) =>
+            `${
+              data.isActive
+                ? classes.activeLink
+                : `${classes.linkStyle} notActive`
+            }`
+          }
+        >
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ManageAccountsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Manage Account " />
             </ListItemButton>
           </ListItem>
         </NavLink>

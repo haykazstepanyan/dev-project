@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import Input from "../components/input";
+// import MailOutlineIcon from "@mui/icons-material/MailOutline";
+// import Input from "../components/input";
 import shipping1 from "../assets/images/shipping1.webp";
 import shipping2 from "../assets/images/shipping2.webp";
 import shipping3 from "../assets/images/shipping3.webp";
@@ -42,7 +42,7 @@ function Main() {
       </Grid>
       <Grid item xs={8} className={classes.shipingArea}>
         <div className={classes.container}>
-          <div className={classes.row}>
+          <div className={classes.row} style={{ justifyContent: "flex-start" }}>
             <div className={classes.colLg4}>
               <div className={classes.singleShipping}>
                 <div className={classes.shippingIcone}>
@@ -87,7 +87,10 @@ function Main() {
       <Grid item xs={8}>
         <div className={classes.bannerArea}>
           <div className={classes.container}>
-            <div className={classes.row}>
+            <div
+              className={classes.row}
+              style={{ justifyContent: "space-between" }}
+            >
               <div
                 className={classes.colLg6}
                 style={{ paddingRight: 10, paddingLeft: 10 }}
@@ -98,10 +101,12 @@ function Main() {
                       <img src={banner1} alt="" />
                     </Link>
                     <div className={classes.bannerContent}>
-                      <h3>Big Sale Products</h3>
-                      <h2>
-                        Plants <br /> For Interior
-                      </h2>
+                      <div>
+                        <h2>Big Sale Products</h2>
+                        <h3>
+                          Plants <br /> For Interior
+                        </h3>
+                      </div>
                       <Link className={classes.bannerContentLink} to="/shop">
                         Shop Now
                       </Link>
@@ -119,10 +124,12 @@ function Main() {
                       <img src={banner2} alt="" />
                     </Link>
                     <div className={classes.bannerContent}>
-                      <h3>Top Products</h3>
-                      <h2>
-                        Plants <br /> For Healthy
-                      </h2>
+                      <div>
+                        <h2>Top Products</h2>
+                        <h3>
+                          Plants <br /> For Healthy
+                        </h3>
+                      </div>
                       <Link className={classes.bannerContentLink} to="/shop">
                         Shop Now
                       </Link>
@@ -179,7 +186,7 @@ function Main() {
           </div>
         </div>
       </Grid>
-      <Grid item xs={8} className={classes.newsletterAreaStart}>
+      {/* <Grid item xs={8} className={classes.newsletterAreaStart}>
         <div className={classes.container}>
           <div className={classes.row}>
             <div className={classes.col12}>
@@ -209,7 +216,7 @@ function Main() {
             </div>
           </div>
         </div>
-      </Grid>
+      </Grid> */}
     </>
   );
 }

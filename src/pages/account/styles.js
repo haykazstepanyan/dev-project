@@ -42,7 +42,7 @@ const detailsStyles = createUseStyles({
   },
   detailsTitle: {
     fontSize: "22px",
-    fontWeight: 500,
+    fontWeight: "100%",
     marginBottom: "15px",
   },
   formControl: {
@@ -85,8 +85,14 @@ const detailsStyles = createUseStyles({
   inputsContainer: {
     marginTop: "22px",
   },
+  passwordInput: {
+    width: "100%",
+  },
   saveBtnContainer: {
     marginTop: "15px",
+  },
+  passwordForm: {
+    marginTop: "20px",
   },
 });
 const dashboardStyles = createUseStyles({

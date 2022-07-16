@@ -2,25 +2,11 @@ import { createUseStyles } from "react-jss";
 
 export const miniShoppingCartStyles = createUseStyles({
   cart_stack: {
-    position: "relative",
-    minWidth: "300px",
-    height: "100%",
-    paddingTop: "0px",
-    paddingRight: "28px",
-    paddingBottom: "33px",
-    paddingLeft: "28px",
-    background: "#fff",
-    right: 0,
-    top: 0,
+    paddingRight: "10px",
+    paddingBottom: "50px",
+    paddingLeft: "10px",
   },
-  cart_gallery: {},
   cart_close: {
-    position: "sticky",
-    top: "0px",
-    zIndex: 2,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
     borderBottom: "1px solid #e1e1e1",
     paddingBottom: "10px",
     paddingTop: "10px",
@@ -32,12 +18,6 @@ export const miniShoppingCartStyles = createUseStyles({
     textTransform: "capitalize",
     fontWeight: 400,
     marginBottom: 0,
-  },
-  clickable_close_icon: {
-    "&:hover": {
-      color: "green",
-    },
-    cursor: "pointer",
   },
   cart_item: {
     overflow: "hidden !important",
@@ -51,6 +31,7 @@ export const miniShoppingCartStyles = createUseStyles({
     width: "90px",
     marginRight: "10px",
     border: "1px solid transparent",
+    textAlign: "center",
   },
   cart_info: {
     width: "63%",
@@ -62,20 +43,16 @@ export const miniShoppingCartStyles = createUseStyles({
     display: "block",
     marginBottom: "6px",
   },
-  cart_product_img: { maxWidth: "100%", height: "auto" },
+  cart_product_img: {
+    maxWidth: "100%",
+    height: 60,
+  },
   cart_product_quantity_and_price: {
     fontSize: "12px",
     marginTop: "10px !important",
   },
-  cart_product_remove: {},
   cart_totals_table: {
     padding: 5,
-  },
-  cart_totals_table_subtotal: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "17px",
-    fontSize: 13,
   },
   cart_totals_table_total: {
     display: "flex",
@@ -88,7 +65,7 @@ export const miniShoppingCartStyles = createUseStyles({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    paddingBottom: 30,
+    paddingBottom: "50px",
   },
   cart_cart_pages_viewCart: {
     display: "flex",

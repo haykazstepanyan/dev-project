@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Grid, Container } from "@mui/material";
 import { signIn } from "../redux/auth/actions";
-import Input from "../components/input/Input";
-import Button from "../components/button/Button";
+import Input from "../components/input";
+import Button from "../components/button";
 import Banner from "../components/common/Banner";
 import { signUpInStyles } from "./styles";
 

@@ -114,6 +114,15 @@ function PageRoutes() {
             </Fallback>
           }
         />
+
+        <Route
+          path="manageAccount"
+          element={
+            <Fallback>
+              <AccountDetails />
+            </Fallback>
+          }
+        />
         <Route
           path="user"
           element={

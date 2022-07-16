@@ -7,47 +7,37 @@ import {
   Box,
   Typography,
   Divider,
-  TextField,
   IconButton,
 } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import PinterestIcon from "@mui/icons-material/Pinterest";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 import Button from "../components/button";
 import { productViewStyles } from "./styles";
-import { productItemStyles } from "../components/product/styles";
 import useFetch from "../hooks/useFetch";
 import { showLoader, hideLoader, showSnackbar } from "../redux/app/appSlice";
 import useLazyFetch from "../hooks/useLazyFetch";
+import SignInModal from "../components/modals/SignInModal";
+import { currencySymbols } from "../constants/constants";
+import AddToCart from "../components/addToCart";
 
 function Product() {
   const [isProductLiked, setIsProductLiked] = useState(false);
-  const [isProductInCart, setIsProductInCart] = useState(false);
-  const [count, setCount] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+
+  const selectedCurrency = useSelector((state) => state.app.currency);
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
   const { productId } = useParams();
   const navigate = useNavigate();
-  const isAuth = useSelector((state) => state.auth.isAuth);
   const classes = productViewStyles();
-  const cartClasses = productItemStyles();
-
-  const { data: productData, error: productError } = useFetch(
-    `/products/getProducts/${productId}`,
-  );
 
   const {
-    data: wishlistChangeData,
-    loading: wishlistChangeLoading,
-    lazyRefetch: wishlistRefetch,
-  } = useLazyFetch();
+    data: productData,
+    loading: prodcutLoading,
+    error: productError,
+  } = useFetch(`/products/getProducts/${productId}`);
 
-  const {
-    data: cartChangeData,
-    loading: cartChangeLoading,
-    lazyRefetch: cartRefetch,
-  } = useLazyFetch();
+  const { data: wishlistChangeData, lazyRefetch: wishlistRefetch } =
+    useLazyFetch();
 
   const {
     id,
@@ -61,45 +51,30 @@ function Product() {
     cart,
   } = productData?.data || {};
 
-  useEffect(() => {
-    if (wishlistChangeLoading) {
-      dispatch(
-        showLoader({
-          key: "wishlist/change",
-        }),
-      );
-    }
-  }, [dispatch, wishlistChangeLoading]);
+  const ratesData = JSON.parse(localStorage.getItem("rates"));
+  const rates = ratesData?.currencyRates;
+  let convertedPrice = price * (rates?.[selectedCurrency] || 1);
+  let discountedPrice = convertedPrice - (convertedPrice * discount) / 100;
+  if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+    convertedPrice = Math.trunc(convertedPrice);
+    discountedPrice = Math.trunc(discountedPrice);
+  } else {
+    convertedPrice = parseFloat(convertedPrice.toFixed(2));
+    discountedPrice = parseFloat(discountedPrice.toFixed(2));
+  }
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   useEffect(() => {
-    if (wishlistChangeData) {
-      dispatch(
-        hideLoader({
-          key: "wishlist/change",
-        }),
-      );
+    if (prodcutLoading) {
+      showLoader({
+        key: "getProduct",
+      });
+    } else {
+      hideLoader({
+        key: "getProduct",
+      });
     }
-  }, [dispatch, wishlistChangeData]);
-
-  useEffect(() => {
-    if (cartChangeLoading) {
-      dispatch(
-        showLoader({
-          key: "cart/change",
-        }),
-      );
-    }
-  }, [dispatch, cartChangeLoading]);
-
-  useEffect(() => {
-    if (cartChangeData) {
-      dispatch(
-        hideLoader({
-          key: "cart/change",
-        }),
-      );
-    }
-  }, [dispatch, cartChangeData]);
+  }, [prodcutLoading]);
 
   useEffect(() => {
     if (productError) {
@@ -114,19 +89,20 @@ function Product() {
 
   useEffect(() => {
     if (productData) {
-      console.log(productData);
-      setIsProductLiked(
-        productData.data.wishlist && productData.data.wishlist.length,
-      );
-      setIsProductInCart(productData.data.cart && productData.data.cart.length);
-      setCount(cart[0]?.count || 1);
+      setIsProductLiked(wishlist && wishlist.length);
     }
-  }, [productData, cart]);
-  useEffect(() => {}, [count]);
+  }, [productData, wishlist, cart]);
+
+  const onModalOpen = () => {
+    setOpenModal(true);
+  };
+  const onModalClose = () => {
+    setOpenModal(false);
+  };
 
   const handleWishlistChange = () => {
     if (!isAuth) {
-      navigate("../signIn", { replace: true });
+      onModalOpen();
       return;
     }
     if (isProductLiked) {
@@ -156,248 +132,91 @@ function Product() {
       });
     }
   };
-  // const handleChangeCount = (event) => {
-  //   setCount(event.target.value);
-  // };
-  const handleAddToCart = () => {
-    if (!isAuth) {
-      navigate("/signin");
-      return;
-    }
-
-    if (isProductInCart) {
-      cartRefetch(
-        `/cart/count/${cartChangeData?.data?.id || cart[0].id}`,
-        {
-          body: JSON.stringify({ count }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-        "PUT",
-      );
-    } else {
-      cartRefetch(
-        "/cart/create",
-        {
-          body: JSON.stringify({ productId: id, count }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-        "POST",
-      ).then((result) => {
-        if (result?.data?.id) {
-          setIsProductInCart(true);
-        }
-      });
-    }
-  };
-  const handleDeleteFromCart = () => {
-    if (!isAuth) {
-      navigate("/signin");
-      return;
-    }
-    cartRefetch(
-      `/cart/delete/${cartChangeData?.data?.id || cart[0].id}`,
-      null,
-      "DELETE",
-    ).then((result) => {
-      if (result.data.id) {
-        setIsProductInCart(false);
-      }
-    });
-    setCount(1);
-  };
-
-  const handleChangeCount = (type) => {
-    if (type === "dec") {
-      if (count < 2) {
-        cartRefetch(
-          `/cart/delete/${cartChangeData?.data?.id || cart[0]?.id}`,
-          null,
-          "DELETE",
-        ).then(() => {
-          setIsProductInCart(false);
-        });
-        return;
-      }
-      cartRefetch(
-        `/cart/count/${cartChangeData?.data?.id || cart[0]?.id}`,
-        {
-          body: JSON.stringify({ count: count - 1 }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-        "PUT",
-      ).then((result) => {
-        if (result.data.id) {
-          setCount((prev) => prev - 1);
-        }
-      });
-    } else {
-      cartRefetch(
-        `/cart/count/${cartChangeData?.data?.id || cart[0]?.id}`,
-        {
-          body: JSON.stringify({ count: count + 1 }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-        "PUT",
-      ).then((result) => {
-        if (result.data.id) {
-          setCount((prev) => prev + 1);
-        }
-      });
-    }
-  };
-  const inputOnchange = (value) => {
-    cartRefetch(
-      `/cart/count/${cartChangeData?.data?.id || cart[0]?.id}`,
-      {
-        body: JSON.stringify({ count: Math.floor(value) }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-      "PUT",
-    ).then((result) => {
-      if (result.data.id) {
-        setCount(value);
-      }
-    });
-  };
 
   return (
     productData?.data && (
-      <Container maxWidth="lg" className={classes.productContainer}>
-        <IconButton
-          className={classes.goBackIcon}
-          onClick={() => navigate(-1)}
-          disableRipple
-        >
-          <KeyboardBackspaceOutlinedIcon />
-        </IconButton>
-        <Grid container alignItems="center">
-          <Grid
-            item
-            md={6}
-            sm={12}
-            padding={10}
-            className={classes.productImgContainer}
+      <>
+        <Container maxWidth="lg" className={classes.productContainer}>
+          <IconButton
+            className={classes.goBackIcon}
+            onClick={() => navigate(-1)}
+            disableRipple
           >
-            <Box component="div">
-              <img src={productImg} alt="some img" style={{ width: "100%" }} />
-            </Box>
-          </Grid>
-          <Grid item md={6} sm={10} padding={5}>
-            <Box maxWidth="100%">
-              <Box component="div" marginBottom={3}>
-                <Typography component="h4" variant="h5">
-                  {name}
-                </Typography>
+            <KeyboardBackspaceOutlinedIcon />
+            <p className={classes.goBackText}>Back to Shop</p>
+          </IconButton>
+
+          <Grid container alignItems="center">
+            <Grid
+              item
+              md={6}
+              sm={12}
+              padding={5}
+              className={classes.productImgContainer}
+            >
+              <Box component="div">
+                <img
+                  className={classes.productImg}
+                  src={productImg}
+                  alt={`${name} product img`}
+                />
               </Box>
-              <Box component="div" marginBottom={3}>
-                <Typography>
-                  <span className={classes["product_current-price"]}>
-                    ${price - (price * discount) / 100}
-                  </span>
-                  {discount ? (
-                    <span className={classes["product_old-price"]}>
-                      ${price}
+            </Grid>
+            <Grid item md={6} sm={10} padding={5}>
+              <Box maxWidth="100%">
+                <Box component="div" marginBottom={3}>
+                  <Typography component="h4" variant="h5">
+                    {name}
+                  </Typography>
+                </Box>
+                <Box component="div" marginBottom={3}>
+                  <Typography>
+                    <span className={classes["product_current-price"]}>
+                      {convertedSymbol}
+                      {discountedPrice}
                     </span>
-                  ) : null}
-                </Typography>
-              </Box>
-              <Box marginBottom={6}>
-                <Typography component="p">{description}</Typography>
-              </Box>
+                    {discount ? (
+                      <span className={classes["product_old-price"]}>
+                        {convertedSymbol}
+                        {convertedPrice}
+                      </span>
+                    ) : null}
+                  </Typography>
+                </Box>
+                <Box marginBottom={6}>
+                  <Typography component="p">{description}</Typography>
+                </Box>
 
-              <Divider />
+                <Divider />
 
-              <Box marginTop={3}>
-                {/* <TextField
-                  value={count}
-                  size="small"
-                  type="number"
-                  InputProps={{ inputProps: { min: 1, max: 10 } }}
-                  onChange={handleChangeCount}
-                /> */}
-                <Box sx={{ display: "inline", marginLeft: 3 }}>
-                  <div className={cartClasses.cartContainer}>
-                    {isProductInCart ? (
-                      // <ShoppingCartIcon />
-                      <>
-                        <button
-                          className={cartClasses.desBtn}
-                          type="button"
-                          onClick={() => handleChangeCount("dec")}
-                        >
-                          -
-                        </button>
-                        <input
-                          className={cartClasses.cartInput}
-                          type="text"
-                          value={count}
-                          onChange={(e) => inputOnchange(e.target.value)}
-                        />
-                        <button
-                          className={cartClasses.incBtn}
-                          type="button"
-                          onClick={() => handleChangeCount("inc")}
-                        >
-                          +
-                        </button>
-                      </>
-                    ) : (
-                      <ShoppingCartOutlinedIcon onClick={handleAddToCart} />
-                    )}
-                  </div>
+                <Box marginTop={3}>
+                  <AddToCart
+                    cart={cart}
+                    isAuth={isAuth}
+                    productId={id}
+                    btnWidth="180px"
+                  />
+                </Box>
 
-                  {/* <Button color="secondary" onClick={handleAddToCart}>
-                    {isProductInCart ? "Change Count" : "Add To Cart"}
+                <Box marginTop={3}>
+                  <Button color="info" onClick={handleWishlistChange}>
+                    {isProductLiked
+                      ? "- Remove from wishlist"
+                      : "+ Add to wishlist"}
                   </Button>
-                  {isProductInCart ? (
-                    <Button color="info" onClick={handleDeleteFromCart}>
-                      -Remove from cart
-                    </Button>
-                  ) : (
-                    ""
-                  )} */}
+                </Box>
+                <Box sx={{ marginTop: 3 }}>
+                  <Typography>
+                    <b className={classes.productCategoryText}>Category:</b>
+                    <span>{category.name}</span>
+                  </Typography>
                 </Box>
               </Box>
-
-              <Box marginTop={3}>
-                <Button color="info" onClick={handleWishlistChange}>
-                  {isProductLiked
-                    ? "- Remove from wishlist"
-                    : "+ Add to wishlist"}
-                </Button>
-              </Box>
-              <Box sx={{ marginTop: 3 }}>
-                <Typography>
-                  <b className={classes.product_category_text}>Category:</b>
-                  <span>{category?.name}</span>
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: 100,
-                  marginTop: 3,
-                }}
-              >
-                <FacebookIcon className={classes.fb_icon} />
-                <PinterestIcon className={classes.pinterest_icon} />
-                <LinkedInIcon className={classes.linkedIn_icon} />
-              </Box>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+        <SignInModal open={openModal} closeModal={onModalClose} />
+      </>
     )
   );
 }

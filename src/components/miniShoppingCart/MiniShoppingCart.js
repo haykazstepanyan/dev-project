@@ -1,4 +1,6 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Stack,
   Typography,
@@ -7,91 +9,91 @@ import {
   ListItemAvatar,
   Box,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import { useNavigate } from "react-router-dom";
+// import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Button from "../button";
 import { miniShoppingCartStyles } from "./styles";
+import useFetch from "../../hooks/useFetch";
+import Loader from "../loader";
 
-function MiniShoppingCart() {
+function MiniShoppingCart({ toggleDrawer }) {
+  const [totalSum, setTotalSum] = useState(0);
   const classes = miniShoppingCartStyles();
-  const user = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
 
-  const handleCartPage = () => {
-    if (user) {
-      navigate("/cart");
-    } else if (user === null) {
-      navigate("/signin");
+  const { data: cartData, loading: cartLoading } =
+    useFetch("/cart/getCartItems");
+
+  useEffect(() => {
+    if (cartData && cartData.data.length) {
+      setTotalSum(
+        cartData.data.reduce(
+          (acc, cur) => acc + cur.count * cur.product.price,
+          0,
+        ),
+      );
     }
+  }, [cartData]);
+
+  const handleCartPage = () => {
+    toggleDrawer();
+    return navigate("/cart");
   };
 
-  const handleCheckoutPage = () => {
-    navigate("/#");
-  };
-
-  return (
+  return cartLoading ? (
+    <Loader />
+  ) : (
     <Stack spacing={2} role="presentation" className={classes.cart_stack}>
-      <Box component="div" className={classes.cart_gallery}>
+      <Box component="div">
         <Box component="div" className={classes.cart_close}>
           <Typography className={classes.cart_text} variant="h6" component="h3">
             Cart
           </Typography>
         </Box>
         <List className={classes.cart_list}>
-          <ListItem className={classes.cart_item}>
-            <ListItemAvatar className={classes.cart_item_img}>
-              <img
-                className={classes.cart_product_img}
-                src="https://htmldemo.net/lukani/lukani/assets/img/s-product/product.jpg"
-                alt=""
-              />
-            </ListItemAvatar>
+          {cartData &&
+            cartData.data.length &&
+            cartData.data.map(({ id, count, product }) => (
+              <ListItem className={classes.cart_item} key={id}>
+                <ListItemAvatar className={classes.cart_item_img}>
+                  <Link to={`/product/${id}`}>
+                    <img
+                      className={classes.cart_product_img}
+                      src={product.productImg}
+                      alt={product.id}
+                    />
+                  </Link>
+                </ListItemAvatar>
 
-            <Box className={classes.cart_info}>
-              <Typography
-                component="a"
-                variant="span"
-                href="#"
-                className={classes.product_name}
-              >
-                Primis In Faucibus
-              </Typography>
+                <Box className={classes.cart_info}>
+                  <Typography
+                    component="a"
+                    variant="span"
+                    href={`/product/${id}`}
+                    className={classes.product_name}
+                  >
+                    {product.name}
+                  </Typography>
 
-              <Typography
-                component="p"
-                variant="span"
-                className={classes.cart_product_quantity_and_price}
-              >
-                1 x <b>65$</b>
-              </Typography>
-            </Box>
-            <div className={classes.cart_product_remove}>
-              <CloseIcon
-                fontSize="extra-small"
-                className={classes.clickable_close_icon}
-              />
-            </div>
-          </ListItem>
+                  <Typography
+                    component="p"
+                    variant="span"
+                    className={classes.cart_product_quantity_and_price}
+                  >
+                    {count} x <b>${product.price}</b>
+                  </Typography>
+                </Box>
+              </ListItem>
+            ))}
         </List>
       </Box>
       <Box component="div" className={classes.cart_totals_table}>
-        <Box component="div" className={classes.cart_totals_table_subtotal}>
-          <Typography component="span" variant="span">
-            Sub Total:
-          </Typography>
-          <Typography component="b" variant="b">
-            $130.00
-          </Typography>
-        </Box>
-
         <Box component="div" className={classes.cart_totals_table_total}>
           <Typography component="span" variant="span">
             Total:
           </Typography>
           <Typography component="b" variant="b">
-            $130.00
+            ${totalSum}
           </Typography>
         </Box>
       </Box>
@@ -107,10 +109,10 @@ function MiniShoppingCart() {
             <span>VIEW CART</span>
           </Button>
         </Box>
-        <Box component="div" className={classes.cart_cart_pages_checkout}>
+        {/* <Box component="div" className={classes.cart_cart_pages_checkout}>
           <Button
             variant="contained"
-            onClick={handleCheckoutPage}
+            // onClick={handleCheckoutPage}
             color="primary"
             fullWidth
           >
@@ -120,10 +122,14 @@ function MiniShoppingCart() {
             />
             <span>CHECKOUT</span>
           </Button>
-        </Box>
+        </Box> */}
       </Box>
     </Stack>
   );
 }
+
+MiniShoppingCart.propTypes = {
+  toggleDrawer: PropTypes.func,
+};
 
 export default MiniShoppingCart;
