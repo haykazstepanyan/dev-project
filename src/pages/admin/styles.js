@@ -29,6 +29,23 @@ const adminGlobalStyles = createUseStyles({
       width: 235,
     },
   },
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  searchBox: {
+    position: "relative",
+    width: "50%",
+    "& svg": {
+      position: "absolute",
+      right: 10,
+      top: 10,
+      width: 20,
+      height: 20,
+    },
+  },
   mb10: {
     marginBottom: 10,
   },

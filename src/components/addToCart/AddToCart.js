@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
-import {
-  // hideLoader,
-  setCartCount,
-  // showLoader,
-  showSnackbar,
-} from "../../redux/app/appSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setCartCount, showSnackbar } from "../../redux/app/appSlice";
 import useDebounce from "../../hooks/useDebounce";
 import useLazyFetch from "../../hooks/useLazyFetch";
 import Button from "../button";
@@ -29,28 +24,13 @@ function AddToCart({
   const [loading, setLoading] = useState(false);
   const [startToSearch, setStartToSearch] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-
+  const role = useSelector((state) => state.auth.role);
   const dispatch = useDispatch();
-  const debouncedCount = useDebounce(count, 1500);
+  const debouncedCount = useDebounce(count, 500);
 
   const { data: cartChangeData, lazyRefetch: cartChangeRefetch } =
     useLazyFetch();
 
-  // useEffect(() => {
-  //   if (cartChangeLoading) {
-  //     dispatch(
-  //       showLoader({
-  //         key: "cartChange",
-  //       }),
-  //     );
-  //   } else {
-  //     dispatch(
-  //       hideLoader({
-  //         key: "cartChange",
-  //       }),
-  //     );
-  //   }
-  // }, [dispatch, cartChangeLoading]);
   const onModalOpen = () => {
     setOpenModal(true);
   };
@@ -215,7 +195,7 @@ function AddToCart({
     );
   }
 
-  return (
+  return role === "ADMIN" || role === "MAIN_ADMIN" ? null : (
     <>
       <div className={classes.addToCart}>{renderAddToCart}</div>
       <SignInModal open={openModal} closeModal={onModalClose} />

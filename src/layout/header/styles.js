@@ -113,7 +113,13 @@ const iconsStyles = createUseStyles({
   iconsContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "start",
+    "& > div:first-child": {
+      marginLeft: 12,
+    },
+    "& > *": {
+      marginRight: 8,
+    },
     "& .MuiButton-root": {
       padding: 0,
       minWidth: "auto",

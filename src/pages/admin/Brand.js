@@ -2,17 +2,25 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Container } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
 import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
 import Button from "../../components/button/Button";
 import AdminModal from "../../components/adminModal/AdminModal";
 import useFetch from "../../hooks/useFetch";
 import useLazyFetch from "../../hooks/useLazyFetch";
 import { showSnackbar } from "../../redux/app/appSlice";
+import useDebounce from "../../hooks/useDebounce";
+import Input from "../../components/input";
+import { adminGlobalStyles } from "./styles";
 
 function Brand() {
   const [open, setOpen] = useState(false);
   const [brands, setBrands] = useState([]);
+  const [search, setSearch] = useState("");
+  const [startToSearch, setStartToSearch] = useState(false);
+  const debouncedSearch = useDebounce(search, 500);
 
+  const classes = adminGlobalStyles();
   const dispatch = useDispatch();
 
   const { data: brandsData, error: brandsError } = useFetch("/brands");
@@ -21,6 +29,9 @@ function Brand() {
     error: addBrandError,
     lazyRefetch: addBrand,
   } = useLazyFetch();
+
+  const { data: filteredBrandData, lazyRefetch: filteredBrandRefetch } =
+    useLazyFetch();
 
   const handleClose = () => {
     setOpen(false);
@@ -60,6 +71,12 @@ function Brand() {
     }
   }, [addBrandError, brandsError, dispatch]);
 
+  useEffect(() => {
+    if (startToSearch) {
+      filteredBrandRefetch(`/brands?keyword=${debouncedSearch}`);
+    }
+  }, [debouncedSearch, filteredBrandRefetch, startToSearch]);
+
   const addData = (value) => {
     const brandData = { name: value };
 
@@ -75,38 +92,56 @@ function Brand() {
     );
   };
 
-  function setEditBrandData(brandData) {
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    if (!startToSearch) {
+      setStartToSearch(true);
+    }
+  };
+  const setEditBrandData = (brandData) => {
     const { id } = brandData;
     const newState = brands.map((elem) => (elem.id === id ? brandData : elem));
     setBrands(newState);
-  }
-  function setDeleteBrandData(brandData) {
+  };
+  const setDeleteBrandData = (brandData) => {
     if (brandData?.data) {
       const { id } = brandData.data;
       const newState = brands.filter((elem) => elem.id !== id);
       setBrands(newState);
     }
-  }
+  };
+
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
-        <div>
+        <div className={classes.toolbar}>
           <Button
             letter="capitalize"
-            style={{ marginBottom: 20 }}
             page="admin"
             onClick={() => handleOpen()}
             disableRipple
           >
             <AddIcon />
           </Button>
+          <div className={classes.searchBox}>
+            <Input
+              type="text"
+              placeholder="Search by name..."
+              size="large"
+              borders="square"
+              state="noFocus"
+              value={search}
+              onChange={handleSearch}
+            />
+            <SearchIcon />
+          </div>
         </div>
         {brands && (
           <AdminMainTable
             setEditBrandData={(value) => setEditBrandData(value)}
             setDeleteBrandData={(value) => setDeleteBrandData(value)}
             type="brand"
-            tableData={brands}
+            tableData={filteredBrandData?.data || brands}
           />
         )}
       </Container>

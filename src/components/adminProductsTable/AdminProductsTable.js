@@ -140,7 +140,11 @@ function AdminProductsTable({
                   <img
                     src={row.productImg}
                     alt="product-img"
-                    style={{ width: "70px", objectFit: "contain" }}
+                    style={{
+                      width: 70,
+                      maxHeight: 60,
+                      objectFit: "contain",
+                    }}
                   />
                 </TableCell>
                 <TableCell align="right">{row.price}</TableCell>

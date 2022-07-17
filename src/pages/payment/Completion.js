@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { fetchData } from "../../helpers/helpers";
+import { setCartCount } from "../../redux/app/appSlice";
 
 function Completion({ stripePromise }) {
   const [messageBody, setMessageBody] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!stripePromise) return;
@@ -35,7 +38,9 @@ function Completion({ stripePromise }) {
           "POST",
         );
 
-        await fetchData("cart", undefined, undefined, "DELETE");
+        await fetchData("cart", undefined, undefined, "DELETE").then(() => {
+          dispatch(setCartCount(0));
+        });
       }
 
       setMessageBody(
@@ -62,7 +67,7 @@ function Completion({ stripePromise }) {
         ),
       );
     });
-  }, [stripePromise]);
+  }, [dispatch, stripePromise]);
 
   return (
     <div

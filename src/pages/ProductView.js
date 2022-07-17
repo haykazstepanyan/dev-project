@@ -25,6 +25,7 @@ function Product() {
 
   const selectedCurrency = useSelector((state) => state.app.currency);
   const isAuth = useSelector((state) => state.auth.isAuth);
+  const role = useSelector((state) => state.auth.role);
   const dispatch = useDispatch();
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -198,13 +199,15 @@ function Product() {
                   />
                 </Box>
 
-                <Box marginTop={3}>
-                  <Button color="info" onClick={handleWishlistChange}>
-                    {isProductLiked
-                      ? "- Remove from wishlist"
-                      : "+ Add to wishlist"}
-                  </Button>
-                </Box>
+                {role === "ADMIN" || role === "MAIN_ADMIN" ? null : (
+                  <Box marginTop={3}>
+                    <Button color="info" onClick={handleWishlistChange}>
+                      {isProductLiked
+                        ? "- Remove from wishlist"
+                        : "+ Add to wishlist"}
+                    </Button>
+                  </Box>
+                )}
                 <Box sx={{ marginTop: 3 }}>
                   <Typography>
                     <b className={classes.productCategoryText}>Category:</b>

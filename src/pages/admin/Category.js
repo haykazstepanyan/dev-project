@@ -2,24 +2,36 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux/es/exports";
 import { Container } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
 import AdminModal from "../../components/adminModal/AdminModal";
 import AdminMainTable from "../../components/adminMainTable/AdminMainTable";
 import Button from "../../components/button/Button";
-// import { addCategories, getCategories } from "../../redux/category/actions";
 import useFetch from "../../hooks/useFetch";
 import { showSnackbar } from "../../redux/app/appSlice";
 import useLazyFetch from "../../hooks/useLazyFetch";
+import useDebounce from "../../hooks/useDebounce";
+import { adminGlobalStyles } from "./styles";
+import Input from "../../components/input";
 
 export default function Category() {
+  const [categories, setCategories] = useState([]);
+  const [search, setSearch] = useState("");
+  const [startToSearch, setStartToSearch] = useState(false);
+  const debouncedSearch = useDebounce(search, 500);
+
+  const classes = adminGlobalStyles();
+  const dispatch = useDispatch();
+
   const { data: categoriesData, error: categoriesError } =
     useFetch("/categories");
-  const [categories, setCategories] = useState([]);
-  const dispatch = useDispatch();
   const {
     data: addCategoryData,
     error: addCategoryError,
     lazyRefetch: addCategory,
   } = useLazyFetch();
+  const { data: filteredCategoryData, lazyRefetch: filteredCategoryRefetch } =
+    useLazyFetch();
+
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -46,10 +58,6 @@ export default function Category() {
     }
   }, [categoriesError, dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(getCategories());
-  // }, [dispatch]);
-
   useEffect(() => {
     if (addCategoryData?.data) {
       setCategories((prev) => [...prev, addCategoryData.data]);
@@ -75,9 +83,21 @@ export default function Category() {
     }
   }, [addCategoryError, categoriesError, dispatch]);
 
+  useEffect(() => {
+    if (startToSearch) {
+      filteredCategoryRefetch(`/categories?keyword=${debouncedSearch}`);
+    }
+  }, [debouncedSearch, filteredCategoryRefetch, startToSearch]);
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    if (!startToSearch) {
+      setStartToSearch(true);
+    }
+  };
+
   const addData = (value) => {
     const categoryData = { name: value };
-    // dispatch(addCategories(categoryData));
 
     addCategory(
       "/categories/category",
@@ -111,7 +131,7 @@ export default function Category() {
   return (
     <>
       <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
-        <div>
+        <div className={classes.toolbar}>
           <Button
             letter="capitalize"
             style={{ marginBottom: 20 }}
@@ -121,13 +141,25 @@ export default function Category() {
           >
             <AddIcon />
           </Button>
+          <div className={classes.searchBox}>
+            <Input
+              type="text"
+              placeholder="Search by name..."
+              size="large"
+              borders="square"
+              state="noFocus"
+              value={search}
+              onChange={handleSearch}
+            />
+            <SearchIcon />
+          </div>
         </div>
-        {categories && (
+        {(filteredCategoryData?.categories || categories) && (
           <AdminMainTable
             setEditCategoryData={(value) => setEditCategoryData(value)}
             setDeleteCategoryData={(value) => setDeleteCategoryData(value)}
             type="category"
-            tableData={categories}
+            tableData={filteredCategoryData?.categories || categories}
           />
         )}
       </Container>

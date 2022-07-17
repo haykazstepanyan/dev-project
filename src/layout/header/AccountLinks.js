@@ -164,8 +164,6 @@ function AccountLinks() {
         ),
         key: "account",
       },
-      { item: "Shopping cart", key: "shoppingCart" },
-      { item: "Wishlist", key: "wishlist" },
       {
         item: (
           <Button
@@ -181,6 +179,15 @@ function AccountLinks() {
         key: "signout",
       },
     ];
+
+    if (role !== "ADMIN" && role !== "MAIN_ADMIN") {
+      allowedLinks.splice(
+        1,
+        0,
+        { item: "Shopping cart", key: "shoppingCart" },
+        { item: "Wishlist", key: "wishlist" },
+      );
+    }
   } else {
     allowedLinks = [
       {
@@ -205,23 +212,27 @@ function AccountLinks() {
   return (
     <Grid item md={2} className={classes.iconsContainer}>
       <HoverableDropdown value={<PeopleOutlineIcon />} list={allowedLinks} />
-      <IconButton onClick={handleWishlistRoute} className={classes.iconBtn}>
-        <FavoriteBorderIcon className={classes.icons} />
-        {!!wishlistCount && (
-          <span className={classes.itemCount}>{wishlistCount}</span>
-        )}
-      </IconButton>
-      <Drawer
-        open={anchor}
-        toggleDrawer={toggleDrawer}
-        anchorDirection="right"
-        OpenIcon={WorkOutlineIcon}
-        drawerWidth={350}
-        outline={false}
-        count={cartCount}
-      >
-        <MiniShoppingCart toggleDrawer={toggleDrawer} />
-      </Drawer>
+      {role !== "ADMIN" && role !== "MAIN_ADMIN" && (
+        <>
+          <IconButton onClick={handleWishlistRoute} className={classes.iconBtn}>
+            <FavoriteBorderIcon className={classes.icons} />
+            {!!wishlistCount && (
+              <span className={classes.itemCount}>{wishlistCount}</span>
+            )}
+          </IconButton>
+          <Drawer
+            open={anchor}
+            toggleDrawer={toggleDrawer}
+            anchorDirection="right"
+            OpenIcon={WorkOutlineIcon}
+            drawerWidth={350}
+            outline={false}
+            count={cartCount}
+          >
+            <MiniShoppingCart toggleDrawer={toggleDrawer} />
+          </Drawer>
+        </>
+      )}
       <HoverableDropdown
         value={<CurrencyExchangeIcon />}
         list={currencies}

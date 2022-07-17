@@ -2,8 +2,14 @@ import { useState, useEffect } from "react";
 import { Container } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { ref, deleteObject } from "firebase/storage";
-
-import { Tooltip } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Tooltip,
+} from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../../components/pagination/Pagination";
@@ -14,12 +20,23 @@ import AdminProductsModal from "../../../components/adminProductsModal/AdminProd
 import { showSnackbar } from "../../../redux/app/appSlice";
 import useFetch from "../../../hooks/useFetch";
 import useLazyFetch from "../../../hooks/useLazyFetch";
+import Input from "../../../components/input";
+import { adminGlobalStyles } from "../styles";
+import useDebounce from "../../../hooks/useDebounce";
 
 export default function Product() {
   const [open, setOpen] = useState(false);
   const [productsData, setProductsData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(+searchParams.get("page") || 1);
+  const [search, setSearch] = useState("");
+  const [startToSearch, setStartToSearch] = useState(false);
+  const [brandSelect, setBrandSelect] = useState(0);
+  const [categorySelect, setCategorySelect] = useState(0);
+  const debouncedSearch = useDebounce(search, 500);
+
+  const classes = adminGlobalStyles();
+
   const { data: brands, error: brandsError } = useFetch("/brands");
   const { data: categories, error: categoriesError } = useFetch("/categories");
   const { error: addProductError, lazyRefetch: addProduct } = useLazyFetch();
@@ -63,6 +80,23 @@ export default function Product() {
     }
   }, [products]);
 
+  useEffect(() => {
+    if (startToSearch) {
+      searchParams.delete("page");
+      searchParams.set("keyword", debouncedSearch);
+      setSearchParams(searchParams);
+      setPage(1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch, startToSearch]);
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    if (!startToSearch) {
+      setStartToSearch(true);
+    }
+  };
+
   const addData = (value) => {
     addProduct(
       "/products/product",
@@ -91,15 +125,16 @@ export default function Product() {
     });
   };
 
-  function setEditProductData(value) {
+  const setEditProductData = (value) => {
     const { id } = value;
     const newState = productsData.map((elem) =>
       elem.id === id ? value : elem,
     );
     setProductsData(newState);
     productFetch();
-  }
-  function setDeleteProductData(value) {
+  };
+
+  const setDeleteProductData = (value) => {
     const { id, productImg } = value;
     const newState = productsData.filter((elem) => elem.id !== id);
     setProductsData(newState);
@@ -119,7 +154,36 @@ export default function Product() {
     }
 
     productFetch();
-  }
+  };
+
+  const handleBrandSelect = (e) => {
+    const { value } = e.target;
+
+    console.log("brand - ", value);
+    searchParams.delete("page");
+    if (value) {
+      searchParams.set("brand", value);
+    } else {
+      searchParams.delete("brand");
+    }
+    setPage(1);
+    setSearchParams(searchParams);
+    setBrandSelect(value);
+  };
+
+  const handleCategorySelect = (e) => {
+    const { value } = e.target;
+    console.log("category - ", value);
+    searchParams.delete("page");
+    if (value) {
+      searchParams.set("category", value);
+    } else {
+      searchParams.delete("category");
+    }
+    setPage(1);
+    setSearchParams(searchParams);
+    setCategorySelect(value);
+  };
 
   const categoriesLength = categories?.categories.length;
   const brandsLength = brands?.data.length;
@@ -129,6 +193,13 @@ export default function Product() {
   if (categoriesLength && brandsLength) {
     disabled = false;
   }
+
+  const brandOptions = brands?.data.length
+    ? [{ id: 0, name: "All brands" }, ...brands.data]
+    : [];
+  const categoryOptions = categories?.categories.length
+    ? [{ id: 0, name: "All categories" }, ...categories.categories]
+    : [];
 
   return (
     <>
@@ -152,7 +223,7 @@ export default function Product() {
             </div>
           </Tooltip>
         ) : (
-          <div>
+          <div className={classes.toolbar}>
             <Button
               disabled={disabled}
               letter="capitalize"
@@ -163,6 +234,54 @@ export default function Product() {
             >
               <AddIcon />
             </Button>
+            <div className={classes.selects}>
+              <FormControl sx={{ m: 1, minWidth: 140 }} size="small">
+                <InputLabel id="demo-select-small">Select brand</InputLabel>
+                <Select
+                  value={brandSelect}
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  label="Select brand"
+                  onChange={handleBrandSelect}
+                >
+                  {brandOptions.map(({ id, name }) => (
+                    <MenuItem key={id} value={id}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+            <div className={classes.selects}>
+              <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+                <InputLabel id="demo-select-small">Select category</InputLabel>
+                <Select
+                  value={categorySelect}
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  label="Select brand"
+                  onChange={handleCategorySelect}
+                >
+                  {categoryOptions.map(({ id, name }) => (
+                    <MenuItem key={id} value={id}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+            <div className={classes.searchBox}>
+              <Input
+                type="text"
+                placeholder="Search by name, description..."
+                size="large"
+                borders="square"
+                state="noFocus"
+                value={search}
+                onChange={handleSearch}
+              />
+              <SearchIcon />
+            </div>
           </div>
         )}
         {productsData && categories?.categories && brands?.data && (
@@ -176,13 +295,13 @@ export default function Product() {
             disabled={disabled}
           />
         )}
-        {products?.dataCount ? (
+        {products?.dataCount > 9 && (
           <Pagination
             count={Math.ceil((products?.dataCount || 0) / 9)}
             page={page}
             onChange={gotoPage}
           />
-        ) : null}
+        )}
       </Container>
       {open && productsData && categories?.categories && brands?.data && (
         <AdminProductsModal
