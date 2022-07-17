@@ -38,7 +38,11 @@ const loginStyles = createUseStyles({
 const detailsStyles = createUseStyles({
   container: {
     marginTop: "13px",
-    paddingLeft: "0!important",
+  },
+  adminContainer: {
+    width: 800,
+    maxWidth: "100%",
+    marginTop: "13px",
   },
   detailsTitle: {
     fontSize: "22px",

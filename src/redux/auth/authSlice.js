@@ -8,9 +8,7 @@ const authSlice = createSlice({
     role: "",
     loading: false,
     authLoading: true,
-    firstName: "",
-    lastName: "",
-    email: "",
+    userName: "",
   },
   extraReducers: {
     [checkIsAuth.fulfilled]: (state, { payload }) => {
@@ -21,15 +19,9 @@ const authSlice = createSlice({
           state.loading = false;
           state.isAuth = false;
           state.role = "";
-          state.firstName = "";
-          state.lastName = "";
-          state.email = "";
         }
       } else {
         state.isAuth = payload.data.isAuth;
-        state.firstName = payload.data.firstName;
-        state.lastName = payload.data.lastName;
-        state.email = payload.data.email;
         if (payload.data.role) {
           state.role = payload.data.role;
         } else {
@@ -45,9 +37,14 @@ const authSlice = createSlice({
       state.loading = true;
     },
     [signUp.fulfilled]: (state, { payload }) => {
+      const { firstName, lastName } = payload.data.user;
+
+      const fullName = `${firstName} ${lastName}`;
+
       state.loading = false;
       state.isAuth = payload.data.isAuth;
       state.role = payload.data.user.role;
+      state.userName = fullName;
     },
     [signUp.rejected]: (state) => {
       state.loading = false;
@@ -56,9 +53,14 @@ const authSlice = createSlice({
       state.loading = true;
     },
     [signIn.fulfilled]: (state, { payload }) => {
+      const { firstName, lastName } = payload.data.user;
+
+      const fullName = `${firstName} ${lastName}`;
+
       state.loading = false;
       state.isAuth = payload.data.isAuth;
       state.role = payload.data.user.role;
+      state.userName = fullName;
     },
     [signIn.rejected]: (state) => {
       state.loading = false;
@@ -70,6 +72,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.isAuth = false;
       state.role = "";
+      state.userName = "";
     },
     [signOut.rejected]: (state) => {
       state.loading = false;

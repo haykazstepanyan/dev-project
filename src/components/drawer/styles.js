@@ -16,7 +16,7 @@ const drawerStyles = createUseStyles({
   },
   itemCount: {
     position: "absolute",
-    top: -5,
+    top: -8,
     right: -5,
     width: 13,
     height: 13,
@@ -25,7 +25,8 @@ const drawerStyles = createUseStyles({
     fontSize: 10,
     color: colors.white,
     textAlign: "center",
-    background: colors.lightRed,
+    background: colors.green,
+    padding: 2,
   },
   icons: {
     cursor: "pointer",

@@ -11,6 +11,7 @@ const hoverableDropdownStyles = createUseStyles({
       color: colors.green,
     },
     "& button": {
+      fontWeight: 400,
       padding: 0,
       fontFamily: '"Rubik", sans-serif',
       fontSize: "1rem",

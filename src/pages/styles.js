@@ -534,6 +534,8 @@ const productViewStyles = createUseStyles({
     paddingTop: 80,
   },
   productImg: {
+    height: 400,
+    objectFit: "contain",
     width: "100%",
   },
   "container_grid-container": {

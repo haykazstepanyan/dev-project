@@ -1,32 +1,93 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/exports";
-import {
-  Container,
-  FormLabel,
-  // TextField
-} from "@mui/material";
-import { Formik, Form } from "formik";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Container, FormLabel } from "@mui/material";
+import { Formik } from "formik";
 import FormControl from "@mui/material/FormControl";
-// import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import validationAccountDetails from "./ValidationAccountDetails";
-import {
-  updateUserPersonalInfo,
-  updateUserPassword,
-} from "../../redux/users/actions";
 import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
 import { detailsStyles } from "./styles";
 import { showSnackbar } from "../../redux/app/appSlice";
+import useLazyFetch from "../../hooks/useLazyFetch";
+import useFetch from "../../hooks/useFetch";
+import { errorKeys } from "../../errorKeys";
 
 function AccountDetails() {
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.auth);
+  const { data: userInfo, error: userInfoError } =
+    useFetch("/users/getUserData");
+  const role = useSelector((state) => state.auth.role);
+
+  const {
+    data: updatedUserData,
+    error: updateUserDataError,
+    lazyRefetch: updateUserData,
+  } = useLazyFetch();
+  const { error: updateUserPasswordError, lazyRefetch: updateUserPassword } =
+    useLazyFetch();
+
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    if (userInfo?.data) {
+      setUserData(userInfo.data);
+    }
+  }, [userInfo, dispatch]);
+
+  useEffect(() => {
+    if (updatedUserData) {
+      dispatch(
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your data is successfully updated!",
+        }),
+      );
+    }
+  }, [updatedUserData, dispatch]);
+
+  useEffect(() => {
+    if (userInfoError) {
+      dispatch(
+        showSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+    }
+  }, [userInfoError, dispatch]);
+
+  useEffect(() => {
+    if (updateUserPasswordError) {
+      const result = JSON.parse(updateUserPasswordError);
+      if (result?.key) {
+        dispatch(
+          showSnackbar({
+            snackbarType: "error",
+            snackbarMessage: errorKeys[result.key],
+          }),
+        );
+      }
+    }
+  }, [updateUserPasswordError, dispatch]);
+
+  useEffect(() => {
+    if (updateUserDataError) {
+      const result = JSON.parse(updateUserDataError);
+      if (result?.key) {
+        dispatch(
+          showSnackbar({
+            snackbarType: "error",
+            snackbarMessage: errorKeys[result.key],
+          }),
+        );
+      }
+    }
+  }, [updateUserDataError, dispatch]);
 
   const [showPasswordChange, setShowPasswordChange] = useState(true);
   const [passwordChange, setPasswordChange] = useState({
@@ -38,29 +99,65 @@ function AccountDetails() {
     validationAccountDetails;
   const classes = detailsStyles();
 
-  const handleClickUserInfo = (e) => {
+  const handleClickUserInfo = (formData) => {
     const data = {
-      firstName: e.firstName,
-      lastName: e.lastName,
-      email: e.email,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
     };
-    dispatch(updateUserPersonalInfo(data));
+
+    updateUserData(
+      "/users/personalInfo",
+      {
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      "PATCH",
+    );
   };
 
-  const handleClickPasswordChange = (e) => {
-    if (e.newPassword === e.newPasswordConfirm) {
-      const data = {
-        newPassword: e.newPassword,
-        password: e.oldPassword,
-      };
-      dispatch(updateUserPassword(data));
+  const handleClickPasswordChange = (formData, actions) => {
+    if (formData.newPassword !== formData.newPasswordConfirm) {
+      dispatch(
+        showSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Passwords don't match",
+        }),
+      );
+      return;
     }
-    dispatch(
-      showSnackbar({
-        notificationType: "error",
-        notificationMessage: "passwords do not match",
-      }),
-    );
+    const data = {
+      newPassword: formData.newPassword,
+      password: formData.oldPassword,
+    };
+
+    updateUserPassword(
+      "/users/password",
+      {
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      "PATCH",
+    ).then(() => {
+      dispatch(
+        showSnackbar({
+          snackbarType: "success",
+          snackbarMessage: "Your password is successfully updated!",
+        }),
+      );
+
+      actions.resetForm({
+        values: {
+          newPassword: "",
+          newPasswordConfirm: "",
+          oldPassword: "",
+        },
+      });
+    });
   };
 
   const handleClickShowNewPassword = () => {
@@ -89,89 +186,103 @@ function AccountDetails() {
   };
 
   return (
-    <Container className={classes.container}>
-      <h3 className={classes.detailsTitle}>Account Details</h3>
-      <Formik
-        initialValues={{
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          email: userData.email,
-        }}
-        validationSchema={accountDetailsValidation}
-        onSubmit={(values) => handleClickUserInfo(values)}
-      >
-        {({ values, errors, touched, handleChange, handleBlur }) => (
-          <Form className={classes.formControl}>
-            <div className={classes.inputsContainer}>
-              <div className={classes.inputContainer}>
-                <Input
-                  htmlFor="firstName"
-                  labelValue="First Name"
-                  type="text"
-                  placeholder="First Name"
-                  name="firstName"
-                  size="large"
-                  borders="square"
-                  state="noFocus"
-                  value={values.firstName}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
+    <Container
+      className={role === "user" ? classes.container : classes.adminContainer}
+    >
+      {role === "user" && (
+        <h3 className={classes.detailsTitle}>Account Details</h3>
+      )}
+      {userData && (
+        <Formik
+          initialValues={{
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            email: userData.email,
+          }}
+          validationSchema={accountDetailsValidation}
+          onSubmit={(values) => handleClickUserInfo(values)}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          }) => (
+            <form className={classes.formControl} onSubmit={handleSubmit}>
+              <div className={classes.inputsContainer}>
+                <div className={classes.inputContainer}>
+                  <Input
+                    htmlFor="firstName"
+                    labelValue="First Name"
+                    type="text"
+                    placeholder="First Name"
+                    name="firstName"
+                    size="large"
+                    borders="square"
+                    state="noFocus"
+                    value={values.firstName}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
 
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.firstName && touched.firstName && errors.firstName}
+                  <div style={{ color: "#d22d3d" }}>
+                    {errors.firstName && touched.firstName && errors.firstName}
+                  </div>
+                </div>
+                <div className={classes.inputContainer}>
+                  <Input
+                    htmlFor="lastName"
+                    labelValue="Last Name"
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    size="large"
+                    borders="square"
+                    state="noFocus"
+                    value={values.lastName}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <div style={{ color: "#d22d3d" }}>
+                    {errors.lastName && touched.lastName && errors.lastName}
+                  </div>
+                </div>
+                <div className={classes.inputContainer}>
+                  <Input
+                    htmlFor="email"
+                    labelValue="Email"
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    size="large"
+                    borders="square"
+                    state="noFocus"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.email}
+                  />
+                  <div style={{ color: "#d22d3d" }}>
+                    {errors.email && touched.email && errors.email}
+                  </div>
                 </div>
               </div>
-              <div className={classes.inputContainer}>
-                <Input
-                  htmlFor="lastName"
-                  labelValue="Last Name"
-                  type="text"
-                  name="lastName"
-                  placeholder="Last Name"
-                  size="large"
+              <div className={classes.saveBtnContainer}>
+                <Button
+                  color="primary"
                   borders="square"
-                  state="noFocus"
-                  value={values.lastName}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.lastName && touched.lastName && errors.lastName}
-                </div>
+                  size="small"
+                  type="submit"
+                  page={role !== "user" ? "admin" : ""}
+                >
+                  Save
+                </Button>
               </div>
-              <div className={classes.inputContainer}>
-                <Input
-                  htmlFor="email"
-                  labelValue="Email"
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  size="large"
-                  borders="square"
-                  state="noFocus"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.email}
-                />
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.email && touched.email && errors.email}
-                </div>
-              </div>
-            </div>
-            <div className={classes.saveBtnContainer}>
-              <Button
-                color="primary"
-                borders="square"
-                size="small"
-                type="submit"
-              >
-                Save
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+            </form>
+          )}
+        </Formik>
+      )}
       <hr className={classes.hrStyle} />
       <Button
         color="secondary"
@@ -179,6 +290,7 @@ function AccountDetails() {
         size="small"
         onClick={() => setShowPasswordChange(!showPasswordChange)}
         className={classes.passwordForm}
+        page={role !== "user" ? "admin" : ""}
       >
         Change Password
       </Button>
@@ -192,10 +304,19 @@ function AccountDetails() {
             oldPassword: "",
           }}
           validationSchema={passwordValidation}
-          onSubmit={(values) => handleClickPasswordChange(values)}
+          onSubmit={(values, actions) =>
+            handleClickPasswordChange(values, actions)
+          }
         >
-          {({ values, errors, touched, handleChange, handleBlur }) => (
-            <Form className={classes.passwordForm}>
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          }) => (
+            <form className={classes.passwordForm} onSubmit={handleSubmit}>
               <div className={classes.inputContainer}>
                 <FormControl
                   className={classes.passwordInput}
@@ -325,17 +446,21 @@ function AccountDetails() {
                 </div>
               </div>
 
-              <div className={classes.saveBtnContainer}>
+              <div
+                className={classes.saveBtnContainer}
+                style={{ marginBottom: 20 }}
+              >
                 <Button
                   color="primary"
                   borders="square"
                   size="small"
                   type="submit"
+                  page={role !== "user" ? "admin" : ""}
                 >
                   Save
                 </Button>
               </div>
-            </Form>
+            </form>
           )}
         </Formik>
       )}

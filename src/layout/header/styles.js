@@ -127,7 +127,7 @@ const iconsStyles = createUseStyles({
   },
   itemCount: {
     position: "absolute",
-    top: -5,
+    top: -8,
     right: -5,
     width: 13,
     height: 13,
@@ -136,7 +136,8 @@ const iconsStyles = createUseStyles({
     fontSize: 10,
     color: colors.white,
     textAlign: "center",
-    background: colors.lightRed,
+    background: colors.green,
+    padding: 2,
   },
   selectedCurrency: {
     color: colors.green,
