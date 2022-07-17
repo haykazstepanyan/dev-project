@@ -77,8 +77,6 @@ const detailsStyles = createUseStyles({
     "& label": {
       fontSize: "16px",
       fontWeight: 400,
-      color: colors.black,
-      // lineHeight: "12px",
       marginBottom: "12px",
     },
   },
@@ -87,12 +85,29 @@ const detailsStyles = createUseStyles({
   },
   passwordInput: {
     width: "100%",
+    "& fieldset": {
+      border: "1px solid #e1e1e1!important",
+      borderRadius: 0,
+    },
+    "& label.Mui-focused": {
+      color: "rgba(0, 0, 0, 0.6)",
+    },
+    "& input::placeholder": {
+      fontSize: 14,
+    },
   },
   saveBtnContainer: {
     marginTop: "15px",
   },
   passwordForm: {
     marginTop: "20px",
+  },
+  hrStyle: {
+    border: "1px solid #e1e1e1",
+    borderTop: 0,
+    borderRight: 0,
+    borderLeft: 0,
+    paddingBottom: 20,
   },
 });
 const dashboardStyles = createUseStyles({
