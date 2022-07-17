@@ -5,7 +5,7 @@ import {
   ref,
   uploadBytes,
   getDownloadURL,
-  deleteObject,
+  // deleteObject,
 } from "firebase/storage";
 import Typography from "@mui/material/Typography";
 import { FormLabel, InputLabel } from "@mui/material";
@@ -48,16 +48,16 @@ function AdminProductsModal({
     const imageRef = ref(storage, `images/${image.name + v4()}`);
     uploadBytes(imageRef, image).then((snapshot) => {
       if (productImg !== "") {
-        const pictureRef = ref(storage, productImg);
-        deleteObject(pictureRef)
-          .then(() => {})
-          .catch(() => {})
-          .finally(() => {
-            getDownloadURL(snapshot.ref).then((url) => {
-              setProductImg(url);
-              setImageLoader(false);
-            });
-          });
+        // const pictureRef = ref(storage, productImg);
+        // deleteObject(pictureRef)
+        //   .then(() => {})
+        //   .catch(() => {})
+        //   .finally(() => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          setProductImg(url);
+          setImageLoader(false);
+          // });
+        });
       } else {
         getDownloadURL(snapshot.ref).then((url) => {
           setProductImg(url);

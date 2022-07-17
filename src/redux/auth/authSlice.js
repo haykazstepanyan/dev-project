@@ -21,7 +21,12 @@ const authSlice = createSlice({
           state.role = "";
         }
       } else {
-        state.isAuth = payload.data.isAuth;
+        if (payload.data.user) {
+          const { firstName, lastName } = payload.data.user;
+          const fullName = `${firstName} ${lastName}`;
+          state.isAuth = payload.data.isAuth;
+          state.userName = fullName;
+        }
         if (payload.data.role) {
           state.role = payload.data.role;
         } else {

@@ -26,7 +26,7 @@ export default function AdminLeftSidebar() {
     <nav className={classes.leftSidebar}>
       <div>
         <Avatar alt="Remy Sharp" className={classes.avatarStyle}>
-          A A
+          {`${userName.split(" ")[0][0]} ${userName.split(" ")[1][0]}`}
         </Avatar>
         <p className={classes.adminNameStyle}>{userName}</p>
         <p className={classes.adminRoleStyle}>{userRole.replace("_", " ")}</p>
