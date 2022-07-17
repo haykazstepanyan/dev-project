@@ -40,3 +40,14 @@ export const fetchData = async (
     };
   }
 };
+
+export const countByCurrencyRate = (selectedCurrency, price, discount) => {
+  const ratesData = JSON.parse(localStorage.getItem("rates"));
+  const rates = ratesData?.currencyRates;
+  const convertedPrice =
+    (price - (price * discount) / 100) * (rates?.[selectedCurrency] || 1);
+  if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+    return Math.trunc(convertedPrice);
+  }
+  return parseFloat(convertedPrice.toFixed(2));
+};

@@ -207,7 +207,7 @@ function AccountLinks() {
       <HoverableDropdown value={<PeopleOutlineIcon />} list={allowedLinks} />
       <IconButton onClick={handleWishlistRoute} className={classes.iconBtn}>
         <FavoriteBorderIcon className={classes.icons} />
-        {wishlistCount && (
+        {!!wishlistCount && (
           <span className={classes.itemCount}>{wishlistCount}</span>
         )}
       </IconButton>

@@ -16,27 +16,17 @@ import { miniShoppingCartStyles } from "./styles";
 import useFetch from "../../hooks/useFetch";
 import Loader from "../loader";
 import { currencySymbols } from "../../constants/constants";
+import { countByCurrencyRate } from "../../helpers/helpers";
 
 function MiniShoppingCart({ toggleDrawer }) {
   const [totalSum, setTotalSum] = useState(0);
   const classes = miniShoppingCartStyles();
   const navigate = useNavigate();
-
   const selectedCurrency = useSelector((state) => state.app.currency);
-  const ratesData = JSON.parse(localStorage.getItem("rates"));
-  const rates = ratesData?.currencyRates;
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   const { data: cartData, loading: cartLoading } =
     useFetch("/cart/getCartItems");
-
-  const countByCurrencyRate = (price, discount) => {
-    const convertedPrice =
-      (price - (price * discount) / 100) * (rates?.[selectedCurrency] || 1);
-    if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
-      return Math.trunc(convertedPrice);
-    }
-    return parseFloat(convertedPrice.toFixed(2));
-  };
 
   useEffect(() => {
     if (cartData && cartData.data.length) {
@@ -44,7 +34,11 @@ function MiniShoppingCart({ toggleDrawer }) {
         .reduce(
           (acc, cur) =>
             acc +
-            countByCurrencyRate(cur.product.price, cur.product.discount) *
+            countByCurrencyRate(
+              selectedCurrency,
+              cur.product.price,
+              cur.product.discount,
+            ) *
               cur.count,
           0,
         )
@@ -58,8 +52,6 @@ function MiniShoppingCart({ toggleDrawer }) {
     toggleDrawer();
     return navigate("/cart");
   };
-
-  const convertedSymbol = currencySymbols[selectedCurrency];
 
   return cartLoading ? (
     <Loader />
@@ -104,7 +96,11 @@ function MiniShoppingCart({ toggleDrawer }) {
                     {count} x{" "}
                     <b>
                       {convertedSymbol}
-                      {countByCurrencyRate(product.price, product.discount)}
+                      {countByCurrencyRate(
+                        selectedCurrency,
+                        product.price,
+                        product.discount,
+                      )}
                     </b>
                   </Typography>
                 </Box>

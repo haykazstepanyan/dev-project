@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { showSnackbar } from "../app/appSlice";
+import { showSnackbar, setWishlistCount, setCartCount } from "../app/appSlice";
 import { fetchData } from "../../helpers/helpers";
 import { errorKeys } from "../../errorKeys";
+import { getCartCount, getWishlistCount } from "../app/actions";
 
 export const checkIsAuth = createAsyncThunk(
   "auth/isAuth",
@@ -108,7 +109,8 @@ export const signOut = createAsyncThunk(
         );
         throw new Error();
       }
-
+      dispatch(setCartCount(0));
+      dispatch(setWishlistCount(0));
       return response;
     } catch (err) {
       return rejectWithValue();
@@ -152,6 +154,8 @@ export const signIn = createAsyncThunk(
           snackbarMessage: `Welcome back, ${response.data.user.firstName} ${response.data.user.lastName}!`,
         }),
       );
+      dispatch(getCartCount());
+      dispatch(getWishlistCount());
 
       return response;
     } catch {

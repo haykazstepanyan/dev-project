@@ -19,6 +19,7 @@ import Button from "../button";
 import { tableStyles } from "./styles";
 import { currencySymbols } from "../../constants/constants";
 import AddToCart from "../addToCart";
+import { countByCurrencyRate } from "../../helpers/helpers";
 
 function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
   const [openModal, setOpenModal] = useState(false);
@@ -27,18 +28,6 @@ function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
   const classes = tableStyles();
 
   const selectedCurrency = useSelector((state) => state.app.currency);
-  const ratesData = JSON.parse(localStorage.getItem("rates"));
-  const rates = ratesData?.currencyRates;
-
-  const countByCurrencyRate = (price, discount) => {
-    const convertedPrice =
-      (price - (price * discount) / 100) * (rates?.[selectedCurrency] || 1);
-    if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
-      return Math.trunc(convertedPrice);
-    }
-    return parseFloat(convertedPrice.toFixed(2));
-  };
-
   const convertedSymbol = currencySymbols[selectedCurrency];
 
   const onModalClose = () => {
@@ -132,6 +121,7 @@ function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
                     <p>
                       {convertedSymbol}
                       {countByCurrencyRate(
+                        selectedCurrency,
                         row.product.price,
                         row.product.discount,
                       )}
@@ -167,6 +157,7 @@ function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
                   {type === "cart" ? (
                     <TableCell>
                       {countByCurrencyRate(
+                        selectedCurrency,
                         row.product.price,
                         row.product.discount,
                       ) * row.count}

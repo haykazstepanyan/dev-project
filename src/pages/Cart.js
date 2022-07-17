@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Container, Grid } from "@mui/material";
 import Table from "../components/table/Table";
 import Button from "../components/button";
@@ -12,12 +13,14 @@ import { showLoader, hideLoader, setCartCount } from "../redux/app/appSlice";
 import NoData from "../components/common/NoData";
 import useLazyFetch from "../hooks/useLazyFetch";
 import { currencySymbols } from "../constants/constants";
+import { countByCurrencyRate } from "../helpers/helpers";
 
 function Cart() {
+  const [totalSum, setTotalSum] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const globalClasses = globalStyles();
   const classes = cartStyles();
-  const dispatch = useDispatch();
-  const [totalSum, setTotalSum] = useState(0);
 
   const {
     data: cartItems,
@@ -32,17 +35,7 @@ function Cart() {
   } = useLazyFetch();
 
   const selectedCurrency = useSelector((state) => state.app.currency);
-  const ratesData = JSON.parse(localStorage.getItem("rates"));
-  const rates = ratesData?.currencyRates;
-
-  const countByCurrencyRate = (price, discount) => {
-    const convertedPrice =
-      (price - (price * discount) / 100) * (rates?.[selectedCurrency] || 1);
-    if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
-      return Math.trunc(convertedPrice);
-    }
-    return parseFloat(convertedPrice.toFixed(2));
-  };
+  const convertedSymbol = currencySymbols[selectedCurrency];
 
   useEffect(() => {
     if (cartLoading) {
@@ -60,7 +53,11 @@ function Cart() {
         .reduce(
           (acc, cur) =>
             acc +
-            countByCurrencyRate(cur.product.price, cur.product.discount) *
+            countByCurrencyRate(
+              selectedCurrency,
+              cur.product.price,
+              cur.product.discount,
+            ) *
               cur.count,
           0,
         )
@@ -105,7 +102,9 @@ function Cart() {
     });
   };
 
-  const convertedSymbol = currencySymbols[selectedCurrency];
+  const handleCheckoutClick = () => {
+    return navigate("/checkout");
+  };
 
   return (
     <>
@@ -163,7 +162,11 @@ function Cart() {
                         </p>
                       </div>
                       <div style={{ textAlign: "right" }}>
-                        <Button color="primary" disableRipple>
+                        <Button
+                          color="primary"
+                          onClick={handleCheckoutClick}
+                          disableRipple
+                        >
                           proceed to checkout
                         </Button>
                       </div>
