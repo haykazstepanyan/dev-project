@@ -132,7 +132,7 @@ const saleStyles = createUseStyles({
 
 const shopPageProductsStyles = createUseStyles({
   shopItem: {
-    padding: [[0, 8]],
+    padding: [[0, 10]],
     marginBottom: 24,
     "@media screen and (max-width: 600px)": {
       padding: 0,
@@ -148,6 +148,7 @@ const ToolbarStyles = createUseStyles({
     justifyContent: "space-between",
     alignItems: "center",
     margin: [[0, 20, 24]],
+    borderRadius: 4,
   },
   shopWrapperIconsContainer: {},
   productsLength: {},
@@ -173,6 +174,9 @@ const ToolbarStyles = createUseStyles({
     },
     "& fieldset": {
       border: "solid 1px #e8e8e8",
+    },
+    "& .Mui-focused fieldset": {
+      border: "solid 1px #e8e8e8 !important",
     },
   },
   sortingFormControls: {

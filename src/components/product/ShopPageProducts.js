@@ -49,7 +49,7 @@ function ShopPageProducts({
       <Grid
         container
         className={classes.shopItemContainer}
-        style={{ paddingRight: 20, paddingLeft: 20 }}
+        style={{ paddingRight: 10, paddingLeft: 10 }}
       >
         {products.data.length ? (
           products.data.map(
