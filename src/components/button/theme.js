@@ -126,7 +126,7 @@ const theme = createTheme({
             height: 36,
             background: "transparent",
             "&:hover": {
-              backgroundColor: "#aeb1b0",
+              backgroundColor: "#343535",
               color: colors.white,
             },
           },

@@ -156,11 +156,13 @@ function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
                   </TableCell>
                   {type === "cart" ? (
                     <TableCell>
-                      {countByCurrencyRate(
-                        selectedCurrency,
-                        row.product.price,
-                        row.product.discount,
-                      ) * row.count}
+                      {(
+                        countByCurrencyRate(
+                          selectedCurrency,
+                          row.product.price,
+                          row.product.discount,
+                        ) * row.count
+                      ).toFixed(2)}
                     </TableCell>
                   ) : null}
                   <TableCell>
