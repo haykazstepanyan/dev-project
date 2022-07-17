@@ -14,7 +14,6 @@ export default {
       .email("Please write a valid email.")
       .matches(/^.*\.(ru|com|net)$/, "Please write a valid email.")
       .required("Email is required."),
-    gender: Yup.string(),
   }),
   passwordValidation: Yup.object().shape({
     newPassword: Yup.string()

@@ -90,7 +90,9 @@ const accountStyles = createUseStyles({
     },
   },
   activeLink: {
-    backgroundColor: colors.green,
+    "& li": {
+      backgroundColor: colors.green,
+    },
   },
 });
 

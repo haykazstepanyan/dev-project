@@ -8,8 +8,11 @@ function Dashboard() {
       <h3>Dashboard</h3>
       <p>
         From your account dashboard. you can easily check & view your
-        <Link to="/orders"> recent orders,</Link>
-        <Link to="/details"> edit your password and account details.</Link>
+        <Link to="/account/orders"> recent orders,</Link>
+        <Link to="/account/details">
+          {" "}
+          edit your password and account details.
+        </Link>
       </p>
     </div>
   );

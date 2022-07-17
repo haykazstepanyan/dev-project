@@ -10,7 +10,6 @@ const authSlice = createSlice({
     authLoading: true,
     firstName: "",
     lastName: "",
-    gender: "",
     email: "",
   },
   extraReducers: {
@@ -24,14 +23,12 @@ const authSlice = createSlice({
           state.role = "";
           state.firstName = "";
           state.lastName = "";
-          state.gender = "";
           state.email = "";
         }
       } else {
         state.isAuth = payload.data.isAuth;
         state.firstName = payload.data.firstName;
         state.lastName = payload.data.lastName;
-        state.gender = payload.data.gender;
         state.email = payload.data.email;
         if (payload.data.role) {
           state.role = payload.data.role;

@@ -1,17 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
 import {
   Container,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  TextField,
+  FormLabel,
+  // TextField
 } from "@mui/material";
 import { Formik, Form } from "formik";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
+// import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
@@ -22,6 +19,7 @@ import {
   updateUserPersonalInfo,
   updateUserPassword,
 } from "../../redux/users/actions";
+import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
 import { detailsStyles } from "./styles";
 import { showSnackbar } from "../../redux/app/appSlice";
@@ -45,7 +43,6 @@ function AccountDetails() {
       firstName: e.firstName,
       lastName: e.lastName,
       email: e.email,
-      gender: e.gender,
     };
     dispatch(updateUserPersonalInfo(data));
   };
@@ -99,46 +96,42 @@ function AccountDetails() {
           firstName: userData.firstName,
           lastName: userData.lastName,
           email: userData.email,
-          gender: userData.gender,
         }}
         validationSchema={accountDetailsValidation}
         onSubmit={(values) => handleClickUserInfo(values)}
       >
         {({ values, errors, touched, handleChange, handleBlur }) => (
           <Form className={classes.formControl}>
-            <p>
-              Already have an account <Link to="/login">Log in instead!</Link>
-            </p>
-            <RadioGroup
-              className={classes.radioGroup}
-              value={values.gender}
-              name="gender"
-              onChange={handleChange}
-            >
-              <FormControlLabel value="male" control={<Radio />} label="Mr." />
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="Mrs."
-              />
-            </RadioGroup>
             <div className={classes.inputsContainer}>
               <div className={classes.inputContainer}>
-                <TextField
+                <Input
+                  htmlFor="firstName"
+                  labelValue="First Name"
+                  type="text"
+                  placeholder="First Name"
                   name="firstName"
-                  label="First Name"
+                  size="large"
+                  borders="square"
+                  state="noFocus"
                   value={values.firstName}
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
+
                 <div style={{ color: "#d22d3d" }}>
                   {errors.firstName && touched.firstName && errors.firstName}
                 </div>
               </div>
               <div className={classes.inputContainer}>
-                <TextField
+                <Input
+                  htmlFor="lastName"
+                  labelValue="Last Name"
+                  type="text"
                   name="lastName"
-                  label="Last Name"
+                  placeholder="Last Name"
+                  size="large"
+                  borders="square"
+                  state="noFocus"
                   value={values.lastName}
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -148,9 +141,15 @@ function AccountDetails() {
                 </div>
               </div>
               <div className={classes.inputContainer}>
-                <TextField
+                <Input
+                  htmlFor="email"
+                  labelValue="Email"
                   name="email"
-                  label="Email"
+                  type="email"
+                  placeholder="Email"
+                  size="large"
+                  borders="square"
+                  state="noFocus"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.email}
@@ -163,7 +162,7 @@ function AccountDetails() {
             <div className={classes.saveBtnContainer}>
               <Button
                 color="primary"
-                borders="rounded"
+                borders="square"
                 size="small"
                 type="submit"
               >
@@ -173,9 +172,10 @@ function AccountDetails() {
           </Form>
         )}
       </Formik>
+      <hr className={classes.hrStyle} />
       <Button
-        color="primary"
-        borders="rounded"
+        color="secondary"
+        borders="square"
         size="small"
         onClick={() => setShowPasswordChange(!showPasswordChange)}
         className={classes.passwordForm}
@@ -199,13 +199,55 @@ function AccountDetails() {
               <div className={classes.inputContainer}>
                 <FormControl
                   className={classes.passwordInput}
-                  sx={{ m: 1, width: "25ch" }}
+                  sx={{ width: "25ch" }}
                   variant="outlined"
                 >
-                  <InputLabel htmlFor="outlined-adornment-password">
-                    New Password
-                  </InputLabel>
+                  <FormLabel htmlFor="outlined-adornment-password">
+                    Current Password
+                  </FormLabel>
                   <OutlinedInput
+                    placeholder="Current Password"
+                    id="outlined-adornment-password1-oldPassword"
+                    name="oldPassword"
+                    type={passwordChange.showPassword ? "text" : "password"}
+                    value={values.oldPassword}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDown}
+                          edge="end"
+                        >
+                          {passwordChange.showPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+                <div style={{ color: "#d22d3d" }}>
+                  {errors.oldPassword &&
+                    touched.oldPassword &&
+                    errors.oldPassword}
+                </div>
+              </div>
+              <div className={classes.inputContainer}>
+                <FormControl
+                  className={classes.passwordInput}
+                  sx={{ width: "25ch" }}
+                  variant="outlined"
+                >
+                  <FormLabel htmlFor="outlined-adornment-password">
+                    New Password
+                  </FormLabel>
+                  <OutlinedInput
+                    placeholder="New Password"
                     id="outlined-adornment-password-newPassword"
                     name="newPassword"
                     type={passwordChange.showNewPassword ? "text" : "password"}
@@ -229,7 +271,6 @@ function AccountDetails() {
                         </IconButton>
                       </InputAdornment>
                     }
-                    label="New Password"
                   />
                 </FormControl>
                 <div style={{ color: "#d22d3d" }}>
@@ -241,13 +282,14 @@ function AccountDetails() {
               <div className={classes.inputContainer}>
                 <FormControl
                   className={classes.passwordInput}
-                  sx={{ m: 1, width: "25ch" }}
+                  sx={{ width: "25ch" }}
                   variant="outlined"
                 >
-                  <InputLabel htmlFor="outlined-adornment-password">
-                    New Password Confirm
-                  </InputLabel>
+                  <FormLabel htmlFor="outlined-adornment-password">
+                    Confirm New Password
+                  </FormLabel>
                   <OutlinedInput
+                    placeholder="Confirm New Password"
                     id="outlined-adornment-password-newPasswordConfirm"
                     name="newPasswordConfirm"
                     type={
@@ -274,7 +316,6 @@ function AccountDetails() {
                         </IconButton>
                       </InputAdornment>
                     }
-                    label="New Password Confirm"
                   />
                 </FormControl>
                 <div style={{ color: "#d22d3d" }}>
@@ -283,52 +324,11 @@ function AccountDetails() {
                     errors.newPasswordConfirm}
                 </div>
               </div>
-              <div className={classes.inputContainer}>
-                <FormControl
-                  className={classes.passwordInput}
-                  sx={{ m: 1, width: "25ch" }}
-                  variant="outlined"
-                >
-                  <InputLabel htmlFor="outlined-adornment-password">
-                    Enter Password
-                  </InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-password1-oldPassword"
-                    name="oldPassword"
-                    type={passwordChange.showPassword ? "text" : "password"}
-                    value={values.oldPassword}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDown}
-                          edge="end"
-                        >
-                          {passwordChange.showPassword ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    label="Enter Password"
-                  />
-                </FormControl>
-                <div style={{ color: "#d22d3d" }}>
-                  {errors.oldPassword &&
-                    touched.oldPassword &&
-                    errors.oldPassword}
-                </div>
-              </div>
 
               <div className={classes.saveBtnContainer}>
                 <Button
                   color="primary"
-                  borders="rounded"
+                  borders="square"
                   size="small"
                   type="submit"
                 >

@@ -85,10 +85,7 @@ export const updateUsersRole = createAsyncThunk(
 
 export const updateUserPersonalInfo = createAsyncThunk(
   "users/updateUserPersonalInfo",
-  async (
-    { firstName, lastName, email, gender },
-    { rejectWithValue, dispatch },
-  ) => {
+  async ({ firstName, lastName, email }, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(`${BASE_URL}/users/personalInfo`, {
         method: "PATCH",
@@ -100,7 +97,6 @@ export const updateUserPersonalInfo = createAsyncThunk(
           firstName,
           lastName,
           email,
-          gender,
         }),
       });
 
