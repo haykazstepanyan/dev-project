@@ -18,16 +18,19 @@ import { adminLayoutStyles } from "./styles";
 
 export default function AdminLeftSidebar() {
   const userData = useSelector((state) => state.auth);
-
+  const userName = useSelector((state) => state.auth.userName);
+  const userRole = useSelector((state) => state.auth.role);
+  console.log(userName);
   const classes = adminLayoutStyles();
   return (
     <nav className={classes.leftSidebar}>
       <div>
         <Avatar alt="Remy Sharp" className={classes.avatarStyle}>
-          A A
+          {userName &&
+            `${userName.split(" ")[0][0]} ${userName?.split(" ")[1][0]}`}
         </Avatar>
-        <p className={classes.adminNameStyle}>Admin Admin</p>
-        <p className={classes.adminRoleStyle}>Admin</p>
+        <p className={classes.adminNameStyle}>{userName}</p>
+        <p className={classes.adminRoleStyle}>{userRole.replace("_", " ")}</p>
       </div>
       <List className={classes.listStyle}>
         <NavLink

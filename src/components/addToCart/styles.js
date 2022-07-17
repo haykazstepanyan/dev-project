@@ -14,7 +14,8 @@ const addToCartStyles = createUseStyles({
     alignItems: "center",
     boxSizing: "border-box",
     border: `2px solid ${colors.green}`,
-    borderRadius: 10,
+    borderRadius: 50,
+    height: 36,
     padding: 5,
     "&:focus-within": {
       borderColor: colors.success,

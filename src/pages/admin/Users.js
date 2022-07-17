@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
+import clsx from "clsx";
 import { Container } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import AdminUserTable from "../../components/adminUserTable/AdminUserTable";
@@ -71,7 +72,7 @@ export default function Users() {
         <Loader />
       ) : (
         <>
-          <div className={classes.toolbar}>
+          <div className={clsx(classes.toolbar, classes.userPanel)}>
             <div className={classes.searchBox}>
               <Input
                 type="text"

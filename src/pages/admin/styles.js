@@ -35,9 +35,12 @@ const adminGlobalStyles = createUseStyles({
     alignItems: "center",
     marginBottom: 20,
   },
+  userPanel: {
+    justifyContent: "right",
+  },
   searchBox: {
     position: "relative",
-    width: "50%",
+    width: "40%",
     "& svg": {
       position: "absolute",
       right: 10,

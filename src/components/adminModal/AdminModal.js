@@ -83,7 +83,16 @@ function AdminModal({ modalData, open, onClose, type, onSubmit, pageType }) {
             </ToggleButtonGroup>
             <div className={classes.textRight}>
               <Button
-                onClick={() => editDataUser()}
+                onClick={onClose}
+                style={{ marginTop: 20, marginRight: 10 }}
+                page="admin"
+                letter="capitalize"
+                disableRipple
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={editDataUser}
                 style={{ marginTop: 20 }}
                 page="admin"
                 disableRipple
@@ -109,6 +118,15 @@ function AdminModal({ modalData, open, onClose, type, onSubmit, pageType }) {
               onChange={handleValue}
             />
             <div className={classes.textRight}>
+              <Button
+                onClick={onClose}
+                style={{ marginTop: 20, marginRight: 10 }}
+                page="admin"
+                letter="capitalize"
+                disableRipple
+              >
+                Cancel
+              </Button>
               <Button
                 type="submit"
                 style={{ marginTop: 20 }}
@@ -137,9 +155,17 @@ function AdminModal({ modalData, open, onClose, type, onSubmit, pageType }) {
             />
             <div className={classes.textRight}>
               <Button
+                onClick={onClose}
+                style={{ marginTop: 20, marginRight: 10 }}
+                page="admin"
+                letter="capitalize"
+                disableRipple
+              >
+                Cancel
+              </Button>
+              <Button
                 type="submit"
                 style={{ marginTop: 20 }}
-                letter="capitalize"
                 page="admin"
                 disableRipple
               >
@@ -171,7 +197,7 @@ function AdminModal({ modalData, open, onClose, type, onSubmit, pageType }) {
             )}
             <div className={classes.textRight}>
               <Button
-                onClick={() => onClose()}
+                onClick={onClose}
                 style={{ marginTop: 20, marginRight: 10 }}
                 page="admin"
                 letter="capitalize"
@@ -180,7 +206,7 @@ function AdminModal({ modalData, open, onClose, type, onSubmit, pageType }) {
                 Cancel
               </Button>
               <Button
-                onClick={() => deleteData()}
+                onClick={deleteData}
                 style={{ marginTop: 20 }}
                 page="admin"
                 disableRipple

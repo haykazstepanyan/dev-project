@@ -204,10 +204,12 @@ function AddToCart({
 }
 
 AddToCart.propTypes = {
-  cart: PropTypes.arrayOf(PropTypes.number),
+  cart: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+  ),
   isAuth: PropTypes.bool,
   productId: PropTypes.number,
-  btnWidth: PropTypes.number,
+  btnWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   deleteCart: PropTypes.func,
   from: PropTypes.string,
   dataRefetch: PropTypes.func,

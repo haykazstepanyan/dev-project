@@ -125,7 +125,7 @@ function AdminMessagesTable({ tableData, pageType, setDeleteContactData }) {
         <AdminModal
           type="delete"
           pageType={pageType}
-          onClose={() => handleCloseDelete()}
+          onClose={handleCloseDelete}
           open={openDelete}
           modalData={modalData}
           onSubmit={(value) => deleteData(value)}

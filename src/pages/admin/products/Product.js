@@ -3,13 +3,7 @@ import { Container } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { ref, deleteObject } from "firebase/storage";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Tooltip,
-} from "@mui/material";
+import { FormControl, MenuItem, Select, Tooltip } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import Pagination from "../../../components/pagination/Pagination";
@@ -215,7 +209,7 @@ export default function Product() {
                 letter="capitalize"
                 style={{ marginBottom: 20 }}
                 page="admin"
-                onClick={() => handleOpen()}
+                onClick={handleOpen}
                 disableRipple
               >
                 <AddIcon />
@@ -227,23 +221,15 @@ export default function Product() {
             <Button
               disabled={disabled}
               letter="capitalize"
-              style={{ marginBottom: 20 }}
               page="admin"
-              onClick={() => handleOpen()}
+              onClick={handleOpen}
               disableRipple
             >
               <AddIcon />
             </Button>
             <div className={classes.selects}>
               <FormControl sx={{ m: 1, minWidth: 140 }} size="small">
-                <InputLabel id="demo-select-small">Select brand</InputLabel>
-                <Select
-                  value={brandSelect}
-                  labelId="demo-select-small"
-                  id="demo-select-small"
-                  label="Select brand"
-                  onChange={handleBrandSelect}
-                >
+                <Select value={brandSelect} onChange={handleBrandSelect}>
                   {brandOptions.map(({ id, name }) => (
                     <MenuItem key={id} value={id}>
                       {name}
@@ -253,14 +239,11 @@ export default function Product() {
               </FormControl>
             </div>
             <div className={classes.selects}>
-              <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
-                <InputLabel id="demo-select-small">Select category</InputLabel>
+              <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
                 <Select
                   value={categorySelect}
-                  labelId="demo-select-small"
-                  id="demo-select-small"
-                  label="Select brand"
                   onChange={handleCategorySelect}
+                  autoWidth
                 >
                   {categoryOptions.map(({ id, name }) => (
                     <MenuItem key={id} value={id}>
@@ -308,7 +291,7 @@ export default function Product() {
           selectCategoryData={categories.categories}
           selectBrandData={brands.data}
           type="add"
-          onClose={() => handleClose()}
+          onClose={handleClose}
           open={open}
           onSubmit={(value) => addData(value)}
         />

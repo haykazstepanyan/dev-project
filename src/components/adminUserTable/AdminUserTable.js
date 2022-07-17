@@ -88,7 +88,7 @@ function AdminUserTable({ tableData }) {
       {open ? (
         <AdminModal
           type="changeRole"
-          onClose={() => handleClose()}
+          onClose={handleClose}
           open={open}
           modalData={modalData}
           onSubmit={(value) => editData(value)}

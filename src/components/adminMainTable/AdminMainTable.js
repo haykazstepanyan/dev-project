@@ -226,7 +226,7 @@ function AdminMainTable({
       {open ? (
         <AdminModal
           type="edit"
-          onClose={() => handleClose()}
+          onClose={handleClose}
           open={open}
           modalData={modalData}
           onSubmit={(value) => editData(value)}
@@ -238,7 +238,7 @@ function AdminMainTable({
       {openDelete ? (
         <AdminModal
           type="delete"
-          onClose={() => handleCloseDelete()}
+          onClose={handleCloseDelete}
           open={openDelete}
           modalData={modalData}
           onSubmit={(value) => deleteData(value)}

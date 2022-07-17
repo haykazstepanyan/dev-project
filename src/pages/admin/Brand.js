@@ -118,7 +118,7 @@ function Brand() {
           <Button
             letter="capitalize"
             page="admin"
-            onClick={() => handleOpen()}
+            onClick={handleOpen}
             disableRipple
           >
             <AddIcon />
@@ -148,7 +148,7 @@ function Brand() {
       {open ? (
         <AdminModal
           type="add"
-          onClose={() => handleClose()}
+          onClose={handleClose}
           open={open}
           onSubmit={(value) => addData(value)}
         />

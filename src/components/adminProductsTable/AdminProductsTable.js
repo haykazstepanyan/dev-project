@@ -188,7 +188,7 @@ function AdminProductsTable({
       {open ? (
         <AdminProductsModal
           type="edit"
-          onClose={() => handleClose()}
+          onClose={handleClose}
           open={open}
           modalData={modalData}
           selectCategoryData={selectCategoryData}
@@ -202,7 +202,7 @@ function AdminProductsTable({
       {openDelete ? (
         <AdminProductsModal
           type="delete"
-          onClose={() => handleCloseDelete()}
+          onClose={handleCloseDelete}
           open={openDelete}
           modalData={modalData}
           selectCategoryData={selectCategoryData}

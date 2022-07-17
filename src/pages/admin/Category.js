@@ -136,7 +136,7 @@ export default function Category() {
             letter="capitalize"
             style={{ marginBottom: 20 }}
             page="admin"
-            onClick={() => handleOpen()}
+            onClick={handleOpen}
             disableRipple
           >
             <AddIcon />
@@ -166,7 +166,7 @@ export default function Category() {
       {open ? (
         <AdminModal
           type="add"
-          onClose={() => handleClose()}
+          onClose={handleClose}
           open={open}
           onSubmit={(value) => addData(value)}
         />
