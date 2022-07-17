@@ -187,9 +187,9 @@ function AccountDetails() {
 
   return (
     <Container
-      className={role === "user" ? classes.container : classes.adminContainer}
+      className={role === "USER" ? classes.container : classes.adminContainer}
     >
-      {role === "user" && (
+      {role === "USER" && (
         <h3 className={classes.detailsTitle}>Account Details</h3>
       )}
       {userData && (
@@ -274,7 +274,7 @@ function AccountDetails() {
                   borders="square"
                   size="small"
                   type="submit"
-                  page={role !== "user" ? "admin" : ""}
+                  page={role !== "USER" ? "admin" : ""}
                 >
                   Save
                 </Button>
@@ -290,7 +290,7 @@ function AccountDetails() {
         size="small"
         onClick={() => setShowPasswordChange(!showPasswordChange)}
         className={classes.passwordForm}
-        page={role !== "user" ? "admin" : ""}
+        page={role !== "USER" ? "admin" : ""}
       >
         Change Password
       </Button>
@@ -455,7 +455,7 @@ function AccountDetails() {
                   borders="square"
                   size="small"
                   type="submit"
-                  page={role !== "user" ? "admin" : ""}
+                  page={role !== "USER" ? "admin" : "home"}
                 >
                   Save
                 </Button>
