@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -14,6 +14,7 @@ import SignInModal from "../modals/SignInModal";
 import { currencySymbols } from "../../constants/constants";
 import AddToCart from "../addToCart";
 import { setWishlistCount } from "../../redux/app/appSlice";
+import defaultImg from "../../assets/images/default.png";
 
 function ProductItem({
   id,
@@ -28,6 +29,7 @@ function ProductItem({
 }) {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const role = useSelector((state) => state.auth.role);
+  const [imgSrc, setImgSrc] = useState(defaultImg);
   const selectedCurrency = useSelector((state) => state.app.currency);
   const [isProductLiked, setIsProductLiked] = useState(
     wishlist && wishlist[0]?.id,
@@ -103,10 +105,10 @@ function ProductItem({
         })}
       >
         <Link to={`/product/${id}`} className={classes.productImgLink}>
-          <CardMedia
-            component="img"
+          <img
+            onLoad={() => setImgSrc(image)}
+            src={imgSrc}
             alt={title}
-            image={image}
             className={classes.productImg}
           />
         </Link>
@@ -146,7 +148,7 @@ function ProductItem({
             }}
           >
             {role !== "ADMIN" && role !== "MAIN_ADMIN" && (
-              <IconButton onClick={handleWishlistChange}>
+              <IconButton onClick={handleWishlistChange} disableRipple>
                 {isProductLiked ? (
                   <FavoriteIcon />
                 ) : (

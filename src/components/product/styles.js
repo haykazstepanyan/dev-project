@@ -48,6 +48,7 @@ const productItemStyles = createUseStyles({
   productImg: {
     objectFit: "contain",
     height: 180,
+    width: "100%",
     "&:hover": {
       transform: "scale(1.07)",
       transition: "0.4s all",

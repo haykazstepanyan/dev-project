@@ -341,6 +341,7 @@ function AccountDetails() {
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDown}
                           edge="end"
+                          disableRipple
                         >
                           {passwordChange.showPassword ? (
                             <VisibilityOff />
@@ -383,6 +384,7 @@ function AccountDetails() {
                           onClick={handleClickShowNewPassword}
                           onMouseDown={handleMouseDown}
                           edge="end"
+                          disableRipple
                         >
                           {passwordChange.showNewPassword ? (
                             <VisibilityOff />
@@ -428,6 +430,7 @@ function AccountDetails() {
                           onClick={handleClickShowNewPasswordConfirm}
                           onMouseDown={handleMouseDown}
                           edge="end"
+                          disableRipple
                         >
                           {passwordChange.showNewPasswordConfirm ? (
                             <VisibilityOff />

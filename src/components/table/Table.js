@@ -20,11 +20,13 @@ import { tableStyles } from "./styles";
 import { currencySymbols } from "../../constants/constants";
 import AddToCart from "../addToCart";
 import { countByCurrencyRate } from "../../helpers/helpers";
+import defaultImg from "../../assets/images/default.png";
 
 function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
   const [openModal, setOpenModal] = useState(false);
   const [selectedWishlist, setSelectedWishlist] = useState(null);
   const [selectedCartItem, setSelectedCartItem] = useState(null);
+  const [imgSrc, setImgSrc] = useState(defaultImg);
   const classes = tableStyles();
 
   const selectedCurrency = useSelector((state) => state.app.currency);
@@ -111,7 +113,11 @@ function Table({ type, tableData, deleteCart, deleteWishlist, dataRefetch }) {
                 >
                   <TableCell component="th" scope="row">
                     <Link to={`/product/${row.productId}`}>
-                      <img src={row.product.productImg} alt="product" />
+                      <img
+                        onLoad={() => setImgSrc(row.product.productImg)}
+                        src={imgSrc}
+                        alt="product"
+                      />
                     </Link>
                   </TableCell>
                   <TableCell>

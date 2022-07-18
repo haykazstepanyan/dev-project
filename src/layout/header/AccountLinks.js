@@ -214,7 +214,11 @@ function AccountLinks() {
       <HoverableDropdown value={<PeopleOutlineIcon />} list={allowedLinks} />
       {role !== "ADMIN" && role !== "MAIN_ADMIN" && (
         <>
-          <IconButton onClick={handleWishlistRoute} className={classes.iconBtn}>
+          <IconButton
+            onClick={handleWishlistRoute}
+            className={classes.iconBtn}
+            disableRipple
+          >
             <FavoriteBorderIcon className={classes.icons} />
             {!!wishlistCount && (
               <span className={classes.itemCount}>{wishlistCount}</span>

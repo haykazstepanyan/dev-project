@@ -18,10 +18,12 @@ import useLazyFetch from "../hooks/useLazyFetch";
 import SignInModal from "../components/modals/SignInModal";
 import { currencySymbols } from "../constants/constants";
 import AddToCart from "../components/addToCart";
+import defaultImg from "../assets/images/default.png";
 
 function Product() {
   const [isProductLiked, setIsProductLiked] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [imgSrc, setImgSrc] = useState(defaultImg);
 
   const selectedCurrency = useSelector((state) => state.app.currency);
   const isAuth = useSelector((state) => state.auth.isAuth);
@@ -157,8 +159,9 @@ function Product() {
             >
               <Box component="div">
                 <img
+                  onLoad={() => setImgSrc(productImg)}
                   className={classes.productImg}
-                  src={productImg}
+                  src={imgSrc}
                   alt={`${name} product img`}
                 />
               </Box>
