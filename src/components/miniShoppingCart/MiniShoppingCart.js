@@ -17,11 +17,10 @@ import useFetch from "../../hooks/useFetch";
 import Loader from "../loader";
 import { currencySymbols } from "../../constants/constants";
 import { countByCurrencyRate } from "../../helpers/helpers";
-import defaultImg from "../../assets/images/default.png";
+import ImageLoad from "../imageLoad";
 
 function MiniShoppingCart({ toggleDrawer }) {
   const [totalSum, setTotalSum] = useState(0);
-  const [imgSrc, setImgSrc] = useState(defaultImg);
   const classes = miniShoppingCartStyles();
   const navigate = useNavigate();
   const selectedCurrency = useSelector((state) => state.app.currency);
@@ -72,12 +71,7 @@ function MiniShoppingCart({ toggleDrawer }) {
               <ListItem className={classes.cart_item} key={id}>
                 <ListItemAvatar className={classes.cart_item_img}>
                   <Link to={`/product/${id}`}>
-                    <img
-                      onLoad={() => setImgSrc(product.productImg)}
-                      src={imgSrc}
-                      className={classes.cart_product_img}
-                      alt={product.id}
-                    />
+                    <ImageLoad src={product.productImg} alt={product.name} />
                   </Link>
                 </ListItemAvatar>
 

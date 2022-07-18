@@ -15,7 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "../button";
 import AdminProductsModal from "../adminProductsModal/AdminProductsModal";
-import { adminTableStyles } from "./styles";
+import { adminTableStyles } from "../styles/styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
 import { showSnackbar } from "../../redux/app/appSlice";
 
