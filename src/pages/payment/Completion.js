@@ -62,7 +62,7 @@ function Completion({ stripePromise }) {
             <Typography component="p" variant="p" marginBottom={4}>
               You have been charged{" "}
               <b>
-                {paymentIntent.amount / 100}
+                {Math.trunc(paymentIntent.amount / 100)}
                 {paymentIntent.currency.toUpperCase()}
               </b>
               .

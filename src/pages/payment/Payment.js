@@ -50,7 +50,7 @@ function Payment({ stripePromise }) {
   return (
     clientSecretKey &&
     stripePromise && (
-      <>
+      <div className="asd">
         <h1>Payment</h1>
         <Elements
           stripe={stripePromise}
@@ -58,7 +58,7 @@ function Payment({ stripePromise }) {
         >
           <CheckoutForm />
         </Elements>
-      </>
+      </div>
     )
   );
 }

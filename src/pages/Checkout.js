@@ -60,7 +60,7 @@ function Checkout() {
             />
             <Route
               path="/success"
-              element={<Completion stripePromise={stripePromise} />}
+              element={<Completion stripePromise={stripePromise} success={1} />}
             />
           </Routes>
         )}
