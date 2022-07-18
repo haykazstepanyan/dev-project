@@ -128,7 +128,7 @@ const iconsStyles = createUseStyles({
   icons: {
     cursor: "pointer",
     "&:hover": {
-      color: colors.success,
+      color: colors.green,
     },
   },
   itemCount: {

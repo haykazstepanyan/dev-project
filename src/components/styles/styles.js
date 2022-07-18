@@ -39,6 +39,14 @@ const documentStyles = createUseStyles({
 });
 
 const globalStyles = createUseStyles({
+  errorInput: {
+    "& fieldset": {
+      border: "1px solid #d22d3d !important",
+    },
+    "& textarea": {
+      border: "1px solid #d22d3d !important",
+    },
+  },
   header: {
     background: colors.lightGrey,
     borderBottom: `1px solid ${colors.milky}`,

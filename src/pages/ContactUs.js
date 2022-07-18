@@ -27,7 +27,7 @@ function ContactUs() {
     lazyRefetch: addContact,
   } = useLazyFetch();
 
-  const submitContactUsForm = (values) => {
+  const submitContactUsForm = (values, actions) => {
     addContact(
       "/contacts/contact",
       {
@@ -37,7 +37,16 @@ function ContactUs() {
         },
       },
       "POST",
-    );
+    ).then(() => {
+      actions.resetForm({
+        values: {
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        },
+      });
+    });
   };
 
   useEffect(() => {
@@ -106,7 +115,9 @@ function ContactUs() {
                   message: "",
                 }}
                 validationSchema={contactUsValidation}
-                onSubmit={(values) => submitContactUsForm(values)}
+                onSubmit={(values, actions) =>
+                  submitContactUsForm(values, actions)
+                }
               >
                 {({
                   values,
@@ -118,7 +129,14 @@ function ContactUs() {
                 }) => (
                   <form onSubmit={handleSubmit}>
                     <div className={classes.contactUsForm}>
-                      <div className={globalClasses.mb10}>
+                      <div
+                        className={`${globalClasses.mb10} ${
+                          errors.name &&
+                          touched.name &&
+                          errors.name &&
+                          `${globalClasses.errorInput}`
+                        }`}
+                      >
                         <Input
                           placeholder="Name *"
                           size="large"
@@ -137,7 +155,14 @@ function ContactUs() {
                           {errors.name && touched.name && errors.name}
                         </div>
                       </div>
-                      <div className={globalClasses.mb10}>
+                      <div
+                        className={`${globalClasses.mb10} ${
+                          errors.email &&
+                          touched.email &&
+                          errors.email &&
+                          `${globalClasses.errorInput}`
+                        }`}
+                      >
                         <Input
                           placeholder="Email *"
                           size="large"
@@ -156,7 +181,14 @@ function ContactUs() {
                           {errors.email && touched.email && errors.email}
                         </div>
                       </div>
-                      <div className={globalClasses.mb10}>
+                      <div
+                        className={`${globalClasses.mb10} ${
+                          errors.subject &&
+                          touched.subject &&
+                          errors.subject &&
+                          `${globalClasses.errorInput}`
+                        }`}
+                      >
                         <Input
                           placeholder="Subject *"
                           size="large"
@@ -175,7 +207,14 @@ function ContactUs() {
                           {errors.subject && touched.subject && errors.subject}
                         </div>
                       </div>
-                      <div>
+                      <div
+                        className={`${globalClasses.mb10} ${
+                          errors.message &&
+                          touched.message &&
+                          errors.message &&
+                          `${globalClasses.errorInput}`
+                        }`}
+                      >
                         <Textarea
                           id="msg"
                           placeholder="Message *"

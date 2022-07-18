@@ -59,7 +59,14 @@ function SignUp() {
               handleSubmit,
             }) => (
               <form onSubmit={handleSubmit} className={classes.formStyle}>
-                <div>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.firstName &&
+                    touched.firstName &&
+                    errors.firstName &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <Input
                     value={values.firstName}
                     borders="square"
@@ -77,7 +84,14 @@ function SignUp() {
                     {errors.firstName && touched.firstName && errors.firstName}
                   </div>
                 </div>
-                <div>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.lastName &&
+                    touched.lastName &&
+                    errors.lastName &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <Input
                     value={values.lastName}
                     borders="square"
@@ -95,7 +109,14 @@ function SignUp() {
                     {errors.lastName && touched.lastName && errors.lastName}
                   </div>
                 </div>
-                <div>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.email &&
+                    touched.email &&
+                    errors.email &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <Input
                     value={values.email}
                     borders="square"
@@ -115,7 +136,14 @@ function SignUp() {
                   </div>
                 </div>
 
-                <div>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.password &&
+                    touched.password &&
+                    errors.password &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <Input
                     value={values.password}
                     borders="square"

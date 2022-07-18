@@ -48,7 +48,7 @@ const contactUsStyles = createUseStyles({
   },
   contactUsForm: {
     "& label": {
-      fontWeight: 500,
+      fontWeight: 400,
       display: "block",
       fontSize: 14,
     },
@@ -57,11 +57,11 @@ const contactUsStyles = createUseStyles({
       maxHeight: 45,
       height: 45,
       background: "#ffffff",
-      textIndent: 20,
+      textIndent: 5,
       color: "#757575",
       minWidth: "100%",
       maxWidth: "100%",
-      paddingTop: 20,
+      paddingTop: 13,
       minHeight: 100,
       marginBottom: 0,
     },
@@ -467,6 +467,14 @@ const mainStyles = createUseStyles({
 const signUpInStyles = createUseStyles({
   formContainer: {
     padding: [[50, 0]],
+  },
+  errorInput: {
+    "& fieldset": {
+      border: "1px solid #d22d3d !important",
+    },
+    "& textarea": {
+      border: "1px solid #d22d3d !important",
+    },
   },
   formStyle: {
     width: 350,

@@ -169,10 +169,10 @@ const ToolbarStyles = createUseStyles({
   },
   sortingForm: {
     minWidth: 160,
-    "& >div:hover fieldset": {
-      border: "solid 1px #e8e8e8",
-      borderColor: "#e8e8e8 !important",
-    },
+    // "& >div:hover fieldset": {
+    // border: "solid 1px #e8e8e8",
+    // borderColor: "#e8e8e8 !important",
+    // },
     "& .MuiSelect-select": {
       fontSize: 14,
     },

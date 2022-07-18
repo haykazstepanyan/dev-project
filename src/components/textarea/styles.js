@@ -26,7 +26,7 @@ const globalTextAreaStyles = createUseStyles({
     fontSize: 14,
     fontFamily: "'Rubik', sans-serif",
     "&:focus-visible": {
-      border: `1px solid ${colors.milky} !important`,
+      // border: `1px solid ${colors.milky} !important`,
       outline: "none",
     },
     "&::placeholder": {
