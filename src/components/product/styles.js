@@ -176,6 +176,9 @@ const ToolbarStyles = createUseStyles({
     "& .MuiSelect-select": {
       fontSize: 14,
     },
+    "&:hover fieldset": {
+      border: "solid 1px #e8e8e8 !important",
+    },
     "& fieldset": {
       border: "solid 1px #e8e8e8",
     },

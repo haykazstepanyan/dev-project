@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Grid, Container } from "@mui/material";
 import BusinessIcon from "@mui/icons-material/Business";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import { Formik } from "formik";
 import MailIcon from "@mui/icons-material/Mail";
 import Button from "../components/button";
+
 import Banner from "../components/common/Banner";
 import Input from "../components/input";
 import Textarea from "../components/textarea";
@@ -19,7 +20,7 @@ function ContactUs() {
   const classes = contactUsStyles();
   const globalClasses = globalStyles();
   const dispatch = useDispatch();
-
+  const role = useSelector((state) => state.auth.role);
   const { contactUsValidation } = validations;
   const {
     data: addContactData,
@@ -106,7 +107,7 @@ function ContactUs() {
               </div>
             </Grid>
             <Grid item xs={12} lg={6} md={6} className={globalClasses.mxAuto}>
-              <p className={classes.contactUsTitle}>Tell Us Your Project</p>
+              <p className={classes.contactUsTitle}>Send us your message </p>
               <Formik
                 initialValues={{
                   name: "",
@@ -150,6 +151,7 @@ function ContactUs() {
                           value={values.name}
                           onBlur={handleBlur}
                           onChange={handleChange}
+                          disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                         />
                         <div style={{ color: "#d22d3d" }}>
                           {errors.name && touched.name && errors.name}
@@ -176,6 +178,7 @@ function ContactUs() {
                           value={values.email}
                           onBlur={handleBlur}
                           onChange={handleChange}
+                          disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                         />
                         <div style={{ color: "#d22d3d" }}>
                           {errors.email && touched.email && errors.email}
@@ -202,6 +205,7 @@ function ContactUs() {
                           value={values.subject}
                           onBlur={handleBlur}
                           onChange={handleChange}
+                          disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                         />
                         <div style={{ color: "#d22d3d" }}>
                           {errors.subject && touched.subject && errors.subject}
@@ -225,6 +229,7 @@ function ContactUs() {
                           value={values.message}
                           onBlur={handleBlur}
                           onChange={handleChange}
+                          disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                         />
                         <div style={{ color: "#d22d3d" }}>
                           {errors.message && touched.message && errors.message}
@@ -234,6 +239,7 @@ function ContactUs() {
                         style={{ marginTop: 20 }}
                         type="submit"
                         disableRipple
+                        disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                       >
                         Send
                       </Button>

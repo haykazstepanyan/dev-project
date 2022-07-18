@@ -227,43 +227,45 @@ export default function Product() {
             >
               <AddIcon />
             </Button>
-            <div className={classes.selects}>
-              <FormControl sx={{ m: 1, minWidth: 140 }} size="small">
-                <Select value={brandSelect} onChange={handleBrandSelect}>
-                  {brandOptions.map(({ id, name }) => (
-                    <MenuItem key={id} value={id}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className={classes.selects}>
-              <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
-                <Select
-                  value={categorySelect}
-                  onChange={handleCategorySelect}
-                  autoWidth
-                >
-                  {categoryOptions.map(({ id, name }) => (
-                    <MenuItem key={id} value={id}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className={classes.searchBox}>
-              <Input
-                type="text"
-                placeholder="Search by name, description..."
-                size="large"
-                borders="square"
-                state="noFocus"
-                value={search}
-                onChange={handleSearch}
-              />
-              <SearchIcon />
+            <div className={classes.filterPartsStyle}>
+              <div className={classes.selects}>
+                <FormControl sx={{ m: 1, minWidth: 140 }} size="small">
+                  <Select value={brandSelect} onChange={handleBrandSelect}>
+                    {brandOptions.map(({ id, name }) => (
+                      <MenuItem key={id} value={id}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              <div className={classes.selects}>
+                <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
+                  <Select
+                    value={categorySelect}
+                    onChange={handleCategorySelect}
+                    autoWidth
+                  >
+                    {categoryOptions.map(({ id, name }) => (
+                      <MenuItem key={id} value={id}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              <div className={classes.searchBox}>
+                <Input
+                  type="text"
+                  placeholder="Search by name, description..."
+                  size="large"
+                  borders="square"
+                  state="noFocus"
+                  value={search}
+                  onChange={handleSearch}
+                />
+                <SearchIcon />
+              </div>
             </div>
           </div>
         )}

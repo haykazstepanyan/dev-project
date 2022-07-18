@@ -177,7 +177,7 @@ function Main() {
                   <div className={classes.welcomeHomeFooter}>
                     <img src={signature} alt="" />
                     <p>
-                      <span>john doe</span> – CEO Lukani
+                      <span>john doe</span> – CEO Lifestyle Electronics
                     </p>
                   </div>
                 </div>

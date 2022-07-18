@@ -20,7 +20,8 @@ function FooterBottom() {
           <Grid item xs={8} className={classes.footerBottomGrid}>
             <div>
               <p>
-                © 2021 <Link to="/">Lukani</Link>. Made with <FavoriteIcon />
+                © 2021 <Link to="/">Lifestyle Electronics</Link>. Made with{" "}
+                <FavoriteIcon />
                 <i className="fa fa-heart text-danger" /> By{" "}
                 <Link to="/">Our Teams</Link>{" "}
               </p>

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import Slider from "react-slick";
 import { createUseStyles } from "react-jss";
+import { Link } from "react-router-dom";
 import { colors } from "../../constants/constants";
 import Button from "../button";
 import "slick-carousel/slick/slick.css";
@@ -106,7 +107,8 @@ function SlickSlider({
   const settings = {
     dots: false,
     infinite: true,
-    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 3000,
     slidesToShow,
     slidesToScroll,
     ...(arrows ? { arrows: true } : { arrows: false }),
@@ -161,11 +163,14 @@ function SlickSlider({
               <div className={classes.sliderBlockStyle}>
                 <h1>TOP SALE</h1>
                 <p>
-                  Discount <span>20% Off </span> For Lukani Members{" "}
+                  Discount <span>20% Off </span> For Lifestyle Electronics
+                  Members{" "}
                 </p>
-                <Button size="large" borders="rounded">
-                  Discover now
-                </Button>
+                <Link to="/shop">
+                  <Button size="large" borders="rounded">
+                    Discover now
+                  </Button>
+                </Link>
               </div>
             ) : (
               ""
