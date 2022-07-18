@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { io } from "socket.io-client";
 import PropTypes from "prop-types";
 import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { showSnackbar } from "../../redux/app/appSlice";
 import { fetchData } from "../../helpers/helpers";
 import { setCartCount } from "../../redux/app/appSlice";
+import { BASE_URL } from "../../constants/constants";
 
 function Completion({ stripePromise }) {
   const [messageBody, setMessageBody] = useState("");
+
+function Completion({ stripePromise }) {
+  const [messageBody, setMessageBody] = useState("");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,7 +32,12 @@ function Completion({ stripePromise }) {
           data: { data },
         } = await fetchData("cart/getCartItems");
 
-        const productIds = data.map(({ id }) => id);
+        const productIds = data.map(({ productId }) => productId);
+
+        if (!productIds.length) {
+          navigate("/");
+          return;
+        }
 
         await fetchData(
           "orders",
@@ -67,7 +79,21 @@ function Completion({ stripePromise }) {
         ),
       );
     });
-  }, [dispatch, stripePromise]);
+  }, [dispatch, stripePromise, navigate]);
+
+  useEffect(() => {
+    const socket = io(BASE_URL);
+    socket.on("orderCreate", (data) => {
+      if (data.action === "orderCreated") {
+        dispatch(
+          showSnackbar({
+            snackbarType: "success",
+            snackbarMessage: data.message,
+          }),
+        );
+      }
+    });
+  }, [dispatch]);
 
   return (
     <div

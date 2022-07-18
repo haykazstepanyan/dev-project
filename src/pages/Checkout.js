@@ -3,15 +3,29 @@ import "./Checkout.css";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Completion from "./payment/Completion";
 import Payment from "./payment/Payment";
 import useFetch from "../hooks/useFetch";
 import { showLoader, hideLoader } from "../redux/app/appSlice";
 
 function Checkout() {
-  const [stripePromise, setStripePromise] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  if (!location.state) {
+    location.state = {};
+  }
+
+  const [stripePromise, setStripePromise] = useState(null);
+
+  useEffect(() => {
+    if (!location.search && !location.state.dontRedirect) {
+      navigate("/");
+    }
+  }, [navigate, location]);
+
   const { data, loading } = useFetch("/payment/config");
 
   useEffect(() => {
