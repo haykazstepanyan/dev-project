@@ -39,7 +39,6 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("delivering");
     socket.on("delivering", (data) => {
       if (data.action === "beingDelivered") {
         dispatch(
