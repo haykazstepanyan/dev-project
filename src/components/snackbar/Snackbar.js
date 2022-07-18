@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Snackbar as MuiSnackbar, Alert } from "@mui/material";
 import { hideSnackbar } from "../../redux/app/appSlice";
 
-function SnackBar({ type, message }) {
+function SnackBar({ type, message, delay = 3000 }) {
   const [openSnackbar, setOpenSnackbar] = useState({
     open: true,
     vertical: "bottom",
@@ -25,9 +25,9 @@ function SnackBar({ type, message }) {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch(hideSnackbar());
-    }, 3000);
+    }, delay);
     return () => clearTimeout(timeoutId);
-  }, [dispatch]);
+  }, [dispatch, delay]);
 
   return (
     <MuiSnackbar
@@ -48,6 +48,7 @@ function SnackBar({ type, message }) {
 SnackBar.propTypes = {
   type: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
+  delay: PropTypes.number,
 };
 
 export default SnackBar;
