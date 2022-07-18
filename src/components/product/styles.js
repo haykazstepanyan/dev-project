@@ -45,24 +45,17 @@ const productItemStyles = createUseStyles({
     fontWeight: 400,
     fontSize: 12,
   },
-  productImg: {
-    objectFit: "contain",
-    height: 180,
-    width: "100%",
-    "&:hover": {
-      transform: "scale(1.07)",
-      transition: "0.4s all",
-    },
-  },
   multipleProductsCard: {
     textAlign: "center",
   },
   singleProductCard: {
     display: "flex",
     boxShadow: "none",
-    "& $productImg": {
-      width: 250,
-      height: 250,
+    "& $productImgLink": {
+      "& img": {
+        width: 250,
+        height: 250,
+      },
     },
     "& $productName": {
       fontSize: 18,
@@ -80,6 +73,17 @@ const productItemStyles = createUseStyles({
       marginTop: 24,
     },
   },
+  productImgLink: {
+    "& img": {
+      objectFit: "contain",
+      height: 180,
+      width: "100%",
+      "&:hover": {
+        transform: "scale(1.07)",
+        transition: "0.4s all",
+      },
+    },
+  },
   "@media screen and (max-width: 600px)": {
     product: {
       boxShadow: "none",
@@ -92,10 +96,10 @@ const productItemStyles = createUseStyles({
     productName: {
       fontSize: 18,
     },
-    productImg: {
-      height: 350,
-    },
     productImgLink: {
+      "& img": {
+        height: 350,
+      },
       width: "fit-content",
       margin: [[0, "auto"]],
     },
@@ -116,7 +120,6 @@ const productItemStyles = createUseStyles({
     right: 0,
     zIndex: 20,
   },
-  productImgLink: {},
 });
 
 const saleStyles = createUseStyles({

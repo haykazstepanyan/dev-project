@@ -45,6 +45,7 @@ function App() {
           showSnackbar({
             snackbarType: "success",
             snackbarMessage: data.message,
+            snackbarDelay: 5000,
           }),
         );
       }
@@ -59,7 +60,11 @@ function App() {
         <ThemeProvider theme={mainTheme}>
           <Routes />
           {(snackbar.type || snackbar.message) && (
-            <Snackbar type={snackbar.type} message={snackbar.message} />
+            <Snackbar
+              type={snackbar.type}
+              message={snackbar.message}
+              delay={snackbar.delay}
+            />
           )}
         </ThemeProvider>
       </StyledEngineProvider>

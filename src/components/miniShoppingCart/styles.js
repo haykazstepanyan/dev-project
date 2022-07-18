@@ -32,6 +32,10 @@ export const miniShoppingCartStyles = createUseStyles({
     marginRight: "10px",
     border: "1px solid transparent",
     textAlign: "center",
+    "& img": {
+      maxWidth: "100%",
+      height: 60,
+    },
   },
   cart_info: {
     width: "63%",
@@ -42,10 +46,6 @@ export const miniShoppingCartStyles = createUseStyles({
     lineHeight: "20px",
     display: "block",
     marginBottom: "6px",
-  },
-  cart_product_img: {
-    maxWidth: "100%",
-    height: 60,
   },
   cart_product_quantity_and_price: {
     fontSize: "12px",

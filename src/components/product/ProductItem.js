@@ -14,7 +14,7 @@ import SignInModal from "../modals/SignInModal";
 import { currencySymbols } from "../../constants/constants";
 import AddToCart from "../addToCart";
 import { setWishlistCount } from "../../redux/app/appSlice";
-import defaultImg from "../../assets/images/default.png";
+import ImageLoad from "../imageLoad";
 
 function ProductItem({
   id,
@@ -29,7 +29,6 @@ function ProductItem({
 }) {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const role = useSelector((state) => state.auth.role);
-  const [imgSrc, setImgSrc] = useState(defaultImg);
   const selectedCurrency = useSelector((state) => state.app.currency);
   const [isProductLiked, setIsProductLiked] = useState(
     wishlist && wishlist[0]?.id,
@@ -105,12 +104,7 @@ function ProductItem({
         })}
       >
         <Link to={`/product/${id}`} className={classes.productImgLink}>
-          <img
-            onLoad={() => setImgSrc(image)}
-            src={imgSrc}
-            alt={title}
-            className={classes.productImg}
-          />
+          <ImageLoad src={image} alt={title} />
         </Link>
         <CardContent className={classes.productCardContent}>
           <Typography gutterBottom className={classes.productName}>

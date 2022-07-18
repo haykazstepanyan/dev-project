@@ -532,11 +532,11 @@ const productViewStyles = createUseStyles({
   },
   productImgContainer: {
     paddingTop: 80,
-  },
-  productImg: {
-    height: 400,
-    objectFit: "contain",
-    width: "100%",
+    "& img": {
+      height: 400,
+      objectFit: "contain",
+      width: "100%",
+    },
   },
   "container_grid-container": {
     alignItems: "center",

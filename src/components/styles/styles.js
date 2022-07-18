@@ -144,4 +144,21 @@ const addToCartStyles = createUseStyles({
   // },
 });
 
-export { documentStyles, globalStyles, addToCartStyles };
+const adminTableStyles = createUseStyles({
+  tableStyle: {
+    "& .editIcon": {
+      color: "#24695c",
+    },
+    "& .settingsIcon": {
+      color: "#717171",
+    },
+    "& .deleteIcon": {
+      color: "#d22d3d",
+    },
+    "& thead th": {
+      fontWeight: 600,
+    },
+  },
+});
+
+export { documentStyles, globalStyles, addToCartStyles, adminTableStyles };

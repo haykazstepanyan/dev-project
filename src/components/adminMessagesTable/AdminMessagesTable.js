@@ -14,7 +14,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
-import { adminTableStyles } from "./styles";
+import { adminTableStyles } from "../styles/styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
 import { showSnackbar } from "../../redux/app/appSlice";
 

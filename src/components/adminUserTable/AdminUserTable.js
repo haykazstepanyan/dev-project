@@ -15,7 +15,7 @@ import { useState } from "react";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
 import { updateUsersRole } from "../../redux/users/actions";
-import { adminUsersStyles } from "./styles";
+import { adminTableStyles } from "../styles/styles";
 
 function AdminUserTable({ tableData }) {
   const [modalData, setModalData] = useState([]);
@@ -41,7 +41,7 @@ function AdminUserTable({ tableData }) {
     handleClose();
   };
 
-  const classes = adminUsersStyles();
+  const classes = adminTableStyles();
 
   return (
     <>

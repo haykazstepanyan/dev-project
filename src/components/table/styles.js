@@ -61,6 +61,7 @@ const tableStyles = createUseStyles({
     },
     "& img": {
       maxHeight: 40,
+      maxWidth: 60,
       marginBottom: 0,
     },
     "& .price p": {
