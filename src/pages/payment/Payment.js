@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { Elements } from "@stripe/react-stripe-js";
@@ -21,6 +22,7 @@ const paymentOptions = {
 
 function Payment({ stripePromise }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [clientSecretKey, setClientSecretKey] = useState("");
   const { data, loading } = useFetch("/payment", paymentOptions, "POST");
 
@@ -43,7 +45,7 @@ function Payment({ stripePromise }) {
         }),
       );
     }
-  }, [dispatch, data]);
+  }, [dispatch, data, navigate]);
 
   return (
     clientSecretKey &&

@@ -103,7 +103,7 @@ function Cart() {
   };
 
   const handleCheckoutClick = () => {
-    return navigate("/checkout");
+    return navigate("/checkout", { state: { dontRedirect: true } });
   };
 
   return (
