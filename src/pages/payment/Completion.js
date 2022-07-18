@@ -4,13 +4,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { io } from "socket.io-client";
 import PropTypes from "prop-types";
 import { Typography } from "@mui/material";
-import { showSnackbar } from "../../redux/app/appSlice";
+import { showSnackbar, setCartCount } from "../../redux/app/appSlice";
 import { fetchData } from "../../helpers/helpers";
-import { setCartCount } from "../../redux/app/appSlice";
 import { BASE_URL } from "../../constants/constants";
-
-function Completion({ stripePromise }) {
-  const [messageBody, setMessageBody] = useState("");
 
 function Completion({ stripePromise }) {
   const [messageBody, setMessageBody] = useState("");
