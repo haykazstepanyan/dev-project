@@ -39,8 +39,8 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    socket.on("delivering", (data) => {
-      if (data.action === "beingDelivered") {
+    socket.on("delivered", (data) => {
+      if (data.action === "isDelivered") {
         dispatch(
           showSnackbar({
             snackbarType: "success",

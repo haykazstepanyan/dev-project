@@ -11,10 +11,9 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-// import InventoryIcon from "@mui/icons-material/Inventory";
-import { useEffect, useState } from "react";
-// import ProductsInOrderModal from "../../components/modals/ProductsInOrderModal";
-import { TABLE_TITLES, colors } from "../../constants/constants";
+import { useEffect, useState, useMemo } from "react";
+import { io } from "socket.io-client";
+import { TABLE_TITLES, colors, BASE_URL } from "../../constants/constants";
 import { orderStyles } from "./styles";
 import { fetchData } from "../../helpers/helpers";
 import ModalOpener from "../../components/modalOpener/ModalOpener";
@@ -22,12 +21,23 @@ import ModalOpener from "../../components/modalOpener/ModalOpener";
 function Orders() {
   const [orders, setOrders] = useState();
   const classes = orderStyles();
+  const socket = useMemo(() => io(BASE_URL), []);
 
   useEffect(() => {
     (async () => {
       setOrders(await (await fetchData("orders")).data.data);
     })();
   }, []);
+
+  useEffect(() => {
+    socket.on("delivered", (data) => {
+      if (data.action === "isDelivered") {
+        (async () => {
+          setOrders(await (await fetchData("orders")).data.data);
+        })();
+      }
+    });
+  }, [socket]);
 
   return (
     <div>
