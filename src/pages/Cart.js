@@ -71,7 +71,7 @@ function Cart() {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, cartItems]);
+  }, [dispatch, cartItems, selectedCurrency]);
 
   useEffect(() => {
     if (cartDeleteLoading) {

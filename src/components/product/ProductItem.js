@@ -130,7 +130,7 @@ function ProductItem({
               cart={cart}
               isAuth={isAuth}
               productId={id}
-              btnWidth={order === "single" && "180px"}
+              btnWidth={order === "single" ? "180px" : ""}
             />
           </div>
           {discount !== 0 && <Sale discount={discount} />}
@@ -169,10 +169,8 @@ ProductItem.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   discount: PropTypes.number,
-  cart: PropTypes.arrayOf([
-    PropTypes.shape({ id: PropTypes.number, count: PropTypes.number }),
-  ]),
-  wishlist: PropTypes.arrayOf([PropTypes.shape({ id: PropTypes.number })]),
+  cart: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number })),
+  wishlist: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number })),
   order: PropTypes.string,
 };
 

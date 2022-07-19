@@ -209,7 +209,7 @@ AddToCart.propTypes = {
   ),
   isAuth: PropTypes.bool,
   productId: PropTypes.number,
-  btnWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  btnWidth: PropTypes.string,
   deleteCart: PropTypes.func,
   from: PropTypes.string,
   dataRefetch: PropTypes.func,

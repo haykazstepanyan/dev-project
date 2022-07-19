@@ -13,21 +13,6 @@ import { TABLE_TITLES } from "../../constants/constants";
 import { orderStyles } from "./styles";
 import { fetchData } from "../../helpers/helpers";
 
-// function createData(order, date, status, total, action) {
-//   return {
-//     order,
-//     date,
-//     status,
-//     total,
-//     action,
-//   };
-// }
-
-// const rows = [
-//   createData(1, "May 10 2018", "Completed", "$25.00 For 1 Item", "View"),
-//   createData(2, "May 10 2018", "Completed", "$25.00 For 1 Item", "View"),
-// ];
-
 function Orders() {
   const [orders, setOrders] = useState();
   const classes = orderStyles();
@@ -61,7 +46,7 @@ function Orders() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {order.order}
+                    {order.id}
                   </TableCell>
                   <TableCell align="right">{order.date}</TableCell>
                   <TableCell align="right">
