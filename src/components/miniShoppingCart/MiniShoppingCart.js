@@ -128,20 +128,6 @@ function MiniShoppingCart({ toggleDrawer }) {
             <span>VIEW CART</span>
           </Button>
         </Box>
-        {/* <Box component="div" className={classes.cart_cart_pages_checkout}>
-          <Button
-            variant="contained"
-            // onClick={handleCheckoutPage}
-            color="primary"
-            fullWidth
-          >
-            <ShoppingCartCheckoutIcon
-              fontSize="small"
-              sx={{ marginRight: 1 }}
-            />
-            <span>CHECKOUT</span>
-          </Button>
-        </Box> */}
       </Box>
     </Stack>
   );

@@ -1,12 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  // deleteObject,
-} from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Typography from "@mui/material/Typography";
 import { FormLabel, InputLabel } from "@mui/material";
 import Modal from "@mui/material/Modal";
@@ -48,15 +43,9 @@ function AdminProductsModal({
     const imageRef = ref(storage, `images/${image.name + v4()}`);
     uploadBytes(imageRef, image).then((snapshot) => {
       if (productImg !== "") {
-        // const pictureRef = ref(storage, productImg);
-        // deleteObject(pictureRef)
-        //   .then(() => {})
-        //   .catch(() => {})
-        //   .finally(() => {
         getDownloadURL(snapshot.ref).then((url) => {
           setProductImg(url);
           setImageLoader(false);
-          // });
         });
       } else {
         getDownloadURL(snapshot.ref).then((url) => {
@@ -134,7 +123,14 @@ function AdminProductsModal({
                 >
                   {type}
                 </h2>
-                <div className={classes.mb10}>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.name &&
+                    touched.name &&
+                    errors.name &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <InputLabel className={classes.labelStyle}>Name</InputLabel>
                   <Input
                     name="name"
@@ -152,7 +148,14 @@ function AdminProductsModal({
                     {errors.name && touched.name && errors.name}
                   </div>
                 </div>
-                <div className={classes.mb10}>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.price &&
+                    touched.price &&
+                    errors.price &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <InputLabel className={classes.labelStyle}>Price</InputLabel>
                   <Input
                     name="price"
@@ -170,7 +173,14 @@ function AdminProductsModal({
                     {errors.price && touched.price && errors.price}
                   </div>
                 </div>
-                <div className={classes.mb10}>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.discount &&
+                    touched.discount &&
+                    errors.discount &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <InputLabel className={classes.labelStyle}>
                     Discount
                   </InputLabel>
@@ -190,7 +200,14 @@ function AdminProductsModal({
                     {errors.discount && touched.discount && errors.discount}
                   </div>
                 </div>
-                <div className={classes.mb10}>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.description &&
+                    touched.description &&
+                    errors.description &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <InputLabel className={classes.labelStyle}>
                     Description
                   </InputLabel>
@@ -211,7 +228,14 @@ function AdminProductsModal({
                       errors.description}
                   </div>
                 </div>
-                <div className={classes.mb10}>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.brandId &&
+                    touched.brandId &&
+                    errors.brandId &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <InputLabel className={classes.labelStyle}>Brands</InputLabel>
                   <select
                     name="brandId"
@@ -230,7 +254,14 @@ function AdminProductsModal({
                     {errors.brandId && touched.brandId && errors.brandId}
                   </div>
                 </div>
-                <div className={classes.mb10}>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.categoryId &&
+                    touched.categoryId &&
+                    errors.categoryId &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <InputLabel className={classes.labelStyle}>
                     Categories
                   </InputLabel>

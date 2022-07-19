@@ -212,7 +212,14 @@ function AccountDetails() {
           }) => (
             <form className={classes.formControl} onSubmit={handleSubmit}>
               <div className={classes.inputsContainer}>
-                <div className={classes.inputContainer}>
+                <div
+                  className={`${classes.inputContainer} ${
+                    errors.firstName &&
+                    touched.firstName &&
+                    errors.firstName &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <Input
                     htmlFor="firstName"
                     labelValue="First Name"
@@ -231,7 +238,14 @@ function AccountDetails() {
                     {errors.firstName && touched.firstName && errors.firstName}
                   </div>
                 </div>
-                <div className={classes.inputContainer}>
+                <div
+                  className={`${classes.inputContainer} ${
+                    errors.lastName &&
+                    touched.lastName &&
+                    errors.lastName &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <Input
                     htmlFor="lastName"
                     labelValue="Last Name"
@@ -249,7 +263,14 @@ function AccountDetails() {
                     {errors.lastName && touched.lastName && errors.lastName}
                   </div>
                 </div>
-                <div className={classes.inputContainer}>
+                <div
+                  className={`${classes.inputContainer} ${
+                    errors.email &&
+                    touched.email &&
+                    errors.email &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <Input
                     htmlFor="email"
                     labelValue="Email"
@@ -317,7 +338,14 @@ function AccountDetails() {
             handleSubmit,
           }) => (
             <form className={classes.passwordForm} onSubmit={handleSubmit}>
-              <div className={classes.inputContainer}>
+              <div
+                className={`${classes.inputContainer} ${
+                  errors.oldPassword &&
+                  touched.oldPassword &&
+                  errors.oldPassword &&
+                  `${classes.errorInput}`
+                }`}
+              >
                 <FormControl
                   className={classes.passwordInput}
                   sx={{ width: "25ch" }}
@@ -359,7 +387,14 @@ function AccountDetails() {
                     errors.oldPassword}
                 </div>
               </div>
-              <div className={classes.inputContainer}>
+              <div
+                className={`${classes.inputContainer} ${
+                  errors.newPassword &&
+                  touched.newPassword &&
+                  errors.newPassword &&
+                  `${classes.errorInput}`
+                }`}
+              >
                 <FormControl
                   className={classes.passwordInput}
                   sx={{ width: "25ch" }}
@@ -402,7 +437,14 @@ function AccountDetails() {
                     errors.newPassword}
                 </div>
               </div>
-              <div className={classes.inputContainer}>
+              <div
+                className={`${classes.inputContainer} ${
+                  errors.newPasswordConfirm &&
+                  touched.newPasswordConfirm &&
+                  errors.newPasswordConfirm &&
+                  `${classes.errorInput}`
+                }`}
+              >
                 <FormControl
                   className={classes.passwordInput}
                   sx={{ width: "25ch" }}

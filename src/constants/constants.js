@@ -1,5 +1,3 @@
-// import { getUrl } from "../helpers/url.helpers";
-
 export const colors = {
   black: "#222",
   green: "#79a206",
@@ -12,7 +10,7 @@ export const colors = {
 };
 
 export const BASE_URL = "http://localhost:5000";
-export const TABLE_TITLES = ["Date", "Status", "Total", "Products", "Actions"];
+export const TABLE_TITLES = ["Date", "Status", "Total", "Products"];
 export const NAV_LINKS = [
   { route: "/", name: "Home" },
   { route: "/shop", name: "Shop" },
@@ -20,33 +18,14 @@ export const NAV_LINKS = [
   { route: "/about", name: "About Us" },
 ];
 
-export const sortingData = ["price", "date", "name", "quantity"];
+export const sortingData = ["price", "date", "name"];
 
-export const currencyList = ["USD", "EUR", "AMD", "RUB"];
+export const tabList = ["dashboard", "orders", "account details"];
+
+export const currencyList = ["USD", "EUR", "RUB"];
 export const CURRENCY_API_KEY = "Ub04rgtiZD7bvvPn8DUHzj6jWdovmbB8";
 export const currencySymbols = {
   USD: "$",
   EUR: "€",
   RUB: "₽",
-  AMD: "֏",
 };
-
-// --c-blue: #0d6efd;
-// --c-indigo: #6610f2;
-// --c-purple: #6f42c1;
-// --c-pink: #d63384;
-// --c-red: #dc3545;
-// --c-orange: #fd7e14;
-// --c-yellow: #ffc107;
-// --c-green: #198754;
-// --c-teal: #20c997;
-// --c-cyan: #0dcaf0;
-// --c-gray: #6c757d;
-// --c-gray-dark: #343a40;
-// --c-primary: #0d6efd;
-// --c-secondary: #6c757d;
-// --c-info: #0dcaf0;
-// --c-warning: #ffc107;
-// --c-danger: #dc3545;
-// --c-light: #f8f9fa;
-// --c-dark: #212529;

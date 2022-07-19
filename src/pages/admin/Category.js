@@ -48,6 +48,12 @@ export default function Category() {
   }, [categoriesData]);
 
   useEffect(() => {
+    if (filteredCategoryData?.categories) {
+      setCategories(filteredCategoryData?.categories);
+    }
+  }, [filteredCategoryData?.categories]);
+
+  useEffect(() => {
     if (categoriesError) {
       dispatch(
         showSnackbar({
@@ -154,12 +160,12 @@ export default function Category() {
             <SearchIcon />
           </div>
         </div>
-        {(filteredCategoryData?.categories || categories) && (
+        {!!categories.length && (
           <AdminMainTable
             setEditCategoryData={(value) => setEditCategoryData(value)}
             setDeleteCategoryData={(value) => setDeleteCategoryData(value)}
             type="category"
-            tableData={filteredCategoryData?.categories || categories}
+            tableData={categories}
           />
         )}
       </Container>

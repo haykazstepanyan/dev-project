@@ -1,5 +1,4 @@
 import { Container, Grid, Typography } from "@mui/material";
-// import Information from "./Information";
 import clsx from "clsx";
 import SocialLinks from "./SocialLinks";
 import footerStyles from "./styles";

@@ -61,6 +61,12 @@ function Brand() {
   }, [brandsData]);
 
   useEffect(() => {
+    if (filteredBrandData?.data) {
+      setBrands(filteredBrandData?.data);
+    }
+  }, [filteredBrandData]);
+
+  useEffect(() => {
     if (addBrandError || brandsError) {
       dispatch(
         showSnackbar({
@@ -141,7 +147,7 @@ function Brand() {
             setEditBrandData={(value) => setEditBrandData(value)}
             setDeleteBrandData={(value) => setDeleteBrandData(value)}
             type="brand"
-            tableData={filteredBrandData?.data || brands}
+            tableData={brands}
           />
         )}
       </Container>

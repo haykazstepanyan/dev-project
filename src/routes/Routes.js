@@ -25,7 +25,6 @@ const Product = lazy(() => import("../pages/admin/products/Product"));
 const ContactMessage = lazy(() => import("../pages/admin/ContactMessage"));
 const Users = lazy(() => import("../pages/admin/Users"));
 const Checkout = lazy(() => import("../pages/Checkout"));
-// const CheckoutCompletion = lazy(() => import("../pages/payment/Completion"));
 
 function PageRoutes() {
   const userRole = useSelector((state) => state.auth.role);

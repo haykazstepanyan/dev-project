@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import clsx from "clsx";
 import {
   Container,
   Box,
@@ -15,11 +16,11 @@ import { signOut } from "../redux/auth/actions";
 import Banner from "../components/common/Banner";
 import { accountStyles } from "./styles";
 import Button from "../components/button/Button";
+import { tabList } from "../constants/constants";
 
 function Account() {
   const classes = accountStyles();
   const [signOutModal, setSignOutModal] = useState(false);
-  const tabList = ["dashboard", "orders", "account details", "logout"];
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
@@ -41,20 +42,29 @@ function Account() {
                 {tabList.map((item) => {
                   const path = item === "account details" ? "details" : item;
                   return (
-                    <NavLink
-                      key={item}
-                      to={`${path}`}
-                      onClick={path === "logout" ? signOutModalShow : ""}
-                      className={(data) =>
-                        `${data.isActive ? classes.activeLink : ""} `
-                      }
-                    >
-                      <MuiListItem className={classes.listItem}>
+                    <MuiListItem key={item} className={classes.listItem}>
+                      <NavLink
+                        to={`${path}`}
+                        className={(data) =>
+                          clsx(classes.navLinks, {
+                            [classes.activeLink]: data.isActive,
+                          })
+                        }
+                      >
                         {item}
-                      </MuiListItem>
-                    </NavLink>
+                      </NavLink>
+                    </MuiListItem>
                   );
                 })}
+                <MuiListItem className={classes.listItem}>
+                  <Button
+                    color="secondary"
+                    onClick={signOutModalShow}
+                    disableRipple
+                  >
+                    Logout
+                  </Button>
+                </MuiListItem>
               </MuiList>
             </Grid>
             <Grid item xs={8} p={1}>

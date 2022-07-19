@@ -39,12 +39,13 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    socket.on("delivering", (data) => {
-      if (data.action === "beingDelivered") {
+    socket.on("delivered", (data) => {
+      if (data.action === "isDelivered") {
         dispatch(
           showSnackbar({
             snackbarType: "success",
             snackbarMessage: data.message,
+            snackbarDelay: 5000,
           }),
         );
       }
@@ -59,7 +60,11 @@ function App() {
         <ThemeProvider theme={mainTheme}>
           <Routes />
           {(snackbar.type || snackbar.message) && (
-            <Snackbar type={snackbar.type} message={snackbar.message} />
+            <Snackbar
+              type={snackbar.type}
+              message={snackbar.message}
+              delay={snackbar.delay}
+            />
           )}
         </ThemeProvider>
       </StyledEngineProvider>

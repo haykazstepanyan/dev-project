@@ -20,7 +20,6 @@ export default function AdminLeftSidebar() {
   const userData = useSelector((state) => state.auth);
   const userName = useSelector((state) => state.auth.userName);
   const userRole = useSelector((state) => state.auth.role);
-  console.log(userName);
   const classes = adminLayoutStyles();
   return (
     <nav className={classes.leftSidebar}>

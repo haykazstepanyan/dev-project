@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-// import MailOutlineIcon from "@mui/icons-material/MailOutline";
-// import Input from "../components/input";
 import shipping1 from "../assets/images/shipping1.webp";
 import shipping2 from "../assets/images/shipping2.webp";
 import shipping3 from "../assets/images/shipping3.webp";
@@ -177,7 +175,7 @@ function Main() {
                   <div className={classes.welcomeHomeFooter}>
                     <img src={signature} alt="" />
                     <p>
-                      <span>john doe</span> – CEO Lukani
+                      <span>john doe</span> – CEO Lifestyle Electronics
                     </p>
                   </div>
                 </div>

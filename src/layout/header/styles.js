@@ -3,13 +3,10 @@ import { colors } from "../../constants/constants";
 
 const logoStyles = createUseStyles({
   pageLogo: {
-    // width: 100,
     height: 135,
-    // height: 80,
   },
   "@media screen and (max-width: 900px)": {
     pageLogo: {
-      // width: 50,
       height: 90,
     },
   },
@@ -128,7 +125,7 @@ const iconsStyles = createUseStyles({
   icons: {
     cursor: "pointer",
     "&:hover": {
-      color: colors.success,
+      color: colors.green,
     },
   },
   itemCount: {

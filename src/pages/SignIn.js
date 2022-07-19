@@ -52,7 +52,14 @@ function SignIn() {
               handleSubmit,
             }) => (
               <form className={classes.formStyle} onSubmit={handleSubmit}>
-                <div>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.email &&
+                    touched.email &&
+                    errors.email &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <Input
                     value={values.email}
                     borders="square"
@@ -70,7 +77,14 @@ function SignIn() {
                     {errors.email && touched.email && errors.email}
                   </div>
                 </div>
-                <div>
+                <div
+                  className={`${classes.mb10} ${
+                    errors.password &&
+                    touched.password &&
+                    errors.password &&
+                    `${classes.errorInput}`
+                  }`}
+                >
                   <Input
                     value={values.password}
                     borders="square"

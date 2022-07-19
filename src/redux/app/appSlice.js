@@ -33,6 +33,7 @@ const appSlice = createSlice({
       state.snackbar = {
         type: payload.snackbarType,
         message: payload.snackbarMessage,
+        delay: payload.snackbarDelay,
       };
     },
     hideSnackbar(state) {

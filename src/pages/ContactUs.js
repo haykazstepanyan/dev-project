@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Grid, Container } from "@mui/material";
 import BusinessIcon from "@mui/icons-material/Business";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import { Formik } from "formik";
 import MailIcon from "@mui/icons-material/Mail";
 import Button from "../components/button";
+
 import Banner from "../components/common/Banner";
 import Input from "../components/input";
 import Textarea from "../components/textarea";
@@ -19,7 +20,7 @@ function ContactUs() {
   const classes = contactUsStyles();
   const globalClasses = globalStyles();
   const dispatch = useDispatch();
-
+  const role = useSelector((state) => state.auth.role);
   const { contactUsValidation } = validations;
   const {
     data: addContactData,
@@ -27,7 +28,7 @@ function ContactUs() {
     lazyRefetch: addContact,
   } = useLazyFetch();
 
-  const submitContactUsForm = (values) => {
+  const submitContactUsForm = (values, actions) => {
     addContact(
       "/contacts/contact",
       {
@@ -37,7 +38,16 @@ function ContactUs() {
         },
       },
       "POST",
-    );
+    ).then(() => {
+      actions.resetForm({
+        values: {
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        },
+      });
+    });
   };
 
   useEffect(() => {
@@ -97,7 +107,7 @@ function ContactUs() {
               </div>
             </Grid>
             <Grid item xs={12} lg={6} md={6} className={globalClasses.mxAuto}>
-              <p className={classes.contactUsTitle}>Tell Us Your Project</p>
+              <p className={classes.contactUsTitle}>Send us your message </p>
               <Formik
                 initialValues={{
                   name: "",
@@ -106,7 +116,9 @@ function ContactUs() {
                   message: "",
                 }}
                 validationSchema={contactUsValidation}
-                onSubmit={(values) => submitContactUsForm(values)}
+                onSubmit={(values, actions) =>
+                  submitContactUsForm(values, actions)
+                }
               >
                 {({
                   values,
@@ -118,7 +130,14 @@ function ContactUs() {
                 }) => (
                   <form onSubmit={handleSubmit}>
                     <div className={classes.contactUsForm}>
-                      <div className={globalClasses.mb10}>
+                      <div
+                        className={`${globalClasses.mb10} ${
+                          errors.name &&
+                          touched.name &&
+                          errors.name &&
+                          `${globalClasses.errorInput}`
+                        }`}
+                      >
                         <Input
                           placeholder="Name *"
                           size="large"
@@ -132,12 +151,20 @@ function ContactUs() {
                           value={values.name}
                           onBlur={handleBlur}
                           onChange={handleChange}
+                          disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                         />
                         <div style={{ color: "#d22d3d" }}>
                           {errors.name && touched.name && errors.name}
                         </div>
                       </div>
-                      <div className={globalClasses.mb10}>
+                      <div
+                        className={`${globalClasses.mb10} ${
+                          errors.email &&
+                          touched.email &&
+                          errors.email &&
+                          `${globalClasses.errorInput}`
+                        }`}
+                      >
                         <Input
                           placeholder="Email *"
                           size="large"
@@ -151,12 +178,20 @@ function ContactUs() {
                           value={values.email}
                           onBlur={handleBlur}
                           onChange={handleChange}
+                          disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                         />
                         <div style={{ color: "#d22d3d" }}>
                           {errors.email && touched.email && errors.email}
                         </div>
                       </div>
-                      <div className={globalClasses.mb10}>
+                      <div
+                        className={`${globalClasses.mb10} ${
+                          errors.subject &&
+                          touched.subject &&
+                          errors.subject &&
+                          `${globalClasses.errorInput}`
+                        }`}
+                      >
                         <Input
                           placeholder="Subject *"
                           size="large"
@@ -170,12 +205,20 @@ function ContactUs() {
                           value={values.subject}
                           onBlur={handleBlur}
                           onChange={handleChange}
+                          disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                         />
                         <div style={{ color: "#d22d3d" }}>
                           {errors.subject && touched.subject && errors.subject}
                         </div>
                       </div>
-                      <div>
+                      <div
+                        className={`${globalClasses.mb10} ${
+                          errors.message &&
+                          touched.message &&
+                          errors.message &&
+                          `${globalClasses.errorInput}`
+                        }`}
+                      >
                         <Textarea
                           id="msg"
                           placeholder="Message *"
@@ -186,6 +229,7 @@ function ContactUs() {
                           value={values.message}
                           onBlur={handleBlur}
                           onChange={handleChange}
+                          disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                         />
                         <div style={{ color: "#d22d3d" }}>
                           {errors.message && touched.message && errors.message}
@@ -195,6 +239,7 @@ function ContactUs() {
                         style={{ marginTop: 20 }}
                         type="submit"
                         disableRipple
+                        disabled={role === "ADMIN" || role === "MAIN_ADMIN"}
                       >
                         Send
                       </Button>

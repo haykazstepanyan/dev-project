@@ -56,9 +56,6 @@ const theme = createTheme({
             "& fieldset": {
               border: `1px solid ${colors.milky} !important`,
             },
-            "& >div:hover fieldset": {
-              border: `1px solid ${colors.milky} !important`,
-            },
           },
         },
         {

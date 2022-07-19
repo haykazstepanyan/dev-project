@@ -12,10 +12,6 @@ function ListItems({ list, checkBoxChange, selected }) {
   const [showMore, setShowMore] = useToggle();
   const classes = listStyles();
 
-  const handleMoreToggle = () => {
-    setShowMore((prevState) => !prevState);
-  };
-
   const listToShow = showMore ? list : list.slice(0, 4);
 
   return (
@@ -44,8 +40,8 @@ function ListItems({ list, checkBoxChange, selected }) {
         role="button"
         tabIndex={0}
         className={classes.moreLess}
-        onClick={handleMoreToggle}
-        onKeyDown={handleMoreToggle}
+        onClick={() => setShowMore()}
+        onKeyDown={() => setShowMore()}
       >
         {showMore ? "Less..." : "More..."}
       </div>

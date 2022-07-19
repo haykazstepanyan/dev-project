@@ -2,6 +2,19 @@ import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
 const orderStyles = createUseStyles({
+  orderTableStyle: {
+    boxShadow: "none",
+    "& td": {
+      borderRight: "1px solid #e1e1e1 !important",
+      borderLeft: "1px solid #e1e1e1 !important",
+      borderBottom: "1px solid #e1e1e1 !important",
+      paddingTop: 10,
+      paddingBottom: 10,
+    },
+    "& tr": {
+      maxHeight: 30,
+    },
+  },
   rowTitle: {
     borderBottom: "1.5px solid black",
     backgroundColor: "rgb(225, 225, 225)",
@@ -112,6 +125,14 @@ const detailsStyles = createUseStyles({
     borderRight: 0,
     borderLeft: 0,
     paddingBottom: 20,
+  },
+  errorInput: {
+    "& fieldset": {
+      border: "1px solid #d22d3d !important",
+    },
+    "& textarea": {
+      border: "1px solid #d22d3d !important",
+    },
   },
 });
 const dashboardStyles = createUseStyles({

@@ -31,16 +31,36 @@ const adminGlobalStyles = createUseStyles({
   },
   toolbar: {
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
+  },
+  filterPartsStyle: {
+    display: "flex",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  selects: {
+    "&:hover fieldset": {
+      border: "solid 1px #e8e8e8 !important",
+    },
+    "& .MuiSelect-select": {
+      fontSize: 14,
+    },
+    "& fieldset": {
+      border: "solid 1px #e8e8e8",
+    },
+    "& .Mui-focused fieldset": {
+      border: "solid 1px #e8e8e8 !important",
+    },
   },
   userPanel: {
     justifyContent: "right",
   },
   searchBox: {
     position: "relative",
-    width: "40%",
+    width: 320,
     "& svg": {
       position: "absolute",
       right: 10,

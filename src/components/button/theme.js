@@ -107,16 +107,18 @@ const theme = createTheme({
             },
           },
         },
-        // {
-        //   props: { purpose: "addToCart" },
-        //   style: {
-        //     textTransform: "Capitalize",
-        //     borderRadius: 4,
-        //     "&:hover": {
-        //       backgroundColor: "black",
-        //     },
-        //   },
-        // },
+        {
+          props: { purpose: "viewOrderProducts" },
+          style: {
+            backgroundColor: "transparent",
+            color: colors.green,
+            textTransform: "Capitalize",
+            "&:hover": {
+              backgroundColor: "transparent",
+              color: colors.green,
+            },
+          },
+        },
         {
           props: { purpose: "modalCancel" },
           style: {

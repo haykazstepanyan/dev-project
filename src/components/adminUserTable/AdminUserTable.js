@@ -11,16 +11,29 @@ import {
 import { useDispatch } from "react-redux";
 import SettingsIcon from "@mui/icons-material/Settings";
 import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../button";
 import AdminModal from "../adminModal/AdminModal";
-import { updateUsersRole } from "../../redux/users/actions";
 import { adminTableStyles } from "../styles/styles";
+import useLazyFetch from "../../hooks/useLazyFetch";
+import { showSnackbar } from "../../redux/app/appSlice";
 
-function AdminUserTable({ tableData }) {
+function AdminUserTable({ tableData, setEditUserData }) {
   const [modalData, setModalData] = useState([]);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  const { error: editUserError, lazyRefetch: editUser } = useLazyFetch();
+
+  useEffect(() => {
+    if (editUserError) {
+      dispatch(
+        showSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
+    }
+  }, [editUserError, dispatch]);
 
   const filterById = (id) => {
     const rowData = tableData.filter((elem) => elem.id === id);
@@ -36,9 +49,18 @@ function AdminUserTable({ tableData }) {
     setOpen(false);
   };
 
-  const editData = (value) => {
-    dispatch(updateUsersRole(value));
-    handleClose();
+  const editData = ({ id, role }) => {
+    editUser(`/users/user/${id}`, {
+      body: JSON.stringify({ role }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "PATCH",
+    }).then((res) => {
+      console.log(res);
+      setEditUserData(res.data);
+      handleClose();
+    });
   };
 
   const classes = adminTableStyles();
@@ -103,6 +125,7 @@ function AdminUserTable({ tableData }) {
 AdminUserTable.propTypes = {
   tableData: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
+  setEditUserData: PropTypes.func,
 };
 
 export default AdminUserTable;

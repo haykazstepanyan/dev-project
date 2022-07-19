@@ -31,7 +31,7 @@ const drawerStyles = createUseStyles({
   icons: {
     cursor: "pointer",
     "&:hover": {
-      color: colors.success,
+      color: colors.green,
     },
   },
   outline: {

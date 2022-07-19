@@ -37,9 +37,6 @@ const addToCartStyles = createUseStyles({
     "& .MuiInputBase-root:hover fieldset": {
       border: "none !important",
     },
-    // "& .MuiFormControl-root ": {
-    //   flexBasis: "50%",
-    // },
     "& input": {
       padding: "5px !important",
       textAlign: "center",
@@ -51,15 +48,6 @@ const addToCartStyles = createUseStyles({
       border: "none !important",
     },
   },
-  // cartInput: {
-  //   border: "none",
-  //   textAlign: "center",
-  //   fontSize: 15,
-  //   width: "20%",
-  //   "&:focus-visible": {
-  //     outline: "none",
-  //   },
-  // },
 });
 
 export default addToCartStyles;

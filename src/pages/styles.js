@@ -48,7 +48,7 @@ const contactUsStyles = createUseStyles({
   },
   contactUsForm: {
     "& label": {
-      fontWeight: 500,
+      fontWeight: 400,
       display: "block",
       fontSize: 14,
     },
@@ -57,11 +57,11 @@ const contactUsStyles = createUseStyles({
       maxHeight: 45,
       height: 45,
       background: "#ffffff",
-      textIndent: 20,
+      textIndent: 5,
       color: "#757575",
       minWidth: "100%",
       maxWidth: "100%",
-      paddingTop: 20,
+      paddingTop: 13,
       minHeight: 100,
       marginBottom: 0,
     },
@@ -73,7 +73,6 @@ const contactUsStyles = createUseStyles({
 
 const accountStyles = createUseStyles({
   listItem: {
-    height: "45px",
     cursor: "pointer",
     backgroundColor: "black",
     display: "flex",
@@ -82,12 +81,27 @@ const accountStyles = createUseStyles({
     alignItems: "center",
     justifyContent: "flex-start",
     borderRadius: "3px",
-    padding: 10,
-    margin: 10,
+    margin: [[10, 0]],
+    padding: 0,
     textTransform: "capitalize",
     "&:hover": {
       background: "rgb(121, 162, 6)",
     },
+    "& button": {
+      background: "transparent",
+      fontSize: 14,
+      textTransform: "capitalize",
+      width: "100%",
+      display: "block",
+      textAlign: "left",
+      padding: [[11, 16]],
+    },
+  },
+  navLinks: {
+    display: "inline-block",
+    width: "100%",
+    padding: [[14, 16]],
+    height: 18,
   },
   activeLink: {
     "& li": {
@@ -248,7 +262,6 @@ const mainStyles = createUseStyles({
     "& h3": {
       fontSize: "18px",
       lineHeight: "21px",
-      // marginBottom: "18px",
       fontWeight: "400",
       marginTop: 20,
       color: "#2d383f",
@@ -292,7 +305,6 @@ const mainStyles = createUseStyles({
     },
   },
   welcomeHomeContainer: {
-    // borderBottom: "1px solid #e1e1e1",
     padding: "70px 0 50px",
     "@media only screen and (max-width: 767px)": {
       padding: "59px 0 53px",
@@ -356,7 +368,6 @@ const mainStyles = createUseStyles({
     },
   },
   welcomeHomeFooter: {
-    // marginTop: "32px",
     "@media only screen and (max-width: 767px)": {
       marginTop: "23px",
     },
@@ -467,6 +478,14 @@ const mainStyles = createUseStyles({
 const signUpInStyles = createUseStyles({
   formContainer: {
     padding: [[50, 0]],
+  },
+  errorInput: {
+    "& fieldset": {
+      border: "1px solid #d22d3d !important",
+    },
+    "& textarea": {
+      border: "1px solid #d22d3d !important",
+    },
   },
   formStyle: {
     width: 350,

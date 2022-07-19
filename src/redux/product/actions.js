@@ -48,24 +48,6 @@ export const getProductsCount = createAsyncThunk(
   },
 );
 
-// export const getProducts = createAsyncThunk(
-//   "products/getProducts",
-//   async (_, { dispatch, rejectWithValue }) => {
-//     try {
-//       const response = await fetchData("products");
-//       if (response.result === "error") {
-//         dispatch(
-//           showSnackbar({
-//             snackbarType: "error",
-//             snackbarMessage: response.message,
-//           }),
-//         );
-//         throw new Error();
-//       }
-//       return response;
-//     } catch (err) {
-//       return rejectWithValue();
-
 export const addProducts = createAsyncThunk(
   "products/addProducts",
   async (data, { rejectWithValue, dispatch }) => {
@@ -105,35 +87,3 @@ export const addProducts = createAsyncThunk(
     }
   },
 );
-
-// export const updateProducts = createAsyncThunk(
-//   "brands/updateBrands",
-//   async ({ id, name }, { rejectWithValue, dispatch }) => {
-//     try {
-//       const response = await fetch(`${BASE_URL}/brands/brand/${id}`, {
-//         method: "PATCH",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         credentials: "include",
-//         body: JSON.stringify({ name }),
-//       });
-
-//       if (!response.ok) {
-//         throw new Error(response.statusText);
-//       }
-//       const result = await response.json();
-
-//       dispatch(
-//         showSnackbar({
-//           snackbarType: "success",
-//           snackbarMessage: "Your brand is successfully updated.",
-//         }),
-//       );
-
-//       return result;
-//     } catch (err) {
-//       return rejectWithValue({ message: err.message });
-//     }
-//   },
-// );

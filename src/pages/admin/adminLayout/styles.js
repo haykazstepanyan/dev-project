@@ -71,7 +71,6 @@ const adminLayoutStyles = createUseStyles({
     fontSize: 14,
   },
   adminRoleStyle: {
-    // textTransform: "lowercase",
     textAlign: "center",
     color: "#24695c",
     fontWeight: 500,

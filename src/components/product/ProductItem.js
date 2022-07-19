@@ -41,7 +41,7 @@ function ProductItem({
   const rates = ratesData?.currencyRates;
   let convertedPrice = price * (rates?.[selectedCurrency] || 1);
   let discountedPrice = convertedPrice - (convertedPrice * discount) / 100;
-  if (selectedCurrency === "AMD" || selectedCurrency === "RUB") {
+  if (selectedCurrency === "RUB") {
     convertedPrice = Math.trunc(convertedPrice);
     discountedPrice = Math.trunc(discountedPrice);
   } else {

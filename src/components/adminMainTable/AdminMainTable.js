@@ -94,12 +94,10 @@ function AdminMainTable({
           },
         },
         "PATCH",
-      ).then((e) => {
-        if (e) {
-          if (e?.data) {
-            setEditBrandData(e.data);
-            handleClose();
-          }
+      ).then((res) => {
+        if (res?.data) {
+          setEditBrandData(res.data);
+          handleClose();
         }
       });
     } else {

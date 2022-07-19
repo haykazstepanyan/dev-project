@@ -1,28 +1,23 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/exports";
 import clsx from "clsx";
 import { Container } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import AdminUserTable from "../../components/adminUserTable/AdminUserTable";
-import { getUsers } from "../../redux/users/actions";
-import Loader from "../../components/loader";
 import useDebounce from "../../hooks/useDebounce";
 import Input from "../../components/input";
 import { adminGlobalStyles } from "./styles";
 import useLazyFetch from "../../hooks/useLazyFetch";
-
-function createData(id, firstName, lastName, email, role, num) {
-  return { id, firstName, lastName, email, role, num };
-}
+import useFetch from "../../hooks/useFetch";
+import { showSnackbar } from "../../redux/app/appSlice";
 
 export default function Users() {
-  const usersData = useSelector((state) => state.users);
-  const [loading, setLoading] = useState(true);
   const [usersRows, setUsersRows] = useState([]);
   const [search, setSearch] = useState("");
   const [startToSearch, setStartToSearch] = useState(false);
   const debouncedSearch = useDebounce(search, 500);
+
+  const { data: usersData, error: usersError } = useFetch("/users");
 
   const classes = adminGlobalStyles();
   const dispatch = useDispatch();
@@ -31,27 +26,27 @@ export default function Users() {
     useLazyFetch();
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+    if (usersData) {
+      setUsersRows(usersData.data);
+    }
+  }, [usersData]);
 
   useEffect(() => {
-    if (!usersData?.loading) {
-      setLoading(false);
+    if (usersError) {
+      dispatch(
+        showSnackbar({
+          snackbarType: "error",
+          snackbarMessage: "Oops! Something went wrong!",
+        }),
+      );
     }
+  }, [usersError, dispatch]);
 
-    const rows = [];
-    if (!usersData.loading) {
-      let num = 0;
-      usersData.users.forEach((elem) => {
-        const { id, firstName, lastName, email, role } = elem;
-        if (elem.role !== "MAIN_ADMIN") {
-          num += 1;
-          rows.push(createData(id, firstName, lastName, email, role, num));
-        }
-      });
+  useEffect(() => {
+    if (filteredUserData?.data) {
+      setUsersRows(filteredUserData?.data);
     }
-    setUsersRows(rows);
-  }, [usersData]);
+  }, [filteredUserData?.data]);
 
   useEffect(() => {
     if (startToSearch) {
@@ -66,33 +61,38 @@ export default function Users() {
     }
   };
 
+  const setEditUserData = (userData) => {
+    console.log(userData);
+    console.log(usersRows);
+    const { id } = userData;
+    const newState = usersRows.map((elem) =>
+      elem.id === id ? userData : elem,
+    );
+    setUsersRows(newState);
+  };
+
   return (
     <Container maxWidth="lg" style={{ marginTop: 20, marginBottom: 40 }}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className={clsx(classes.toolbar, classes.userPanel)}>
-            <div className={classes.searchBox}>
-              <Input
-                type="text"
-                placeholder="Search by First Name, Last Name, Email..."
-                size="large"
-                borders="square"
-                state="noFocus"
-                value={search}
-                onChange={handleSearch}
-              />
-              <SearchIcon />
-            </div>
-          </div>
-          <AdminUserTable
-            type="user"
-            tableData={
-              filteredUserData?.data ? filteredUserData?.data : usersRows
-            }
+      <div className={clsx(classes.toolbar, classes.userPanel)}>
+        <div className={classes.searchBox}>
+          <Input
+            type="text"
+            placeholder="Search by First Name, Last Name, Email..."
+            size="large"
+            borders="square"
+            state="noFocus"
+            value={search}
+            onChange={handleSearch}
           />
-        </>
+          <SearchIcon />
+        </div>
+      </div>
+      {!!usersRows.length && (
+        <AdminUserTable
+          type="user"
+          tableData={usersRows}
+          setEditUserData={(value) => setEditUserData(value)}
+        />
       )}
     </Container>
   );
