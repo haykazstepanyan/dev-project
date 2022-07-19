@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -7,13 +7,13 @@ import {
   TableHead,
   TableRow,
   Paper,
-  List,
-  ListItemText,
-  Typography,
+  // List,
+  // ListItemText,
+  // Typography,
 } from "@mui/material";
 import { useEffect, useState, useMemo } from "react";
 import { io } from "socket.io-client";
-import { TABLE_TITLES, colors, BASE_URL } from "../../constants/constants";
+import { TABLE_TITLES, BASE_URL } from "../../constants/constants";
 import { orderStyles } from "./styles";
 import { fetchData } from "../../helpers/helpers";
 import ModalOpener from "../../components/modalOpener/ModalOpener";
@@ -43,22 +43,18 @@ function Orders() {
     <div>
       <div>
         <h3 className={classes.orderTitle}>Orders</h3>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} className={classes.orderTableStyle}>
           <Table
-            sx={{ minWidth: 650, border: "2px solid black" }}
+            sx={{
+              minWidth: 650,
+            }}
             aria-label="simple table"
           >
             <TableHead>
               <TableRow className={classes.rowTitle}>
-                <TableCell align="center" sx={{ border: "1px solid black" }}>
-                  Order ID
-                </TableCell>
+                <TableCell align="center">Order ID</TableCell>
                 {TABLE_TITLES.map((title) => (
-                  <TableCell
-                    align="center"
-                    key={title}
-                    sx={{ border: "1px solid black" }}
-                  >
+                  <TableCell align="center" key={title}>
                     {title}
                   </TableCell>
                 ))}
@@ -68,58 +64,22 @@ function Orders() {
               {orders &&
                 orders.map((order) => (
                   <TableRow key={order.id}>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{ border: "1px solid black" }}
-                      align="center"
-                    >
+                    <TableCell scope="row" align="center">
                       {order.id}
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ border: "1px solid black" }}
-                    >
+                    <TableCell align="center">
                       {new Date(order.createdAt).toLocaleString()}
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ border: "1px solid black" }}
-                    >
+                    <TableCell align="center">
                       {order.isDelivered ? "Delivered" : "On Road"}
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ border: "1px solid black" }}
-                    >
+                    <TableCell align="center">
                       {order.amount / 100 + order.currency}
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ border: "1px solid black" }}
-                    >
-                      <List>
-                        {order.orderDetails.map(({ product }) => (
-                          <ListItemText
-                            key={product.id}
-                            sx={{
-                              display: "list-item",
-                              listStyleType: "disclosure-closed",
-                            }}
-                          >
-                            <Link to={`/product/${product.id}`}>
-                              <Typography
-                                sx={{
-                                  ":hover": { color: colors.green },
-                                }}
-                              >
-                                {product.name}
-                              </Typography>
-                            </Link>
-                          </ListItemText>
-                        ))}
-                        <ModalOpener orderId={order.id} />
-                      </List>
+                    <TableCell align="center">
+                      {/* <List> */}
+                      <ModalOpener orderId={order.id} />
+                      {/* </List> */}
                     </TableCell>
                   </TableRow>
                 ))}

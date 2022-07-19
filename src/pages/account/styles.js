@@ -2,6 +2,19 @@ import { createUseStyles } from "react-jss";
 import { colors } from "../../constants/constants";
 
 const orderStyles = createUseStyles({
+  orderTableStyle: {
+    boxShadow: "none",
+    "& td": {
+      borderRight: "1px solid #e1e1e1 !important",
+      borderLeft: "1px solid #e1e1e1 !important",
+      borderBottom: "1px solid #e1e1e1 !important",
+      paddingTop: 10,
+      paddingBottom: 10,
+    },
+    "& tr": {
+      maxHeight: 30,
+    },
+  },
   rowTitle: {
     borderBottom: "1.5px solid black",
     backgroundColor: "rgb(225, 225, 225)",

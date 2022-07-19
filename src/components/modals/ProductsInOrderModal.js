@@ -15,8 +15,10 @@ import {
 import { Link } from "react-router-dom";
 import { fetchData } from "../../helpers/helpers";
 import { colors } from "../../constants/constants";
+import { orderStyles } from "../../pages/account/styles";
 
 function SimpleDialog({ onClose, open, orderId }) {
+  const classes = orderStyles();
   const [products, setProducts] = useState([]);
   const { currency, rate } = {
     currency: localStorage.getItem("currency"),
@@ -37,83 +39,63 @@ function SimpleDialog({ onClose, open, orderId }) {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Products in Order</DialogTitle>
-      <TableContainer component={Paper}>
-        <Table
-          sx={{ minWidth: 350, border: "1px solid black" }}
-          aria-label="simple table"
-        >
-          <TableHead>
-            <TableRow>
-              {["Image", "Name", "Price"].map((title) => (
-                <TableCell
-                  align="center"
-                  key={title}
-                  sx={{ border: "1px solid black" }}
-                >
-                  {title}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products &&
-              products.map((product) => (
-                <TableRow key={product.id}>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    sx={{ border: "1px solid black" }}
-                    align="center"
-                  >
-                    <Link to={`/product/${product.id}`}>
-                      <img
-                        src={product.productImg}
-                        alt=""
-                        style={{ maxWidth: 50 }}
-                      />
-                    </Link>
+      <div style={{ padding: 20 }}>
+        <DialogTitle>Order Products</DialogTitle>
+        <TableContainer component={Paper} className={classes.orderTableStyle}>
+          <Table
+            sx={{
+              minWidth: 350,
+              // border: "1px solid black"
+            }}
+            aria-label="simple table"
+          >
+            <TableHead>
+              <TableRow className={classes.rowTitle}>
+                {["Image", "Name", "Price"].map((title) => (
+                  <TableCell align="center" key={title}>
+                    {title}
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid black" }}>
-                    <Link to={`/product/${product.id}`}>
-                      <Typography
-                        sx={{
-                          ":hover": { color: colors.green },
-                        }}
-                      >
-                        {product.name}
-                      </Typography>
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid black" }}>
-                    {Math.trunc(product.price * rate)}
-                    {currency}
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {/* {products.map((product) => {
-          return (
-            <div
-              key={product.id}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: 20,
-              }}
-            >
-              <ImageListItem>
-                <img
-                  src={product.productImg}
-                  alt="text"
-                  style={{ maxWidth: 60 }}
-                />
-              </ImageListItem>
-              <ListItemText>{product.name}</ListItemText>
-              <ListItemText>{product.price}</ListItemText>
-            </div> */}
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {products &&
+                products.map((product) => (
+                  <TableRow key={product.id}>
+                    <TableCell scope="row" align="center">
+                      <Link to={`/product/${product.id}`}>
+                        <img
+                          src={product.productImg}
+                          alt=""
+                          style={{
+                            width: 50,
+                            height: 30,
+                            objectFit: "contain",
+                          }}
+                        />
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Link to={`/product/${product.id}`}>
+                        <Typography
+                          sx={{
+                            ":hover": { color: colors.green },
+                          }}
+                        >
+                          {product.name}
+                        </Typography>
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      {Math.trunc(product.price * rate)}
+                      {currency}
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </Dialog>
   );
 }
@@ -121,7 +103,6 @@ function SimpleDialog({ onClose, open, orderId }) {
 SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  // products: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   orderId: PropTypes.number,
 };
 
