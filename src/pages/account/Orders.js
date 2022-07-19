@@ -7,26 +7,17 @@ import {
   TableHead,
   TableRow,
   Paper,
+  List,
+  ListItemText,
+  Typography,
 } from "@mui/material";
+// import InventoryIcon from "@mui/icons-material/Inventory";
 import { useEffect, useState } from "react";
-import { TABLE_TITLES } from "../../constants/constants";
+// import ProductsInOrderModal from "../../components/modals/ProductsInOrderModal";
+import { TABLE_TITLES, colors } from "../../constants/constants";
 import { orderStyles } from "./styles";
 import { fetchData } from "../../helpers/helpers";
-
-// function createData(order, date, status, total, action) {
-//   return {
-//     order,
-//     date,
-//     status,
-//     total,
-//     action,
-//   };
-// }
-
-// const rows = [
-//   createData(1, "May 10 2018", "Completed", "$25.00 For 1 Item", "View"),
-//   createData(2, "May 10 2018", "Completed", "$25.00 For 1 Item", "View"),
-// ];
+import ModalOpener from "../../components/modalOpener/ModalOpener";
 
 function Orders() {
   const [orders, setOrders] = useState();
@@ -39,49 +30,94 @@ function Orders() {
   }, []);
 
   return (
-    <>
-      <h3 className={classes.orderTitle}>Orders</h3>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow className={classes.rowTitle}>
-              <TableCell>Order</TableCell>
-              {TABLE_TITLES.map((title) => (
-                <TableCell align="right" key={title}>
-                  {title}
+    <div>
+      <div>
+        <h3 className={classes.orderTitle}>Orders</h3>
+        <TableContainer component={Paper}>
+          <Table
+            sx={{ minWidth: 650, border: "2px solid black" }}
+            aria-label="simple table"
+          >
+            <TableHead>
+              <TableRow className={classes.rowTitle}>
+                <TableCell align="center" sx={{ border: "1px solid black" }}>
+                  Order ID
                 </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orders &&
-              orders.map((order) => (
-                <TableRow
-                  key={order.order}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {order.order}
+                {TABLE_TITLES.map((title) => (
+                  <TableCell
+                    align="center"
+                    key={title}
+                    sx={{ border: "1px solid black" }}
+                  >
+                    {title}
                   </TableCell>
-                  <TableCell align="right">{order.date}</TableCell>
-                  <TableCell align="right">
-                    {order.isDelivered ? "Delivered" : "On Road"}
-                  </TableCell>
-                  <TableCell align="right">
-                    {order.amount / 100 + order.currency}
-                  </TableCell>
-                  <TableCell align="right">
-                    {order.orderDetails.map(({ product }) => product.name)}
-                  </TableCell>
-                  <TableCell className={classes.greenText} align="right">
-                    <Link to="cart"> {order.action}</Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders &&
+                orders.map((order) => (
+                  <TableRow key={order.id}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      sx={{ border: "1px solid black" }}
+                      align="center"
+                    >
+                      {order.id}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ border: "1px solid black" }}
+                    >
+                      {new Date(order.createdAt).toLocaleString()}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ border: "1px solid black" }}
+                    >
+                      {order.isDelivered ? "Delivered" : "On Road"}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ border: "1px solid black" }}
+                    >
+                      {order.amount / 100 + order.currency}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ border: "1px solid black" }}
+                    >
+                      <List>
+                        {order.orderDetails.map(({ product }) => (
+                          <ListItemText
+                            key={product.id}
+                            sx={{
+                              display: "list-item",
+                              listStyleType: "disclosure-closed",
+                            }}
+                          >
+                            <Link to={`/product/${product.id}`}>
+                              <Typography
+                                sx={{
+                                  ":hover": { color: colors.green },
+                                }}
+                              >
+                                {product.name}
+                              </Typography>
+                            </Link>
+                          </ListItemText>
+                        ))}
+                        <ModalOpener orderId={order.id} />
+                      </List>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </div>
   );
 }
 export default Orders;
