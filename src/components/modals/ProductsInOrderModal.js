@@ -19,17 +19,11 @@ import { orderStyles } from "../../pages/account/styles";
 
 function SimpleDialog({ onClose, open, orderId }) {
   const classes = orderStyles();
-  const [products, setProducts] = useState([]);
-  const { currency, rate } = {
-    currency: localStorage.getItem("currency"),
-    rate: JSON.parse(localStorage.getItem("rates")).currencyRates[
-      localStorage.getItem("currency")
-    ],
-  };
+  const [order, setOrder] = useState([]);
 
   useEffect(() => {
     fetchData(`orders/${orderId}`).then((data) =>
-      setProducts(data.data.data.data),
+      setOrder(data.data.data.data),
     );
   }, [orderId]);
 
@@ -59,8 +53,8 @@ function SimpleDialog({ onClose, open, orderId }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products &&
-                products.map((product) => (
+              {order.orderDetails &&
+                order.orderDetails.map(({ product }) => (
                   <TableRow key={product.id}>
                     <TableCell scope="row" align="center">
                       <Link to={`/product/${product.id}`}>
@@ -87,8 +81,8 @@ function SimpleDialog({ onClose, open, orderId }) {
                       </Link>
                     </TableCell>
                     <TableCell align="center">
-                      {Math.trunc(product.price * rate)}
-                      {currency}
+                      {order.amount / 100}
+                      {order.currency}
                     </TableCell>
                   </TableRow>
                 ))}
