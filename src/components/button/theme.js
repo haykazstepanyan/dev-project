@@ -107,6 +107,18 @@ const theme = createTheme({
             },
           },
         },
+        {
+          props: { purpose: "viewOrderProducts" },
+          style: {
+            backgroundColor: "transparent",
+            color: colors.green,
+            textTransform: "Capitalize",
+            "&:hover": {
+              backgroundColor: "transparent",
+              color: colors.green,
+            },
+          },
+        },
         // {
         //   props: { purpose: "addToCart" },
         //   style: {

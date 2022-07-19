@@ -1,25 +1,24 @@
-import InventoryIcon from "@mui/icons-material/Inventory";
+// import InventoryIcon from "@mui/icons-material/Inventory";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import ProductsInOrderModal from "../modals/ProductsInOrderModal";
-import { colors } from "../../constants/constants";
+// import { colors } from "../../constants/constants";
+import Button from "../button/Button";
 
 export default function ModalOpener({ orderId }) {
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
-      <InventoryIcon
+      <Button
+        disableRipple
+        purpose="viewOrderProducts"
         onClick={() => {
           setOpenModal((prevOpenModal) => !prevOpenModal);
         }}
-        sx={{
-          ":hover": {
-            color: colors.green,
-            cursor: "pointer",
-          },
-        }}
-      />
+      >
+        View
+      </Button>
       {openModal && (
         <ProductsInOrderModal
           openModal={openModal}
